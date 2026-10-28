@@ -12,46 +12,19 @@
   },
   "sections": [
     {
-      "id": "s-mvscjl3i7yeds",
-      "title": "Processor  ( Arm cortex M4 & R8 )",
+      "id": "s-mvsdbvu4yuyny",
+      "title": "hhjgh",
       "doc": {
         "type": "doc",
         "content": [
           {
-            "type": "paragraph",
+            "type": "htmlAnimation",
             "attrs": {
-              "textAlign": null
-            },
-            "content": [
-              {
-                "type": "text",
-                "text": "nkx cnkldvlkjdf"
-              }
-            ]
-          },
-          {
-            "type": "paragraph",
-            "attrs": {
-              "textAlign": null
-            },
-            "content": [
-              {
-                "type": "text",
-                "text": "dnldklfnjdfndf"
-              }
-            ]
-          },
-          {
-            "type": "paragraph",
-            "attrs": {
-              "textAlign": null
-            },
-            "content": [
-              {
-                "type": "text",
-                "text": "jldnkjdfnjkdfn"
-              }
-            ]
+              "src": "content/media/2026-10/mvsdsg9v-animation.html",
+              "height": 420,
+              "width": 100,
+              "title": "Animation"
+            }
           },
           {
             "type": "paragraph",
