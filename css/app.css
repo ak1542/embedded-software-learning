@@ -386,11 +386,12 @@ fieldset p { font-size: 0.9rem; margin-top: 0; }
 }
 
 /* export to PDF: the page is rebuilt in #print-root and only that is printed */
-#print-root { display: none; }
+/* While preparing, the pages are laid out for real (so animations load at their true size) but kept off-screen. */
+#print-root { position: fixed; left: -10000px; top: 0; width: 688px; visibility: hidden; pointer-events: none; }
 @media print {
   @page { margin: 16mm 14mm; }
   body.printing > :not(#print-root) { display: none !important; }
-  body.printing #print-root { display: block; color: #1c2330; background: #fff; font-size: 11pt; }
+  body.printing #print-root { position: static; width: auto; visibility: visible; color: #1c2330; background: #fff; font-size: 11pt; }
   #print-root, #print-root * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .print-title { font-size: 26pt; margin: 0 0 4pt; }
   .print-meta { color: #5f6b7a; margin: 0 0 18pt; }
@@ -428,8 +429,33 @@ fieldset p { font-size: 0.9rem; margin-top: 0; }
 .ProseMirror[contenteditable='true'] .html-anim.selected .html-anim-handle { display: block; }
 .html-anim.selected .html-anim-frame { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: var(--radius); }
 .ProseMirror[contenteditable='true'] .html-anim.selected .media-tools { display: flex; }
-@media print {
-  #print-root .html-anim iframe { display: none; }
-  #print-root .html-anim::after { content: 'Interactive animation: play it in the online notes'; padding: 14pt; border: 1px dashed #c9ced6; color: #5f6b7a; font-style: italic; width: 100%; }
-}
 .html-anim .media-tools { bottom: auto; top: 10px; }
+
+/* big view of an animation */
+.html-anim-hit {
+  display: none; position: absolute; inset: 0; z-index: 2; padding: 0; border: 0; background: transparent; cursor: zoom-in;
+  border-radius: var(--radius);
+}
+.ProseMirror:not([contenteditable='true']) .html-anim-hit { display: block; }
+.html-anim-hit span {
+  position: absolute; top: 8px; right: 8px; padding: 3px 9px; border-radius: 999px; font-size: 0.78rem; line-height: 1.4;
+  background: rgba(15, 23, 42, 0.72); color: #fff; opacity: 0.85; transition: opacity 0.15s;
+}
+.html-anim-hit:hover span, .html-anim-hit:focus-visible span { opacity: 1; background: var(--accent); }
+dialog.anim-popup {
+  width: 96vw; height: 92vh; max-width: none; max-height: none; padding: 0; border: 0; border-radius: 12px;
+  overflow: hidden; background: var(--bg); color: var(--fg); box-shadow: var(--shadow);
+}
+dialog.anim-popup[open] { display: flex; flex-direction: column; }
+dialog.anim-popup::backdrop { background: rgba(0, 0, 0, 0.8); }
+.anim-popup-bar { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-bottom: 1px solid var(--border); font-weight: 600; }
+.anim-popup iframe { flex: 1; width: 100%; border: 0; background: #fff; }
+@media (max-width: 560px) { dialog.anim-popup { width: 100vw; height: 100vh; border-radius: 0; } }
+
+/* animations in the PDF: shown for real, one page at most */
+@media print {
+  #print-root .html-anim { display: block; position: relative; overflow: hidden; break-inside: avoid; margin: 10pt 0; }
+  #print-root .html-anim-frame { position: relative; width: 100%; max-width: none; }
+  #print-root .html-anim iframe { display: block; width: 100%; border: 1px solid #c9ced6; border-radius: 4pt; }
+  #print-root .html-anim-hit, #print-root .html-anim-handle, #print-root .media-tools { display: none !important; }
+}

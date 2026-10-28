@@ -87,6 +87,13 @@ export async function exportPdf({ nb, sections, title, lib }) {
   };
   toast('Preparing the PDF…', 'info', 15000);
   await waitUntil(() => !root.querySelector('.diagram-out .muted') && [...root.querySelectorAll('img')].every((i) => i.complete), 20000);
+  // Animations: wait until each page has loaded and reported its height, then give them a moment.
+  const animations = [...root.querySelectorAll('.html-anim')];
+  if (animations.length) {
+    await waitUntil(() => animations.every((a) => a.dataset.ready), 6000);
+    await new Promise((resolve) => setTimeout(resolve, 700));
+    fitAnimationsToPage(animations);
+  }
   document.body.classList.add('printing');
   document.title = fileBase(title);
   window.addEventListener('afterprint', cleanup, { once: true });
@@ -96,6 +103,23 @@ export async function exportPdf({ nb, sections, title, lib }) {
   } catch (err) {
     cleanup();
     throw err;
+  }
+}
+
+// An animation taller than a page is scaled down so it is not cut off.
+const MAX_ANIMATION_HEIGHT = 860; // CSS pixels: about one A4 page inside the margins
+function fitAnimationsToPage(animations) {
+  for (const anim of animations) {
+    const frame = anim.querySelector('.html-anim-frame');
+    if (!frame) continue;
+    frame.style.width = '100%'; // the width chosen on screen does not apply on paper
+    const height = anim.querySelector('iframe').getBoundingClientRect().height;
+    if (height <= MAX_ANIMATION_HEIGHT) continue;
+    const scale = MAX_ANIMATION_HEIGHT / height;
+    frame.style.width = `${100 / scale}%`;
+    frame.style.transform = `scale(${scale})`;
+    frame.style.transformOrigin = 'top left';
+    anim.style.height = `${Math.round(height * scale)}px`;
   }
 }
 

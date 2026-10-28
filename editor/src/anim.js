@@ -20,6 +20,45 @@ function withFitScript(html) {
   return /<\/body>/i.test(html) ? html.replace(/<\/body>/i, () => `${FIT_SCRIPT}</body>`) : html + FIT_SCRIPT;
 }
 
+// A big view of the animation (like clicking a picture): the page fills the screen and scrolls
+// by itself. It is loaded fresh, without the height script, so it starts from the beginning.
+function openAnimationPopup(url, title) {
+  const dialog = document.createElement('dialog');
+  dialog.className = 'anim-popup';
+  const bar = document.createElement('div');
+  bar.className = 'anim-popup-bar';
+  const heading = document.createElement('span');
+  heading.textContent = title || 'Animation';
+  const open = document.createElement('button');
+  open.type = 'button';
+  open.className = 'btn small';
+  open.textContent = 'Open in its own tab ↗';
+  open.addEventListener('click', () => window.open(url, '_blank', 'noopener'));
+  const close = document.createElement('button');
+  close.type = 'button';
+  close.className = 'btn small';
+  close.textContent = '✕ Close';
+  close.addEventListener('click', () => dialog.close());
+  const spacer = document.createElement('span');
+  spacer.style.flex = '1';
+  bar.append(heading, spacer, open, close);
+  const iframe = document.createElement('iframe');
+  iframe.setAttribute('sandbox', SANDBOX);
+  iframe.setAttribute('allow', 'fullscreen');
+  iframe.allowFullscreen = true;
+  iframe.title = title || 'Animation';
+  dialog.append(bar, iframe);
+  dialog.addEventListener('click', (e) => e.target === dialog && dialog.close());
+  dialog.addEventListener('close', () => dialog.remove());
+  document.body.append(dialog);
+  dialog.showModal();
+  fetch(url)
+    .then((res) => (res.ok ? res.text() : Promise.reject(new Error(`HTTP ${res.status}`))))
+    .then((html) => (iframe.srcdoc = html))
+    .catch(() => iframe.setAttribute('src', url));
+  close.focus();
+}
+
 export const HtmlAnimation = Node.create({
   name: 'htmlAnimation',
   group: 'block',
@@ -150,6 +189,7 @@ export const HtmlAnimation = Node.create({
         stamps.push(now);
         if (stamps.length > 8) return;
         measured = Math.max(80, Math.min(3000, h));
+        dom.dataset.ready = '1';
         applyHeight();
       };
       window.addEventListener('message', onMessage);
@@ -186,7 +226,18 @@ export const HtmlAnimation = Node.create({
         handle.addEventListener('pointercancel', up);
       });
 
-      frame.append(iframe, handle, tools);
+      // In view mode a click anywhere on the animation opens the big view. (The frame itself would
+      // swallow the click, so a transparent button sits on top of it. Hidden while editing.)
+      const hit = document.createElement('button');
+      hit.type = 'button';
+      hit.className = 'html-anim-hit';
+      hit.setAttribute('aria-label', 'Enlarge the animation');
+      const badge = document.createElement('span');
+      badge.textContent = '⤢ Click to enlarge';
+      hit.append(badge);
+      hit.addEventListener('click', () => openAnimationPopup(options.resolveMedia(current.attrs.src), current.attrs.title));
+
+      frame.append(iframe, hit, handle, tools);
       dom.append(frame);
       apply();
       return {
@@ -199,7 +250,7 @@ export const HtmlAnimation = Node.create({
         },
         selectNode: () => dom.classList.add('selected'),
         deselectNode: () => dom.classList.remove('selected'),
-        stopEvent: (event) => tools.contains(event.target) || handle.contains(event.target),
+        stopEvent: (event) => tools.contains(event.target) || handle.contains(event.target) || hit.contains(event.target),
         ignoreMutation: () => true,
         destroy: () => window.removeEventListener('message', onMessage),
       };
