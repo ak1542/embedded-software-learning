@@ -24,6 +24,7 @@ import x86asm from 'highlight.js/lib/languages/x86asm';
 import verilog from 'highlight.js/lib/languages/verilog';
 import cmake from 'highlight.js/lib/languages/cmake';
 import { Image, Video } from './media.js';
+import { HtmlAnimation } from './anim.js';
 import { numberHeadings } from './numbering.js';
 import { Callout, CALLOUT_VARIANTS, Embed, Diagram, DEFAULT_DIAGRAM, embedUrl } from './nodes.js';
 
@@ -128,6 +129,7 @@ export function createEditor(element, { content, editable, hooks, onUpdate, numb
       Video.configure({ resolveMedia: hooks.resolveMedia }),
       Callout,
       Embed,
+      HtmlAnimation.configure({ resolveMedia: hooks.resolveMedia }),
       Diagram.configure({ renderDiagram: hooks.renderDiagram }),
       CodeTab,
       TrailingParagraph,

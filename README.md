@@ -10,6 +10,7 @@ Click **Edit** and the page itself becomes the editor, like a word processor. Cl
 - **Pictures, GIFs and videos:** use the *Image* / *Video* buttons, or paste or drag a file onto the page. Click a picture to pick a size (25 / 50 / 75 / 100 %) and alignment, or drag its round corner handle to resize it freely. Videos have a *Loop* option to play like a GIF.
 - **Tables:** insert one, then add or delete rows and columns from the toolbar that appears while the cursor is in the table.
 - **Code:** a code block with syntax highlighting (C, C++, ARM and x86 assembly, Python, Rust, Verilog, CMake, shell…); pick the language from the toolbar while the cursor is in it.
+- **Animations from Claude (or anywhere):** the *Animation* button takes the HTML of a self-contained animation, pasted or from a file, saves it with your notes and plays it inside the page. It runs in a sandboxed frame, so it cannot read the site's data or your saved token. Resize by dragging the bar under it. (In a PDF or Word export it appears as a note pointing to the online page.)
 - **Highlighted boxes** (info, tip, warning, danger), horizontal lines, **diagrams** (flowcharts, state machines and sequence diagrams written as [Mermaid](https://mermaid.js.org/intro/) text) and **embeds** (YouTube, Wokwi simulations, any embeddable page).
 - **Sections and subsections** at any depth: create, rename, reorder, indent / outdent, delete. Search covers all notes. The ☰ button hides or shows the section list (your choice is remembered).
 - **On this page:** an outline built automatically from your headings (H1–H4). Click an entry to jump there; the one you are reading is highlighted. It sits at the right on wide screens and at the top of the page on narrower ones.
@@ -64,6 +65,7 @@ js/schema.js          data format version, migrations, defaults
 js/model.js           section tree operations, search text
 js/diagram.js         Mermaid diagram rendering (and diagram-to-picture for Word)
 js/export.js          export to PDF and Word
+editor/src/anim.js    sandboxed HTML animation node
 js/storage.js         GitHub API, local drafts, media uploads
 editor/src/           editor source (Tiptap setup, picture/video/embed/diagram nodes)
 editor/src/export-docx.js  converts pages to a Word file

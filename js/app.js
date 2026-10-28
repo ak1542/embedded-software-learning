@@ -57,6 +57,7 @@ async function init() {
     languages: lib.CODE_LANGUAGES,
     defaultDiagram: lib.DEFAULT_DIAGRAM,
     insertFiles,
+    addAnimation: openAnimationDialog,
   });
   state.sha = loaded.sha;
   state.source = loaded.source;
@@ -237,6 +238,48 @@ async function insertFiles(files, pos) {
     } catch (err) {
       toast(err.message, 'error', 6000);
     }
+  }
+}
+
+// Animations are self-contained HTML pages. They are stored as a file next to the notes and
+// shown in a sandboxed frame (see editor/src/anim.js).
+function openAnimationDialog() {
+  $('#anim-code').value = '';
+  $('#anim-file').value = '';
+  $('#anim-status').textContent = '';
+  $('#anim-insert').disabled = false;
+  $('#anim-dialog').showModal();
+}
+
+function prepareAnimationHtml(code) {
+  let html = code.trim();
+  if (!/<meta[^>]+charset/i.test(html)) {
+    html = /<head[^>]*>/i.test(html) ? html.replace(/<head[^>]*>/i, (m) => `${m}<meta charset="utf-8">`) : `<meta charset="utf-8">${html}`;
+  }
+  if (!/<meta[^>]+viewport/i.test(html)) html = html.replace(/<meta charset="utf-8">/i, '<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">');
+  return html;
+}
+
+async function insertAnimation() {
+  const status = $('#anim-status');
+  const editor = state.editor;
+  const chosen = $('#anim-file').files[0];
+  const code = $('#anim-code').value;
+  if (!chosen && !code.trim()) return (status.textContent = 'Paste the HTML code or choose a file first.');
+  const source = chosen ? await chosen.text() : code;
+  if (!/<[a-z!]/i.test(source)) return (status.textContent = 'That does not look like HTML code.');
+  $('#anim-insert').disabled = true;
+  status.textContent = 'Saving…';
+  try {
+    const file = new File([prepareAnimationHtml(source)], 'animation.html', { type: 'text/html' });
+    const src = await store.uploadMedia(file);
+    $('#anim-dialog').close();
+    if (!editor || editor.isDestroyed) return;
+    editor.chain().focus().insertContent({ type: 'htmlAnimation', attrs: { src, title: 'Animation', height: 420, width: 100 } }).run();
+    toast('Animation added. Click “Done editing” to play it.', 'success', 5000);
+  } catch (err) {
+    status.textContent = err.message;
+    $('#anim-insert').disabled = false;
   }
 }
 
@@ -701,8 +744,18 @@ function wireChrome() {
   $('#edit-toggle').addEventListener('click', toggleEdit);
   $('#save').addEventListener('click', save);
   $('#open-settings').addEventListener('click', openSettings);
-  $('#open-export').addEventListener('click', openExport);
-  $('#export-go').addEventListener('click', runExport);
+  const guarded = (fn) => async () => {
+    try {
+      await fn();
+    } catch (err) {
+      console.error(err);
+      toast(`Something went wrong: ${err.message}`, 'error', 8000);
+    }
+  };
+  $('#open-export').addEventListener('click', guarded(openExport));
+  $('#export-go').addEventListener('click', guarded(runExport));
+  $('#anim-insert').addEventListener('click', guarded(insertAnimation));
+  $('#close-anim').addEventListener('click', () => $('#anim-dialog').close());
   $('#close-export').addEventListener('click', () => $('#export-dialog').close());
   $('#nav-toggle').addEventListener('click', toggleSidebar);
   syncSidebarState();

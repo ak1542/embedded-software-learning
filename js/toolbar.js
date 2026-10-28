@@ -29,7 +29,7 @@ const CALLOUTS = {
   danger: 'Danger box',
 };
 
-export function createToolbar({ languages, defaultDiagram, insertFiles }) {
+export function createToolbar({ languages, defaultDiagram, insertFiles, addAnimation }) {
   let editor = null;
   const refreshers = [];
 
@@ -193,6 +193,7 @@ export function createToolbar({ languages, defaultDiagram, insertFiles }) {
         className: 'text',
         action: (e) => e.chain().focus().insertContent({ type: 'diagram', attrs: { code: defaultDiagram } }).run(),
       }),
+      button({ label: 'Animation', title: 'Add an animation made with HTML (for example one from Claude)', className: 'text', action: () => addAnimation() }),
       button({
         label: 'Embed',
         title: 'Embed a YouTube video or web page',

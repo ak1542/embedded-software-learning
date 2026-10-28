@@ -336,13 +336,13 @@ body.nav-collapsed main { max-width: calc(var(--content) + 120px); }
 body.editing .ProseMirror h1, body.editing .ProseMirror h2, body.editing .ProseMirror h3, body.editing .ProseMirror h4 { scroll-margin-top: calc(var(--topbar) + 110px); }
 
 /* settings dialog */
-dialog#settings, dialog#export-dialog {
+dialog#settings, dialog#export-dialog, dialog#anim-dialog {
   width: min(640px, calc(100vw - 32px)); max-height: calc(100vh - 32px);
   padding: 0; border: 1px solid var(--border); border-radius: 14px;
   background: var(--bg); color: var(--fg); box-shadow: var(--shadow);
 }
-dialog#settings::backdrop, dialog#export-dialog::backdrop { background: rgba(0, 0, 0, 0.45); }
-dialog#settings form, dialog#export-dialog form { padding: 0 20px 20px; }
+dialog#settings::backdrop, dialog#export-dialog::backdrop, dialog#anim-dialog::backdrop { background: rgba(0, 0, 0, 0.45); }
+dialog#settings form, dialog#export-dialog form, dialog#anim-dialog form { padding: 0 20px 20px; }
 .dialog-head { display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; background: var(--bg); padding: 12px 0; z-index: 1; }
 .dialog-head h2 { margin: 0; font-size: 1.2rem; }
 fieldset { border: 1px solid var(--border); border-radius: var(--radius); margin: 0 0 14px; padding: 12px 14px; }
@@ -414,3 +414,22 @@ fieldset p { font-size: 0.9rem; margin-top: 0; }
   .topbar .btn.icon-btn { width: 36px; padding: 0; }
   .site-title { display: none; }
 }
+
+/* animations (sandboxed HTML pages) */
+.html-anim { position: relative; display: flex; justify-content: center; margin: 1em 0; }
+.html-anim-frame { position: relative; max-width: 100%; width: 100%; }
+.html-anim iframe { display: block; width: 100%; border: 1px solid var(--border); border-radius: var(--radius); background: #fff; }
+.html-anim-handle {
+  display: none; position: absolute; left: 50%; bottom: -8px; width: 56px; height: 14px; transform: translateX(-50%); z-index: 3;
+  border-radius: 8px; background: var(--accent); border: 2px solid var(--bg); cursor: ns-resize; touch-action: none;
+}
+.ProseMirror[contenteditable='true'] .html-anim iframe { pointer-events: none; }
+.ProseMirror[contenteditable='true'] .html-anim:hover .html-anim-handle,
+.ProseMirror[contenteditable='true'] .html-anim.selected .html-anim-handle { display: block; }
+.html-anim.selected .html-anim-frame { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: var(--radius); }
+.ProseMirror[contenteditable='true'] .html-anim.selected .media-tools { display: flex; }
+@media print {
+  #print-root .html-anim iframe { display: none; }
+  #print-root .html-anim::after { content: 'Interactive animation: play it in the online notes'; padding: 14pt; border: 1px dashed #c9ced6; color: #5f6b7a; font-style: italic; width: 100%; }
+}
+.html-anim .media-tools { bottom: auto; top: 10px; }
