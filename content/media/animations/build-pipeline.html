@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>From C source to a running firmware</title>
+<style>
+:root{color-scheme:light;--bg:#fff;--soft:#f6f7f9;--sunk:#eef0f3;--fg:#1c2330;--muted:#5f6b7a;--line:#dde1e7;--accent:#2563eb;--accent-soft:#e8efff;--on-accent:#fff;
+--rom:#b45309;--romf:#fef3c7;--flash:#6d28d9;--flashf:#ede9fe;--ram:#15803d;--ramf:#d1fae5;--bus:#0e7490;--busf:#cffafe;--bad:#c62828;--badf:#fde8e8;--ok:#15803d;--okf:#dcfce7;--warn:#b45309;--warnf:#fef9c3;--r:10px}
+@media(prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#0f141b;--soft:#161c25;--sunk:#1d2531;--fg:#e4e8ee;--muted:#98a3b3;--line:#2a3441;--accent:#6ea0ff;--accent-soft:#1b2a45;--on-accent:#0b1220;--rom:#fbbf24;--romf:#3a2d0e;--flash:#a78bfa;--flashf:#2a2150;--ram:#4ade80;--ramf:#0f3328;--bus:#22d3ee;--busf:#0c3a44;--bad:#f87171;--badf:#3b1818;--ok:#4ade80;--okf:#12331f;--warn:#fbbf24;--warnf:#3a3210}}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:12px}
+.mono,code,pre{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+h1,h2,h3{margin:0 0 6px;line-height:1.25}h1{font-size:1.15rem}h2{font-size:1rem}
+button{font:inherit;color:inherit;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:6px 12px;cursor:pointer}
+button:hover:not(:disabled){background:var(--sunk)}button:disabled{opacity:.45;cursor:default}
+button.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+button.primary:hover:not(:disabled){background:var(--accent);filter:brightness(1.1)}
+button.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+button:focus-visible,[tabindex]:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+select,input[type=range]{font:inherit;color:inherit}
+select{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:5px 8px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px}
+.panel[hidden]{display:none}
+.card{background:var(--soft);border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.muted{color:var(--muted)}.grow{flex:1}
+.chip{display:inline-block;padding:1px 9px;border-radius:999px;font-size:.8rem;background:var(--sunk);border:1px solid var(--line);white-space:nowrap}
+.narr{min-height:3.4em;padding:10px 12px;border-left:4px solid var(--accent);background:var(--accent-soft);border-radius:0 var(--r) var(--r) 0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.flow{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;align-items:stretch}
+@media(max-width:760px){.flow{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.st{position:relative;border:2px solid var(--line);border-radius:10px;padding:8px 8px 10px;background:var(--bg);cursor:pointer;text-align:left;font:inherit;color:inherit;transition:border-color .25s,background .25s,transform .25s}
+.st:hover{background:var(--sunk)}
+.st .n{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--sunk);font-size:.78rem;font-weight:700;margin-bottom:4px}
+.st b{display:block;font-size:.9rem}.st small{display:block;color:var(--muted);font-size:.76rem;line-height:1.3;margin-top:2px}
+.st.on{border-color:var(--accent);background:var(--accent-soft);transform:translateY(-2px)}
+.st.on .n{background:var(--accent);color:var(--on-accent)}
+.st.done .n{background:var(--ok);color:var(--on-accent)}
+.st::after{content:'▶';position:absolute;right:-10px;top:50%;transform:translateY(-50%);font-size:.7rem;color:var(--muted);z-index:1}
+.st:last-child::after{display:none}
+@media(max-width:760px){.st::after{display:none}}
+.cols{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:12px;margin-top:12px}
+@media(max-width:700px){.cols{grid-template-columns:1fr}}
+.cmd{font:12.5px/1.8 ui-monospace,Menlo,Consolas,monospace;background:var(--code,#0f172a);color:#e6edf3;border-radius:10px;padding:12px 14px;word-break:break-word}
+:root{--code:#0f172a}
+.cmd .tok{border-radius:4px;padding:1px 3px;cursor:help;border-bottom:1px dotted #94a3b8}
+.cmd .tok:hover,.cmd .tok.sel{background:#2563eb;color:#fff}
+.cmd .prog{color:#7dd3fc;font-weight:700}.cmd .file{color:#fcd34d}
+.expl{margin-top:8px;min-height:3em}
+.files{border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--bg)}
+.files h2{display:flex;justify-content:space-between}
+.files ul{list-style:none;margin:6px 0 0;padding:0;font:12.5px ui-monospace,Menlo,Consolas,monospace}
+.files li{padding:3px 6px;border-radius:5px;display:flex;justify-content:space-between;gap:6px;opacity:.25;transition:opacity .4s,background .4s}
+.files li.have{opacity:1}.files li.new{background:var(--okf);animation:pop .6s}
+.files li span{color:var(--muted);font-size:.72rem}
+@keyframes pop{from{transform:translateX(12px);opacity:0}to{transform:none;opacity:1}}
+</style></head>
+<body>
+<h1>Build pipeline: C source → ELF → BIN → running in Renode</h1>
+<div class="flow" id="flow" role="list"></div>
+<div class="cols">
+  <div>
+    <div class="cmd" id="cmd" aria-live="polite"></div>
+    <div class="narr expl" id="expl" aria-live="polite"></div>
+  </div>
+  <div class="files"><h2>build/ <span class="muted" id="cnt" style="font-weight:400;font-size:.8rem"></span></h2><ul id="files"></ul></div>
+</div>
+<div class="bar" style="margin-top:10px"><button id="prev">◀ Back</button><button class="primary" id="play">▶ Play</button><button id="next">Next ▶</button><button id="reset">↺ Restart</button></div>
+<script>
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const hex=(n,w=8)=>'0x'+(n>>>0).toString(16).toUpperCase().padStart(w,'0');
+// tabs: buttons with data-tab="id" show the .panel with that id
+function initTabs(start=window.__START||0){const btns=$$('.tabs button');const show=id=>{btns.forEach(b=>{const on=b.dataset.tab===id;b.classList.toggle('on',on);b.setAttribute('aria-selected',on)});$$('.panel').forEach(p=>p.hidden=p.id!==id)};btns.forEach(b=>b.addEventListener('click',()=>show(b.dataset.tab)));if(btns[start])show(btns[start].dataset.tab);return show}
+// player: generic step controller. steps = count; render(i) draws step i; returns controls
+function player({count,render,prev,next,play,reset,delay=1800}){let i=0,timer=null;const set=n=>{i=Math.max(0,Math.min(count-1,n));render(i);if(prev)prev.disabled=i===0;if(next)next.disabled=i===count-1;};const stop=()=>{clearInterval(timer);timer=null;if(play)play.textContent='▶ Play'};const go=()=>{if(i>=count-1){stop();return}set(i+1)};
+if(next)next.onclick=()=>{stop();set(i+1)};if(prev)prev.onclick=()=>{stop();set(i-1)};if(reset)reset.onclick=()=>{stop();set(0)};
+if(play)play.onclick=()=>{if(timer){stop();return}if(i>=count-1)set(0);play.textContent='❚❚ Pause';timer=setInterval(go,delay)};
+addEventListener('keydown',e=>{if(e.target.closest('input,select,textarea'))return;if(e.key==='ArrowRight'){stop();set(i+1)}if(e.key==='ArrowLeft'){stop();set(i-1)}});
+set(0);return{set,stop,get i(){return i}}}
+
+const GCC='-mcpu=cortex-m7 -mthumb -std=c11 -ffreestanding -fno-builtin -fdata-sections -ffunction-sections -Wall -Wextra -Werror -Og -g3 -Iinclude';
+const OPT={
+ '-mcpu=cortex-m7':'Target CPU. Written as Cortex-M7 in your notes; the STM32F407 core is a Cortex-M4, so for this board use -mcpu=cortex-m4 (check which you intend).',
+ '-mthumb':'Generate Thumb instructions (Cortex-M only runs Thumb).','-std=c11':'C11 language standard.','-ffreestanding':'Bare-metal environment: no hosted OS or startup files assumed.',
+ '-fno-builtin':"Don't assume standard library functions (memcpy, printf…) behave as built-ins.",'-ffunction-sections':'Put each function in its own section so the linker can drop unused ones.',
+ '-fdata-sections':'Put each variable in its own section (same reason).','-Wall':'Enable common warnings.','-Wextra':'Enable extra warnings.','-Werror':'Warnings become errors.',
+ '-Og':'Debug-friendly optimization.','-g3':'Generate full debug information (also macros) in the ELF.','-Iinclude':'Search include/ for headers.','-c':'Compile only, do not link.',
+ '-nostdlib':'Do not link the standard library or default startup files: you provide startup.c and the linker script.','-Wl,--gc-sections':'Linker: garbage-collect unused sections (this is why KEEP() is needed for the vector table).',
+ '-Tlinker.ld':'Use your linker script.','-Wl,-Map=build/firmware.map':'Write the linker address report: read it to learn memory.','-O':'Output format / output file option.'
+};
+const ST=[
+ {t:'Clean',s:'make clean',cmd:['Remove-Item -Recurse -Force build -ErrorAction SilentlyContinue','New-Item -ItemType Directory build'],out:[],ex:'Steps 1–3: delete the old build folder and create an empty one. Together these two PowerShell commands are "make clean".'},
+ {t:'Compile',s:'gcc -c → .o',cmd:[`arm-none-eabi-gcc ${GCC} -c drivers/i2c_stm32f7.c -o build/i2c_stm32f7.o`],out:['i2c_stm32f7.o'],ex:'Step 4: compile one source file into an object file, with debug info (-g3). -c stops before linking.'},
+ {t:'Archive',s:'ar → library',cmd:['arm-none-eabi-ar rcs build/libi2c.a build/i2c_stm32f7.o'],out:['libi2c.a'],ex:'Step 5: bundle object files into a static library (the "make library" step).'},
+ {t:'Link',s:'gcc + linker.ld',cmd:[`arm-none-eabi-gcc ${GCC} startup.c main.c -nostdlib "-Wl,--gc-sections,-Tlinker.ld,-Map=build/firmware.map" build/libi2c.a -o build/firmware.elf`],out:['firmware.elf','firmware.map'],ex:'Step 6: compile startup.c and main.c, link everything with your linker script into firmware.elf, and write the map file. (The three linker options are really passed together in one quoted -Wl,… argument.)'},
+ {t:'Convert',s:'objcopy / objdump',cmd:['arm-none-eabi-objcopy -O binary build/firmware.elf build/firmware.bin','arm-none-eabi-objdump -d -S build/firmware.elf > build/firmware.dis'],out:['firmware.bin','firmware.dis'],ex:'Steps 7–8: .bin = raw bytes for a future flashing workflow (no header: the core never sees ENTRY). .dis = disassembly mixed with your C source.'},
+ {t:'Run & debug',s:'Renode + GDB',cmd:['renode --disable-xwt run.resc','arm-none-eabi-gdb build/firmware.elf','(gdb) target remote localhost:3333'],out:[],ex:'Steps 9–11: start the Renode simulation with your run.resc, then attach GDB to its server on port 3333. -g3 is why GDB can show source lines.'}
+];
+const FILES=[['i2c_stm32f7.o','object file'],['libi2c.a','static library'],['firmware.elf','executable + symbols + debug info'],['firmware.map','linker address report'],['firmware.bin','raw bytes'],['firmware.dis','disassembly + C source']];
+$('#flow').innerHTML=ST.map((s,i)=>`<button class="st" role="listitem" data-i="${i}"><span class="n">${i+1}</span><b>${esc(s.t)}</b><small>${esc(s.s)}</small></button>`).join('');
+$('#files').innerHTML=FILES.map(f=>`<li data-f="${f[0]}"><b>${f[0]}</b><span>${f[1]}</span></li>`).join('');
+function tokens(line){
+ return line.split(/(\s+)/).map(w=>{if(/^\s+$/.test(w))return w;const k=w.replace(/^"|"$/g,'');
+  const key=OPT[k]?k:Object.keys(OPT).find(o=>k.startsWith(o+'=')||k.startsWith(o));
+  if(/^arm-none-eabi-|^renode$|^\(gdb\)$/.test(w))return `<span class="prog">${esc(w)}</span>`;
+  if(key)return `<span class="tok" tabindex="0" data-k="${esc(key)}">${esc(w)}</span>`;
+  if(/\.(c|o|a|elf|bin|dis|ld|resc)$/.test(w))return `<span class="file">${esc(w)}</span>`;return esc(w)}).join('');
+}
+function renderCmd(i){
+ $('#cmd').innerHTML=ST[i].cmd.map(c=>{
+  // the real command passes three linker options in one quoted -Wl,... argument; show them separately so each can be explained
+  const line=c.replace('"-Wl,--gc-sections,-Tlinker.ld,-Map=build/firmware.map"','-Wl,--gc-sections -Tlinker.ld -Wl,-Map=build/firmware.map');
+  return '<div>'+(c.startsWith('(gdb)')?'':'$ ')+line.split(' ').map(tokens).join(' ')+'</div>'}).join('');
+ $$('#cmd .tok').forEach(t=>{const show=()=>{$$('#cmd .tok').forEach(x=>x.classList.toggle('sel',x===t));$('#expl').innerHTML='<b>'+esc(t.textContent)+'</b>: '+esc(OPT[t.dataset.k])};t.onmouseenter=show;t.onfocus=show;t.onclick=show});
+}
+const P=player({count:ST.length,prev:$('#prev'),next:$('#next'),play:$('#play'),reset:$('#reset'),delay:2600,render(i){
+ $$('.st').forEach((e,k)=>{e.classList.toggle('on',k===i);e.classList.toggle('done',k<i)});
+ renderCmd(i);$('#expl').textContent=ST[i].ex+(ST[i].cmd.join('').includes('-')?'  Hover or tap an option for its meaning.':'');
+ const have=new Set(),fresh=new Set(ST[i].out);ST.slice(0,i+1).forEach(s=>s.out.forEach(o=>have.add(o)));
+ $$('#files li').forEach(li=>{li.classList.toggle('have',have.has(li.dataset.f));li.classList.toggle('new',fresh.has(li.dataset.f))});
+ $('#cnt').textContent=have.size+' files';
+}});
+$$('.st').forEach(b=>b.onclick=()=>{P.stop();P.set(+b.dataset.i)});
+</script></body></html>

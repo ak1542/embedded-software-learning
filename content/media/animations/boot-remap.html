@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Boot sequence with a software remap</title>
+<style>
+:root{color-scheme:light;--bg:#fff;--soft:#f6f7f9;--sunk:#eef0f3;--fg:#1c2330;--muted:#5f6b7a;--line:#dde1e7;--accent:#2563eb;--accent-soft:#e8efff;--on-accent:#fff;
+--rom:#b45309;--romf:#fef3c7;--flash:#6d28d9;--flashf:#ede9fe;--ram:#15803d;--ramf:#d1fae5;--bus:#0e7490;--busf:#cffafe;--bad:#c62828;--badf:#fde8e8;--ok:#15803d;--okf:#dcfce7;--warn:#b45309;--warnf:#fef9c3;--r:10px}
+@media(prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#0f141b;--soft:#161c25;--sunk:#1d2531;--fg:#e4e8ee;--muted:#98a3b3;--line:#2a3441;--accent:#6ea0ff;--accent-soft:#1b2a45;--on-accent:#0b1220;--rom:#fbbf24;--romf:#3a2d0e;--flash:#a78bfa;--flashf:#2a2150;--ram:#4ade80;--ramf:#0f3328;--bus:#22d3ee;--busf:#0c3a44;--bad:#f87171;--badf:#3b1818;--ok:#4ade80;--okf:#12331f;--warn:#fbbf24;--warnf:#3a3210}}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:12px}
+.mono,code,pre{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+h1,h2,h3{margin:0 0 6px;line-height:1.25}h1{font-size:1.15rem}h2{font-size:1rem}
+button{font:inherit;color:inherit;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:6px 12px;cursor:pointer}
+button:hover:not(:disabled){background:var(--sunk)}button:disabled{opacity:.45;cursor:default}
+button.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+button.primary:hover:not(:disabled){background:var(--accent);filter:brightness(1.1)}
+button.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+button:focus-visible,[tabindex]:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+select,input[type=range]{font:inherit;color:inherit}
+select{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:5px 8px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px}
+.panel[hidden]{display:none}
+.card{background:var(--soft);border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.muted{color:var(--muted)}.grow{flex:1}
+.chip{display:inline-block;padding:1px 9px;border-radius:999px;font-size:.8rem;background:var(--sunk);border:1px solid var(--line);white-space:nowrap}
+.narr{min-height:3.4em;padding:10px 12px;border-left:4px solid var(--accent);background:var(--accent-soft);border-radius:0 var(--r) var(--r) 0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.wrap{display:grid;grid-template-columns:minmax(0,230px) minmax(0,1fr);gap:12px}
+@media(max-width:700px){.wrap{grid-template-columns:1fr}}
+ol.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+ol.steps li{padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);cursor:pointer;font-size:.88rem;display:flex;gap:8px}
+ol.steps li b{flex:none;width:22px;height:22px;border-radius:50%;background:var(--sunk);display:grid;place-items:center;font-size:.78rem}
+ol.steps li.on{border-color:var(--accent);background:var(--accent-soft)}
+ol.steps li.on b{background:var(--accent);color:var(--on-accent)}
+ol.steps li.done b{background:var(--ok);color:var(--on-accent)}
+svg{width:100%;height:auto;display:block}
+svg text{font-family:system-ui,sans-serif;fill:var(--fg)}
+.box{fill:var(--bg);stroke:var(--line);stroke-width:1.5}
+.mem{transition:opacity .4s}
+.mem rect{stroke-width:1.5;transition:stroke-width .3s}
+.mem.rom rect{fill:var(--romf);stroke:var(--rom)}.mem.fl rect{fill:var(--flashf);stroke:var(--flash)}.mem.ram rect{fill:var(--ramf);stroke:var(--ram)}
+.mem.dim{opacity:.45}.mem.hot rect{stroke-width:4}
+svg text{stroke:none}
+.ln{stroke:var(--muted);stroke-width:2;fill:none;opacity:.3;stroke-dasharray:5 6}
+.ln.on{stroke:var(--accent);opacity:1;stroke-width:3;animation:flow .8s linear infinite}
+.ln.cpu{stroke:var(--accent);opacity:1;stroke-dasharray:none;stroke-width:3}
+#l-copy.on{stroke:var(--flash)}.ln.hide{opacity:0!important}
+@keyframes flow{to{stroke-dashoffset:-11}}
+.small{font-size:11px;fill:var(--muted)!important}
+.pill{fill:var(--sunk);stroke:var(--line)}
+.fade{transition:opacity .4s}.hide{opacity:0}
+.pkt{fill:var(--flash)}
+.led{transition:fill .3s}
+</style></head>
+<body>
+<h1>Boot with a software remap</h1>
+<div class="wrap">
+  <ol class="steps" id="steps"></ol>
+  <div>
+    <svg viewBox="0 0 760 348" role="img" aria-label="CPU, address decoder and memories">
+      <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--accent)"/></marker><marker id="ahf" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--flash)"/></marker></defs>
+      <!-- CPU -->
+      <rect class="box" x="14" y="115" width="130" height="100" rx="12"/>
+      <text x="79" y="146" text-anchor="middle" font-weight="700" font-size="15">CPU core</text>
+      <text x="79" y="168" text-anchor="middle" class="mono small" id="fetchTxt">fetch @ 0x0</text>
+      <g id="vtorG" class="fade hide"><rect class="pill" x="26" y="180" width="106" height="24" rx="12"/><text x="79" y="197" text-anchor="middle" class="mono" font-size="11" id="vtorTxt">VTOR=0x20000000</text></g>
+      <g id="irqG" class="fade hide"><rect x="26" y="78" width="106" height="26" rx="13" fill="var(--bad)"/><text x="79" y="96" text-anchor="middle" font-size="12" font-weight="700" style="fill:#fff">IRQ / SVC / abort</text></g>
+      <!-- decoder -->
+      <rect class="box" x="270" y="30" width="170" height="270" rx="12"/>
+      <text x="355" y="58" text-anchor="middle" font-weight="700" font-size="15">Address decoder</text>
+      <text x="355" y="76" text-anchor="middle" class="small">SoC interconnect</text>
+      <circle class="led" id="led" cx="300" cy="106" r="8" fill="var(--muted)"/>
+      <text x="316" y="110" font-size="13" id="remapTxt">remap = 0</text>
+      <rect class="pill" x="284" y="236" width="142" height="48" rx="8"/>
+      <text x="355" y="256" text-anchor="middle" class="mono" font-size="12" id="mapTxt">0x0 → Boot ROM</text>
+      <text x="355" y="274" text-anchor="middle" class="small" id="mapSub">remap bit = 0</text>
+      <!-- memories -->
+      <g class="mem rom" id="r-rom"><rect class="memrect" x="590" y="24" width="156" height="84" rx="10"/><text x="668" y="50" text-anchor="middle" font-weight="700">Boot ROM</text><text x="668" y="70" text-anchor="middle" class="small">mask ROM, XIP</text><text x="668" y="92" text-anchor="middle" class="mono small">boot code</text></g>
+      <g class="mem fl" id="r-fl"><rect x="590" y="124" width="156" height="84" rx="10"/><text x="668" y="150" text-anchor="middle" font-weight="700">Flash</text><text x="668" y="170" text-anchor="middle" class="small">firmware image</text><text x="668" y="192" text-anchor="middle" class="mono small">vectors + code</text></g>
+      <g class="mem ram" id="r-ram"><rect x="590" y="224" width="156" height="84" rx="10"/><text x="668" y="250" text-anchor="middle" font-weight="700">SRAM / DRAM</text><g id="ramFill" class="fade hide"><text x="668" y="270" text-anchor="middle" class="mono small">vector table</text><text x="668" y="290" text-anchor="middle" class="mono small">firmware copy</text></g></g>
+      <!-- lines -->
+      <path class="ln cpu" d="M144 165 H268" marker-end="url(#ah)"/>
+      <path class="ln" id="l-rom" d="M440 70 H590"/>
+      <path class="ln" id="l-fl" d="M440 166 H590"/>
+      <path class="ln" id="l-ram" d="M440 266 H590"/>
+      <!-- copy channel flash -> ram -->
+      <path class="ln" id="l-copy" d="M590 190 H566 V250 H588" marker-end="url(#ahf)"/>
+      <g id="pkts"></g>
+      <path class="ln fade hide" id="l-vtor" d="M79 215 V316 H668 V310" marker-end="url(#ah)"/>
+      <text x="355" y="341" text-anchor="middle" class="small fade hide" id="vtorNote">VTOR points the vector fetch straight at RAM: the decoder never changes</text>
+    </svg>
+    <div class="narr" id="narr" aria-live="polite"></div>
+    <div class="bar" style="margin-top:10px"><button id="prev">◀ Back</button><button id="play" class="primary">▶ Play</button><button id="next">Next ▶</button><button id="reset">↺ Restart</button><span class="grow"></span><span class="muted" id="count"></span></div>
+  </div>
+</div>
+<script>
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const hex=(n,w=8)=>'0x'+(n>>>0).toString(16).toUpperCase().padStart(w,'0');
+// tabs: buttons with data-tab="id" show the .panel with that id
+function initTabs(start=window.__START||0){const btns=$$('.tabs button');const show=id=>{btns.forEach(b=>{const on=b.dataset.tab===id;b.classList.toggle('on',on);b.setAttribute('aria-selected',on)});$$('.panel').forEach(p=>p.hidden=p.id!==id)};btns.forEach(b=>b.addEventListener('click',()=>show(b.dataset.tab)));if(btns[start])show(btns[start].dataset.tab);return show}
+// player: generic step controller. steps = count; render(i) draws step i; returns controls
+function player({count,render,prev,next,play,reset,delay=1800}){let i=0,timer=null;const set=n=>{i=Math.max(0,Math.min(count-1,n));render(i);if(prev)prev.disabled=i===0;if(next)next.disabled=i===count-1;};const stop=()=>{clearInterval(timer);timer=null;if(play)play.textContent='▶ Play'};const go=()=>{if(i>=count-1){stop();return}set(i+1)};
+if(next)next.onclick=()=>{stop();set(i+1)};if(prev)prev.onclick=()=>{stop();set(i-1)};if(reset)reset.onclick=()=>{stop();set(0)};
+if(play)play.onclick=()=>{if(timer){stop();return}if(i>=count-1)set(0);play.textContent='❚❚ Pause';timer=setInterval(go,delay)};
+addEventListener('keydown',e=>{if(e.target.closest('input,select,textarea'))return;if(e.key==='ArrowRight'){stop();set(i+1)}if(e.key==='ArrowLeft'){stop();set(i-1)}});
+set(0);return{set,stop,get i(){return i}}}
+
+const STEPS=[
+ {t:'Reset: remap = 0, so address 0x0 is the boot ROM. The CPU simply fetches from 0x0 and runs the boot ROM.',s:'Reset: 0x0 is ROM',map:'rom',remap:0},
+ {t:'The ROM (or a later boot stage) copies the real firmware and its exception vector table into SRAM or DRAM.',s:'ROM copies firmware + vectors to RAM',map:'rom',remap:0,copy:true,ram:true},
+ {t:'Software writes the remap bit, so 0x0 now points to RAM. The CPU still fetches from 0x0 and has no idea anything changed.',s:'Software sets the remap bit',map:'ram',remap:1,ram:true},
+ {t:'From now on interrupts, aborts and SVC calls read their vectors from RAM, which lets the firmware install its own handlers.',s:'Vectors now come from RAM',map:'ram',remap:1,ram:true,irq:true},
+ {t:'Alternative: on Cortex-M/R, skip remapping and use VTOR / VBAR to move the vector table to any RAM address (or a TCM). That is why newer designs often have no remap hardware at all.',s:'Alternative: VTOR / VBAR',map:'fixed',remap:0,ram:true,vtor:true}
+];
+const li=STEPS.map((st,i)=>`<li data-i="${i}"><b>${i+1}</b><span>${esc(st.s)}</span></li>`).join('');
+$('#steps').innerHTML=li;
+const mapInfo={rom:['0x0 → Boot ROM','l-rom','r-rom'],ram:['0x0 → SRAM / DRAM','l-ram','r-ram'],fixed:['0x0 → Boot ROM','l-rom','r-rom']};
+function pkts(on){const g=$('#pkts');g.innerHTML='';if(!on||reduce)return;for(let k=0;k<4;k++){const c=document.createElementNS('http://www.w3.org/2000/svg','circle');c.setAttribute('r','5');c.setAttribute('class','pkt');c.innerHTML=`<animateMotion dur="1.6s" begin="${k*0.4}s" repeatCount="indefinite" path="M590 190 H566 V250 H590"/>`;g.appendChild(c)}}
+const P=player({count:STEPS.length,prev:$('#prev'),next:$('#next'),play:$('#play'),reset:$('#reset'),delay:3200,render(i){
+ const st=STEPS[i];$$('#steps li').forEach((li,k)=>{li.classList.toggle('on',k===i);li.classList.toggle('done',k<i)});
+ $('#narr').textContent=st.t;$('#count').textContent=`Step ${i+1} of ${STEPS.length}`;
+ const [txt,lineId,boxId]=mapInfo[st.map];
+ $('#mapTxt').textContent=txt;$('#mapSub').textContent=st.vtor?'decoder fixed; VTOR moves vectors':`remap bit = ${st.remap}`;
+ $('#remapTxt').textContent=`remap = ${st.remap}`;$('#led').setAttribute('fill',st.remap?'var(--ok)':'var(--muted)');
+ ['l-rom','l-fl','l-ram'].forEach(id=>$('#'+id).classList.toggle('on',id===lineId&&!st.vtor));
+ ['r-rom','r-fl','r-ram'].forEach(id=>{const e=$('#'+id);e.classList.toggle('hot',id===boxId&&!st.vtor);e.classList.toggle('dim',id!==boxId&&!(id==='r-fl'&&st.copy)&&!(id==='r-ram'&&st.ram&&st.vtor)&&!(id==='r-ram'&&st.copy));});
+ $('#l-copy').classList.toggle('on',!!st.copy);pkts(!!st.copy);
+ $('#ramFill').classList.toggle('hide',!st.ram);
+ $('#irqG').classList.toggle('hide',!st.irq);
+ $('#vtorG').classList.toggle('hide',!st.vtor);$('#vtorNote').classList.toggle('hide',!st.vtor);$('#l-vtor').classList.toggle('on',!!st.vtor);$('#l-vtor').classList.toggle('hide',!st.vtor);
+ if(st.vtor){$('#r-ram').classList.add('hot');$('#r-ram').classList.remove('dim')}
+ $('#fetchTxt').textContent=st.vtor?'vectors via VTOR':'fetch @ 0x0';
+}});
+$$('#steps li').forEach(li=>li.onclick=()=>{P.stop();P.set(+li.dataset.i)});
+</script></body></html>

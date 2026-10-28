@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Multitasking on a single core</title>
+<style>
+:root{color-scheme:light;--bg:#fff;--soft:#f6f7f9;--sunk:#eef0f3;--fg:#1c2330;--muted:#5f6b7a;--line:#dde1e7;--accent:#2563eb;--accent-soft:#e8efff;--on-accent:#fff;
+--rom:#b45309;--romf:#fef3c7;--flash:#6d28d9;--flashf:#ede9fe;--ram:#15803d;--ramf:#d1fae5;--bus:#0e7490;--busf:#cffafe;--bad:#c62828;--badf:#fde8e8;--ok:#15803d;--okf:#dcfce7;--warn:#b45309;--warnf:#fef9c3;--r:10px}
+@media(prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#0f141b;--soft:#161c25;--sunk:#1d2531;--fg:#e4e8ee;--muted:#98a3b3;--line:#2a3441;--accent:#6ea0ff;--accent-soft:#1b2a45;--on-accent:#0b1220;--rom:#fbbf24;--romf:#3a2d0e;--flash:#a78bfa;--flashf:#2a2150;--ram:#4ade80;--ramf:#0f3328;--bus:#22d3ee;--busf:#0c3a44;--bad:#f87171;--badf:#3b1818;--ok:#4ade80;--okf:#12331f;--warn:#fbbf24;--warnf:#3a3210}}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:12px}
+.mono,code,pre{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+h1,h2,h3{margin:0 0 6px;line-height:1.25}h1{font-size:1.15rem}h2{font-size:1rem}
+button{font:inherit;color:inherit;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:6px 12px;cursor:pointer}
+button:hover:not(:disabled){background:var(--sunk)}button:disabled{opacity:.45;cursor:default}
+button.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+button.primary:hover:not(:disabled){background:var(--accent);filter:brightness(1.1)}
+button.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+button:focus-visible,[tabindex]:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+select,input[type=range]{font:inherit;color:inherit}
+select{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:5px 8px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px}
+.panel[hidden]{display:none}
+.card{background:var(--soft);border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.muted{color:var(--muted)}.grow{flex:1}
+.chip{display:inline-block;padding:1px 9px;border-radius:999px;font-size:.8rem;background:var(--sunk);border:1px solid var(--line);white-space:nowrap}
+.narr{min-height:3.4em;padding:10px 12px;border-left:4px solid var(--accent);background:var(--accent-soft);border-radius:0 var(--r) var(--r) 0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.lane{display:grid;grid-template-columns:96px 1fr;gap:8px;align-items:center;margin:5px 0}
+.lane>b{font-size:.85rem}
+.ticks{display:grid;gap:2px}
+.t{height:30px;border-radius:4px;background:var(--sunk);display:grid;place-items:center;font:600 11px ui-monospace,Menlo,Consolas,monospace;color:#fff;transition:opacity .2s}
+.t.off{opacity:.12}
+.A{background:#2563eb}.B{background:#9333ea}.C{background:#d97706}.sw{background:var(--muted)}
+.H{background:#dc2626}.M{background:#d97706}.L{background:#2563eb}
+.t.rdy{background:repeating-linear-gradient(45deg,var(--sunk),var(--sunk) 4px,var(--line) 4px,var(--line) 8px);color:var(--muted)}
+.t.blk{background:var(--badf);color:var(--bad);border:1.5px dashed var(--bad)}
+.t.hold{box-shadow:inset 0 0 0 3px #facc15}
+.t.cur{outline:3px solid var(--fg);outline-offset:1px;z-index:1}
+.axis{display:grid;gap:2px;margin-left:104px;font:10px ui-monospace,Menlo,Consolas,monospace;color:var(--muted)}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
+.stat{padding:6px 12px;border-radius:8px;background:var(--bg);border:1px solid var(--line)}
+.stat b{font-size:1.1rem}
+.race{display:grid;grid-template-columns:1fr 150px 1fr;gap:10px;align-items:start}
+@media(max-width:620px){.race{grid-template-columns:1fr}}
+.task{border:2px solid var(--line);border-radius:10px;padding:8px;background:var(--bg)}
+.task.run{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.task h3{margin:0 0 6px;display:flex;justify-content:space-between;align-items:center}
+.task .cpu{font-size:.72rem;padding:1px 8px;border-radius:999px;background:var(--accent);color:var(--on-accent);visibility:hidden}
+.task.run .cpu{visibility:visible}
+.task ol{margin:0;padding:0;list-style:none;font:12.5px ui-monospace,Menlo,Consolas,monospace}
+.task li{padding:3px 6px;border-radius:5px;display:flex;justify-content:space-between;gap:6px}
+.task li.now{background:var(--accent);color:var(--on-accent)}.task li.done{color:var(--muted);text-decoration:line-through}
+.task .reg{margin-top:6px;font:12px ui-monospace,Menlo,Consolas,monospace;color:var(--muted)}
+.mem{border:2px solid var(--line);border-radius:10px;padding:8px;text-align:center;background:var(--bg)}
+.mem .v{font:700 2rem ui-monospace,Menlo,Consolas,monospace}
+.mem.bad{border-color:var(--bad);background:var(--badf)}.mem.ok{border-color:var(--ok);background:var(--okf)}
+.mx{margin-top:8px;padding:4px 8px;border-radius:8px;font-size:.82rem;background:var(--sunk)}
+.mx.held{background:var(--warnf)}
+</style></head>
+<body>
+<h1>Why a single core still needs mutexes, queues and schedulers</h1>
+<div class="tabs" role="tablist"><button data-tab="p1">Time slicing</button><button data-tab="p2">Race condition</button><button data-tab="p3">Priority inversion</button></div>
+
+<div class="panel" id="p1">
+  <p class="muted" style="margin-top:0">Three tasks, one CPU. The scheduler switches between them on every tick; each switch costs time. Two cores can really run two tasks at once.</p>
+  <label>Time slice <input type="range" id="slice" min="1" max="5" value="3"> <b id="sliceV">3</b> ticks</label>
+  <div class="lane"><b>Single core</b><div class="ticks" id="one"></div></div>
+  <div class="lane"><b>Dual core: core 0</b><div class="ticks" id="two0"></div></div>
+  <div class="lane"><b>Dual core: core 1</b><div class="ticks" id="two1"></div></div>
+  <div class="axis" id="axis"></div>
+  <div class="stats"><div class="stat">True parallel execution (single core): <b>No</b></div><div class="stat">Time lost to context switches: <b id="ovh">–</b></div><div class="stat">Work finished by this tick, single core / dual core: <b id="work">–</b></div></div>
+  <div class="bar"><button class="primary" id="play1">▶ Play</button><button id="reset1">↺ Restart</button></div>
+</div>
+
+<div class="panel" id="p2" hidden>
+  <div class="bar" style="margin-bottom:8px"><label>Scenario <select id="scn2"><option value="race">Two tasks do counter++ (no protection)</option><option value="mutex">Same, protected by a mutex</option></select></label></div>
+  <div class="race">
+    <div class="task" id="tA"><h3>Task A <span class="cpu">on the CPU</span></h3><ol id="cA"></ol><div class="reg" id="rA"></div></div>
+    <div><div class="mem" id="mem"><div class="muted">shared <code>counter</code></div><div class="v" id="cv">0</div></div><div class="mx" id="mx">mutex: free</div></div>
+    <div class="task" id="tB"><h3>Task B <span class="cpu">on the CPU</span></h3><ol id="cB"></ol><div class="reg" id="rB"></div></div>
+  </div>
+  <div class="narr" id="narr2" style="margin-top:10px" aria-live="polite"></div>
+  <div class="bar" style="margin-top:10px"><button id="prev2">◀ Back</button><button class="primary" id="play2">▶ Play</button><button id="next2">Next ▶</button><button id="reset2">↺ Restart</button><span class="grow"></span><span class="muted" id="cnt2"></span></div>
+</div>
+
+<div class="panel" id="p3" hidden>
+  <p class="muted" style="margin-top:0">H (high), M (medium) and L (low) priority. L holds a mutex that H needs. Gold border = holding the mutex.</p>
+  <label><input type="checkbox" id="inh"> Priority inheritance</label>
+  <div class="lane"><b>H · high</b><div class="ticks" id="lH"></div></div>
+  <div class="lane"><b>M · medium</b><div class="ticks" id="lM"></div></div>
+  <div class="lane"><b>L · low</b><div class="ticks" id="lL"></div></div>
+  <div class="axis" id="axis3"></div>
+  <div class="stats"><div class="stat">H blocked for: <b id="hb">–</b></div></div>
+  <div class="narr" id="narr3" aria-live="polite"></div>
+  <div class="bar" style="margin-top:10px"><button class="primary" id="play3">▶ Play</button><button id="reset3">↺ Restart</button></div>
+</div>
+<script>
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const hex=(n,w=8)=>'0x'+(n>>>0).toString(16).toUpperCase().padStart(w,'0');
+// tabs: buttons with data-tab="id" show the .panel with that id
+function initTabs(start=window.__START||0){const btns=$$('.tabs button');const show=id=>{btns.forEach(b=>{const on=b.dataset.tab===id;b.classList.toggle('on',on);b.setAttribute('aria-selected',on)});$$('.panel').forEach(p=>p.hidden=p.id!==id)};btns.forEach(b=>b.addEventListener('click',()=>show(b.dataset.tab)));if(btns[start])show(btns[start].dataset.tab);return show}
+// player: generic step controller. steps = count; render(i) draws step i; returns controls
+function player({count,render,prev,next,play,reset,delay=1800}){let i=0,timer=null;const set=n=>{i=Math.max(0,Math.min(count-1,n));render(i);if(prev)prev.disabled=i===0;if(next)next.disabled=i===count-1;};const stop=()=>{clearInterval(timer);timer=null;if(play)play.textContent='▶ Play'};const go=()=>{if(i>=count-1){stop();return}set(i+1)};
+if(next)next.onclick=()=>{stop();set(i+1)};if(prev)prev.onclick=()=>{stop();set(i-1)};if(reset)reset.onclick=()=>{stop();set(0)};
+if(play)play.onclick=()=>{if(timer){stop();return}if(i>=count-1)set(0);play.textContent='❚❚ Pause';timer=setInterval(go,delay)};
+addEventListener('keydown',e=>{if(e.target.closest('input,select,textarea'))return;if(e.key==='ArrowRight'){stop();set(i+1)}if(e.key==='ArrowLeft'){stop();set(i-1)}});
+set(0);return{set,stop,get i(){return i}}}
+
+initTabs();
+/* ---- tab 1: time slicing ---- */
+const N=30;let cur1=-1,timer1=null;
+function grid(el,n){el.style.gridTemplateColumns=`repeat(${n},1fr)`}
+function lane(el,arr){el.innerHTML=arr.map((c,i)=>`<div class="t ${c.k}" data-i="${i}">${c.t||''}</div>`).join('')}
+function build1(){
+ const L=+$('#slice').value;$('#sliceV').textContent=L;
+ const one=[];let task=0,left=L,first=true;const names=['A','B','C'];
+ while(one.length<N){
+  if(!first&&left===L){one.push({k:'sw',t:'⇄'});if(one.length>=N)break;}
+  one.push({k:names[task],t:names[task]});left--;first=false;
+  if(left===0){task=(task+1)%3;left=L}
+ }
+ const two0=Array.from({length:N},()=>({k:'A',t:'A'})),two1=Array.from({length:N},()=>({k:'B',t:'B'}));
+ [ ['#one',one],['#two0',two0],['#two1',two1] ].forEach(([s,a])=>{grid($(s),N);lane($(s),a)});
+ $('#axis').style.gridTemplateColumns=`repeat(${N},1fr)`;$('#axis').innerHTML=Array.from({length:N},(_,i)=>`<span>${i%5===0?i:''}</span>`).join('');
+ window.ONE=one;paint1();
+}
+function paint1(){
+ $$('#p1 .t').forEach(e=>{const i=+e.dataset.i;e.classList.toggle('off',i>cur1);e.classList.toggle('cur',i===cur1)});
+ const upto=ONE.slice(0,cur1+1);const sw=upto.filter(c=>c.k==='sw').length;
+ $('#ovh').textContent=cur1<0?'–':`${sw} tick${sw===1?'':'s'} (${Math.round(sw*100/(cur1+1))}%)`;
+ $('#work').textContent=cur1<0?'–':`${upto.length-sw} / ${(cur1+1)*2}`;
+}
+function stop1(){clearInterval(timer1);timer1=null;$('#play1').textContent='▶ Play'}
+$('#play1').onclick=()=>{if(timer1){stop1();return}if(cur1>=N-1)cur1=-1;$('#play1').textContent='❚❚ Pause';timer1=setInterval(()=>{cur1++;paint1();if(cur1>=N-1)stop1()},reduce?20:160)};
+$('#reset1').onclick=()=>{stop1();cur1=-1;paint1()};
+$('#slice').oninput=()=>{stop1();cur1=reduce?N-1:-1;build1()};
+cur1=reduce?N-1:-1;build1();
+
+/* ---- tab 2: race condition ---- */
+const SC={
+ race:{code:['LDR r0,[counter]','ADD r0,r0,#1','STR r0,[counter]'],steps:[
+  {run:'A',pa:0,rA:0,t:'Task A loads counter (0) into its register r0.'},
+  {run:'B',pa:0,rA:0,t:'The tick interrupt fires: the scheduler preempts A and switches to B. A\'s r0 (=0) is saved. Context switch!'},
+  {run:'B',pb:0,rA:0,rB:0,t:'Task B loads counter (still 0).'},
+  {run:'B',pb:1,rA:0,rB:1,t:'Task B adds 1: r0 = 1.'},
+  {run:'B',pb:2,rA:0,rB:1,c:1,t:'Task B stores 1 → counter = 1.'},
+  {run:'A',pa:0,pb:2,rA:0,rB:1,c:1,t:'B is done. The scheduler resumes A and restores its old r0 (=0).'},
+  {run:'A',pa:1,pb:2,rA:1,rB:1,c:1,t:'Task A adds 1 to its stale copy: r0 = 1.'},
+  {run:'A',pa:2,pb:2,rA:1,rB:1,c:1,bad:1,t:'Task A stores 1 → counter = 1. Two increments ran, the result should be 2: one update was LOST. That is a race condition.'}]},
+ mutex:{code:['lock(m)','LDR r0,[counter]','ADD r0,r0,#1','STR r0,[counter]','unlock(m)'],steps:[
+  {run:'A',pa:0,lock:'A',t:'Task A takes the mutex: lock(m) succeeds.'},
+  {run:'A',pa:1,lock:'A',rA:0,t:'Task A loads counter (0).'},
+  {run:'B',pa:1,lock:'A',rA:0,t:'Tick interrupt: A is preempted, B gets the CPU. A still owns the mutex.'},
+  {run:'A',pa:1,pb:0,lock:'A',rA:0,blockedB:1,t:'Task B calls lock(m): it is held by A, so B BLOCKS and the scheduler gives the CPU back to A.'},
+  {run:'A',pa:2,pb:0,lock:'A',rA:1,blockedB:1,t:'Task A adds 1: r0 = 1.'},
+  {run:'A',pa:3,pb:0,lock:'A',rA:1,c:1,blockedB:1,t:'Task A stores 1 → counter = 1.'},
+  {run:'A',pa:4,pb:0,lock:null,rA:1,c:1,t:'Task A unlocks the mutex. B becomes ready.'},
+  {run:'B',pa:4,pb:0,lock:'B',rA:1,rB:null,c:1,t:'B runs and its lock(m) now succeeds.'},
+  {run:'B',pa:4,pb:1,lock:'B',rA:1,rB:1,c:1,t:'Task B loads counter: it sees 1 (the up-to-date value).'},
+  {run:'B',pa:4,pb:2,lock:'B',rA:1,rB:2,c:1,t:'Task B adds 1: r0 = 2.'},
+  {run:'B',pa:4,pb:3,lock:'B',rA:1,rB:2,c:2,ok:1,t:'Task B stores 2 → counter = 2. Correct: no update was lost.'},
+  {run:'B',pa:4,pb:4,lock:null,rA:1,rB:2,c:2,ok:1,t:'Task B unlocks the mutex. The mutex made the three instructions behave as one indivisible step.'}]}
+};
+let P2;
+function build2(){
+ const sc=SC[$('#scn2').value];
+ const li=(code,k)=>code.map((c,i)=>`<li data-k="${k}${i}"><span>${esc(c)}</span></li>`).join('');
+ $('#cA').innerHTML=li(sc.code,'A');$('#cB').innerHTML=li(sc.code,'B');
+ if(P2)P2.stop();
+ P2=player({count:sc.steps.length,prev:$('#prev2'),next:$('#next2'),play:$('#play2'),reset:$('#reset2'),delay:2200,render(i){
+  const s=sc.steps[i];
+  $('#tA').classList.toggle('run',s.run==='A');$('#tB').classList.toggle('run',s.run==='B');
+  let pa=-1,pb=-1,doneA=-1,doneB=-1;
+  for(let k=0;k<=i;k++){const x=sc.steps[k];if(x.run==='A'&&x.pa!==undefined)doneA=Math.max(doneA,x.pa);if(x.run==='B'&&x.pb!==undefined)doneB=Math.max(doneB,x.pb)}
+  const isRunInstr=(who)=>s.run===who&&!(who==='B'&&s.blockedB&&false);
+  $$('#cA li').forEach((e,k)=>{e.classList.toggle('now',s.run==='A'&&k===doneA);e.classList.toggle('done',k<doneA||(k===doneA&&s.run!=='A'))});
+  $$('#cB li').forEach((e,k)=>{e.classList.toggle('now',s.run==='B'&&k===doneB);e.classList.toggle('done',k<doneB||(k===doneB&&s.run!=='B'))});
+  $('#cv').textContent=s.c||0;$('#mem').classList.toggle('bad',!!s.bad);$('#mem').classList.toggle('ok',!!s.ok);
+  $('#rA').textContent='r0 = '+(s.rA===undefined||s.rA===null?'–':s.rA);$('#rB').textContent='r0 = '+(s.rB===undefined||s.rB===null?'–':s.rB)+(s.blockedB?'   (blocked on mutex)':'');
+  const mx=$('#mx');mx.className='mx'+(s.lock?' held':'');mx.textContent=sc.code.length===3?'no mutex':('mutex: '+(s.lock?'held by '+s.lock:'free'));
+  $('#narr2').textContent=s.t;$('#cnt2').textContent=`Step ${i+1} of ${sc.steps.length}`;
+ }});
+}
+$('#scn2').onchange=build2;build2();
+
+/* ---- tab 3: priority inversion ---- */
+const T3=12;
+const PI={
+ off:{H:['-','-','blk','blk','blk','blk','blk','blk','H','H','-','-'],M:['-','-','-','M','M','M','M','-','-','-','-','-'],L:['L','Lh','Lh','rdyh','rdyh','rdyh','rdyh','Lh','-','-','-','-'],
+  ev:{2:'H arrives and needs the mutex that L holds: H blocks.',3:'M arrives. It has a higher priority than L, so it preempts L, while H is still waiting for L. Priority inversion: M runs although H is more important.',7:'M finishes; L runs again and finishes its critical section.',8:'L unlocks the mutex; at last H can run.'},hb:'6 ticks (t2–t7)'},
+ on:{H:['-','-','blk','blk','H','H','-','-','-','-','-','-'],M:['-','-','-','rdy','rdy','rdy','M','M','M','M','-','-'],L:['L','Lh','Lh','Lh','-','-','rdy','rdy','rdy','rdy','L','-'],
+  ev:{2:'H needs the mutex held by L: H blocks and L INHERITS H\'s priority.',3:'M arrives but cannot preempt L (L now runs at H\'s priority). L finishes its critical section.',4:'L unlocks the mutex and drops back to its own priority. H runs first.',6:'H is done; now M runs, then L finishes its remaining work.'},hb:'2 ticks (t2–t3)'}
+};
+let cur3=-1,timer3=null;
+function build3(){
+ const m=PI[$('#inh').checked?'on':'off'];
+ for(const k of ['H','M','L']){const el=$('#l'+k);grid(el,T3);el.innerHTML=m[k].map((s,i)=>{let cls='',tx='';
+   if(s==='-')cls='off0';else if(s==='blk'){cls='blk';tx='wait'}else if(s.startsWith('rdy')){cls='rdy';tx='';if(s==='rdyh')cls+=' hold'}else{cls=k;tx=k;if(s==='Lh')cls+=' hold'}
+   return `<div class="t ${cls}" data-i="${i}" style="${s==='-'?'background:transparent;border:1px dotted var(--line)':''}">${tx}</div>`}).join('')}
+ $('#axis3').style.gridTemplateColumns=`repeat(${T3},1fr)`;$('#axis3').innerHTML=Array.from({length:T3},(_,i)=>`<span>t${i}</span>`).join('');
+ paint3();
+}
+function paint3(){
+ const m=PI[$('#inh').checked?'on':'off'];
+ $$('#p3 .t').forEach(e=>{const i=+e.dataset.i;e.classList.toggle('off',i>cur3);e.classList.toggle('cur',i===cur3)});
+ $('#hb').textContent=cur3>=T3-1?m.hb:'…';
+ const ev=Object.keys(m.ev).map(Number).filter(k=>k<=cur3).pop();
+ $('#narr3').textContent=cur3<0?'Press Play. Tick by tick you will see who runs, who waits (hatched) and who is blocked (dashed red).':m.ev[ev]||'';
+}
+function stop3(){clearInterval(timer3);timer3=null;$('#play3').textContent='▶ Play'}
+$('#play3').onclick=()=>{if(timer3){stop3();return}if(cur3>=T3-1)cur3=-1;$('#play3').textContent='❚❚ Pause';timer3=setInterval(()=>{cur3++;paint3();if(cur3>=T3-1)stop3()},reduce?20:650)};
+$('#reset3').onclick=()=>{stop3();cur3=-1;paint3()};
+$('#inh').onchange=()=>{stop3();cur3=reduce?T3-1:-1;build3()};
+cur3=reduce?T3-1:-1;build3();
+</script></body></html>

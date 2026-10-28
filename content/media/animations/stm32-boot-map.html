@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>STM32F407 boot pins and memory map</title>
+<style>
+:root{color-scheme:light;--bg:#fff;--soft:#f6f7f9;--sunk:#eef0f3;--fg:#1c2330;--muted:#5f6b7a;--line:#dde1e7;--accent:#2563eb;--accent-soft:#e8efff;--on-accent:#fff;
+--rom:#b45309;--romf:#fef3c7;--flash:#6d28d9;--flashf:#ede9fe;--ram:#15803d;--ramf:#d1fae5;--bus:#0e7490;--busf:#cffafe;--bad:#c62828;--badf:#fde8e8;--ok:#15803d;--okf:#dcfce7;--warn:#b45309;--warnf:#fef9c3;--r:10px}
+@media(prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#0f141b;--soft:#161c25;--sunk:#1d2531;--fg:#e4e8ee;--muted:#98a3b3;--line:#2a3441;--accent:#6ea0ff;--accent-soft:#1b2a45;--on-accent:#0b1220;--rom:#fbbf24;--romf:#3a2d0e;--flash:#a78bfa;--flashf:#2a2150;--ram:#4ade80;--ramf:#0f3328;--bus:#22d3ee;--busf:#0c3a44;--bad:#f87171;--badf:#3b1818;--ok:#4ade80;--okf:#12331f;--warn:#fbbf24;--warnf:#3a3210}}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:12px}
+.mono,code,pre{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+h1,h2,h3{margin:0 0 6px;line-height:1.25}h1{font-size:1.15rem}h2{font-size:1rem}
+button{font:inherit;color:inherit;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:6px 12px;cursor:pointer}
+button:hover:not(:disabled){background:var(--sunk)}button:disabled{opacity:.45;cursor:default}
+button.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+button.primary:hover:not(:disabled){background:var(--accent);filter:brightness(1.1)}
+button.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+button:focus-visible,[tabindex]:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+select,input[type=range]{font:inherit;color:inherit}
+select{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:5px 8px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px}
+.panel[hidden]{display:none}
+.card{background:var(--soft);border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.muted{color:var(--muted)}.grow{flex:1}
+.chip{display:inline-block;padding:1px 9px;border-radius:999px;font-size:.8rem;background:var(--sunk);border:1px solid var(--line);white-space:nowrap}
+.narr{min-height:3.4em;padding:10px 12px;border-left:4px solid var(--accent);background:var(--accent-soft);border-radius:0 var(--r) var(--r) 0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.wrap{display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:12px}
+@media(max-width:700px){.wrap{grid-template-columns:1fr}}
+.sw{display:flex;align-items:center;gap:8px;margin:6px 0}
+.sw b{width:58px}
+.sw button{min-width:44px}
+.mode{margin:10px 0;padding:8px 10px;border-radius:8px;background:var(--accent-soft);border:1px solid var(--accent);font-weight:600}
+.regs{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;margin-top:8px;font-size:.9rem}
+.regs span:nth-child(odd){color:var(--muted)}
+.regs .val{font-family:ui-monospace,Menlo,Consolas,monospace;transition:background .3s}
+.regs .val.flash{background:var(--warnf)}
+#map{display:flex;flex-direction:column;gap:6px}
+.row{display:grid;grid-template-columns:118px 1fr;gap:10px;align-items:stretch;border:1.5px solid var(--line);border-radius:8px;background:var(--bg);overflow:hidden;position:relative;transition:border-color .3s,box-shadow .3s,opacity .3s}
+.row .a{padding:8px;background:var(--sunk);font:12px ui-monospace,Menlo,Consolas,monospace;display:flex;align-items:center}
+.row .n{padding:6px 10px 6px 0}
+.row .n b{display:block}.row .n small{color:var(--muted)}
+.row.flash{border-left:6px solid var(--flash)}.row.sys{border-left:6px solid var(--rom)}.row.ram{border-left:6px solid var(--ram)}.row.per{border-left:6px solid var(--bus)}
+.row.target{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.row.dim{opacity:.55}
+.tag{position:absolute;right:8px;top:6px;font-size:.75rem;padding:1px 8px;border-radius:999px;background:var(--accent);color:var(--on-accent);display:none}
+.row.target .tag{display:block}
+.row.alias{border-style:dashed;background:var(--accent-soft)}
+.alias .arrow{position:absolute;right:12px;bottom:6px;font-size:.8rem;color:var(--accent)}
+.hint{font-size:.88rem}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 3px var(--accent-soft)}50%{box-shadow:0 0 0 7px var(--accent-soft)}}
+.row.pulse{animation:pulse .9s ease-in-out 2}
+.note{margin-top:10px;font-size:.88rem}
+</style></head>
+<body>
+<h1>STM32F407: boot pins decide what 0x0000_0000 means</h1>
+<div class="wrap">
+  <div class="card">
+    <h2>Boot pins</h2>
+    <div class="sw"><b>BOOT0</b><button data-pin="0" data-v="0">0</button><button data-pin="0" data-v="1">1</button></div>
+    <div class="sw"><b>BOOT1</b><button data-pin="1" data-v="0">0</button><button data-pin="1" data-v="1">1</button></div>
+    <div class="mode" id="mode"></div>
+    <h2>CPU after reset</h2>
+    <div class="regs">
+      <span>VTOR</span><span class="val">0x0000_0000</span>
+      <span>[0x0] → SP</span><span class="val" id="sp">–</span>
+      <span>[0x4] → PC</span><span class="val" id="pc">–</span>
+    </div>
+    <div class="bar" style="margin-top:10px"><button class="primary" id="go">▶ Replay reset</button></div>
+    <p class="muted hint" id="hint"></p>
+  </div>
+  <div>
+    <div id="map" role="list"></div>
+    <div class="narr note" id="narr" aria-live="polite"></div>
+  </div>
+</div>
+<script>
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const hex=(n,w=8)=>'0x'+(n>>>0).toString(16).toUpperCase().padStart(w,'0');
+// tabs: buttons with data-tab="id" show the .panel with that id
+function initTabs(start=window.__START||0){const btns=$$('.tabs button');const show=id=>{btns.forEach(b=>{const on=b.dataset.tab===id;b.classList.toggle('on',on);b.setAttribute('aria-selected',on)});$$('.panel').forEach(p=>p.hidden=p.id!==id)};btns.forEach(b=>b.addEventListener('click',()=>show(b.dataset.tab)));if(btns[start])show(btns[start].dataset.tab);return show}
+// player: generic step controller. steps = count; render(i) draws step i; returns controls
+function player({count,render,prev,next,play,reset,delay=1800}){let i=0,timer=null;const set=n=>{i=Math.max(0,Math.min(count-1,n));render(i);if(prev)prev.disabled=i===0;if(next)next.disabled=i===count-1;};const stop=()=>{clearInterval(timer);timer=null;if(play)play.textContent='▶ Play'};const go=()=>{if(i>=count-1){stop();return}set(i+1)};
+if(next)next.onclick=()=>{stop();set(i+1)};if(prev)prev.onclick=()=>{stop();set(i-1)};if(reset)reset.onclick=()=>{stop();set(0)};
+if(play)play.onclick=()=>{if(timer){stop();return}if(i>=count-1)set(0);play.textContent='❚❚ Pause';timer=setInterval(go,delay)};
+addEventListener('keydown',e=>{if(e.target.closest('input,select,textarea'))return;if(e.key==='ArrowRight'){stop();set(i+1)}if(e.key==='ArrowLeft'){stop();set(i-1)}});
+set(0);return{set,stop,get i(){return i}}}
+
+const REG=[
+ {id:'ppb',a:'0xE000_0000',n:'Cortex-M4 private peripherals',s:'NVIC, SysTick, SCB (incl. VTOR), MPU, debug',c:'per'},
+ {id:'per',a:'0x4000_0000',n:'Peripherals',s:'APB1, APB2, AHB1, AHB2: GPIO, I2C, SPI, UART, timers…',c:'per'},
+ {id:'sram',a:'0x2000_0000',n:'SRAM (128 KB)',s:'SRAM1 112 KB + SRAM2 16 KB',c:'ram'},
+ {id:'sys',a:'0x1FFF_0000',n:'System memory',s:'ST ROM bootloader (UART / USB DFU…)',c:'sys'},
+ {id:'ccm',a:'0x1000_0000',n:'CCM data RAM (64 KB)',s:'core-coupled, CPU access only, no DMA',c:'ram'},
+ {id:'flash',a:'0x0800_0000',n:'Main Flash',s:'1 MB on the F407VG. Your linker FLASH origin',c:'flash'}
+];
+const MODES={
+ flash:{name:'Boot from main Flash',tgt:'flash',sp:'0x2002_0000',pc:'0x0800_0189',hint:'BOOT0 = 0 (BOOT1 is a don\'t-care).',
+  t:'Main Flash is aliased at 0x0000_0000. VTOR resets to 0x0, so the core reads the initial SP and the Reset_Handler address from your Flash vector table. The Flash is still visible at 0x0800_0000, which is where your linker script places it.'},
+ sys:{name:'Boot from system memory',tgt:'sys',sp:'ST bootloader SP',pc:'bootloader entry',hint:'BOOT0 = 1, BOOT1 = 0.',
+  t:'System memory (the ST ROM bootloader) is aliased at 0x0000_0000, so the CPU runs ST\'s bootloader, which can program Flash over UART, USB DFU, etc.'},
+ sram:{name:'Boot from embedded SRAM',tgt:'sram',sp:'from 0x2000_0000',pc:'from 0x2000_0004',hint:'BOOT0 = 1, BOOT1 = 1.',
+  t:'SRAM is aliased at 0x0000_0000, so the vector table must already be at the start of SRAM. Useful with a debugger that loads code straight into RAM.'}
+};
+const pins=[0,0];
+const map=$('#map');
+map.innerHTML=REG.map(r=>`<div class="row ${r.c}" role="listitem" id="r-${r.id}"><div class="a">${r.a}</div><div class="n"><b>${esc(r.n)}</b><small>${esc(r.s)}</small></div><span class="tag">0x0 alias</span></div>`).join('')+
+ `<div class="row alias" id="r-alias"><div class="a">0x0000_0000</div><div class="n"><b>Boot alias</b><small id="aliasTxt"></small></div><span class="arrow" id="arrow">▲</span></div>`;
+const cur=()=>pins[0]===0?'flash':pins[1]===0?'sys':'sram';
+function draw(){
+ const m=MODES[cur()];
+ $$('.sw button').forEach(b=>b.classList.toggle('on',pins[+b.dataset.pin]===+b.dataset.v));
+ $('#mode').textContent=m.name;$('#hint').textContent=m.hint;
+ REG.forEach(r=>{const e=$('#r-'+r.id);e.classList.toggle('target',r.id===m.tgt);e.classList.toggle('dim',r.id!==m.tgt&&!['ppb','per'].includes(r.id)?true:false)});
+ $('#r-ppb').classList.add('dim');$('#r-per').classList.add('dim');
+ $('#aliasTxt').textContent='aliased to '+REG.find(r=>r.id===m.tgt).n;
+ $('#narr').textContent=m.t;$('#sp').textContent='–';$('#pc').textContent='–';
+}
+async function replay(){
+ const m=MODES[cur()];const w=reduce?0:700;const r=$('#r-'+m.tgt),al=$('#r-alias');
+ $('#sp').textContent='–';$('#pc').textContent='–';
+ const flash=(el)=>{el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),900)};
+ al.classList.remove('pulse');void al.offsetWidth;al.classList.add('pulse');await sleep(w);
+ $('#narr').textContent='Reset: the core reads the word at 0x0000_0000 (initial stack pointer).';$('#sp').textContent=m.sp;flash($('#sp'));await sleep(w*1.6);
+ $('#narr').textContent='Then the word at 0x0000_0004 (address of Reset_Handler, Thumb bit set).';$('#pc').textContent=m.pc;flash($('#pc'));await sleep(w*1.6);
+ r.classList.remove('pulse');void r.offsetWidth;r.classList.add('pulse');
+ $('#narr').textContent='The CPU now executes from '+REG.find(x=>x.id===m.tgt).n+'. '+m.t;
+}
+$$('.sw button').forEach(b=>b.onclick=()=>{pins[+b.dataset.pin]=+b.dataset.v;draw();});
+$('#go').onclick=replay;draw();
+</script></body></html>

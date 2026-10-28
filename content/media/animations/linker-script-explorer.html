@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Linker script explorer</title>
+<style>
+:root{color-scheme:light;--bg:#fff;--soft:#f6f7f9;--sunk:#eef0f3;--fg:#1c2330;--muted:#5f6b7a;--line:#dde1e7;--accent:#2563eb;--accent-soft:#e8efff;--on-accent:#fff;
+--rom:#b45309;--romf:#fef3c7;--flash:#6d28d9;--flashf:#ede9fe;--ram:#15803d;--ramf:#d1fae5;--bus:#0e7490;--busf:#cffafe;--bad:#c62828;--badf:#fde8e8;--ok:#15803d;--okf:#dcfce7;--warn:#b45309;--warnf:#fef9c3;--r:10px}
+@media(prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#0f141b;--soft:#161c25;--sunk:#1d2531;--fg:#e4e8ee;--muted:#98a3b3;--line:#2a3441;--accent:#6ea0ff;--accent-soft:#1b2a45;--on-accent:#0b1220;--rom:#fbbf24;--romf:#3a2d0e;--flash:#a78bfa;--flashf:#2a2150;--ram:#4ade80;--ramf:#0f3328;--bus:#22d3ee;--busf:#0c3a44;--bad:#f87171;--badf:#3b1818;--ok:#4ade80;--okf:#12331f;--warn:#fbbf24;--warnf:#3a3210}}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:12px}
+.mono,code,pre{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+h1,h2,h3{margin:0 0 6px;line-height:1.25}h1{font-size:1.15rem}h2{font-size:1rem}
+button{font:inherit;color:inherit;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:6px 12px;cursor:pointer}
+button:hover:not(:disabled){background:var(--sunk)}button:disabled{opacity:.45;cursor:default}
+button.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+button.primary:hover:not(:disabled){background:var(--accent);filter:brightness(1.1)}
+button.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+button:focus-visible,[tabindex]:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+select,input[type=range]{font:inherit;color:inherit}
+select{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:5px 8px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px}
+.panel[hidden]{display:none}
+.card{background:var(--soft);border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.muted{color:var(--muted)}.grow{flex:1}
+.chip{display:inline-block;padding:1px 9px;border-radius:999px;font-size:.8rem;background:var(--sunk);border:1px solid var(--line);white-space:nowrap}
+.narr{min-height:3.4em;padding:10px 12px;border-left:4px solid var(--accent);background:var(--accent-soft);border-radius:0 var(--r) var(--r) 0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.wrap{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:12px}
+@media(max-width:760px){.wrap{grid-template-columns:1fr}}
+.script{background:#0f172a;color:#e6edf3;border-radius:10px;padding:8px;font:12.5px/1.55 ui-monospace,Menlo,Consolas,monospace}
+.blk{display:block;width:100%;text-align:left;background:transparent;border:1.5px solid transparent;border-radius:8px;padding:4px 8px;margin:2px 0;color:inherit;font:inherit;white-space:pre;overflow-x:auto;cursor:pointer}
+button.blk:hover:not(:disabled){background:#1e293b}button.blk.on,button.blk.on:hover:not(:disabled){background:#1e3a8a;border-color:#60a5fa;color:#e6edf3}
+.k{color:#c4b5fd}.s{color:#7dd3fc}.n{color:#fcd34d}.c{color:#94a3b8}.f{color:#86efac}
+.mem{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.col h3{text-align:center;margin-bottom:4px}
+.bar{display:flex;flex-direction:column;border:2px solid var(--line);border-radius:8px;overflow:hidden;background:var(--bg)}
+.seg{position:relative;display:grid;place-items:center;text-align:center;font-size:.78rem;padding:2px 4px;border-bottom:1px solid var(--line);transition:background .3s,box-shadow .3s,opacity .3s;opacity:.5}
+.seg:last-child{border-bottom:0}
+.seg.fl{background:var(--flashf)}.seg.ra{background:var(--ramf)}.seg.fr{background:repeating-linear-gradient(45deg,var(--sunk),var(--sunk) 6px,var(--bg) 6px,var(--bg) 12px)}
+.seg.img{border-top:2px dashed var(--flash)}
+.seg.act{opacity:1;box-shadow:inset 0 0 0 3px var(--accent)}
+.seg.dimmed{opacity:.35}
+.addr{font:10.5px ui-monospace,Menlo,Consolas,monospace;color:var(--muted);text-align:center;margin:2px 0}
+.sym{position:absolute;left:3px;font:700 10px ui-monospace,Menlo,Consolas,monospace;background:var(--accent);color:var(--on-accent);border-radius:4px;padding:0 4px;display:none}
+.sym.top{top:2px}.sym.bot{bottom:2px}
+.sym.show{display:block}
+.copy{grid-column:1/-1;text-align:center;font-size:.82rem;color:var(--flash);visibility:hidden}
+.copy.show{visibility:visible}
+.tip{font-size:.85rem;margin-top:6px;color:var(--muted)}
+</style></head>
+<body>
+<h1>Click a part of the linker script</h1>
+<div class="wrap">
+  <div>
+    <div class="script" id="script" role="list"></div>
+    <div class="bar" style="margin-top:8px;border:0;flex-direction:row;gap:8px;background:transparent;overflow:visible"><button id="play" class="primary">▶ Walk through</button><button id="prev">◀</button><button id="next">▶</button></div>
+  </div>
+  <div>
+    <div class="mem">
+      <div class="col"><h3>Flash</h3><div class="addr">0x0800_0000</div><div class="bar" id="flash"></div></div>
+      <div class="col"><h3>RAM</h3><div class="addr">0x2000_0000</div><div class="bar" id="ram"></div><div class="addr">0x2002_0000</div></div>
+      <div class="copy" id="copy">⬇ Reset_Handler copies the .data image from Flash (LMA) to RAM (VMA)</div>
+    </div>
+    <div class="narr" id="narr" style="margin-top:8px" aria-live="polite"></div>
+    <div class="tip" id="tip"></div>
+  </div>
+</div>
+<script>
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const hex=(n,w=8)=>'0x'+(n>>>0).toString(16).toUpperCase().padStart(w,'0');
+// tabs: buttons with data-tab="id" show the .panel with that id
+function initTabs(start=window.__START||0){const btns=$$('.tabs button');const show=id=>{btns.forEach(b=>{const on=b.dataset.tab===id;b.classList.toggle('on',on);b.setAttribute('aria-selected',on)});$$('.panel').forEach(p=>p.hidden=p.id!==id)};btns.forEach(b=>b.addEventListener('click',()=>show(b.dataset.tab)));if(btns[start])show(btns[start].dataset.tab);return show}
+// player: generic step controller. steps = count; render(i) draws step i; returns controls
+function player({count,render,prev,next,play,reset,delay=1800}){let i=0,timer=null;const set=n=>{i=Math.max(0,Math.min(count-1,n));render(i);if(prev)prev.disabled=i===0;if(next)next.disabled=i===count-1;};const stop=()=>{clearInterval(timer);timer=null;if(play)play.textContent='▶ Play'};const go=()=>{if(i>=count-1){stop();return}set(i+1)};
+if(next)next.onclick=()=>{stop();set(i+1)};if(prev)prev.onclick=()=>{stop();set(i-1)};if(reset)reset.onclick=()=>{stop();set(0)};
+if(play)play.onclick=()=>{if(timer){stop();return}if(i>=count-1)set(0);play.textContent='❚❚ Pause';timer=setInterval(go,delay)};
+addEventListener('keydown',e=>{if(e.target.closest('input,select,textarea'))return;if(e.key==='ArrowRight'){stop();set(i+1)}if(e.key==='ArrowLeft'){stop();set(i-1)}});
+set(0);return{set,stop,get i(){return i}}}
+
+const B=[
+ {h:'<span class="k">ENTRY</span>(<span class="s">Reset_Handler</span>)',t:'Sets the ELF executable entry point. It is stored in the ELF/AXF header for debuggers and loaders. The .bin has no header, so the core never sees it: a Cortex-M takes SP and PC from the vector table instead.',tip:'Interview: if ENTRY() is removed, will Cortex-M fail to boot? Not necessarily: the CPU gets SP/PC from the vector table.',seg:[],sym:[]},
+ {h:'<span class="k">MEMORY</span>\n{\n  FLASH (rx)  : ORIGIN = <span class="n">0x08000000</span>, LENGTH = <span class="n">2M</span>\n  RAM   (rwx) : ORIGIN = <span class="n">0x20000000</span>, LENGTH = <span class="n">128K</span>\n}',t:'Tells the linker what memory exists: a name, attributes (r = read, w = write, x = execute), the start address (ORIGIN) and the size (LENGTH). Sizes here: Flash as in your notes, RAM assumed.',tip:'Interview: ORIGIN = starting address, LENGTH = size.',seg:['isr','text','rodata','dataimg','fr','data','bss','free','stack'],sym:[]},
+ {h:'<span class="s">_estack</span> = <span class="k">ORIGIN</span>(RAM) + <span class="k">LENGTH</span>(RAM);',t:'A symbol for the initial stack pointer: the end of RAM. The Cortex-M stack grows downward and the first push decrements SP, so it is technically one byte beyond the last RAM byte, and still lands in valid RAM.',tip:'Interview: why is _estack one byte beyond the last RAM byte?',seg:['stack'],sym:['_estack']},
+ {h:'<span class="k">.isr_vector</span> :\n{\n  . = <span class="k">ALIGN</span>(<span class="n">4</span>);\n  <span class="k">KEEP</span>(*(<span class="k">.isr_vector</span>))\n  . = <span class="k">ALIGN</span>(<span class="n">4</span>);\n} &gt; <span class="s">FLASH</span>',t:'The vector table goes first in Flash. KEEP() stops --gc-sections from throwing it away (nothing calls it directly). ALIGN(4) keeps the 32-bit architecture happy. "> FLASH" puts it at runtime (VMA) in Flash.',tip:'Interview: what does KEEP(*(.isr_vector)) do? It prevents the vector table from being garbage-collected.',seg:['isr'],sym:[]},
+ {h:'<span class="k">.text</span> :\n{\n  . = <span class="k">ALIGN</span>(<span class="n">4</span>);\n  *(<span class="k">.text*</span>)\n  . = <span class="k">ALIGN</span>(<span class="n">4</span>);\n} &gt; <span class="s">FLASH</span>',t:'Executable code. The first * means "from all input object files"; .text* also matches .text.foo (one section per function with -ffunction-sections).',tip:'Interview: what does *(.text*) mean? Collect matching .text input sections from all object files.',seg:['text'],sym:[]},
+ {h:'<span class="k">.rodata</span> :\n{\n  . = <span class="k">ALIGN</span>(<span class="n">4</span>);\n  *(<span class="k">.rodata*</span>)\n  . = <span class="k">ALIGN</span>(<span class="n">4</span>);\n  <span class="s">_etext</span> = .;\n} &gt; <span class="s">FLASH</span>',t:'Read-only data: strings, constants, lookup tables. It needs no runtime writes, so non-volatile Flash is perfect. _etext records the address after .text/.rodata ("." is the location counter).',tip:'Interview: why is .rodata usually in Flash?',seg:['rodata'],sym:['_etext']},
+ {h:'<span class="s">_sidata</span> = <span class="k">LOADADDR</span>(<span class="k">.data</span>);',t:'LOADADDR(.data) returns the LMA: where .data\'s initial values are stored in the Flash image. Startup code uses it as the copy source. Plain "." would give the RAM address instead.',tip:'Interview: why LOADADDR(.data) instead of "."?',seg:['dataimg'],sym:['_sidata'],copy:true},
+ {h:'<span class="k">.data</span> :\n{\n  . = <span class="k">ALIGN</span>(<span class="n">4</span>);\n  <span class="s">_sdata</span> = .;\n  *(<span class="k">.data*</span>)\n  . = <span class="k">ALIGN</span>(<span class="n">4</span>);\n  <span class="s">_edata</span> = .;\n} &gt; <span class="s">RAM</span> <span class="k">AT</span> &gt; <span class="s">FLASH</span>',t:'Initialised, writable variables (like int x = 10). "> RAM" is where they RUN (VMA); "AT > FLASH" is where their initial values are STORED (LMA). Inside this block "." is the RAM address. _sdata/_edata mark the runtime copy.',tip:'Interview: why does .data have two addresses? Initial values must persist in Flash but variables must run from writable RAM.',seg:['data','dataimg'],sym:['_sdata','_edata','_sidata'],copy:true},
+ {h:'<span class="k">.bss</span> (<span class="k">NOLOAD</span>) :\n{\n  . = <span class="k">ALIGN</span>(<span class="n">4</span>);\n  <span class="s">_sbss</span> = .;\n  *(<span class="k">.bss*</span>)\n  *(<span class="k">COMMON</span>)\n  . = <span class="k">ALIGN</span>(<span class="n">4</span>);\n  <span class="s">_ebss</span> = .;\n} &gt; <span class="s">RAM</span>',t:'Zero-initialised variables (like int x;). (NOLOAD) reserves RAM without a load image: storing zeros in Flash would be a waste. Startup code zeros the range _sbss.._ebss.',tip:'Interview: who initialises .bss, the linker or the CPU? The startup code (Reset_Handler).',seg:['bss'],sym:['_sbss','_ebss']},
+ {h:'<span class="k">/DISCARD/</span> : { *(<span class="k">.comment</span>) *(<span class="k">.ARM.attributes</span>) }',t:'Removes the listed input sections from the final output.',tip:'Interview: what is /DISCARD/?',seg:[],sym:[]}
+];
+const FL=[['isr','.isr_vector',34,'fl'],['text','.text',84,'fl'],['rodata','.rodata',40,'fl'],['dataimg','.data (load image, LMA)',38,'fl img'],['fr','unused Flash',46,'fr']];
+const RA=[['data','.data (runtime, VMA)',46,'ra'],['bss','.bss',46,'ra'],['free','free RAM / heap',92,'fr'],['stack','stack ↑  (grows down)',46,'ra']];
+const SYM={isr:{},text:{},rodata:{bot:'_etext'},dataimg:{top:'_sidata'},data:{top:'_sdata',bot:'_edata'},bss:{top:'_sbss',bot:'_ebss'},stack:{bot:'_estack'}};
+const seg=([id,l,h,c])=>`<div class="seg ${c}" data-s="${id}" style="height:${h}px"><span>${l}</span>${SYM[id]&&SYM[id].top?`<span class="sym top" data-y="${SYM[id].top}">${SYM[id].top}</span>`:''}${SYM[id]&&SYM[id].bot?`<span class="sym bot" data-y="${SYM[id].bot}">${SYM[id].bot}</span>`:''}</div>`;
+$('#flash').innerHTML=FL.map(seg).join('');$('#ram').innerHTML=RA.map(seg).join('');
+$('#script').innerHTML=B.map((b,i)=>`<button class="blk" data-i="${i}" role="listitem">${b.h}</button>`).join('');
+const P=player({count:B.length,prev:$('#prev'),next:$('#next'),play:$('#play'),delay:4500,render(i){
+ const b=B[i];$$('.blk').forEach((e,k)=>e.classList.toggle('on',k===i));
+ $$('.seg').forEach(e=>{const on=b.seg.includes(e.dataset.s);e.classList.toggle('act',on&&b.seg.length<8);e.classList.toggle('dimmed',b.seg.length>0&&!on&&b.seg.length<8)});
+ if(b.seg.length>=8)$$('.seg').forEach(e=>e.classList.remove('dimmed'));
+ $$('.sym').forEach(e=>e.classList.toggle('show',b.sym.includes(e.dataset.y)));
+ $('#copy').classList.toggle('show',!!b.copy);$('#narr').textContent=b.t;$('#tip').textContent=b.tip;
+}});
+$$('.blk').forEach(e=>e.onclick=()=>{P.stop();P.set(+e.dataset.i)});
+</script></body></html>

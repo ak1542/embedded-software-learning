@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Debugging: GDB, Renode and TRACE32</title>
+<style>
+:root{color-scheme:light;--bg:#fff;--soft:#f6f7f9;--sunk:#eef0f3;--fg:#1c2330;--muted:#5f6b7a;--line:#dde1e7;--accent:#2563eb;--accent-soft:#e8efff;--on-accent:#fff;
+--rom:#b45309;--romf:#fef3c7;--flash:#6d28d9;--flashf:#ede9fe;--ram:#15803d;--ramf:#d1fae5;--bus:#0e7490;--busf:#cffafe;--bad:#c62828;--badf:#fde8e8;--ok:#15803d;--okf:#dcfce7;--warn:#b45309;--warnf:#fef9c3;--r:10px}
+@media(prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#0f141b;--soft:#161c25;--sunk:#1d2531;--fg:#e4e8ee;--muted:#98a3b3;--line:#2a3441;--accent:#6ea0ff;--accent-soft:#1b2a45;--on-accent:#0b1220;--rom:#fbbf24;--romf:#3a2d0e;--flash:#a78bfa;--flashf:#2a2150;--ram:#4ade80;--ramf:#0f3328;--bus:#22d3ee;--busf:#0c3a44;--bad:#f87171;--badf:#3b1818;--ok:#4ade80;--okf:#12331f;--warn:#fbbf24;--warnf:#3a3210}}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:12px}
+.mono,code,pre{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+h1,h2,h3{margin:0 0 6px;line-height:1.25}h1{font-size:1.15rem}h2{font-size:1rem}
+button{font:inherit;color:inherit;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:6px 12px;cursor:pointer}
+button:hover:not(:disabled){background:var(--sunk)}button:disabled{opacity:.45;cursor:default}
+button.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+button.primary:hover:not(:disabled){background:var(--accent);filter:brightness(1.1)}
+button.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+button:focus-visible,[tabindex]:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+select,input[type=range]{font:inherit;color:inherit}
+select{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:5px 8px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px}
+.panel[hidden]{display:none}
+.card{background:var(--soft);border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.muted{color:var(--muted)}.grow{flex:1}
+.chip{display:inline-block;padding:1px 9px;border-radius:999px;font-size:.8rem;background:var(--sunk);border:1px solid var(--line);white-space:nowrap}
+.narr{min-height:3.4em;padding:10px 12px;border-left:4px solid var(--accent);background:var(--accent-soft);border-radius:0 var(--r) var(--r) 0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.chain{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:26px;margin:14px 0 8px}
+@media(max-width:640px){.chain{grid-template-columns:1fr;gap:22px}}
+.node{border:2px solid var(--line);border-radius:12px;padding:10px;background:var(--bg);min-height:92px;position:relative;transition:border-color .3s,background .3s}
+.node b{display:block}.node small{color:var(--muted);display:block;margin-top:2px;line-height:1.3}
+.node.hit{border-color:var(--accent);background:var(--accent-soft)}
+.node:not(:last-child)::after{content:'⇄';position:absolute;right:-22px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:1.1rem}
+@media(max-width:640px){.node:not(:last-child)::after{content:'⇅';right:50%;top:auto;bottom:-24px;transform:translateX(50%)}}
+.dot{position:absolute;width:16px;height:16px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px var(--accent-soft);top:-6px;left:0;opacity:0;pointer-events:none;z-index:2}
+.dot.back{background:var(--ok);box-shadow:0 0 0 4px var(--okf)}
+.term{background:#0f172a;color:#e6edf3;border-radius:10px;padding:10px 12px;font:12.5px/1.6 ui-monospace,Menlo,Consolas,monospace;min-height:6.5em;max-height:14em;overflow:auto;white-space:pre-wrap}
+.term .c{color:#7dd3fc}.term .o{color:#a7f3d0}.term .e{color:#fca5a5}
+.cmds{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.cmds button{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.82rem}
+.g3{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr) 170px;gap:10px}
+@media(max-width:820px){.g3{grid-template-columns:1fr}}
+.pane{border:1px solid var(--line);border-radius:10px;background:var(--bg);overflow:hidden}
+.pane h3{margin:0;padding:6px 10px;background:var(--sunk);font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.code{font:12.5px/1.65 ui-monospace,Menlo,Consolas,monospace;padding:4px 0}
+.ln{display:grid;grid-template-columns:20px 26px 1fr;align-items:center;padding:0 6px;white-space:pre}
+.ln i{font-style:normal;color:var(--bad);cursor:pointer;text-align:center}
+.ln em{font-style:normal;color:var(--muted);text-align:right;padding-right:8px;cursor:pointer}
+.ln.cur{background:var(--accent-soft)}.ln.cur span{font-weight:700}
+.asm{display:grid;grid-template-columns:20px 84px 1fr;padding:0 6px;white-space:pre}
+.asm.cur{background:var(--warnf)}.asm .k{color:var(--muted)}
+.regs{padding:6px 10px;font:12.5px/1.7 ui-monospace,Menlo,Consolas,monospace}
+.regs div{display:flex;justify-content:space-between;border-radius:4px;padding:0 4px}
+.regs div.chg{background:var(--okf);transition:background 1s}
+.frames{padding:6px 10px;font:12px/1.5 ui-monospace,Menlo,Consolas,monospace;border-top:1px solid var(--line);color:var(--muted)}
+</style></head>
+<body>
+<h1>Debugging an ARM firmware</h1>
+<div class="tabs" role="tablist"><button data-tab="p1">Debug chain</button><button data-tab="p2">GDB stepper (layout split)</button></div>
+
+<div class="panel" id="p1">
+  <div class="bar"><span class="muted">Setup:</span><button data-m="renode" class="on">Renode simulation + GDB</button><button data-m="board">Real board + GDB</button><button data-m="t32">TRACE32 (T32)</button></div>
+  <div class="chain" id="chain"><div class="dot" id="dot"></div></div>
+  <div class="narr" id="expl" aria-live="polite"></div>
+  <div class="cmds" id="cmds"></div>
+  <div class="term" id="term" aria-live="polite">Pick a command above and watch it travel to the target and back.</div>
+</div>
+
+<div class="panel" id="p2" hidden>
+  <div class="cmds" id="g-cmds"></div>
+  <div class="g3">
+    <div>
+      <div class="pane"><h3>Source (list / layout src)</h3><div class="code" id="src"></div></div>
+      <div class="pane" style="margin-top:10px"><h3>Assembly (disassemble / layout split)</h3><div class="code" id="asm"></div></div>
+    </div>
+    <div class="term" id="gterm" style="max-height:none;min-height:18em" aria-live="polite"></div>
+    <div class="pane"><h3>info registers</h3><div class="regs" id="regs"></div><div class="frames" id="frames"></div></div>
+  </div>
+  <p class="muted" style="font-size:.85rem">Click a line number in the source to set or clear a breakpoint (red dot), then try <b>continue</b>.</p>
+</div>
+<script>
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const hex=(n,w=8)=>'0x'+(n>>>0).toString(16).toUpperCase().padStart(w,'0');
+// tabs: buttons with data-tab="id" show the .panel with that id
+function initTabs(start=window.__START||0){const btns=$$('.tabs button');const show=id=>{btns.forEach(b=>{const on=b.dataset.tab===id;b.classList.toggle('on',on);b.setAttribute('aria-selected',on)});$$('.panel').forEach(p=>p.hidden=p.id!==id)};btns.forEach(b=>b.addEventListener('click',()=>show(b.dataset.tab)));if(btns[start])show(btns[start].dataset.tab);return show}
+// player: generic step controller. steps = count; render(i) draws step i; returns controls
+function player({count,render,prev,next,play,reset,delay=1800}){let i=0,timer=null;const set=n=>{i=Math.max(0,Math.min(count-1,n));render(i);if(prev)prev.disabled=i===0;if(next)next.disabled=i===count-1;};const stop=()=>{clearInterval(timer);timer=null;if(play)play.textContent='▶ Play'};const go=()=>{if(i>=count-1){stop();return}set(i+1)};
+if(next)next.onclick=()=>{stop();set(i+1)};if(prev)prev.onclick=()=>{stop();set(i-1)};if(reset)reset.onclick=()=>{stop();set(0)};
+if(play)play.onclick=()=>{if(timer){stop();return}if(i>=count-1)set(0);play.textContent='❚❚ Pause';timer=setInterval(go,delay)};
+addEventListener('keydown',e=>{if(e.target.closest('input,select,textarea'))return;if(e.key==='ArrowRight'){stop();set(i+1)}if(e.key==='ArrowLeft'){stop();set(i-1)}});
+set(0);return{set,stop,get i(){return i}}}
+
+initTabs();
+/* ----- tab 1 ----- */
+const MODES={
+ renode:{n:['GDB','GDB server','—','Simulated target'],s:['arm-none-eabi-gdb on your PC','built into Renode, port 3333','no hardware: simulation','STM32F407 machine in Renode'],
+  t:'Renode runs the simulated STM32F407 and offers a GDB server on localhost:3333. GDB connects with "target remote localhost:3333". There is no probe, which is why `run` is not used: the program is already loaded.'},
+ board:{n:['GDB','GDB server','Debug probe','Target MCU'],s:['arm-none-eabi-gdb on your PC','OpenOCD / ST-LINK server','ST-LINK or J-Link over SWD / JTAG','STM32F407, Cortex-M4 debug port'],
+  t:'On real hardware GDB talks to a GDB server (for example OpenOCD), which drives a probe over SWD or JTAG, which reads and writes the core\'s debug registers (breakpoint units, memory, registers).'},
+ t32:{n:['TRACE32 GUI','—','TRACE32 debug probe','Target MCU / SoC'],s:['PowerView GUI + command language','no GDB server needed','JTAG / SWD, optional trace (ETM)','ARM firmware, SoC, multicore'],
+  t:'TRACE32 is a professional hardware/software debugger: its own GUI talks directly to its own probe. It adds strong RTOS awareness, trace and multicore debugging, and has built-in Flash programming.'}
+};
+const CMD1={
+ renode:{'target remote localhost:3333':['connect','Remote debugging using localhost:3333\n0x08000189 in Reset_Handler ()'],'break main':['reply','Breakpoint 1 at 0x08000110: file main.c, line 6.'],'continue':['run','Continuing.\n\nBreakpoint 1, main () at main.c:6'],'si':['step','0x08000112\t6\t    int x = 2;'],'info registers':['read','r0 0x0 0\nr1 0x0 0\n...\nsp 0x20020000\npc 0x08000110']},
+ board:{'target remote localhost:3333':['connect','Remote debugging using localhost:3333\nReset_Handler () at startup.c:12'],'break main':['reply','Breakpoint 1 at 0x08000110: file main.c, line 6.\n(hardware breakpoint in Flash)'],'continue':['run','Continuing.\n\nBreakpoint 1, main () at main.c:6'],'si':['step','0x08000112\t6\t    int x = 2;'],'info registers':['read','r0 0x0 0\n...\nsp 0x20020000\npc 0x08000110']},
+ t32:{'SYStem.Up':['connect','target connected, core running'],'Break.Set main':['reply','breakpoint set at main (on-chip)'],'Go':['run','stopped at breakpoint main'],'Step.Asm':['step','one instruction executed'],'Register.view':['read','register window opened']}
+};
+let mode='renode';
+function drawChain(){
+ const m=MODES[mode];$('#chain').innerHTML='<div class="dot" id="dot"></div>'+m.n.map((n,i)=>`<div class="node" id="n${i}"><b>${esc(n)}</b><small>${esc(m.s[i])}</small></div>`).join('');
+ $('#expl').textContent=m.t;
+ $('#cmds').innerHTML=Object.keys(CMD1[mode]).map(c=>`<button data-c="${esc(c)}">${esc(c)}</button>`).join('');
+ $$('#cmds button').forEach(b=>b.onclick=()=>send(b.dataset.c));
+ $$('[data-m]').forEach(b=>b.classList.toggle('on',b.dataset.m===mode));
+}
+$$('[data-m]').forEach(b=>b.onclick=()=>{mode=b.dataset.m;drawChain();$('#term').textContent='Pick a command above and watch it travel to the target and back.'});
+let busy=false;
+async function send(cmd){
+ if(busy)return;busy=true;const [kind,out]=CMD1[mode][cmd];
+ const nodes=[0,1,2,3].map(i=>$('#n'+i));const dot=$('#dot');const box=$('#chain').getBoundingClientRect();
+ const pos=n=>{const r=n.getBoundingClientRect();return{x:r.left-box.left+r.width/2-8,y:r.top-box.top+r.height/2-8}};
+ const stack=innerWidth<640;
+ $('#term').innerHTML=`<span class="c">${esc(mode==='t32'?'B::':'(gdb) ')}${esc(cmd)}</span>\n`;
+ const trip=async(order,cls)=>{dot.className='dot '+cls;for(const n of order){const p=pos(n);const first=dot.style.opacity!=='1';
+   if(reduce){dot.style.opacity=1;dot.style.left=p.x+'px';dot.style.top=p.y+'px'}else{dot.style.transition=first?'none':'left .45s ease,top .45s ease';dot.style.left=p.x+'px';dot.style.top=p.y+'px';dot.style.opacity=1;if(first){void dot.offsetWidth}}
+   nodes.forEach(x=>x.classList.toggle('hit',x===n));await sleep(reduce?60:560)}};
+ const use=mode==='renode'?[nodes[0],nodes[1],nodes[3]]:mode==='t32'?[nodes[0],nodes[2],nodes[3]]:nodes;
+ await trip(use,'');await trip([...use].reverse().slice(1),'back');
+ dot.style.opacity=0;nodes.forEach(x=>x.classList.remove('hit'));
+ $('#term').innerHTML+=`<span class="o">${esc(out)}</span>`;busy=false;
+}
+drawChain();
+
+/* ----- tab 2: mini GDB ----- */
+const SRC=['int add(int a, int b) {','    int c = a + b;','    return c;','}','int main(void) {','    int x = 2;','    int y = add(x, 3);','    y *= 2;','    return y;','}'];
+const INS=[
+ {a:0x08000100,l:2,t:'adds r0, r0, r1',fn:'add'},{a:0x08000102,l:4,t:'bx lr',fn:'add'},
+ {a:0x08000110,l:6,t:'movs r4, #2',fn:'main'},{a:0x08000112,l:7,t:'movs r1, #3',fn:'main'},{a:0x08000114,l:7,t:'mov r0, r4',fn:'main'},{a:0x08000116,l:7,t:'bl add',fn:'main'},{a:0x0800011A,l:7,t:'mov r5, r0',fn:'main'},
+ {a:0x0800011C,l:8,t:'lsls r5, r5, #1',fn:'main'},{a:0x0800011E,l:9,t:'mov r0, r5',fn:'main'},{a:0x08000120,l:10,t:'bx lr',fn:'main'}
+];
+const idxOf=a=>INS.findIndex(i=>i.a===a);
+let S,bps=new Set(),chg=new Set(),log=[];
+function reset(){S={i:idxOf(0x08000110),r:{r0:0,r1:0,r4:0,r5:0,sp:0x20020000,lr:0},frames:[{fn:'main',ret:null,args:''}],exited:false};chg=new Set();log=[];say('<span class="c">(gdb) target remote localhost:3333</span>\n<span class="o">Remote debugging using localhost:3333</span>');say('<span class="c">(gdb) break main</span>\n<span class="o">Breakpoint 1 at 0x08000110: file main.c, line 6.</span>');say('<span class="c">(gdb) continue</span>\n<span class="o">Continuing.\n\nBreakpoint 1, main () at main.c:6\n6\t    int x = 2;</span>');draw()}
+function say(h){log.push(h);if(log.length>14)log.shift()}
+const locLine=()=>{const x=INS[S.i];return `${x.l}\t${SRC[x.l-1]}`};
+function exec1(){ // one instruction
+ const x=INS[S.i],r=S.r,t=x.t;chg=new Set();let next=S.i+1;
+ const set=(k,v)=>{if(r[k]!==v){r[k]=v;chg.add(k)}};
+ if(t==='movs r4, #2')set('r4',2);else if(t==='movs r1, #3')set('r1',3);else if(t==='mov r0, r4')set('r0',r.r4);
+ else if(t==='bl add'){set('lr',0x0800011B);S.frames.push({fn:'add',ret:idxOf(0x0800011A),args:`a=${r.r0}, b=${r.r1}`});next=idxOf(0x08000100)}
+ else if(t==='adds r0, r0, r1')set('r0',r.r0+r.r1);
+ else if(t==='bx lr'){if(S.frames.length>1){next=S.frames.pop().ret}else{S.exited=true;next=S.i}}
+ else if(t==='mov r5, r0')set('r5',r.r0);else if(t==='lsls r5, r5, #1')set('r5',r.r5*2);else if(t==='mov r0, r5')set('r0',r.r5);
+ S.i=next;chg.add('pc');
+}
+const hexs=n=>'0x'+n.toString(16).padStart(8,'0');
+function frameTxt(){const f=S.frames[S.frames.length-1];return `${f.fn} (${f.args||''})`}
+function cmd(c){
+ if(S.exited){say('<span class="e">The program is not being run. Press ↺ restart.</span>');draw();return}
+ say(`<span class="c">(gdb) ${c}</span>`);
+ const stepOut=()=>S.exited?'[Inferior 1 (process 1) exited with code 012]':`${hexs(INS[S.i].a)}\t${locLine()}`;
+ if(c==='si'){exec1();say(`<span class="o">${S.exited?'[Inferior 1 (process 1) exited with code 012]':hexs(INS[S.i].a)+'\t'+locLine()}</span>`)}
+ else if(c==='ni'){const wasCall=INS[S.i].t==='bl add';const d=S.frames.length;exec1();if(wasCall)while(S.frames.length>d)exec1();say(`<span class="o">${S.exited?'[Inferior 1 (process 1) exited with code 012]':hexs(INS[S.i].a)+'\t'+locLine()}</span>`)}
+ else if(c==='step'||c==='next'){
+  const startLine=INS[S.i].l,depth=S.frames.length;let n=0;
+  do{const wasCall=INS[S.i].t==='bl add';const d=S.frames.length;exec1();if(wasCall&&c==='next')while(S.frames.length>d)exec1();n++}while(!S.exited&&INS[S.i].l===startLine&&n<40);
+  if(S.frames.length>depth)say(`<span class="o">${frameTxt()}\n${locLine()}</span>`);else say(`<span class="o">${S.exited?'[Inferior 1 (process 1) exited with code 012]':locLine()}</span>`)}
+ else if(c==='finish'){
+  if(S.frames.length<2){say('<span class="e">"finish" not meaningful in the outermost frame.</span>')}else{const f=S.frames[S.frames.length-1];const d=S.frames.length;say(`<span class="o">Run till exit from #0  ${f.fn} (${f.args})</span>`);while(S.frames.length>=d)exec1();say(`<span class="o">0x${INS[S.i].a.toString(16).padStart(8,'0')} in main () at main.c:7\n7\t${SRC[6]}\nValue returned is $1 = ${S.r.r0}</span>`)}}
+ else if(c==='continue'){let n=0;say('<span class="o">Continuing.</span>');let hit=null;do{exec1();n++;const x=INS[S.i];if(!S.exited&&bps.has(x.l)&&(x.l!==INS[S.i-1]?.l)){hit=x.l;break}}while(!S.exited&&n<200);
+  if(hit)say(`<span class="o">\nBreakpoint, ${S.frames[S.frames.length-1].fn} (${S.frames[S.frames.length-1].args}) at main.c:${hit}\n${locLine()}</span>`);else say('<span class="o">[Inferior 1 (process 1) exited with code 012]</span>')}
+ draw();
+}
+function draw(){
+ const cur=S.exited?-1:INS[S.i].l;
+ $('#src').innerHTML=SRC.map((t,k)=>`<div class="ln ${k+1===cur?'cur':''}"><i data-bp="${k+1}">${bps.has(k+1)?'●':''}</i><em data-bp="${k+1}">${k+1}</em><span>${k+1===cur?'➜ ':'  '}${esc(t)}</span></div>`).join('');
+ $$('#src [data-bp]').forEach(e=>e.onclick=()=>{const l=+e.dataset.bp;bps.has(l)?bps.delete(l):bps.add(l);draw()});
+ $('#asm').innerHTML=INS.map((x,k)=>`<div class="asm ${k===S.i&&!S.exited?'cur':''}"><span>${k===S.i&&!S.exited?'=>':''}</span><span class="k">${hexs(x.a)}</span><span>${esc(x.t)}</span></div>`).join('');
+ $('#regs').innerHTML=['r0','r1','r4','r5','sp','lr'].map(k=>`<div class="${chg.has(k)?'chg':''}"><span>${k}</span><span>${k==='sp'||k==='lr'?hexs(S.r[k]):S.r[k]}</span></div>`).join('')+`<div class="${chg.has('pc')?'chg':''}"><span>pc</span><span>${S.exited?'—':hexs(INS[S.i].a)}</span></div>`;
+ $('#frames').innerHTML=S.frames.slice().reverse().map((f,k)=>`#${k} ${esc(f.fn)} (${esc(f.args)})`).join('<br>');
+ $('#gterm').innerHTML=log.join('\n\n');$('#gterm').scrollTop=1e6;
+}
+const GC=[['step','s'],['next','n'],['si',''],['ni',''],['finish',''],['continue','c'],['restart','']];
+$('#g-cmds').innerHTML=GC.map(([c,a])=>`<button data-g="${c}" title="${c==='step'?'Execute one source-level statement, stepping into functions':c==='next'?'Execute one source-level statement, stepping over functions':c==='si'?'Execute one CPU instruction':c==='ni'?'One CPU instruction, stepping over calls':c==='finish'?'Run until the current function returns':c==='continue'?'Run until a breakpoint or the end':'Start over'}">${c}${a?' / '+a:''}</button>`).join('');
+$$('[data-g]').forEach(b=>b.onclick=()=>{const c=b.dataset.g;if(c==='restart'){reset();return}cmd(c)});
+reset();
+</script></body></html>

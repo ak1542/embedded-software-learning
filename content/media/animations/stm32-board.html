@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>STM32F4 Discovery: board, MCU, processor, core</title>
+<style>
+:root{color-scheme:light;--bg:#fff;--soft:#f6f7f9;--sunk:#eef0f3;--fg:#1c2330;--muted:#5f6b7a;--line:#dde1e7;--accent:#2563eb;--accent-soft:#e8efff;--on-accent:#fff;
+--rom:#b45309;--romf:#fef3c7;--flash:#6d28d9;--flashf:#ede9fe;--ram:#15803d;--ramf:#d1fae5;--bus:#0e7490;--busf:#cffafe;--bad:#c62828;--badf:#fde8e8;--ok:#15803d;--okf:#dcfce7;--warn:#b45309;--warnf:#fef9c3;--r:10px}
+@media(prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#0f141b;--soft:#161c25;--sunk:#1d2531;--fg:#e4e8ee;--muted:#98a3b3;--line:#2a3441;--accent:#6ea0ff;--accent-soft:#1b2a45;--on-accent:#0b1220;--rom:#fbbf24;--romf:#3a2d0e;--flash:#a78bfa;--flashf:#2a2150;--ram:#4ade80;--ramf:#0f3328;--bus:#22d3ee;--busf:#0c3a44;--bad:#f87171;--badf:#3b1818;--ok:#4ade80;--okf:#12331f;--warn:#fbbf24;--warnf:#3a3210}}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:12px}
+.mono,code,pre{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+h1,h2,h3{margin:0 0 6px;line-height:1.25}h1{font-size:1.15rem}h2{font-size:1rem}
+button{font:inherit;color:inherit;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:6px 12px;cursor:pointer}
+button:hover:not(:disabled){background:var(--sunk)}button:disabled{opacity:.45;cursor:default}
+button.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+button.primary:hover:not(:disabled){background:var(--accent);filter:brightness(1.1)}
+button.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+button:focus-visible,[tabindex]:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+select,input[type=range]{font:inherit;color:inherit}
+select{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:5px 8px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px}
+.panel[hidden]{display:none}
+.card{background:var(--soft);border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.muted{color:var(--muted)}.grow{flex:1}
+.chip{display:inline-block;padding:1px 9px;border-radius:999px;font-size:.8rem;background:var(--sunk);border:1px solid var(--line);white-space:nowrap}
+.narr{min-height:3.4em;padding:10px 12px;border-left:4px solid var(--accent);background:var(--accent-soft);border-radius:0 var(--r) var(--r) 0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.wrap{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:12px}
+@media(max-width:760px){.wrap{grid-template-columns:1fr}}
+.board{background:#14532d;background:color-mix(in srgb,var(--ok) 20%,var(--bg));border:2px solid var(--ok);border-radius:14px;padding:10px;display:grid;grid-template-columns:1fr 2fr 1fr;gap:8px}
+@media(max-width:560px){.board{grid-template-columns:1fr}}
+.blk{border:2px solid var(--line);border-radius:10px;background:var(--bg);padding:6px 8px;text-align:left;font:inherit;color:inherit;cursor:pointer;display:block;width:100%;transition:border-color .2s,background .2s,transform .2s}
+.blk b{display:block;font-size:.85rem}.blk small{color:var(--muted);font-size:.74rem;line-height:1.25;display:block}
+.blk:hover{transform:translateY(-1px)}
+.side{display:flex;flex-direction:column;gap:8px}
+.mcu{border:2px solid var(--flash);background:var(--flashf);border-radius:12px;padding:8px;display:grid;grid-template-columns:1fr 1fr;gap:6px;align-content:start}
+.mcu h3{grid-column:1/-1;font-size:.9rem;text-align:center;margin:0}
+.mcu .wide{grid-column:1/-1}
+.mcu .blk{background:var(--bg)}
+.blk.sel,.mcu .blk.sel{border-color:var(--accent);background:var(--accent-soft)}
+.nest{border:3px solid var(--line);border-radius:14px;padding:12px;margin:0;background:var(--bg);cursor:pointer;transition:border-color .2s,box-shadow .2s}
+.nest>b{display:block;margin-bottom:6px}
+.nest.sel{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.nest .nest{margin-top:6px}
+.lv1{background:color-mix(in srgb,var(--ok) 12%,var(--bg))}.lv2{background:color-mix(in srgb,var(--flash) 12%,var(--bg))}.lv3{background:color-mix(in srgb,var(--accent) 12%,var(--bg))}.lv4{background:color-mix(in srgb,var(--warn) 14%,var(--bg))}
+.hint{font-size:.85rem;color:var(--muted)}
+.info h2{font-size:1rem}.info ul{margin:6px 0 0;padding-left:20px}
+</style></head>
+<body>
+<h1>STM32F4 Discovery: what is the board, the MCU, the processor and the core?</h1>
+<div class="tabs" role="tablist"><button data-tab="p1">Board block diagram</button><button data-tab="p2">Who owns what?</button></div>
+
+<div class="panel" id="p1">
+  <div class="wrap">
+    <div class="board" id="board" role="group" aria-label="Board block diagram"></div>
+    <div class="card info" id="info1" aria-live="polite"></div>
+  </div>
+  <p class="hint">Illustrative overview; exact pins and parts are in the board manual (UM1472).</p>
+</div>
+
+<div class="panel" id="p2" hidden>
+  <div class="wrap">
+    <div id="nest"></div>
+    <div class="card info" id="info2" aria-live="polite"></div>
+  </div>
+</div>
+
+<script>
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const hex=(n,w=8)=>'0x'+(n>>>0).toString(16).toUpperCase().padStart(w,'0');
+// tabs: buttons with data-tab="id" show the .panel with that id
+function initTabs(start=window.__START||0){const btns=$$('.tabs button');const show=id=>{btns.forEach(b=>{const on=b.dataset.tab===id;b.classList.toggle('on',on);b.setAttribute('aria-selected',on)});$$('.panel').forEach(p=>p.hidden=p.id!==id)};btns.forEach(b=>b.addEventListener('click',()=>show(b.dataset.tab)));if(btns[start])show(btns[start].dataset.tab);return show}
+// player: generic step controller. steps = count; render(i) draws step i; returns controls
+function player({count,render,prev,next,play,reset,delay=1800}){let i=0,timer=null;const set=n=>{i=Math.max(0,Math.min(count-1,n));render(i);if(prev)prev.disabled=i===0;if(next)next.disabled=i===count-1;};const stop=()=>{clearInterval(timer);timer=null;if(play)play.textContent='▶ Play'};const go=()=>{if(i>=count-1){stop();return}set(i+1)};
+if(next)next.onclick=()=>{stop();set(i+1)};if(prev)prev.onclick=()=>{stop();set(i-1)};if(reset)reset.onclick=()=>{stop();set(0)};
+if(play)play.onclick=()=>{if(timer){stop();return}if(i>=count-1)set(0);play.textContent='❚❚ Pause';timer=setInterval(go,delay)};
+addEventListener('keydown',e=>{if(e.target.closest('input,select,textarea'))return;if(e.key==='ArrowRight'){stop();set(i+1)}if(e.key==='ArrowLeft'){stop();set(i-1)}});
+set(0);return{set,stop,get i(){return i}}}
+
+initTabs();
+const BD={
+ stlink:{t:'ST-LINK/V2 (on-board debugger)',d:'A second small MCU on the board that talks SWD to the STM32F407 and appears to your PC as a USB debug probe and virtual drive. GDB servers (OpenOCD, ST-LINK GDB server) use it. With Renode you do not need it: the board is simulated.'},
+ usb:{t:'USB OTG FS connector',d:'Full-speed USB On-The-Go port wired to the MCU\'s USB OTG controller: device, host or OTG. Used for USB demos; separate from the ST-LINK USB port.'},
+ mcu:{t:'STM32F407VGT6 (the MCU)',d:'One chip containing the Arm Cortex-M4F core plus Flash, SRAM and all the peripheral controllers. This is what "the board\'s processor" really is. Select the blocks inside.'},
+ core:{t:'Cortex-M4F core',d:'The single CPU core: registers, ALU, 3-stage pipeline, FPU, optional MPU, NVIC, SysTick and debug hardware. It only issues fetches and loads/stores to addresses: it does not know what sits there.'},
+ flash:{t:'Flash (1 MB)',d:'Non-volatile program memory at 0x0800_0000 (aliased at 0x0 depending on the boot pins). Your .isr_vector, .text, .rodata and the .data load image live here.'},
+ ram:{t:'SRAM (128 KB) + CCM (64 KB)',d:'Volatile memory at 0x2000_0000 for .data, .bss, heap and stack. The 64 KB CCM RAM at 0x1000_0000 is reachable only by the CPU (no DMA).'},
+ bus:{t:'AHB / APB buses & interconnect',d:'The bus matrix that routes the core\'s (and DMA\'s) addresses to Flash, SRAM or a peripheral: the "address decoder" of this SoC.'},
+ per:{t:'Peripherals',d:'Hardware IP controllers: GPIO, I2C, SPI, UART/USART, timers, ADC/DAC, USB OTG, and more. They are controlled by reading and writing memory-mapped registers at 0x4000_0000 and up.'},
+ led:{t:'User LEDs and button',d:'Four user LEDs on PD12 (green), PD13 (orange), PD14 (red), PD15 (blue) and the blue user button on PA0: the classic first GPIO exercise.'},
+ mems:{t:'Sensors and audio',d:'A MEMS accelerometer (SPI), a MEMS microphone, and an audio DAC with speaker driver (I2C control + I2S audio): useful for SPI, I2C and I2S practice.'},
+ hdr:{t:'Expansion headers',d:'Breakout pins exposing most GPIOs, power and reset so you can wire your own sensors, displays and logic analyzer.'}
+};
+const B=(id,small)=>`<button class="blk" data-b="${id}"><b>${esc(BD[id].t)}</b>${small?`<small>${esc(small)}</small>`:''}</button>`;
+$('#board').innerHTML=`<div class="side">${B('stlink','SWD debug + USB')}${B('usb','OTG connector')}${B('hdr','GPIO pins')}</div>
+ <div class="mcu" id="mcu"><h3>${esc(BD.mcu.t)}</h3>${B('core','single core, FPU').replace('class="blk"','class="blk wide"')}${B('flash','0x0800_0000')}${B('ram','0x2000_0000')}${B('bus','bus matrix').replace('class="blk"','class="blk wide"')}${B('per','GPIO · I2C · SPI · UART · timers · ADC/DAC').replace('class="blk"','class="blk wide"')}</div>
+ <div class="side">${B('led','PD12–15, PA0')}${B('mems','accelerometer · mic · audio DAC')}</div>`;
+function sel(id){$$('#board .blk').forEach(b=>b.classList.toggle('sel',b.dataset.b===id));$('#mcu').style.outline=id==='mcu'?'3px solid var(--accent)':'none';$('#info1').innerHTML=`<h2>${esc(BD[id].t)}</h2><p style="margin:0">${esc(BD[id].d)}</p>`}
+$$('#board .blk').forEach(b=>b.onclick=()=>sel(b.dataset.b));$('#mcu h3').onclick=()=>sel('mcu');$('#mcu h3').style.cursor='pointer';sel('mcu');
+const NEST={
+ board:{t:'Board: STM32F4 Discovery',d:['The PCB: MCU, ST-LINK debugger, LEDs, button, sensors, connectors, power.','You buy and hold this. In Renode it is described by a .repl platform file and a .resc script.']},
+ mcu:{t:'MCU: STM32F407 (the chip)',d:['One silicon die: processor subsystem + Flash + SRAM + peripherals.','"MCU" is the whole chip; "MPU" usually means a bigger application processor with an MMU.']},
+ sub:{t:'Processor subsystem',d:['Everything around the core: bus interconnect (address decoder), memories, DMA, peripheral controllers (I2C, SPI, UART, timers, …), clock and power control.','I2C, SPI, UART and timers are hardware IP controllers.','Higher cache levels (L2, L3) belong to the processor subsystem on big SoCs. Note: the Cortex-M4 in the STM32F407 has no L1 cache; ST adds an "ART accelerator" that prefetches/caches Flash instead.','The SoC integrator decides what the interconnect routes each address to.']},
+ core:{t:'Core: Arm Cortex-M4',d:['The CPU itself: pipeline, register file, ALU, optional FPU/MPU, NVIC, SysTick, debug.','L1 cache, when a core has one, is part of the core.','It only issues fetches and loads/stores; it has no idea what is at an address.']}
+};
+$('#nest').innerHTML=`<div class="nest lv1" data-n="board"><b>${esc(NEST.board.t)}</b><div class="nest lv2" data-n="mcu"><b>${esc(NEST.mcu.t)}</b><div class="nest lv3" data-n="sub"><b>${esc(NEST.sub.t)}</b><div class="nest lv4" data-n="core"><b>${esc(NEST.core.t)}</b></div></div></div></div>`;
+function selN(id){$$('#nest .nest').forEach(n=>n.classList.toggle('sel',n.dataset.n===id));$('#info2').innerHTML=`<h2>${esc(NEST[id].t)}</h2><ul>${NEST[id].d.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`}
+$$('#nest .nest').forEach(n=>n.onclick=e=>{e.stopPropagation();selN(n.dataset.n)});selN('core');
+</script></body></html>

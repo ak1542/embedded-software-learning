@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Linker and loader: interview flashcards</title>
+<style>
+:root{color-scheme:light;--bg:#fff;--soft:#f6f7f9;--sunk:#eef0f3;--fg:#1c2330;--muted:#5f6b7a;--line:#dde1e7;--accent:#2563eb;--accent-soft:#e8efff;--on-accent:#fff;
+--rom:#b45309;--romf:#fef3c7;--flash:#6d28d9;--flashf:#ede9fe;--ram:#15803d;--ramf:#d1fae5;--bus:#0e7490;--busf:#cffafe;--bad:#c62828;--badf:#fde8e8;--ok:#15803d;--okf:#dcfce7;--warn:#b45309;--warnf:#fef9c3;--r:10px}
+@media(prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#0f141b;--soft:#161c25;--sunk:#1d2531;--fg:#e4e8ee;--muted:#98a3b3;--line:#2a3441;--accent:#6ea0ff;--accent-soft:#1b2a45;--on-accent:#0b1220;--rom:#fbbf24;--romf:#3a2d0e;--flash:#a78bfa;--flashf:#2a2150;--ram:#4ade80;--ramf:#0f3328;--bus:#22d3ee;--busf:#0c3a44;--bad:#f87171;--badf:#3b1818;--ok:#4ade80;--okf:#12331f;--warn:#fbbf24;--warnf:#3a3210}}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:12px}
+.mono,code,pre{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+h1,h2,h3{margin:0 0 6px;line-height:1.25}h1{font-size:1.15rem}h2{font-size:1rem}
+button{font:inherit;color:inherit;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:6px 12px;cursor:pointer}
+button:hover:not(:disabled){background:var(--sunk)}button:disabled{opacity:.45;cursor:default}
+button.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+button.primary:hover:not(:disabled){background:var(--accent);filter:brightness(1.1)}
+button.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+button:focus-visible,[tabindex]:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+select,input[type=range]{font:inherit;color:inherit}
+select{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:5px 8px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px}
+.panel[hidden]{display:none}
+.card{background:var(--soft);border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.muted{color:var(--muted)}.grow{flex:1}
+.chip{display:inline-block;padding:1px 9px;border-radius:999px;font-size:.8rem;background:var(--sunk);border:1px solid var(--line);white-space:nowrap}
+.narr{min-height:3.4em;padding:10px 12px;border-left:4px solid var(--accent);background:var(--accent-soft);border-radius:0 var(--r) var(--r) 0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.top{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.prog{flex:1;min-width:140px;height:10px;border-radius:999px;background:var(--sunk);overflow:hidden;border:1px solid var(--line)}
+.prog i{display:block;height:100%;background:var(--ok);width:0;transition:width .4s}
+.scene{perspective:1200px;margin:8px 0}
+.card3{position:relative;min-height:250px;cursor:pointer;transition:transform .55s;transform-style:preserve-3d}
+.card3.flip{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border:2px solid var(--line);border-radius:14px;padding:18px 20px;background:var(--bg);display:flex;flex-direction:column;justify-content:center;gap:10px;overflow:auto}
+.face.back{transform:rotateY(180deg);background:var(--accent-soft);border-color:var(--accent)}
+.face .no{position:absolute;top:10px;left:14px;font-size:.8rem;color:var(--muted)}
+.face .tag{align-self:flex-start;font-size:.78rem}
+.face .q{font-size:1.25rem;font-weight:600;line-height:1.4}
+.face .a{font-size:1.1rem;line-height:1.5}
+.face code{background:var(--sunk);border-radius:5px;padding:1px 5px;font-size:.92em}
+.face.back code{background:var(--bg)}
+.hint{color:var(--muted);font-size:.8rem}
+.state{position:absolute;top:10px;right:14px;font-size:.78rem}
+.end{text-align:center;padding:30px 10px}
+</style></head>
+<body>
+<h1>Linker &amp; loader: 30 interview questions</h1>
+<div class="top">
+  <div class="prog" title="Known cards"><i id="bar"></i></div><b id="score"></b>
+  <label>Show <select id="filter"><option value="all">all cards</option><option value="todo">to review</option><option value="known">known</option></select></label>
+  <button id="shuffle">🔀 Shuffle</button><button id="clear">↺ Reset progress</button>
+</div>
+<div id="stage"></div>
+<div class="bar" id="ctl" style="margin-top:8px"><button id="prev">◀ Prev</button><button class="primary" id="flip">Show answer</button><button id="next">Next ▶</button><span class="grow"></span><button id="again">↻ Review again</button><button id="know" class="primary">✓ I knew it</button></div>
+<p class="hint">Keys: Space = flip · ← → = previous / next · K = knew it · R = review again</p>
+<script>
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const hex=(n,w=8)=>'0x'+(n>>>0).toString(16).toUpperCase().padStart(w,'0');
+// tabs: buttons with data-tab="id" show the .panel with that id
+function initTabs(start=window.__START||0){const btns=$$('.tabs button');const show=id=>{btns.forEach(b=>{const on=b.dataset.tab===id;b.classList.toggle('on',on);b.setAttribute('aria-selected',on)});$$('.panel').forEach(p=>p.hidden=p.id!==id)};btns.forEach(b=>b.addEventListener('click',()=>show(b.dataset.tab)));if(btns[start])show(btns[start].dataset.tab);return show}
+// player: generic step controller. steps = count; render(i) draws step i; returns controls
+function player({count,render,prev,next,play,reset,delay=1800}){let i=0,timer=null;const set=n=>{i=Math.max(0,Math.min(count-1,n));render(i);if(prev)prev.disabled=i===0;if(next)next.disabled=i===count-1;};const stop=()=>{clearInterval(timer);timer=null;if(play)play.textContent='▶ Play'};const go=()=>{if(i>=count-1){stop();return}set(i+1)};
+if(next)next.onclick=()=>{stop();set(i+1)};if(prev)prev.onclick=()=>{stop();set(i-1)};if(reset)reset.onclick=()=>{stop();set(0)};
+if(play)play.onclick=()=>{if(timer){stop();return}if(i>=count-1)set(0);play.textContent='❚❚ Pause';timer=setInterval(go,delay)};
+addEventListener('keydown',e=>{if(e.target.closest('input,select,textarea'))return;if(e.key==='ArrowRight'){stop();set(i+1)}if(e.key==='ArrowLeft'){stop();set(i-1)}});
+set(0);return{set,stop,get i(){return i}}}
+
+const Q=[
+['What is a linker script?','Basic linker knowledge','It controls how input sections from object files are arranged into memory and defines symbols/addresses.'],
+['What is `ENTRY(Reset_Handler)`?','ELF/linker understanding','Sets the ELF executable entry point; Cortex-M reset normally uses the **vector table**.'],
+['If `ENTRY()` is removed, will Cortex-M fail to boot?','Hardware vs linker distinction','Not necessarily. The CPU normally gets SP/PC from the vector table.'],
+['What is the purpose of `MEMORY`?','Memory layout','Defines available memory regions, origin, size, and attributes.'],
+['Difference between `ORIGIN` and `LENGTH`?','Basic syntax','`ORIGIN` = starting address, `LENGTH` = size.'],
+['What does `> RAM` mean?','VMA',"Places the section's runtime/VMA address in RAM."],
+['What does `AT > FLASH` mean?','LMA/VMA',"Stores the section's load image in Flash while its runtime address is in RAM."],
+['What is VMA?','Memory model','Address where the section exists/runs at runtime.'],
+['What is LMA?','Memory model','Address where the initial section contents are stored in the image.'],
+['Why does `.data` have two addresses?','Startup mechanism','Initial values must persist in Flash but variables must run from writable RAM.'],
+['How does `.data` get copied from Flash to RAM?','Startup code','`Reset_Handler` uses linker symbols such as `_sidata`, `_sdata`, `_edata`.'],
+['What is `_sidata`?','Linker symbols','Load address of `.data`, usually Flash.'],
+['Why `LOADADDR(.data)` instead of `.`?','Important conceptual question','`.` is the current VMA/location counter; `LOADADDR()` returns the LMA.'],
+['What exactly does `.` mean?','Linker-script semantics','The current linker location counter.'],
+['Does `.` always mean a RAM address?','Common trap','No. It depends on the section currently being placed.'],
+['What is `.bss`?','C runtime','Zero-initialized writable global/static data.'],
+["Why isn't `.bss` stored in Flash?",'Memory optimization','It only needs to become zero in RAM; storing zeros in Flash is unnecessary.'],
+['What does `(NOLOAD)` do?','Linker details','Reserves memory for the section without requiring a normal load image.'],
+['Who initializes `.bss`: linker or CPU?','Boot flow','Startup code, typically called from `Reset_Handler`.'],
+['What does `_sdata` mean?','Symbol understanding','Start of `.data` VMA, normally RAM.'],
+['What does `_edata` mean?','Symbol understanding','End of `.data` VMA.'],
+['What do `_sbss` / `_ebss` mean?','Symbol understanding','Start/end of `.bss`.'],
+['What is `.text`?','Section knowledge','Executable code.'],
+['What is `.rodata`?','Section knowledge','Read-only constants, strings, lookup tables, etc.'],
+['Why is `.rodata` usually in Flash?','Embedded memory model',"It doesn't need runtime writes, so nonvolatile Flash is suitable."],
+['What does `KEEP(*(.isr_vector))` do?','--gc-sections','Prevents the vector table from being garbage-collected.'],
+['What does `*(.text*)` mean?','Wildcards','Collect matching `.text` input sections from all object files.'],
+['What is `/DISCARD/`?','Linker control','Removes unwanted input sections from the final image.'],
+['Why is the stack initialized to `ORIGIN(RAM)+LENGTH(RAM)`?','ARM stack model','Cortex-M uses a descending stack; the initial SP starts at the top of RAM.'],
+['Why is `_estack` technically one byte beyond the last RAM byte?','Address reasoning','It represents the top/boundary of the stack region; the first push decrements SP into valid RAM.']
+].map((c,i)=>({id:i+1,q:c[0],tag:c[1],a:c[2]}));
+const fmt=s=>esc(s).replace(/`([^`]+)`/g,'<code>$1</code>').replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>');
+let known=new Set(),order=Q.map(c=>c.id),pos=0,flipped=false;
+try{known=new Set(JSON.parse(localStorage.getItem('ifc')||'[]'))}catch{}
+const save=()=>{try{localStorage.setItem('ifc',JSON.stringify([...known]))}catch{}};
+const byId=id=>Q.find(c=>c.id===id);
+function list(){const f=$('#filter').value;return order.filter(id=>f==='all'||(f==='known')===known.has(id))}
+function render(){
+ const L=list();$('#bar').style.width=(known.size*100/Q.length)+'%';$('#score').textContent=`${known.size} / ${Q.length} known`;
+ if(!L.length){$('#stage').innerHTML=`<div class="end card"><h2>${$('#filter').value==='todo'?'🎉 Nothing left to review!':'No cards here yet'}</h2><p class="muted">Change the filter above, or reset your progress.</p></div>`;$('#ctl').style.visibility='hidden';return}
+ $('#ctl').style.visibility='visible';pos=Math.max(0,Math.min(pos,L.length-1));const c=byId(L[pos]);flipped=false;
+ $('#stage').innerHTML=`<div class="scene"><div class="card3" id="card" role="button" tabindex="0" aria-label="Flashcard, press space to flip"><div class="face"><span class="no">Card ${pos+1} of ${L.length} · #${c.id}</span><span class="state">${known.has(c.id)?'✓ known':''}</span><span class="chip tag">${esc(c.tag)}</span><div class="q">${fmt(c.q)}</div><div class="hint">What is the key answer? Tap the card to reveal it.</div></div><div class="face back"><span class="no">Answer · #${c.id}</span><div class="a">${fmt(c.a)}</div></div></div></div>`;
+ $('#card').onclick=flip;$('#flip').textContent='Show answer';$('#prev').disabled=pos===0;$('#next').disabled=pos===L.length-1;
+}
+function flip(){const c=$('#card');if(!c)return;flipped=!flipped;c.classList.toggle('flip',flipped);$('#flip').textContent=flipped?'Hide answer':'Show answer'}
+const go=d=>{pos+=d;render()};
+function mark(isKnown){const L=list();if(!L.length)return;const id=L[pos];isKnown?known.add(id):known.delete(id);save();if($('#filter').value==='all'){if(pos<L.length-1)pos++}render()}
+$('#flip').onclick=flip;$('#prev').onclick=()=>go(-1);$('#next').onclick=()=>go(1);$('#know').onclick=()=>mark(true);$('#again').onclick=()=>mark(false);
+$('#filter').onchange=()=>{pos=0;render()};
+$('#shuffle').onclick=()=>{for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]]}pos=0;render()};
+$('#clear').onclick=()=>{known.clear();save();pos=0;render()};
+addEventListener('keydown',e=>{if(e.target.closest('select'))return;if(e.key===' '||e.key==='Enter'){if(e.target.closest('button'))return;e.preventDefault();flip()}else if(e.key==='ArrowRight')go(1);else if(e.key==='ArrowLeft')go(-1);else if(e.key==='k'||e.key==='K')mark(true);else if(e.key==='r'||e.key==='R')mark(false)});
+render();
+</script></body></html>

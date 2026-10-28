@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>What happens between reset and main()</title>
+<style>
+:root{color-scheme:light;--bg:#fff;--soft:#f6f7f9;--sunk:#eef0f3;--fg:#1c2330;--muted:#5f6b7a;--line:#dde1e7;--accent:#2563eb;--accent-soft:#e8efff;--on-accent:#fff;
+--rom:#b45309;--romf:#fef3c7;--flash:#6d28d9;--flashf:#ede9fe;--ram:#15803d;--ramf:#d1fae5;--bus:#0e7490;--busf:#cffafe;--bad:#c62828;--badf:#fde8e8;--ok:#15803d;--okf:#dcfce7;--warn:#b45309;--warnf:#fef9c3;--r:10px}
+@media(prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#0f141b;--soft:#161c25;--sunk:#1d2531;--fg:#e4e8ee;--muted:#98a3b3;--line:#2a3441;--accent:#6ea0ff;--accent-soft:#1b2a45;--on-accent:#0b1220;--rom:#fbbf24;--romf:#3a2d0e;--flash:#a78bfa;--flashf:#2a2150;--ram:#4ade80;--ramf:#0f3328;--bus:#22d3ee;--busf:#0c3a44;--bad:#f87171;--badf:#3b1818;--ok:#4ade80;--okf:#12331f;--warn:#fbbf24;--warnf:#3a3210}}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:12px}
+.mono,code,pre{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+h1,h2,h3{margin:0 0 6px;line-height:1.25}h1{font-size:1.15rem}h2{font-size:1rem}
+button{font:inherit;color:inherit;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:6px 12px;cursor:pointer}
+button:hover:not(:disabled){background:var(--sunk)}button:disabled{opacity:.45;cursor:default}
+button.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+button.primary:hover:not(:disabled){background:var(--accent);filter:brightness(1.1)}
+button.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+button:focus-visible,[tabindex]:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+select,input[type=range]{font:inherit;color:inherit}
+select{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:5px 8px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px}
+.panel[hidden]{display:none}
+.card{background:var(--soft);border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.muted{color:var(--muted)}.grow{flex:1}
+.chip{display:inline-block;padding:1px 9px;border-radius:999px;font-size:.8rem;background:var(--sunk);border:1px solid var(--line);white-space:nowrap}
+.narr{min-height:3.4em;padding:10px 12px;border-left:4px solid var(--accent);background:var(--accent-soft);border-radius:0 var(--r) var(--r) 0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:12px}
+@media(max-width:760px){.wrap{grid-template-columns:1fr}}
+.code{background:#0f172a;color:#e6edf3;border-radius:10px;padding:8px 0;font:12.5px/1.6 ui-monospace,Menlo,Consolas,monospace;overflow-x:auto}
+.cl{display:grid;grid-template-columns:28px 1fr;padding:0 8px 0 0;white-space:pre}
+.cl i{font-style:normal;color:#64748b;text-align:right;padding-right:8px}
+.cl.on{background:#1e3a8a}.cl .k{color:#c4b5fd}.cl .c{color:#94a3b8}.cl .n{color:#fcd34d}.cl .s{color:#7dd3fc}
+.hw{display:grid;grid-template-columns:auto 1fr;gap:3px 12px;font-size:.88rem;margin-bottom:8px}
+.hw span:nth-child(odd){color:var(--muted)}.hw .v{font:600 .9rem ui-monospace,Menlo,Consolas,monospace;transition:background .4s}
+.hw .v.chg{background:var(--okf)}
+.vt{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin:6px 0 10px;font:11.5px ui-monospace,Menlo,Consolas,monospace}
+.vt div{border:1.5px solid var(--line);border-radius:6px;padding:3px 5px;background:var(--bg);transition:border-color .3s,background .3s}
+.vt div small{display:block;color:var(--muted)}
+.vt div.rd{border-color:var(--accent);background:var(--accent-soft)}
+.areas{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.area h3{font-size:.8rem;color:var(--muted);margin:0 0 4px}
+.cells{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.cell{border:1.5px solid var(--line);border-radius:6px;padding:3px 4px;text-align:center;font:11px ui-monospace,Menlo,Consolas,monospace;background:var(--bg);transition:background .25s,border-color .25s,transform .25s}
+.cell small{display:block;color:var(--muted);font-size:.68rem}
+.cell.fl{background:var(--flashf);border-color:var(--flash)}
+.cell.src{box-shadow:0 0 0 3px var(--flash)}
+.cell.dst{box-shadow:0 0 0 3px var(--accent);transform:scale(1.05)}
+.cell.done{background:var(--okf);border-color:var(--ok)}
+.cell.junk{color:var(--bad);background:var(--badf);border-color:var(--bad)}
+.cell.zero{background:var(--okf);border-color:var(--ok);color:var(--ok)}
+.flag{display:inline-block;margin:0 4px 4px 0;font-size:.72rem}
+</style></head>
+<body>
+<h1>Reset → Reset_Handler → main()</h1>
+<div class="wrap">
+  <div>
+    <div class="code" id="code" aria-label="Reset_Handler (illustrative)"></div>
+    <p class="muted" style="font-size:.8rem;margin:4px 0 0">Illustrative startup code; your startup.c may differ. The symbols come from the linker script.</p>
+  </div>
+  <div>
+    <div class="hw"><span>SP (r13)</span><span class="v" id="sp">?</span><span>PC (r15)</span><span class="v" id="pc">?</span><span>Doing</span><span class="v" id="doing" style="font-family:inherit">—</span></div>
+    <div class="vt" id="vt"></div>
+    <div class="areas">
+      <div class="area"><h3>Flash: .data load image (LMA)  ·  <code>_sidata</code></h3><div class="cells" id="img"></div></div>
+      <div class="area"><h3>RAM: .data (VMA)  ·  <code>_sdata</code> … <code>_edata</code></h3><div class="cells" id="dat"></div><h3 style="margin-top:8px">RAM: .bss  ·  <code>_sbss</code> … <code>_ebss</code></h3><div class="cells" id="bss"></div></div>
+    </div>
+  </div>
+</div>
+<div class="narr" id="narr" style="margin-top:10px" aria-live="polite"></div>
+<div class="bar" style="margin-top:10px"><button id="prev">◀ Back</button><button class="primary" id="play">▶ Play</button><button id="next">Next ▶</button><button id="reset">↺ Restart</button><span class="grow"></span><span class="muted" id="cnt"></span></div>
+<script>
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const hex=(n,w=8)=>'0x'+(n>>>0).toString(16).toUpperCase().padStart(w,'0');
+// tabs: buttons with data-tab="id" show the .panel with that id
+function initTabs(start=window.__START||0){const btns=$$('.tabs button');const show=id=>{btns.forEach(b=>{const on=b.dataset.tab===id;b.classList.toggle('on',on);b.setAttribute('aria-selected',on)});$$('.panel').forEach(p=>p.hidden=p.id!==id)};btns.forEach(b=>b.addEventListener('click',()=>show(b.dataset.tab)));if(btns[start])show(btns[start].dataset.tab);return show}
+// player: generic step controller. steps = count; render(i) draws step i; returns controls
+function player({count,render,prev,next,play,reset,delay=1800}){let i=0,timer=null;const set=n=>{i=Math.max(0,Math.min(count-1,n));render(i);if(prev)prev.disabled=i===0;if(next)next.disabled=i===count-1;};const stop=()=>{clearInterval(timer);timer=null;if(play)play.textContent='▶ Play'};const go=()=>{if(i>=count-1){stop();return}set(i+1)};
+if(next)next.onclick=()=>{stop();set(i+1)};if(prev)prev.onclick=()=>{stop();set(i-1)};if(reset)reset.onclick=()=>{stop();set(0)};
+if(play)play.onclick=()=>{if(timer){stop();return}if(i>=count-1)set(0);play.textContent='❚❚ Pause';timer=setInterval(go,delay)};
+addEventListener('keydown',e=>{if(e.target.closest('input,select,textarea'))return;if(e.key==='ArrowRight'){stop();set(i+1)}if(e.key==='ArrowLeft'){stop();set(i-1)}});
+set(0);return{set,stop,get i(){return i}}}
+
+const CODE=[
+ '<span class="k">extern</span> uint32_t <span class="s">_sidata</span>, <span class="s">_sdata</span>, <span class="s">_edata</span>, <span class="s">_sbss</span>, <span class="s">_ebss</span>;',
+ '',
+ '<span class="k">void</span> Reset_Handler(<span class="k">void</span>) {',
+ '    <span class="c">/* copy .data: Flash (LMA) → RAM (VMA) */</span>',
+ '    uint32_t *src = &amp;<span class="s">_sidata</span>;',
+ '    uint32_t *dst = &amp;<span class="s">_sdata</span>;',
+ '    <span class="k">while</span> (dst &lt; &amp;<span class="s">_edata</span>)',
+ '        *dst++ = *src++;',
+ '',
+ '    <span class="c">/* zero .bss */</span>',
+ '    <span class="k">for</span> (dst = &amp;<span class="s">_sbss</span>; dst &lt; &amp;<span class="s">_ebss</span>; dst++)',
+ '        *dst = <span class="n">0</span>;',
+ '',
+ '    SystemInit();   <span class="c">/* clocks, optional */</span>',
+ '    main();',
+ '    <span class="k">while</span> (1) {}',
+ '}'
+];
+$('#code').innerHTML=CODE.map((l,i)=>`<div class="cl" data-l="${i}"><i>${i+1}</i><span>${l}</span></div>`).join('');
+const VAL=['0x0000000A','0x12345678','0x00000001','0xDEADBEEF','0x00000064','0xCAFE0001'];
+const NB=5;
+$('#vt').innerHTML=[['[0] initial SP','_estack'],['[1] Reset','Reset_Handler'],['[2] NMI','NMI_Handler'],['[3] HardFault','HardFault_…']].map((v,i)=>`<div data-v="${i}"><small>${v[0]}</small>${v[1]}</div>`).join('');
+const STEPS=[
+ {t:'Power-on reset. RAM contents are undefined: any variable you read now would be garbage. Flash already holds the firmware image, including the initial values of .data.',lines:[],doing:'reset released'},
+ {t:'Hardware step 1: the core loads SP from the first word of the vector table (address 0x0, which is the vector table because VTOR resets to 0). That word is _estack = end of RAM.',lines:[],doing:'SP ← [0x0]',sp:'0x20020000',vt:0},
+ {t:'Hardware step 2: the core loads PC from the second word: the address of Reset_Handler (with the Thumb bit set). From here your code runs, with no C runtime yet.',lines:[2],doing:'PC ← [0x4]',sp:'0x20020000',pc:'Reset_Handler',vt:1},
+ {t:'Reset_Handler copies .data from Flash (_sidata, the LMA) to RAM (_sdata … _edata, the VMA), one word at a time. After this, initialised globals such as int x = 10; have their values.',lines:[3,4,5,6,7],doing:'copy .data',sp:'0x20020000',pc:'Reset_Handler',copy:true},
+ {t:'Reset_Handler zeroes .bss (_sbss … _ebss): globals such as int counter; start at 0 as the C standard requires. The linker could not do this: the CPU (startup code) does it.',lines:[9,10,11],doing:'zero .bss',sp:'0x20020000',pc:'Reset_Handler',copied:true,zero:true},
+ {t:'SystemInit() is optional board setup, typically the clock tree, so the CPU and peripherals run at the intended speed.',lines:[13],doing:'SystemInit()',sp:'0x20020000',pc:'Reset_Handler',copied:true,zeroed:true},
+ {t:'main() is called. C globals are now valid (.data initialised, .bss zero), the stack works, and your program begins. If main() ever returns, the while(1) traps the CPU.',lines:[14,15],doing:'main()',sp:'0x20020000',pc:'main',copied:true,zeroed:true}
+];
+let anim=0;
+function cells(){return {img:$$('#img .cell'),dat:$$('#dat .cell'),bss:$$('#bss .cell')}}
+function paintMem(copiedN,bssN,srcI,dstI,bssI){
+ const c=cells();
+ c.img.forEach((e,i)=>{e.className='cell fl'+(i===srcI?' src':'')});
+ c.dat.forEach((e,i)=>{const done=i<copiedN;e.className='cell'+(done?' done':' junk')+(i===dstI?' dst':'');e.innerHTML=`<small>[${i}]</small>${done?VAL[i]:'??????'}`});
+ c.bss.forEach((e,i)=>{const done=i<bssN;e.className='cell'+(done?' zero':' junk')+(i===bssI?' dst':'');e.innerHTML=`<small>[${i}]</small>${done?'0x00000000':'??????'}`});
+}
+$('#img').innerHTML=VAL.map((v,i)=>`<div class="cell fl"><small>[${i}]</small>${v}</div>`).join('');
+$('#dat').innerHTML=VAL.map(()=>'<div class="cell"></div>').join('');
+$('#bss').innerHTML=Array.from({length:NB},()=>'<div class="cell"></div>').join('');
+async function loop(kind,token){
+ const n=kind==='copy'?VAL.length:NB;
+ for(let i=0;i<=n;i++){if(token!==anim)return;
+  if(kind==='copy')paintMem(i,0,i<n?i:-1,i<n?i:-1,-1);else paintMem(VAL.length,i,-1,-1,i<n?i:-1);
+  $('#doing').textContent=kind==='copy'?(i<n?`*dst++ = *src++  (word ${i+1}/${n})`:'copy done'):(i<n?`*dst = 0  (word ${i+1}/${n})`:'zero done');
+  await sleep(reduce?10:520)}
+}
+const P=player({count:STEPS.length,prev:$('#prev'),next:$('#next'),play:$('#play'),reset:$('#reset'),delay:4200,render(i){
+ const s=STEPS[i];anim++;const tok=anim;
+ $$('.cl').forEach(e=>e.classList.toggle('on',s.lines.includes(+e.dataset.l)));
+ $('#narr').textContent=s.t;$('#cnt').textContent=`Step ${i+1} of ${STEPS.length}`;$('#doing').textContent=s.doing;
+ const set=(id,v)=>{const e=$(id);const old=e.textContent;e.textContent=v||'?';if(old!==e.textContent){e.classList.add('chg');setTimeout(()=>e.classList.remove('chg'),900)}};
+ set('#sp',s.sp);set('#pc',s.pc);
+ $$('#vt div').forEach(e=>e.classList.toggle('rd',s.vt!==undefined&&+e.dataset.v===s.vt));
+ if(s.copy)loop('copy',tok);else if(s.zero){paintMem(VAL.length,0,-1,-1,-1);loop('zero',tok)}
+ else paintMem(s.copied||s.zeroed?VAL.length:0,s.zeroed?NB:0,-1,-1,-1);
+}});
+</script></body></html>
