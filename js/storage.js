@@ -48,8 +48,9 @@ async function gh(path, options = {}) {
   // Keep requests "simple" for CORS: no cache: 'no-store' (browsers then add Cache-Control and
   // Pragma headers, which api.github.com rejects) and no extra custom headers. Reads are kept
   // fresh with a throwaway query parameter instead.
-  const fresh = options.method ? '' : `${path.includes('?') ? '&' : '?'}_=${Date.now()}`;
-  const res = await fetch(`https://api.github.com/repos/${c.owner}/${c.repo}/${path}${fresh}`, {
+  const fresh = options.method || !path ? '' : `${path.includes('?') ? '&' : '?'}_=${Date.now()}`;
+  const url = `https://api.github.com/repos/${c.owner}/${c.repo}${path ? `/${path}` : ''}${fresh}`;
+  const res = await fetch(url, {
     ...options,
     headers: {
       Accept: 'application/vnd.github+json',
