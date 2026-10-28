@@ -15,6 +15,7 @@ export const DEFAULT_SETTINGS = {
   fontSize: 16,
   contentWidth: 'normal', // narrow | normal | wide
   codeWrap: false,
+  numbering: false, // number sections and headings: 1, 1.1, 1.2 ...
 };
 
 export const EMPTY_DOC = { type: 'doc', content: [{ type: 'paragraph' }] };

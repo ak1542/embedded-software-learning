@@ -2,6 +2,7 @@
 // Built into vendor/editor.bundle.js with `npm run build:editor`.
 import { Editor, Extension } from '@tiptap/core';
 import { Plugin, PluginKey } from '@tiptap/pm/state';
+import { Decoration, DecorationSet } from '@tiptap/pm/view';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
 import Link from '@tiptap/extension-link';
@@ -23,6 +24,7 @@ import x86asm from 'highlight.js/lib/languages/x86asm';
 import verilog from 'highlight.js/lib/languages/verilog';
 import cmake from 'highlight.js/lib/languages/cmake';
 import { Image, Video } from './media.js';
+import { numberHeadings } from './numbering.js';
 import { Callout, CALLOUT_VARIANTS, Embed, Diagram, DEFAULT_DIAGRAM, embedUrl } from './nodes.js';
 
 export { CALLOUT_VARIANTS, DEFAULT_DIAGRAM, embedUrl };
@@ -73,12 +75,35 @@ const TrailingParagraph = Extension.create({
   },
 });
 
+// Adds a data-num attribute (1, 1.1, ...) to every heading; the stylesheet shows it.
+const HeadingNumbers = Extension.create({
+  name: 'headingNumbers',
+  addProseMirrorPlugins() {
+    return [
+      new Plugin({
+        key: new PluginKey('headingNumbers'),
+        props: {
+          decorations: (state) => {
+            const headings = [];
+            state.doc.descendants((node, pos) => {
+              if (node.type.name === 'heading') headings.push({ pos, end: pos + node.nodeSize, level: node.attrs.level });
+            });
+            if (!headings.length) return null;
+            const numbers = numberHeadings(headings.map((h) => h.level));
+            return DecorationSet.create(state.doc, headings.map((h, i) => Decoration.node(h.pos, h.end, { 'data-num': numbers[i] })));
+          },
+        },
+      }),
+    ];
+  },
+});
+
 export const EMPTY_DOC = { type: 'doc', content: [{ type: 'paragraph' }] };
 
 const isMedia = (f) => f.type.startsWith('image/') || f.type.startsWith('video/');
 
 // hooks: { resolveMedia(src), renderDiagram(el, code), insertFiles(files, pos) }
-export function createEditor(element, { content, editable, hooks, onUpdate }) {
+export function createEditor(element, { content, editable, hooks, onUpdate, numbering = false }) {
   return new Editor({
     element,
     editable,
@@ -106,6 +131,7 @@ export function createEditor(element, { content, editable, hooks, onUpdate }) {
       Diagram.configure({ renderDiagram: hooks.renderDiagram }),
       CodeTab,
       TrailingParagraph,
+      ...(numbering ? [HeadingNumbers] : []),
     ],
     editorProps: {
       attributes: { class: 'doc-content', spellcheck: 'true' },

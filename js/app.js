@@ -152,13 +152,68 @@ function mountEditor(node, host) {
     content: node.doc,
     editable: state.edit,
     hooks: { resolveMedia: store.resolveMedia, renderDiagram, insertFiles },
+    numbering: Boolean(state.nb.settings.numbering),
     onUpdate: (ed) => {
       pending = { node, editor: ed };
       scheduleFlush();
+      scheduleOutline();
     },
   });
   state.editor = editor;
   toolbar.bind(editor);
+}
+
+/* ---------- "On this page": an outline built from the headings ---------- */
+
+const scheduleOutline = debounce(() => refreshOutline(), 250);
+let spyQueued = false;
+let spyLockedUntil = 0;
+
+function pageHeadings() {
+  return [...document.querySelectorAll('.doc .ProseMirror h1, .doc .ProseMirror h2, .doc .ProseMirror h3, .doc .ProseMirror h4')].filter((el) => el.textContent.trim());
+}
+
+function refreshOutline() {
+  const headings = pageHeadings();
+  const minLevel = Math.min(...headings.map((el) => Number(el.tagName[1])));
+  const links = () =>
+    headings.map((el, i) =>
+      h(
+        'a',
+        {
+          href: '#outline',
+          class: 'lvl',
+          style: `padding-left:${8 + (Number(el.tagName[1]) - minLevel) * 14}px`,
+          onClick: (e) => {
+            e.preventDefault();
+            pageHeadings()[i]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // A short page cannot scroll far enough to bring the last headings to the top.
+            spyLockedUntil = Date.now() + 1200;
+            document.querySelectorAll('.outline-list').forEach((list) => [...list.children].forEach((a, j) => a.classList.toggle('active', j === i)));
+          },
+        },
+        el.dataset.num ? h('span', { class: 'num' }, el.dataset.num) : null,
+        el.textContent.trim()
+      )
+    );
+  document.querySelectorAll('.outline-list').forEach((list) => fill(list, links()));
+  $('#outline').hidden = !headings.length;
+  document.querySelectorAll('.outline-inline').forEach((box) => (box.hidden = !headings.length));
+  updateOutlineSpy();
+}
+
+// Highlight the heading that is currently at the top of the screen.
+function updateOutlineSpy() {
+  spyQueued = false;
+  if (Date.now() < spyLockedUntil) return;
+  const headings = pageHeadings();
+  let active = -1;
+  headings.forEach((el, i) => {
+    if (el.getBoundingClientRect().top <= 140) active = i;
+  });
+  document.querySelectorAll('.outline-list').forEach((list) => {
+    [...list.children].forEach((a, i) => a.classList.toggle('active', i === active));
+  });
 }
 
 // Upload pictures and videos (from the toolbar, paste or drag and drop) and put them in the page.
@@ -200,6 +255,7 @@ function applySettings() {
   const root = document.documentElement;
   root.dataset.theme = s.theme;
   root.dataset.codeWrap = String(Boolean(s.codeWrap));
+  root.dataset.numbering = String(Boolean(s.numbering));
   root.style.setProperty('--font-size', `${Number(s.fontSize) || 16}px`);
   root.dataset.width = s.contentWidth;
   document.title = s.title;
@@ -225,9 +281,12 @@ function updateSaveButton() {
   btn.classList.toggle('attention', state.dirty && !state.saving);
 }
 
+let numbers = null; // section id -> "1.2" when numbering is on
+
 function renderSidebar() {
   const nav = $('#tree');
   const q = state.query.trim().toLowerCase();
+  numbers = state.nb.settings.numbering ? model.sectionNumbers(state.nb) : null;
   if (q) {
     const results = model.flatten(state.nb).filter((n) => `${n.title} ${model.docText(n.doc)}`.toLowerCase().includes(q));
     fill(
@@ -239,6 +298,7 @@ function renderSidebar() {
     return;
   }
   const openPath = new Set((model.locate(state.nb, state.currentId)?.path || []).map((n) => n.id));
+  numbers = state.nb.settings.numbering ? model.sectionNumbers(state.nb) : null;
   const list = (nodes) =>
     h(
       'ul',
@@ -277,6 +337,7 @@ function treeLink(node, path) {
       'aria-current': node.id === state.currentId ? 'page' : null,
     },
     path && path.length > 1 ? h('small', { class: 'muted' }, path.slice(0, -1).map((p) => p.title).join(' › ') + ' › ') : null,
+    numbers && numbers.get(node.id) ? h('span', { class: 'num' }, numbers.get(node.id)) : null,
     node.title || 'Untitled'
   );
 }
@@ -297,6 +358,7 @@ function renderMain() {
   const node = currentNode();
   if (!node) {
     destroyEditor();
+    $('#outline').hidden = true;
     fill(
       main,
       h(
@@ -333,6 +395,7 @@ function renderMain() {
         })
       : h('h1', { class: 'page-title' }, node.title || 'Untitled'),
     state.edit ? toolbar.el : null,
+    h('details', { class: 'outline-inline', hidden: true }, h('summary', {}, 'On this page'), h('nav', { class: 'outline-list' })),
     host,
     renderChildren(node),
     h(
@@ -343,6 +406,7 @@ function renderMain() {
     )
   );
   mountEditor(node, host);
+  refreshOutline();
   host.addEventListener('click', (e) => {
     const img = e.target.closest('.media-img img');
     if (img && !state.edit) openLightbox(img.src, img.alt);
@@ -473,6 +537,7 @@ function openSettings() {
   f.fontSize.value = s.fontSize;
   f.contentWidth.value = s.contentWidth;
   f.codeWrap.checked = s.codeWrap;
+  f.numbering.checked = Boolean(s.numbering);
   updateConnectionStatus();
   dialog.showModal();
 }
@@ -526,7 +591,7 @@ async function connect() {
 function wireSettings() {
   const dialog = $('#settings');
   const f = dialog.querySelector('form').elements;
-  ['title', 'theme', 'fontSize', 'contentWidth', 'codeWrap'].forEach((name) =>
+  ['title', 'theme', 'fontSize', 'contentWidth', 'codeWrap', 'numbering'].forEach((name) =>
     f[name].addEventListener('change', () => {
       commit(() => {
         const el = f[name];
@@ -568,11 +633,47 @@ function wireSettings() {
 
 /* ---------- page chrome ---------- */
 
+// On a phone the section list slides over the page; on a computer it can be hidden to give
+// the page more room. The choice on a computer is remembered.
+const NAV_KEY = 'esl.nav';
+const isPhone = () => window.matchMedia('(max-width: 860px)').matches;
+
+function syncSidebarState() {
+  let hidden = false;
+  try {
+    hidden = localStorage.getItem(NAV_KEY) === 'hidden';
+  } catch {
+    /* default: shown */
+  }
+  document.body.classList.toggle('nav-collapsed', hidden);
+  $('#nav-toggle').setAttribute('aria-expanded', String(isPhone() ? document.body.classList.contains('nav-open') : !hidden));
+}
+
+function toggleSidebar() {
+  if (isPhone()) document.body.classList.toggle('nav-open');
+  else {
+    const hide = !document.body.classList.contains('nav-collapsed');
+    try {
+      localStorage.setItem(NAV_KEY, hide ? 'hidden' : 'shown');
+    } catch {
+      /* not remembered */
+    }
+  }
+  syncSidebarState();
+}
+
 function wireChrome() {
   $('#edit-toggle').addEventListener('click', toggleEdit);
   $('#save').addEventListener('click', save);
   $('#open-settings').addEventListener('click', openSettings);
-  $('#nav-toggle').addEventListener('click', () => document.body.classList.toggle('nav-open'));
+  $('#nav-toggle').addEventListener('click', toggleSidebar);
+  syncSidebarState();
+  window.addEventListener('scroll', () => {
+    if (!spyQueued) {
+      spyQueued = true;
+      requestAnimationFrame(updateOutlineSpy);
+    }
+  }, { passive: true });
   $('#scrim').addEventListener('click', () => document.body.classList.remove('nav-open'));
   $('#search').addEventListener('input', (e) => {
     state.query = e.target.value;

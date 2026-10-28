@@ -92,3 +92,16 @@ export function docText(doc) {
   })(doc);
   return out.join('').replace(/\s+/g, ' ').trim();
 }
+
+// Outline numbers of every section: 1, 1.1, 1.2, 2 ... as a Map from section id.
+export function sectionNumbers(nb) {
+  const out = new Map();
+  (function visit(list, prefix) {
+    list.forEach((node, i) => {
+      const num = [...prefix, i + 1];
+      out.set(node.id, num.join('.'));
+      visit(node.children, num);
+    });
+  })(nb.sections, []);
+  return out;
+}

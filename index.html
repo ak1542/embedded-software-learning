@@ -12,7 +12,7 @@
   </head>
   <body>
     <header class="topbar">
-      <button id="nav-toggle" class="btn icon-btn" type="button" aria-label="Show sections">☰</button>
+      <button id="nav-toggle" class="btn icon-btn" type="button" aria-label="Show or hide the section list" aria-expanded="true" title="Show or hide sections">☰</button>
       <a href="#/" id="site-title" class="site-title">Embedded Software Notes</a>
       <span class="spacer"></span>
       <button id="save" class="btn" type="button" hidden title="Save to GitHub (Ctrl+S)">Saved</button>
@@ -27,6 +27,10 @@
       </aside>
       <div id="scrim"></div>
       <main id="main"><p class="muted">Loading notes…</p></main>
+      <aside id="outline" aria-label="On this page" hidden>
+        <div class="outline-title">On this page</div>
+        <nav class="outline-list"></nav>
+      </aside>
     </div>
 
     <dialog id="settings" aria-labelledby="settings-title">
@@ -78,6 +82,7 @@
               </select></label
             >
           </div>
+          <label class="field checkbox"><input name="numbering" type="checkbox" /><span>Number sections and headings (1, 1.1, 1.2…)</span></label>
           <label class="field checkbox"><input name="codeWrap" type="checkbox" /><span>Wrap long code lines</span></label>
         </fieldset>
 

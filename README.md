@@ -11,7 +11,9 @@ Click **Edit** and the page itself becomes the editor, like a word processor. Cl
 - **Tables:** insert one, then add or delete rows and columns from the toolbar that appears while the cursor is in the table.
 - **Code:** a code block with syntax highlighting (C, C++, ARM and x86 assembly, Python, Rust, Verilog, CMake, shell…); pick the language from the toolbar while the cursor is in it.
 - **Highlighted boxes** (info, tip, warning, danger), horizontal lines, **diagrams** (flowcharts, state machines and sequence diagrams written as [Mermaid](https://mermaid.js.org/intro/) text) and **embeds** (YouTube, Wokwi simulations, any embeddable page).
-- **Sections and subsections** at any depth: create, rename, reorder, indent / outdent, delete. Search covers all notes.
+- **Sections and subsections** at any depth: create, rename, reorder, indent / outdent, delete. Search covers all notes. The ☰ button hides or shows the section list (your choice is remembered).
+- **On this page:** an outline built automatically from your headings (H1–H4). Click an entry to jump there; the one you are reading is highlighted. It sits at the right on wide screens and at the top of the page on narrower ones.
+- **Numbering:** in ⚙ Settings, *Number sections and headings* adds 1, 1.1, 1.2… numbers to the section list, the headings and the outline. Off by default.
 - Light and dark theme, works on phones, and unsaved edits are kept in the browser so a closed tab doesn't lose work.
 
 ## One-time setup

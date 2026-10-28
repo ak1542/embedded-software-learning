@@ -112,3 +112,9 @@ test('document text for search, and the empty-page check', () => {
   assert.equal(model.isEmptyDoc(doc), false);
   assert.equal(model.isEmptyDoc({ type: 'doc', content: [{ type: 'paragraph' }] }), true);
 });
+
+test('sections are numbered 1, 1.1, 1.2, 2 ...', () => {
+  const nb = fresh();
+  const nums = model.sectionNumbers(nb);
+  assert.deepEqual([...nums], [['a', '1'], ['a1', '1.1'], ['a2', '1.2'], ['b', '2']]);
+});
