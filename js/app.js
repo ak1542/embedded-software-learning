@@ -152,7 +152,13 @@ function mountEditor(node, host) {
   const editor = lib.createEditor(host, {
     content: node.doc,
     editable: state.edit,
-    hooks: { resolveMedia: store.resolveMedia, renderDiagram, insertFiles },
+    hooks: {
+      resolveMedia: store.resolveMedia,
+      renderDiagram,
+      insertFiles,
+      addAnimation: (html, pos) => addAnimationFromSource(html, pos).catch((err) => toast(err.message, 'error', 6000)),
+      confirmAnimation: () => confirm('This looks like a web page. Add it as an animation?\n\nOK = add it as an animation\nCancel = paste it as plain text'),
+    },
     numbering: Boolean(state.nb.settings.numbering),
     onUpdate: (ed) => {
       pending = { node, editor: ed };
@@ -224,6 +230,15 @@ async function insertFiles(files, pos) {
   for (const file of files) {
     if (!editor || editor.isDestroyed) return;
     try {
+      if (file.type === 'text/html' || /\.html?$/i.test(file.name)) {
+        const html = await file.text();
+        if (!/<[a-z!]/i.test(html)) throw new Error(`${file.name} does not look like an HTML page.`);
+        if (store.isConnected()) toast(`Uploading ${file.name}…`, 'info', 10000);
+        await addAnimationFromSource(html, at);
+        at = null;
+        toast('Animation added. Click “Done editing” to play it.', 'success', 5000);
+        continue;
+      }
       const isVideo = file.type.startsWith('video/');
       if (store.isConnected()) toast(`Uploading ${file.name}…`, 'info', 10000);
       const src = await store.uploadMedia(file);
@@ -260,9 +275,20 @@ function prepareAnimationHtml(code) {
   return html;
 }
 
+// Save an animation's HTML as a file and put it in the page (at a position, or at the cursor).
+async function addAnimationFromSource(source, pos = null) {
+  const editor = state.editor;
+  const file = new File([prepareAnimationHtml(source)], 'animation.html', { type: 'text/html' });
+  const src = await store.uploadMedia(file);
+  if (!editor || editor.isDestroyed) return false;
+  const node = { type: 'htmlAnimation', attrs: { src, title: 'Animation', height: 420, width: 100 } };
+  const chain = editor.chain().focus();
+  (pos == null ? chain.insertContent(node) : chain.insertContentAt(pos, node)).run();
+  return true;
+}
+
 async function insertAnimation() {
   const status = $('#anim-status');
-  const editor = state.editor;
   const chosen = $('#anim-file').files[0];
   const code = $('#anim-code').value;
   if (!chosen && !code.trim()) return (status.textContent = 'Paste the HTML code or choose a file first.');
@@ -271,11 +297,8 @@ async function insertAnimation() {
   $('#anim-insert').disabled = true;
   status.textContent = 'Saving…';
   try {
-    const file = new File([prepareAnimationHtml(source)], 'animation.html', { type: 'text/html' });
-    const src = await store.uploadMedia(file);
+    await addAnimationFromSource(source);
     $('#anim-dialog').close();
-    if (!editor || editor.isDestroyed) return;
-    editor.chain().focus().insertContent({ type: 'htmlAnimation', attrs: { src, title: 'Animation', height: 420, width: 100 } }).run();
     toast('Animation added. Click “Done editing” to play it.', 'success', 5000);
   } catch (err) {
     status.textContent = err.message;

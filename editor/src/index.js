@@ -101,9 +101,12 @@ const HeadingNumbers = Extension.create({
 
 export const EMPTY_DOC = { type: 'doc', content: [{ type: 'paragraph' }] };
 
-const isMedia = (f) => f.type.startsWith('image/') || f.type.startsWith('video/');
+const isHtmlFile = (f) => f.type === 'text/html' || /\.html?$/i.test(f.name);
+const isMedia = (f) => f.type.startsWith('image/') || f.type.startsWith('video/') || isHtmlFile(f);
+const looksLikeWebPage = (text) => /^\s*(<!doctype html|<html[\s>])/i.test(text);
 
-// hooks: { resolveMedia(src), renderDiagram(el, code), insertFiles(files, pos) }
+// hooks: { resolveMedia(src), renderDiagram(el, code), insertFiles(files, pos),
+//          addAnimation(html, pos), confirmAnimation() }
 export function createEditor(element, { content, editable, hooks, onUpdate, numbering = false }) {
   return new Editor({
     element,
@@ -139,10 +142,20 @@ export function createEditor(element, { content, editable, hooks, onUpdate, numb
       attributes: { class: 'doc-content', spellcheck: 'true' },
       handlePaste(view, event) {
         const files = [...(event.clipboardData?.files || [])].filter(isMedia);
-        if (!files.length) return false;
-        event.preventDefault();
-        hooks.insertFiles(files, null);
-        return true;
+        if (files.length) {
+          event.preventDefault();
+          hooks.insertFiles(files, null);
+          return true;
+        }
+        // A whole web page copied as text (for example an animation from a Claude chat).
+        // Inside a code block it is always pasted as text.
+        const text = event.clipboardData?.getData('text/plain') || '';
+        if (hooks.addAnimation && looksLikeWebPage(text) && !view.state.selection.$from.parent.type.spec.code && hooks.confirmAnimation()) {
+          event.preventDefault();
+          hooks.addAnimation(text, null);
+          return true;
+        }
+        return false;
       },
       handleDrop(view, event, slice, moved) {
         if (moved) return false;
