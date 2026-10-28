@@ -2,19 +2,17 @@
 
 A notes website for learning embedded software. It runs on free GitHub Pages, so you can read it from any device. You can edit it in the browser from any device too, and every save is a commit to this repository.
 
-## Features
+## Writing notes
 
-- **Sections and subsections** at any depth: create, rename, reorder, indent/outdent, delete
-- **Blocks** for building each page:
-  - Text (Markdown: lists, tables, checklists, links; paste or drop an image straight in)
-  - Heading, callout (info / tip / warning / danger), divider
-  - Code with syntax highlighting (C, C++, ARM and x86 assembly, Python, Rust, Verilog, CMake…), line numbers and a copy button
-  - Image (click to zoom), animation / video (GIF, WebP, MP4, WebM)
-  - Step-by-step animation: frames that play in order, for walking through a protocol, a state machine…
-  - Diagram: flowcharts, state machines, sequence diagrams written as [Mermaid](https://mermaid.js.org/intro/) text
-  - Embed: YouTube, Wokwi simulations, any embeddable page
-- Search across all notes, light/dark theme, works on phones
-- Unsaved edits are kept in the browser, so a closed tab doesn't lose work
+Click **Edit** and the page itself becomes the editor, like a word processor. Click and type; a toolbar above the page has the formatting tools.
+
+- **Text:** paragraph styles (Normal, Heading 1–4, Quote), bold, italic, underline, strikethrough, inline code, highlight, text colour, bulleted / numbered lists and checklists, alignment, links. Markdown shortcuts also work: `# ` for a heading, `- ` for a list, `**bold**`.
+- **Pictures, GIFs and videos:** use the *Image* / *Video* buttons, or paste or drag a file onto the page. Click a picture to pick a size (25 / 50 / 75 / 100 %) and alignment, or drag its round corner handle to resize it freely. Videos have a *Loop* option to play like a GIF.
+- **Tables:** insert one, then add or delete rows and columns from the toolbar that appears while the cursor is in the table.
+- **Code:** a code block with syntax highlighting (C, C++, ARM and x86 assembly, Python, Rust, Verilog, CMake, shell…); pick the language from the toolbar while the cursor is in it.
+- **Highlighted boxes** (info, tip, warning, danger), horizontal lines, **diagrams** (flowcharts, state machines and sequence diagrams written as [Mermaid](https://mermaid.js.org/intro/) text) and **embeds** (YouTube, Wokwi simulations, any embeddable page).
+- **Sections and subsections** at any depth: create, rename, reorder, indent / outdent, delete. Search covers all notes.
+- Light and dark theme, works on phones, and unsaved edits are kept in the browser so a closed tab doesn't lose work.
 
 ## One-time setup
 
@@ -27,17 +25,23 @@ Then click **Edit** and start writing. **Save** (or Ctrl+S) commits your changes
 
 ## How backward compatibility works
 
-Notes are stored as **data, not HTML**, in `content/notebook.json`: sections contain blocks, and each block is `{ id, type, data }`. Uploaded files go to `content/media/`.
+Notes are stored as **data, not HTML**, in `content/notebook.json`: each section holds a rich-text document (ProseMirror / Tiptap JSON) made of headings, paragraphs, lists, tables, images and so on. Uploaded files go to `content/media/`.
 
-- **Every page is rendered fresh** by the current code in `js/blocks.js`. When a renderer or editor improves, every note uses the improvement, old or new.
-- **Defaults are merged at render time.** When a block type gains a new option, older blocks automatically get its default value.
-- **Display settings** (theme, text size, page width, code line numbers…) are global and apply to every section.
-- **Format changes are migrations.** If the stored shape ever needs to change, bump `SCHEMA_VERSION` in `js/schema.js` and add a migration. Older notebooks are upgraded when they load.
-- **Nothing unknown is thrown away.** Unknown fields and block types are kept as they are, can still be edited as raw JSON, and a broken block shows an error box instead of breaking the page.
+- **Every page is rendered fresh** by the current editor code. When the editor, a node's look or the styling improves, every note uses the improvement, old or new.
+- **Display settings** (theme, text size, page width, code wrapping) are global and apply to every section.
+- **Format changes are migrations.** The notebook carries a `schemaVersion`. If the stored shape ever has to change, bump `SCHEMA_VERSION` in `js/schema.js` and add a migration; older notebooks are upgraded when they load. (Version 1 notes, made of typed blocks, are converted to documents this way.)
+- **Nothing unknown is thrown away.** Unknown fields are kept when saving, and a notebook written by a newer version of the site is refused instead of being damaged.
 
-### Adding a new block type
+## Changing the editor
 
-Add an entry to `BLOCK_TYPES` in `js/blocks.js` with `label`, `icon`, `defaults()`, `fields` (the editor form is generated from these) and `render(data, ctx)`. It then appears in the **+ Add block** menu.
+The editor is [Tiptap](https://tiptap.dev), bundled into `vendor/editor.bundle.js` from `editor/src/`. That bundle is committed, so the site needs no build step to run. After changing anything in `editor/src/` (a new extension, a custom node), rebuild it:
+
+```sh
+npm install
+npm run build:editor
+```
+
+The toolbar is in `js/toolbar.js`; its styles and the page styles are in `css/app.css`.
 
 ## Run locally
 
@@ -46,18 +50,19 @@ npm start        # serves the site on http://localhost:8000
 npm test         # unit tests for the data model and migrations
 ```
 
-No build step: plain HTML, CSS and JavaScript modules. Third-party libraries are copied into `vendor/` (see `vendor/README.md`).
-
 ## Layout
 
 ```
 index.html            page shell and settings dialog
-css/app.css           styles (light/dark, mobile)
+css/app.css           styles (light/dark, mobile, the page and editor)
 js/app.js             navigation, editing, saving
-js/blocks.js          block types: renderers and editors
+js/toolbar.js         the formatting toolbar
 js/schema.js          data format version, migrations, defaults
-js/model.js           section/block tree operations
+js/model.js           section tree operations, search text
+js/diagram.js         Mermaid diagram rendering
 js/storage.js         GitHub API, local drafts, media uploads
+editor/src/           editor source (Tiptap setup, picture/video/embed/diagram nodes)
+vendor/               built editor bundle and third-party libraries
 content/notebook.json your notes
 content/media/        your uploaded images and videos
 ```

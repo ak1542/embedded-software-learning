@@ -1,5 +1,5 @@
-// Operations on the section tree and on a section's blocks. Pure data, no DOM.
-import { newId } from './schema.js';
+// Operations on the section tree. Pure data, no DOM.
+import { newId, EMPTY_DOC } from './schema.js';
 
 export function locate(nb, id) {
   let found = null;
@@ -18,7 +18,7 @@ export function locate(nb, id) {
 }
 
 export function addNode(nb, parentId, title) {
-  const node = { id: newId('s'), title, blocks: [], children: [] };
+  const node = { id: newId('s'), title, doc: structuredClone(EMPTY_DOC), children: [] };
   const parent = parentId ? locate(nb, parentId) : null;
   (parent ? parent.node.children : nb.sections).push(node);
   return node;
@@ -71,42 +71,24 @@ export function flatten(nb) {
   return out;
 }
 
-export function countContents(node) {
-  let sections = 0;
-  let blocks = node.blocks.length;
-  for (const child of node.children) {
-    const c = countContents(child);
-    sections += 1 + c.sections;
-    blocks += c.blocks;
-  }
-  return { sections, blocks };
+export function countSubsections(node) {
+  return node.children.reduce((n, child) => n + 1 + countSubsections(child), 0);
 }
 
-export function insertBlock(node, index, type, data = {}) {
-  const block = { id: newId('b'), type, data };
-  node.blocks.splice(Math.max(0, Math.min(index, node.blocks.length)), 0, block);
-  return block;
+// Does the page have anything written on it?
+export function isEmptyDoc(doc) {
+  return !doc || !(doc.content || []).some((n) => n.type !== 'paragraph' || (n.content || []).length);
 }
 
-export function removeBlock(node, blockId) {
-  const i = node.blocks.findIndex((b) => b.id === blockId);
-  if (i >= 0) node.blocks.splice(i, 1);
-  return i >= 0;
-}
-
-export function moveBlock(node, blockId, delta) {
-  const i = node.blocks.findIndex((b) => b.id === blockId);
-  const to = i + delta;
-  if (i < 0 || to < 0 || to >= node.blocks.length) return false;
-  const [block] = node.blocks.splice(i, 1);
-  node.blocks.splice(to, 0, block);
-  return true;
-}
-
-export function duplicateBlock(node, blockId) {
-  const i = node.blocks.findIndex((b) => b.id === blockId);
-  if (i < 0) return null;
-  const copy = { ...structuredClone(node.blocks[i]), id: newId('b') };
-  node.blocks.splice(i + 1, 0, copy);
-  return copy;
+// Plain text of a document, for search.
+export function docText(doc) {
+  const out = [];
+  (function visit(node) {
+    if (!node) return;
+    if (typeof node.text === 'string') out.push(node.text);
+    if (node.attrs && (node.type === 'diagram' || node.type === 'image') && (node.attrs.code || node.attrs.alt)) out.push(node.attrs.code || node.attrs.alt);
+    (node.content || []).forEach(visit);
+    if (!node.text) out.push('\n');
+  })(doc);
+  return out.join('').replace(/\s+/g, ' ').trim();
 }

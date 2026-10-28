@@ -1,8 +1,9 @@
-import { h, fill, toast, prefersReducedMotion } from './dom.js';
+import { h, fill, debounce, toast } from './dom.js';
 import { migrate } from './schema.js';
 import * as model from './model.js';
-import { BLOCK_TYPES, buildBlockEditor, renderBlockBody, blockText } from './blocks.js';
 import * as store from './storage.js';
+import { renderDiagram } from './diagram.js';
+import { createToolbar } from './toolbar.js';
 
 const state = {
   nb: null,
@@ -12,9 +13,8 @@ const state = {
   edit: false,
   dirty: false,
   saving: false,
-  editingBlockId: null,
-  newBlockId: null, // a just-inserted block, removed again if its first edit is cancelled
   query: '',
+  editor: null,
 };
 
 const COLLAPSED_KEY = 'esl.collapsed';
@@ -27,13 +27,8 @@ try {
 
 const $ = (sel) => document.querySelector(sel);
 
-const ctx = {
-  get settings() {
-    return state.nb.settings;
-  },
-  resolveMedia: store.resolveMedia,
-  uploadMedia: store.uploadMedia,
-};
+let lib = null; // the editor bundle, loaded once
+let toolbar = null;
 
 /* ---------- startup ---------- */
 
@@ -54,9 +49,15 @@ async function init() {
   }
   try {
     state.nb = migrate(loaded.notebook);
+    lib = await import('../vendor/editor.bundle.js');
   } catch (err) {
     return fatal(err);
   }
+  toolbar = createToolbar({
+    languages: lib.CODE_LANGUAGES,
+    defaultDiagram: lib.DEFAULT_DIAGRAM,
+    insertFiles,
+  });
   state.sha = loaded.sha;
   state.source = loaded.source;
   restoreDraft();
@@ -88,16 +89,21 @@ function restoreDraft() {
 
 function fatal(err) {
   console.error(err);
-  $('#main').replaceChildren(h('div', { class: 'empty' }, h('h1', {}, 'Could not open the notes'), h('p', {}, err.message)));
+  fill($('#main'), h('div', { class: 'empty' }, h('h1', {}, 'Could not open the notes'), h('p', {}, err.message)));
 }
 
 /* ---------- state changes ---------- */
 
-function commit(mutate, { rerender = true } = {}) {
-  mutate();
+function markDirty() {
   state.dirty = true;
-  if (!store.saveDraft(state.nb, state.sha)) toast('Browser storage is full: save to GitHub soon so you don\'t lose changes.', 'error');
+  if (!store.saveDraft(state.nb, state.sha)) toast("Browser storage is full: save to GitHub soon so you don't lose changes.", 'error');
   updateSaveButton();
+}
+
+function commit(mutate, { rerender = true } = {}) {
+  flushDoc();
+  mutate();
+  markDirty();
   if (rerender) render();
 }
 
@@ -106,19 +112,85 @@ function currentNode() {
 }
 
 function go(id) {
-  if (state.editingBlockId) cancelBlockEdit(false);
   location.hash = id ? `#/${id}` : '#/';
 }
 
 function route() {
+  flushDoc();
   const id = decodeURIComponent(location.hash.replace(/^#\/?/, ''));
   const exists = id && model.locate(state.nb, id);
   state.currentId = exists ? id : state.nb.sections[0]?.id || null;
-  state.editingBlockId = null;
-  state.newBlockId = null;
   document.body.classList.remove('nav-open');
   render();
   window.scrollTo(0, 0);
+}
+
+/* ---------- the page editor ---------- */
+
+// Edits are copied from the editor into the notebook shortly after typing stops, and always
+// before anything that reads or replaces the notebook (saving, switching sections, ...).
+let pending = null;
+const scheduleFlush = debounce(() => flushDoc(), 300);
+
+function flushDoc() {
+  if (!pending) return;
+  const { node, editor } = pending;
+  pending = null;
+  if (!editor.isDestroyed) node.doc = editor.getJSON();
+  markDirty();
+}
+
+function destroyEditor() {
+  flushDoc();
+  if (state.editor) state.editor.destroy();
+  state.editor = null;
+}
+
+function mountEditor(node, host) {
+  destroyEditor();
+  const editor = lib.createEditor(host, {
+    content: node.doc,
+    editable: state.edit,
+    hooks: { resolveMedia: store.resolveMedia, renderDiagram, insertFiles },
+    onUpdate: (ed) => {
+      pending = { node, editor: ed };
+      scheduleFlush();
+    },
+  });
+  state.editor = editor;
+  toolbar.bind(editor);
+}
+
+// Upload pictures and videos (from the toolbar, paste or drag and drop) and put them in the page.
+async function insertFiles(files, pos) {
+  const editor = state.editor;
+  let at = pos;
+  for (const file of files) {
+    if (!editor || editor.isDestroyed) return;
+    try {
+      const isVideo = file.type.startsWith('video/');
+      if (store.isConnected()) toast(`Uploading ${file.name}…`, 'info', 10000);
+      const src = await store.uploadMedia(file);
+      if (editor.isDestroyed) return;
+      const node = isVideo
+        ? { type: 'video', attrs: { src } }
+        : { type: 'image', attrs: { src, alt: file.name.replace(/\.[^.]+$/, ''), width: null } };
+      const chain = editor.chain().focus();
+      (at == null ? chain.insertContent(node) : chain.insertContentAt(at, node)).run();
+      at = null;
+      toast('Added.', 'success', 1500);
+    } catch (err) {
+      toast(err.message, 'error', 6000);
+    }
+  }
+}
+
+function openLightbox(src, alt) {
+  const dialog = h('dialog', { class: 'lightbox' }, h('img', { src, alt: alt || '' }));
+  dialog.addEventListener('click', () => dialog.close());
+  dialog.addEventListener('close', () => dialog.remove());
+  document.body.append(dialog);
+  dialog.showModal();
 }
 
 /* ---------- settings ---------- */
@@ -127,6 +199,7 @@ function applySettings() {
   const s = state.nb.settings;
   const root = document.documentElement;
   root.dataset.theme = s.theme;
+  root.dataset.codeWrap = String(Boolean(s.codeWrap));
   root.style.setProperty('--font-size', `${Number(s.fontSize) || 16}px`);
   root.dataset.width = s.contentWidth;
   document.title = s.title;
@@ -156,11 +229,9 @@ function renderSidebar() {
   const nav = $('#tree');
   const q = state.query.trim().toLowerCase();
   if (q) {
-    const results = model.flatten(state.nb).filter((n) => {
-      const text = `${n.title} ${n.blocks.map(blockText).join(' ')}`.toLowerCase();
-      return text.includes(q);
-    });
-    fill(nav,
+    const results = model.flatten(state.nb).filter((n) => `${n.title} ${model.docText(n.doc)}`.toLowerCase().includes(q));
+    fill(
+      nav,
       results.length
         ? h('ul', { class: 'results' }, results.map((n) => h('li', {}, treeLink(n, model.locate(state.nb, n.id).path))))
         : h('p', { class: 'muted pad' }, 'No matches.')
@@ -190,7 +261,8 @@ function renderSidebar() {
         );
       })
     );
-  fill(nav,
+  fill(
+    nav,
     state.nb.sections.length ? list(state.nb.sections) : h('p', { class: 'muted pad' }, 'No sections yet.'),
     state.edit && h('button', { class: 'btn block-btn', type: 'button', onClick: () => addSection(null) }, '+ New section')
   );
@@ -224,7 +296,9 @@ function renderMain() {
   const main = $('#main');
   const node = currentNode();
   if (!node) {
-    fill(main,
+    destroyEditor();
+    fill(
+      main,
       h(
         'div',
         { class: 'empty' },
@@ -238,8 +312,10 @@ function renderMain() {
   const loc = model.locate(state.nb, node.id);
   const flat = model.flatten(state.nb);
   const pos = flat.indexOf(node);
+  const host = h('div', { class: 'doc' });
 
-  fill(main,
+  fill(
+    main,
     h(
       'nav',
       { class: 'crumbs', 'aria-label': 'Breadcrumb' },
@@ -252,15 +328,12 @@ function renderMain() {
           value: node.title,
           'aria-label': 'Section title',
           placeholder: 'Section title',
-          onInput: (e) =>
-            commit(
-              () => (node.title = e.target.value),
-              { rerender: false }
-            ),
+          onInput: (e) => commit(() => (node.title = e.target.value), { rerender: false }),
           onChange: () => renderSidebar(),
         })
       : h('h1', { class: 'page-title' }, node.title || 'Untitled'),
-    h('div', { class: 'blocks' }, renderBlocks(node)),
+    state.edit ? toolbar.el : null,
+    host,
     renderChildren(node),
     h(
       'nav',
@@ -269,7 +342,11 @@ function renderMain() {
       pos < flat.length - 1 ? h('a', { href: `#/${flat[pos + 1].id}`, class: 'next' }, h('small', {}, 'Next →'), flat[pos + 1].title) : h('span')
     )
   );
-  revealBlocks(main);
+  mountEditor(node, host);
+  host.addEventListener('click', (e) => {
+    const img = e.target.closest('.media-img img');
+    if (img && !state.edit) openLightbox(img.src, img.alt);
+  });
 }
 
 function sectionToolbar(node, loc) {
@@ -287,95 +364,6 @@ function sectionToolbar(node, loc) {
   );
 }
 
-function renderBlocks(node) {
-  const out = [];
-  if (state.edit) out.push(inserter(node, 0));
-  node.blocks.forEach((block, i) => {
-    const editing = state.editingBlockId === block.id;
-    out.push(
-      h(
-        'div',
-        { class: `block block-${block.type}${editing ? ' is-editing' : ''}`, 'data-id': block.id },
-        state.edit && !editing && blockToolbar(node, block, i),
-        editing
-          ? buildBlockEditor(block, ctx, {
-              onDone: (data) => {
-                commit(() => (block.data = data), { rerender: false });
-                state.editingBlockId = null;
-                state.newBlockId = null;
-                render();
-              },
-              onCancel: () => cancelBlockEdit(true),
-            })
-          : h('div', { class: 'block-body', onDblclick: state.edit ? () => startBlockEdit(block.id) : null }, renderBlockBody(block.type, block.data, ctx))
-      )
-    );
-    if (state.edit) out.push(inserter(node, i + 1));
-  });
-  if (!node.blocks.length && !state.edit) {
-    out.push(h('p', { class: 'muted' }, node.children.length ? '' : 'Nothing here yet. Click Edit to add notes.'));
-  }
-  return out;
-}
-
-function blockToolbar(node, block, i) {
-  const btn = (label, title, onClick, disabled = false, extra = '') =>
-    h('button', { type: 'button', class: `btn small ${extra}`, title, 'aria-label': title, disabled, onClick }, label);
-  const def = BLOCK_TYPES[block.type];
-  return h(
-    'div',
-    { class: 'block-toolbar' },
-    h('span', { class: 'block-kind' }, def ? `${def.icon} ${def.label}` : block.type),
-    h('span', { class: 'spacer' }),
-    btn('Edit', 'Edit block', () => startBlockEdit(block.id)),
-    btn('↑', 'Move block up', () => commit(() => model.moveBlock(node, block.id, -1)), i === 0),
-    btn('↓', 'Move block down', () => commit(() => model.moveBlock(node, block.id, 1)), i === node.blocks.length - 1),
-    btn('⧉', 'Duplicate block', () => commit(() => model.duplicateBlock(node, block.id))),
-    btn('✕', 'Delete block', () => confirm('Delete this block?') && commit(() => model.removeBlock(node, block.id)), false, 'danger')
-  );
-}
-
-function inserter(node, index) {
-  const menu = h(
-    'div',
-    { class: 'insert-menu', hidden: true },
-    Object.entries(BLOCK_TYPES).map(([type, def]) =>
-      h(
-        'button',
-        {
-          type: 'button',
-          onClick: () => {
-            let block;
-            commit(() => (block = model.insertBlock(node, index, type, def.defaults())), { rerender: false });
-            if (def.fields.length) {
-              state.editingBlockId = block.id;
-              state.newBlockId = block.id;
-            }
-            render();
-            focusEditor();
-          },
-        },
-        h('span', { class: 'icon' }, def.icon),
-        h('span', {}, h('strong', {}, def.label), def.hint && h('small', {}, def.hint))
-      )
-    )
-  );
-  const toggle = h(
-    'button',
-    {
-      type: 'button',
-      class: 'insert-btn',
-      'aria-label': 'Add a block here',
-      onClick: () => {
-        document.querySelectorAll('.insert-menu').forEach((m) => m !== menu && (m.hidden = true));
-        menu.hidden = !menu.hidden;
-      },
-    },
-    '+ Add block'
-  );
-  return h('div', { class: 'inserter' }, toggle, menu);
-}
-
 function renderChildren(node) {
   if (!node.children.length) return null;
   return h(
@@ -386,73 +374,23 @@ function renderChildren(node) {
       'div',
       { class: 'cards' },
       node.children.map((c) => {
-        const counts = model.countContents(c);
-        const meta = [c.blocks.length && `${c.blocks.length} block${c.blocks.length === 1 ? '' : 's'}`, counts.sections && `${counts.sections} subsection${counts.sections === 1 ? '' : 's'}`]
-          .filter(Boolean)
-          .join(' · ');
-        return h('a', { class: 'card', href: `#/${c.id}` }, h('strong', {}, c.title || 'Untitled'), h('small', { class: 'muted' }, meta || 'Empty'));
+        const subs = model.countSubsections(c);
+        const meta = [model.isEmptyDoc(c.doc) ? 'Empty' : null, subs ? `${subs} subsection${subs === 1 ? '' : 's'}` : null].filter(Boolean).join(' · ');
+        return h('a', { class: 'card', href: `#/${c.id}` }, h('strong', {}, c.title || 'Untitled'), meta && h('small', { class: 'muted' }, meta));
       })
     )
   );
 }
 
-let revealObserver;
-function revealBlocks(root) {
-  const blocks = root.querySelectorAll('.block');
-  if (!state.nb.settings.animateBlocks || prefersReducedMotion() || state.edit || !('IntersectionObserver' in window)) return;
-  revealObserver?.disconnect();
-  revealObserver = new IntersectionObserver(
-    (entries) =>
-      entries.forEach((e) => {
-        if (e.isIntersecting) {
-          e.target.classList.add('revealed');
-          revealObserver.unobserve(e.target);
-        }
-      }),
-    { rootMargin: '0px 0px -40px 0px' }
-  );
-  blocks.forEach((b) => {
-    b.classList.add('reveal');
-    revealObserver.observe(b);
-  });
-}
-
 /* ---------- actions ---------- */
 
 function toggleEdit() {
-  if (state.edit && state.editingBlockId) cancelBlockEdit(false);
+  flushDoc();
   state.edit = !state.edit;
   if (state.edit && !store.isConnected()) {
     toast('Editing in this browser only. Connect GitHub in Settings to save your notes online.', 'info', 6000);
   }
   render();
-}
-
-function startBlockEdit(id) {
-  if (state.editingBlockId && state.editingBlockId !== id) cancelBlockEdit(false);
-  state.editingBlockId = id;
-  render();
-  focusEditor();
-}
-
-function cancelBlockEdit(rerender) {
-  const node = currentNode();
-  if (node && state.newBlockId && state.newBlockId === state.editingBlockId) {
-    const id = state.newBlockId;
-    commit(() => model.removeBlock(node, id), { rerender: false });
-  }
-  state.editingBlockId = null;
-  state.newBlockId = null;
-  if (rerender) render();
-}
-
-function focusEditor() {
-  requestAnimationFrame(() => {
-    const editor = document.querySelector('.block-editor');
-    if (!editor) return;
-    editor.scrollIntoView({ block: 'center', behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
-    editor.querySelector('textarea, input:not([type=checkbox]), select')?.focus({ preventScroll: true });
-  });
 }
 
 function addSection(parentId) {
@@ -461,32 +399,28 @@ function addSection(parentId) {
   let node;
   commit(() => (node = model.addNode(state.nb, parentId, title.trim() || 'Untitled')), { rerender: false });
   if (parentId) collapsed.delete(parentId);
-  if (!state.edit) state.edit = true;
-  go(node.id);
+  state.edit = true;
+  if (location.hash === `#/${node.id}`) render();
+  else go(node.id);
 }
 
 function deleteSection(node) {
-  const c = model.countContents(node);
-  const extra = [c.sections && `${c.sections} subsection${c.sections === 1 ? '' : 's'}`, c.blocks && `${c.blocks} block${c.blocks === 1 ? '' : 's'}`]
-    .filter(Boolean)
-    .join(' and ');
-  if (!confirm(`Delete “${node.title}”${extra ? ` with ${extra}` : ''}?\n\nYou can still undo by closing without saving, or from the GitHub history after saving.`)) return;
+  const subs = model.countSubsections(node);
+  const extra = subs ? ` and its ${subs} subsection${subs === 1 ? '' : 's'}` : '';
+  if (!confirm(`Delete “${node.title}”${extra}?\n\nYou can still undo by closing without saving, or from the GitHub history after saving.`)) return;
   let loc;
   commit(() => (loc = model.removeNode(state.nb, node.id)), { rerender: false });
   const next = loc.parent || loc.list[Math.min(loc.index, loc.list.length - 1)] || state.nb.sections[0];
-  go(next ? next.id : null);
-  if (!next) render();
+  if (next && location.hash !== `#/${next.id}`) go(next.id);
+  else route();
 }
 
 async function save() {
+  flushDoc();
   if (!state.dirty || state.saving) return;
   if (!store.isConnected()) {
     openSettings();
     toast('Connect GitHub to save your notes online. Until then they are kept in this browser.', 'info', 6000);
-    return;
-  }
-  if (state.editingBlockId) {
-    toast('Finish or cancel the block you are editing first.', 'info');
     return;
   }
   state.saving = true;
@@ -538,8 +472,6 @@ function openSettings() {
   f.theme.value = s.theme;
   f.fontSize.value = s.fontSize;
   f.contentWidth.value = s.contentWidth;
-  f.animateBlocks.checked = s.animateBlocks;
-  f.codeLineNumbers.checked = s.codeLineNumbers;
   f.codeWrap.checked = s.codeWrap;
   updateConnectionStatus();
   dialog.showModal();
@@ -570,6 +502,7 @@ async function connect() {
     return updateConnectionStatus(`Could not connect: ${err.message}`);
   }
   updateConnectionStatus();
+  flushDoc();
   // Base further saves on the version in the repository, keeping any local edits.
   try {
     const remote = await store.loadNotebook();
@@ -593,8 +526,7 @@ async function connect() {
 function wireSettings() {
   const dialog = $('#settings');
   const f = dialog.querySelector('form').elements;
-  const display = ['title', 'theme', 'fontSize', 'contentWidth', 'animateBlocks', 'codeLineNumbers', 'codeWrap'];
-  display.forEach((name) =>
+  ['title', 'theme', 'fontSize', 'contentWidth', 'codeWrap'].forEach((name) =>
     f[name].addEventListener('change', () => {
       commit(() => {
         const el = f[name];
@@ -611,6 +543,7 @@ function wireSettings() {
   });
   $('#close-settings').addEventListener('click', () => dialog.close());
   $('#export').addEventListener('click', () => {
+    flushDoc();
     const blob = new Blob([JSON.stringify(state.nb, null, 2)], { type: 'application/json' });
     const a = h('a', { href: URL.createObjectURL(blob), download: `notebook-${new Date().toISOString().slice(0, 10)}.json` });
     a.click();
@@ -648,18 +581,20 @@ function wireChrome() {
   wireSettings();
 
   document.addEventListener('keydown', (e) => {
-    if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+    if (!(e.ctrlKey || e.metaKey)) return;
+    if (e.key === 's') {
       e.preventDefault();
       save();
+    } else if (e.key === 'k' && state.edit && state.editor && state.editor.isFocused) {
+      e.preventDefault();
+      toolbar.setLink();
     }
   });
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('.inserter')) document.querySelectorAll('.insert-menu').forEach((m) => (m.hidden = true));
-  });
   window.addEventListener('beforeunload', (e) => {
+    flushDoc();
     if (state.dirty && store.isConnected()) e.preventDefault();
   });
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => state.nb && renderMain());
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => state.nb && state.currentId && renderMain());
 }
 
 init();

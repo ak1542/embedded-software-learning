@@ -1,6 +1,6 @@
-Third-party libraries, copied unmodified from npm (highlight.min.js also bundles the armasm, x86asm, verilog and cmake languages).
+Third-party code used by the site.
 
-- marked@12.0.2 (MIT)
-- dompurify@3.1.6 ((MPL-2.0 OR Apache-2.0))
-- @highlightjs/cdn-assets@11.9.0 (BSD-3-Clause)
-- mermaid@10.9.1 (MIT)
+- `editor.bundle.js` is built from `editor/src/` by `npm run build:editor`. It bundles, unmodified:
+  Tiptap 2.27.3 and its extensions (MIT), ProseMirror (MIT), lowlight 3.3.0 (MIT) and highlight.js 11.9.0 (BSD-3-Clause).
+- `highlight-github-dark.min.css` is the highlight.js 11.9.0 "GitHub Dark" theme (BSD-3-Clause).
+- `mermaid.min.js` is Mermaid 10.9.1 (MIT), loaded only on pages that contain a diagram.
