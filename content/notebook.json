@@ -22,6 +22,7 @@
             "attrs": {
               "src": "content/media/2026-10/mvsdsg9v-animation.html",
               "height": 420,
+              "fit": true,
               "width": 100,
               "title": "Animation"
             }
@@ -37,6 +38,21 @@
                 "text": "lkjlkjl4"
               }
             ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null
+            }
+          },
+          {
+            "type": "image",
+            "attrs": {
+              "src": "content/media/2026-10/mvsecm1h-mermaid-diagram.png",
+              "alt": "mermaid-diagram",
+              "width": null,
+              "align": "center"
+            }
           },
           {
             "type": "paragraph",
