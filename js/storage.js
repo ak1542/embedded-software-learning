@@ -45,13 +45,15 @@ export function guessRepo() {
 
 async function gh(path, options = {}) {
   const c = getConfig();
-  const res = await fetch(`https://api.github.com/repos/${c.owner}/${c.repo}/${path}`, {
-    cache: 'no-store',
+  // Keep requests "simple" for CORS: no cache: 'no-store' (browsers then add Cache-Control and
+  // Pragma headers, which api.github.com rejects) and no extra custom headers. Reads are kept
+  // fresh with a throwaway query parameter instead.
+  const fresh = options.method ? '' : `${path.includes('?') ? '&' : '?'}_=${Date.now()}`;
+  const res = await fetch(`https://api.github.com/repos/${c.owner}/${c.repo}/${path}${fresh}`, {
     ...options,
     headers: {
       Accept: 'application/vnd.github+json',
       Authorization: `Bearer ${c.token}`,
-      'X-GitHub-Api-Version': '2022-11-28',
       ...(options.headers || {}),
     },
   });
