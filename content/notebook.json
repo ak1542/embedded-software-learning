@@ -1,6 +1,14 @@
 {
   "schemaVersion": 1,
-  "settings": {},
+  "settings": {
+    "title": "Embedded Software Notes",
+    "theme": "auto",
+    "fontSize": 16,
+    "contentWidth": "normal",
+    "animateBlocks": true,
+    "codeLineNumbers": true,
+    "codeWrap": false
+  },
   "sections": [
     {
       "id": "s-seed007",
@@ -92,23 +100,6 @@
         }
       ],
       "children": [
-        {
-          "id": "s-seed010",
-          "title": "Bit manipulation",
-          "blocks": [
-            {
-              "id": "b-seed009",
-              "type": "code",
-              "data": {
-                "lang": "c",
-                "filename": "bits.h",
-                "code": "#define BIT(n)            (1UL << (n))\n#define SET_BIT(reg, n)   ((reg) |=  BIT(n))\n#define CLEAR_BIT(reg, n) ((reg) &= ~BIT(n))\n#define TOGGLE_BIT(reg, n) ((reg) ^= BIT(n))\n#define READ_BIT(reg, n)  (((reg) >> (n)) & 1UL)",
-                "caption": "Set, clear, toggle and read single bits"
-              }
-            }
-          ],
-          "children": []
-        },
         {
           "id": "s-seed012",
           "title": "The volatile keyword",
