@@ -5,7 +5,7 @@
   "scripts": {
     "test": "node --test tests/*.test.mjs",
     "start": "python3 -m http.server 8000",
-    "build:editor": "esbuild editor/src/index.js --bundle --format=esm --minify --target=es2020 --legal-comments=none --outfile=vendor/editor.bundle.js"
+    "build:editor": "esbuild editor/src/index.js --bundle --format=esm --minify --target=es2020 --legal-comments=none --outfile=vendor/editor.bundle.js && esbuild editor/src/export-docx.js --bundle --format=esm --minify --target=es2020 --legal-comments=none --outfile=vendor/export-docx.bundle.js"
   },
   "devDependencies": {
     "@tiptap/core": "2.27.3",
@@ -25,6 +25,7 @@
     "@tiptap/extension-underline": "2.27.3",
     "@tiptap/pm": "2.27.3",
     "@tiptap/starter-kit": "2.27.3",
+    "docx": "9.15.0",
     "esbuild": "0.28.2",
     "highlight.js": "11.9.0",
     "lowlight": "3.3.0"

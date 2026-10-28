@@ -631,6 +631,41 @@ function wireSettings() {
   });
 }
 
+/* ---------- export ---------- */
+
+function openExport() {
+  flushDoc();
+  const dialog = $('#export-dialog');
+  const f = dialog.querySelector('form').elements;
+  const has = Boolean(currentNode());
+  [...f.scope].forEach((r) => (r.disabled = r.value !== 'all' && !has));
+  if (!has) f.scope.value = 'all';
+  $('#export-status').textContent = '';
+  $('#export-go').disabled = false;
+  dialog.showModal();
+}
+
+async function runExport() {
+  const dialog = $('#export-dialog');
+  const f = dialog.querySelector('form').elements;
+  const scope = f.scope.value;
+  const format = f.format.value;
+  flushDoc();
+  const exporter = await import('./export.js');
+  const current = currentNode();
+  const sections = exporter.collectSections(state.nb, scope, current);
+  if (!sections.length) return ($('#export-status').textContent = 'There is nothing to export yet.');
+  const title = exporter.exportTitle(state.nb, scope, current);
+  dialog.close();
+  try {
+    if (format === 'docx') await exporter.exportWord({ nb: state.nb, sections, title });
+    else await exporter.exportPdf({ nb: state.nb, sections, title, lib });
+  } catch (err) {
+    console.error(err);
+    toast(`Export failed: ${err.message}`, 'error', 8000);
+  }
+}
+
 /* ---------- page chrome ---------- */
 
 // On a phone the section list slides over the page; on a computer it can be hidden to give
@@ -666,6 +701,9 @@ function wireChrome() {
   $('#edit-toggle').addEventListener('click', toggleEdit);
   $('#save').addEventListener('click', save);
   $('#open-settings').addEventListener('click', openSettings);
+  $('#open-export').addEventListener('click', openExport);
+  $('#export-go').addEventListener('click', runExport);
+  $('#close-export').addEventListener('click', () => $('#export-dialog').close());
   $('#nav-toggle').addEventListener('click', toggleSidebar);
   syncSidebarState();
   window.addEventListener('scroll', () => {

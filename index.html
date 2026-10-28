@@ -17,6 +17,7 @@
       <span class="spacer"></span>
       <button id="save" class="btn" type="button" hidden title="Save to GitHub (Ctrl+S)">Saved</button>
       <button id="edit-toggle" class="btn" type="button">Edit</button>
+      <button id="open-export" class="btn" type="button" title="Export to PDF or Word">Export</button>
       <button id="open-settings" class="btn icon-btn" type="button" aria-label="Settings" title="Settings">⚙</button>
     </header>
 
@@ -32,6 +33,28 @@
         <nav class="outline-list"></nav>
       </aside>
     </div>
+
+    <dialog id="export-dialog" aria-labelledby="export-title">
+      <form method="dialog" onsubmit="return false">
+        <div class="dialog-head">
+          <h2 id="export-title">Export</h2>
+          <button id="close-export" class="btn icon-btn" type="button" aria-label="Close">✕</button>
+        </div>
+        <fieldset>
+          <legend>What to export</legend>
+          <label class="field checkbox"><input type="radio" name="scope" value="page" checked /><span>This page only</span></label>
+          <label class="field checkbox"><input type="radio" name="scope" value="branch" /><span>This section and all its subsections</span></label>
+          <label class="field checkbox"><input type="radio" name="scope" value="all" /><span>The whole notebook</span></label>
+        </fieldset>
+        <fieldset>
+          <legend>Format</legend>
+          <label class="field checkbox"><input type="radio" name="format" value="pdf" checked /><span>PDF (opens your browser's print window: choose “Save as PDF”)</span></label>
+          <label class="field checkbox"><input type="radio" name="format" value="docx" /><span>Word document (.docx)</span></label>
+        </fieldset>
+        <p id="export-status" class="muted"></p>
+        <div class="row"><button id="export-go" class="btn primary" type="button">Export</button></div>
+      </form>
+    </dialog>
 
     <dialog id="settings" aria-labelledby="settings-title">
       <form method="dialog" onsubmit="return false">

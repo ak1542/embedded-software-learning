@@ -36,3 +36,37 @@ export async function renderDiagram(el, code) {
     el.replaceChildren(h('div', { class: 'block-unknown' }, `Diagram error: ${err.message || err}`));
   }
 }
+
+// A diagram as a PNG picture (for Word). It is drawn in the light theme with plain SVG text
+// labels, because browsers cannot turn HTML labels inside an SVG into a picture.
+export async function diagramToPng(code) {
+  const mermaid = await loadMermaid();
+  mermaid.initialize({ startOnLoad: false, securityLevel: 'strict', theme: 'default', htmlLabels: false, flowchart: { htmlLabels: false } });
+  mermaidTheme = null; // the next diagram on screen sets its own theme again
+  const id = `mmdx-${++counter}`;
+  let svg;
+  try {
+    ({ svg } = await mermaid.render(id, code));
+  } finally {
+    document.getElementById(`d${id}`)?.remove();
+  }
+  const root = new DOMParser().parseFromString(svg, 'image/svg+xml').documentElement;
+  const box = (root.getAttribute('viewBox') || '').split(/[\s,]+/).map(Number);
+  const width = Math.ceil(box[2] || parseFloat(root.getAttribute('width')) || 800);
+  const height = Math.ceil(box[3] || parseFloat(root.getAttribute('height')) || 600);
+  root.setAttribute('width', width);
+  root.setAttribute('height', height);
+  const img = new Image();
+  img.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(new XMLSerializer().serializeToString(root))}`;
+  await img.decode();
+  const scale = 2;
+  const canvas = document.createElement('canvas');
+  canvas.width = width * scale;
+  canvas.height = height * scale;
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
+  return { data: new Uint8Array(await blob.arrayBuffer()), width, height };
+}

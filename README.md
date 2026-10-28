@@ -14,6 +14,7 @@ Click **Edit** and the page itself becomes the editor, like a word processor. Cl
 - **Sections and subsections** at any depth: create, rename, reorder, indent / outdent, delete. Search covers all notes. The ☰ button hides or shows the section list (your choice is remembered).
 - **On this page:** an outline built automatically from your headings (H1–H4). Click an entry to jump there; the one you are reading is highlighted. It sits at the right on wide screens and at the top of the page on narrower ones.
 - **Numbering:** in ⚙ Settings, *Number sections and headings* adds 1, 1.1, 1.2… numbers to the section list, the headings and the outline. Off by default.
+- **Export** (top bar) to **PDF** or **Word (.docx)**: this page, a section with its subsections, or the whole notebook. PDF opens your browser's print window (choose *Save as PDF*) and always prints in light colours. Word files keep headings (so Word's Navigation Pane works), lists, tables, code, pictures and diagrams (as pictures).
 - Light and dark theme, works on phones, and unsaved edits are kept in the browser so a closed tab doesn't lose work.
 
 ## One-time setup
@@ -36,7 +37,7 @@ Notes are stored as **data, not HTML**, in `content/notebook.json`: each section
 
 ## Changing the editor
 
-The editor is [Tiptap](https://tiptap.dev), bundled into `vendor/editor.bundle.js` from `editor/src/`. That bundle is committed, so the site needs no build step to run. After changing anything in `editor/src/` (a new extension, a custom node), rebuild it:
+The editor is [Tiptap](https://tiptap.dev), bundled into `vendor/editor.bundle.js` from `editor/src/` (and the Word exporter into `vendor/export-docx.bundle.js`). Those bundles are committed, so the site needs no build step to run. After changing anything in `editor/src/` (a new extension, a custom node), rebuild it:
 
 ```sh
 npm install
@@ -61,9 +62,11 @@ js/app.js             navigation, editing, saving
 js/toolbar.js         the formatting toolbar
 js/schema.js          data format version, migrations, defaults
 js/model.js           section tree operations, search text
-js/diagram.js         Mermaid diagram rendering
+js/diagram.js         Mermaid diagram rendering (and diagram-to-picture for Word)
+js/export.js          export to PDF and Word
 js/storage.js         GitHub API, local drafts, media uploads
 editor/src/           editor source (Tiptap setup, picture/video/embed/diagram nodes)
+editor/src/export-docx.js  converts pages to a Word file
 vendor/               built editor bundle and third-party libraries
 content/notebook.json your notes
 content/media/        your uploaded images and videos

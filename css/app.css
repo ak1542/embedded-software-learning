@@ -336,13 +336,13 @@ body.nav-collapsed main { max-width: calc(var(--content) + 120px); }
 body.editing .ProseMirror h1, body.editing .ProseMirror h2, body.editing .ProseMirror h3, body.editing .ProseMirror h4 { scroll-margin-top: calc(var(--topbar) + 110px); }
 
 /* settings dialog */
-dialog#settings {
+dialog#settings, dialog#export-dialog {
   width: min(640px, calc(100vw - 32px)); max-height: calc(100vh - 32px);
   padding: 0; border: 1px solid var(--border); border-radius: 14px;
   background: var(--bg); color: var(--fg); box-shadow: var(--shadow);
 }
-dialog#settings::backdrop { background: rgba(0, 0, 0, 0.45); }
-dialog#settings form { padding: 0 20px 20px; }
+dialog#settings::backdrop, dialog#export-dialog::backdrop { background: rgba(0, 0, 0, 0.45); }
+dialog#settings form, dialog#export-dialog form { padding: 0 20px 20px; }
 .dialog-head { display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; background: var(--bg); padding: 12px 0; z-index: 1; }
 .dialog-head h2 { margin: 0; font-size: 1.2rem; }
 fieldset { border: 1px solid var(--border); border-radius: var(--radius); margin: 0 0 14px; padding: 12px 14px; }
@@ -383,4 +383,34 @@ fieldset p { font-size: 0.9rem; margin-top: 0; }
 
 @media print {
   .topbar, .sidebar, .pager, .toolbar, .section-toolbar { display: none !important; }
+}
+
+/* export to PDF: the page is rebuilt in #print-root and only that is printed */
+#print-root { display: none; }
+@media print {
+  @page { margin: 16mm 14mm; }
+  body.printing > :not(#print-root) { display: none !important; }
+  body.printing #print-root { display: block; color: #1c2330; background: #fff; font-size: 11pt; }
+  #print-root, #print-root * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .print-title { font-size: 26pt; margin: 0 0 4pt; }
+  .print-meta { color: #5f6b7a; margin: 0 0 18pt; }
+  .print-toc { margin: 0 0 12pt; padding: 10pt 12pt; border: 1px solid #dde1e7; border-radius: 6pt; line-height: 1.5; }
+  .print-section.page-break { break-before: page; }
+  .print-section-title { font-weight: 700; line-height: 1.25; margin: 14pt 0 8pt; break-after: avoid; }
+  .print-section-title.depth-0 { font-size: 22pt; padding-bottom: 4pt; border-bottom: 1.5pt solid #1f3a6d; color: #1f3a6d; }
+  .print-section-title.depth-1 { font-size: 17pt; color: #1f3a6d; }
+  .print-section-title.depth-2 { font-size: 14pt; }
+  .print-section-title.depth-3 { font-size: 12pt; }
+  #print-root .ProseMirror h1, #print-root .ProseMirror h2, #print-root .ProseMirror h3, #print-root .ProseMirror h4 { break-after: avoid; }
+  #print-root .ProseMirror pre, #print-root .ProseMirror table, #print-root .ProseMirror tr, #print-root .media-node, #print-root .diagram-node, #print-root .callout { break-inside: avoid; }
+  #print-root .ProseMirror a { color: #1a55c7; }
+  #print-root .embed-node iframe { display: none; }
+  #print-root .embed-node::after { content: 'Embedded page: see the online notes'; color: #5f6b7a; font-style: italic; }
+}
+
+@media (max-width: 560px) {
+  .topbar { padding: 0 8px; gap: 6px; }
+  .topbar .btn { padding: 0 10px; }
+  .topbar .btn.icon-btn { width: 36px; padding: 0; }
+  .site-title { display: none; }
 }
