@@ -6,125 +6,23 @@
     "fontSize": 16,
     "contentWidth": "normal",
     "codeWrap": false,
+    "numbering": false,
     "animateBlocks": true,
     "codeLineNumbers": true
   },
   "sections": [
     {
-      "id": "s-mvsbp76pjafyv",
-      "title": "Embedded C",
-      "children": [],
+      "id": "s-mvscjl3i7yeds",
+      "title": "Processor  ( Arm cortex M4 & R8 )",
       "doc": {
         "type": "doc",
         "content": [
           {
-            "type": "paragraph",
-            "attrs": {
-              "textAlign": null
-            },
-            "content": [
-              {
-                "type": "text",
-                "text": "nxccnj,nvxc,mnvc,m"
-              }
-            ]
-          },
-          {
-            "type": "paragraph",
-            "attrs": {
-              "textAlign": null
-            },
-            "content": [
-              {
-                "type": "text",
-                "text": "nm nmnmbn"
-              }
-            ]
-          },
-          {
-            "type": "orderedList",
-            "attrs": {
-              "start": 1,
-              "type": null
-            },
-            "content": [
-              {
-                "type": "listItem",
-                "content": [
-                  {
-                    "type": "paragraph",
-                    "attrs": {
-                      "textAlign": null
-                    },
-                    "content": [
-                      {
-                        "type": "text",
-                        "text": ",mnnmb,"
-                      },
-                      {
-                        "type": "text",
-                        "marks": [
-                          {
-                            "type": "bold"
-                          }
-                        ],
-                        "text": "bbnbnbn"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "type": "heading",
-            "attrs": {
-              "textAlign": null,
-              "level": 1
-            },
-            "content": [
-              {
-                "type": "text",
-                "text": "bnmbnmbmnb"
-              }
-            ]
-          },
-          {
-            "type": "taskList",
-            "content": [
-              {
-                "type": "taskItem",
-                "attrs": {
-                  "checked": false
-                },
-                "content": [
-                  {
-                    "type": "paragraph",
-                    "attrs": {
-                      "textAlign": null
-                    }
-                  },
-                  {
-                    "type": "image",
-                    "attrs": {
-                      "src": "content/media/2026-10/mvsc6rx7-mermaid-diagram.png",
-                      "alt": "mermaid-diagram",
-                      "width": null,
-                      "align": "center"
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "type": "paragraph",
-            "attrs": {
-              "textAlign": null
-            }
+            "type": "paragraph"
           }
         ]
-      }
+      },
+      "children": []
     }
   ]
 }
