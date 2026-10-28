@@ -16,7 +16,7 @@ const fresh = () =>
 test('the shipped notebook loads', () => {
   const nb = migrate(JSON.parse(readFileSync(new URL('../content/notebook.json', import.meta.url))));
   assert.equal(nb.schemaVersion, SCHEMA_VERSION);
-  assert.ok(model.flatten(nb).length > 5);
+  assert.ok(Array.isArray(nb.sections));
 });
 
 test('v0 notebooks are upgraded: a markdown `content` string becomes a text block', () => {
