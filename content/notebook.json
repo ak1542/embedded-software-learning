@@ -1,0 +1,243 @@
+{
+  "schemaVersion": 1,
+  "settings": {},
+  "sections": [
+    {
+      "id": "s-seed007",
+      "title": "Start here",
+      "blocks": [
+        {
+          "id": "b-seed001",
+          "type": "callout",
+          "data": {
+            "variant": "tip",
+            "title": "How this site works",
+            "md": "Click **Edit** (top right) to add, change, reorder or delete notes, sections and subsections. Press **Save** (or Ctrl+S) to store them in GitHub. Open **⚙ Settings** once on each device to connect GitHub."
+          }
+        },
+        {
+          "id": "b-seed002",
+          "type": "text",
+          "data": {
+            "md": "Each page is built from **blocks**. In edit mode, use **+ Add block** to insert:\n\n- **Text**: Markdown with lists, tables, links and `inline code`. Paste or drop an image straight in.\n- **Heading**, **Callout**, **Divider**\n- **Code**: highlighted C, C++, ARM assembly, Python, Rust and more, with a copy button\n- **Image** and **Animation / video**: GIF, MP4 or WebM, uploaded to the repository\n- **Step-by-step animation**: frames that play in order\n- **Diagram**: flowcharts, state machines and sequence diagrams from text\n- **Embed**: YouTube videos or a Wokwi simulation"
+          }
+        },
+        {
+          "id": "b-seed003",
+          "type": "heading",
+          "data": {
+            "text": "Example: step-by-step animation",
+            "level": 3
+          }
+        },
+        {
+          "id": "b-seed004",
+          "type": "steps",
+          "data": {
+            "intervalMs": 2200,
+            "autoplay": true,
+            "frames": [
+              {
+                "src": "",
+                "caption": "UART line idles HIGH"
+              },
+              {
+                "src": "",
+                "caption": "Start bit: line pulled LOW for one bit time"
+              },
+              {
+                "src": "",
+                "caption": "Data bits: usually 8, least significant bit first"
+              },
+              {
+                "src": "",
+                "caption": "Optional parity bit"
+              },
+              {
+                "src": "",
+                "caption": "Stop bit: line returns HIGH"
+              }
+            ]
+          }
+        },
+        {
+          "id": "b-seed005",
+          "type": "heading",
+          "data": {
+            "text": "Example: diagram",
+            "level": 3
+          }
+        },
+        {
+          "id": "b-seed006",
+          "type": "diagram",
+          "data": {
+            "code": "stateDiagram-v2\n    [*] --> Ready\n    Ready --> Running: scheduled\n    Running --> Ready: preempted\n    Running --> Blocked: waits for event\n    Blocked --> Ready: event arrives",
+            "caption": "RTOS task states"
+          }
+        }
+      ],
+      "children": []
+    },
+    {
+      "id": "s-seed014",
+      "title": "C for embedded",
+      "blocks": [
+        {
+          "id": "b-seed008",
+          "type": "text",
+          "data": {
+            "md": "The parts of C that matter most on microcontrollers."
+          }
+        }
+      ],
+      "children": [
+        {
+          "id": "s-seed010",
+          "title": "Bit manipulation",
+          "blocks": [
+            {
+              "id": "b-seed009",
+              "type": "code",
+              "data": {
+                "lang": "c",
+                "filename": "bits.h",
+                "code": "#define BIT(n)            (1UL << (n))\n#define SET_BIT(reg, n)   ((reg) |=  BIT(n))\n#define CLEAR_BIT(reg, n) ((reg) &= ~BIT(n))\n#define TOGGLE_BIT(reg, n) ((reg) ^= BIT(n))\n#define READ_BIT(reg, n)  (((reg) >> (n)) & 1UL)",
+                "caption": "Set, clear, toggle and read single bits"
+              }
+            }
+          ],
+          "children": []
+        },
+        {
+          "id": "s-seed012",
+          "title": "The volatile keyword",
+          "blocks": [
+            {
+              "id": "b-seed011",
+              "type": "callout",
+              "data": {
+                "variant": "warning",
+                "title": "Rule of thumb",
+                "md": "Use `volatile` for memory-mapped hardware registers and for variables shared between an ISR and the main loop. It stops the compiler from caching the value, but it does **not** make access atomic."
+              }
+            }
+          ],
+          "children": []
+        },
+        {
+          "id": "s-seed013",
+          "title": "Pointers and memory-mapped registers",
+          "blocks": [],
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "s-seed019",
+      "title": "Microcontroller fundamentals",
+      "blocks": [],
+      "children": [
+        {
+          "id": "s-seed015",
+          "title": "GPIO",
+          "blocks": [],
+          "children": []
+        },
+        {
+          "id": "s-seed016",
+          "title": "Interrupts",
+          "blocks": [],
+          "children": []
+        },
+        {
+          "id": "s-seed017",
+          "title": "Timers and PWM",
+          "blocks": [],
+          "children": []
+        },
+        {
+          "id": "s-seed018",
+          "title": "ADC and DAC",
+          "blocks": [],
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "s-seed024",
+      "title": "Communication protocols",
+      "blocks": [],
+      "children": [
+        {
+          "id": "s-seed020",
+          "title": "UART",
+          "blocks": [],
+          "children": []
+        },
+        {
+          "id": "s-seed021",
+          "title": "SPI",
+          "blocks": [],
+          "children": []
+        },
+        {
+          "id": "s-seed022",
+          "title": "I2C",
+          "blocks": [],
+          "children": []
+        },
+        {
+          "id": "s-seed023",
+          "title": "CAN",
+          "blocks": [],
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "s-seed027",
+      "title": "RTOS",
+      "blocks": [],
+      "children": [
+        {
+          "id": "s-seed025",
+          "title": "Tasks and scheduling",
+          "blocks": [],
+          "children": []
+        },
+        {
+          "id": "s-seed026",
+          "title": "Queues, semaphores and mutexes",
+          "blocks": [],
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "s-seed031",
+      "title": "Tools and debugging",
+      "blocks": [],
+      "children": [
+        {
+          "id": "s-seed028",
+          "title": "Toolchain and build",
+          "blocks": [],
+          "children": []
+        },
+        {
+          "id": "s-seed029",
+          "title": "Debugger (GDB, JTAG/SWD)",
+          "blocks": [],
+          "children": []
+        },
+        {
+          "id": "s-seed030",
+          "title": "Logic analyzer and oscilloscope",
+          "blocks": [],
+          "children": []
+        }
+      ]
+    }
+  ]
+}
