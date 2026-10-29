@@ -65,7 +65,11 @@ async function gh(path, options = {}) {
     } catch {
       /* no JSON body */
     }
-    const err = new Error(`GitHub ${res.status}${detail ? `: ${detail}` : ''}`);
+    const err = new Error(
+      res.status === 401
+        ? 'GitHub rejected the saved token (expired, revoked or wrong). Your edits are safe in this browser. Open ⚙ Settings, create a new token, paste it, press Connect, then Save again.'
+        : `GitHub ${res.status}${detail ? `: ${detail}` : ''}`
+    );
     err.status = res.status;
     throw err;
   }
