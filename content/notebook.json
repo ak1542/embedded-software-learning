@@ -1608,7 +1608,7 @@
                                 "content": [
                                   {
                                     "type": "text",
-                                    "text": "In core R, word 0:  tells the reset handler location"
+                                    "text": "In core R, word 0:  tells the reset handler location instruction "
                                   }
                                 ]
                               }
@@ -2018,7 +2018,7 @@
                           },
                           {
                             "type": "text",
-                            "text": " and jump to or load from the selected device (SPI, eMMC, UART download, and so on)."
+                            "text": " and jump to or load from the selected device (SPI, eMMC, UART download and so on)."
                           }
                         ]
                       }
@@ -2147,7 +2147,7 @@
                         "content": [
                           {
                             "type": "text",
-                            "text": "From then on, interrupts, aborts, and SVC calls read their vectors from RAM, which lets the firmware install its own handlers."
+                            "text": "From then on, interrupts, aborts and SVC calls read their vectors from RAM, which lets the firmware install its own handlers."
                           }
                         ]
                       }
@@ -2184,30 +2184,15 @@
               {
                 "type": "htmlAnimation",
                 "attrs": {
-                  "src": "content/media/animations/boot-remap.html",
-                  "height": 520,
+                  "src": "content/media/2026-10/mvsx5562-animation.html",
+                  "height": 420,
                   "fit": true,
                   "width": 100,
-                  "title": "Boot sequence with a software remap"
+                  "title": "Animation"
                 }
               },
               {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "Each program has its own vector table in this conceptual memory layout."
-                  }
-                ]
-              },
-              {
-                "type": "callout",
-                "attrs": {
-                  "variant": "info"
-                },
+                "type": "blockquote",
                 "content": [
                   {
                     "type": "paragraph",
@@ -2217,20 +2202,7 @@
                     "content": [
                       {
                         "type": "text",
-                        "text": "The original note had a picture of this layout (several programs, each with its own vector table). Add it with "
-                      },
-                      {
-                        "type": "text",
-                        "marks": [
-                          {
-                            "type": "bold"
-                          }
-                        ],
-                        "text": "Edit → Image"
-                      },
-                      {
-                        "type": "text",
-                        "text": " if you want it here."
+                        "text": "Each program has its own vector table in this conceptual memory layout."
                       }
                     ]
                   }
@@ -2316,6 +2288,18 @@
                     ]
                   }
                 ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null
+                }
               },
               {
                 "type": "paragraph",
