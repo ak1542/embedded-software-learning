@@ -1,0 +1,54 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Compare toggle</title>
+<style>:root{color-scheme:light;--bg:#fff;--soft:#f6f7f9;--sunk:#eef0f3;--fg:#1c2330;--muted:#5f6b7a;--line:#dde1e7;--accent:#2563eb;--accent-soft:#e8efff;--on-accent:#fff;
+--rom:#b45309;--romf:#fef3c7;--flash:#6d28d9;--flashf:#ede9fe;--ram:#15803d;--ramf:#d1fae5;--bus:#0e7490;--busf:#cffafe;--bad:#c62828;--badf:#fde8e8;--ok:#15803d;--okf:#dcfce7;--warn:#b45309;--warnf:#fef9c3;--r:10px}
+@media(prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#0f141b;--soft:#161c25;--sunk:#1d2531;--fg:#e4e8ee;--muted:#98a3b3;--line:#2a3441;--accent:#6ea0ff;--accent-soft:#1b2a45;--on-accent:#0b1220;--rom:#fbbf24;--romf:#3a2d0e;--flash:#a78bfa;--flashf:#2a2150;--ram:#4ade80;--ramf:#0f3328;--bus:#22d3ee;--busf:#0c3a44;--bad:#f87171;--badf:#3b1818;--ok:#4ade80;--okf:#12331f;--warn:#fbbf24;--warnf:#3a3210}}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:12px}
+.mono,code,pre{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+h1,h2,h3{margin:0 0 6px;line-height:1.25}h1{font-size:1.15rem}h2{font-size:1rem}
+button{font:inherit;color:inherit;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:6px 12px;cursor:pointer}
+button:hover:not(:disabled){background:var(--sunk)}button:disabled{opacity:.45;cursor:default}
+button.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+button.primary:hover:not(:disabled){background:var(--accent);filter:brightness(1.1)}
+button.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+button:focus-visible,[tabindex]:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+select,input[type=range]{font:inherit;color:inherit}
+select{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:5px 8px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px}
+.panel[hidden]{display:none}
+.card{background:var(--soft);border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.muted{color:var(--muted)}.grow{flex:1}
+.chip{display:inline-block;padding:1px 9px;border-radius:999px;font-size:.8rem;background:var(--sunk);border:1px solid var(--line);white-space:nowrap}
+.narr{min-height:3.4em;padding:10px 12px;border-left:4px solid var(--accent);background:var(--accent-soft);border-radius:0 var(--r) var(--r) 0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.opt{border:2px solid var(--line);border-radius:var(--r);padding:12px;background:var(--soft);transition:all .25s}
+.opt.hot{border-color:var(--accent);background:var(--accent-soft)}.opt.cold{opacity:.55}
+.opt ul{margin:6px 0 0;padding-left:1.1em}.verdict{margin-top:10px}
+</style></head><body>
+<!-- COMPARE TOGGLE: two or three options side by side; pick a scenario and the best fit lights up with the reason. Edit DATA only. -->
+<h1 id="t"></h1><div class="bar" id="sc" role="group" aria-label="Scenario"></div><div class="cols" id="cols" style="margin-top:10px"></div><div class="narr verdict" id="v" aria-live="polite"></div>
+<script>const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const hex=(n,w=8)=>'0x'+(n>>>0).toString(16).toUpperCase().padStart(w,'0');
+// tabs: buttons with data-tab="id" show the .panel with that id
+function initTabs(start=window.__START||0){const btns=$$('.tabs button');const show=id=>{btns.forEach(b=>{const on=b.dataset.tab===id;b.classList.toggle('on',on);b.setAttribute('aria-selected',on)});$$('.panel').forEach(p=>p.hidden=p.id!==id)};btns.forEach(b=>b.addEventListener('click',()=>show(b.dataset.tab)));if(btns[start])show(btns[start].dataset.tab);return show}
+// player: generic step controller. steps = count; render(i) draws step i; returns controls
+function player({count,render,prev,next,play,reset,delay=1800}){let i=0,timer=null;const set=n=>{i=Math.max(0,Math.min(count-1,n));render(i);if(prev)prev.disabled=i===0;if(next)next.disabled=i===count-1;};const stop=()=>{clearInterval(timer);timer=null;if(play)play.textContent='▶ Play'};const go=()=>{if(i>=count-1){stop();return}set(i+1)};
+if(next)next.onclick=()=>{stop();set(i+1)};if(prev)prev.onclick=()=>{stop();set(i-1)};if(reset)reset.onclick=()=>{stop();set(0)};
+if(play)play.onclick=()=>{if(timer){stop();return}if(i>=count-1)set(0);play.textContent='❚❚ Pause';timer=setInterval(go,delay)};
+addEventListener('keydown',e=>{if(e.target.closest('input,select,textarea'))return;if(e.key==='ArrowRight'){stop();set(i+1)}if(e.key==='ArrowLeft'){stop();set(i-1)}});
+set(0);return{set,stop,get i(){return i}}}
+
+const DATA={"title": "UART, SPI or I2C? Pick a situation", "options": [{"id": "uart", "name": "UART", "points": ["2 wires (TX, RX), no clock", "Point to point, 2 devices", "Both sides must agree on the baud rate", "Typically up to a few Mbit/s"]}, {"id": "spi", "name": "SPI", "points": ["4+ wires: SCLK, MOSI, MISO, one CS per slave", "Full duplex, no addressing", "Fastest of the three (tens of MHz)", "Master drives the clock"]}, {"id": "i2c", "name": "I2C", "points": ["2 wires (SDA, SCL) shared by many devices", "Address in every transfer, ACK per byte", "100 kHz to 1 MHz (3.4 MHz high-speed)", "Needs pull-up resistors"]}], "scenarios": [{"label": "Debug console to a PC", "best": "uart", "why": "Two devices, no clock wire needed, and every PC and USB-serial adapter speaks UART."}, {"label": "Display or flash chip needing high throughput", "best": "spi", "why": "SPI is fastest and full duplex; one extra CS wire per device is a fair price."}, {"label": "Five sensors on a board with few free pins", "best": "i2c", "why": "All five share the same two wires; each is chosen by its address."}, {"label": "Long cable to another board (a few metres)", "best": "uart", "why": "No shared clock to keep in step. (Real long runs add RS-485 or similar drivers.)"}]};
+$('#t').textContent=DATA.title;
+$('#cols').innerHTML=DATA.options.map(o=>`<div class="opt" data-id="${esc(o.id)}"><h2>${esc(o.name)}</h2><ul>${o.points.map(p=>`<li>${esc(p)}</li>`).join('')}</ul></div>`).join('');
+$('#sc').innerHTML=DATA.scenarios.map((s,i)=>`<button data-i="${i}">${esc(s.label)}</button>`).join('');
+function pick(i){const s=DATA.scenarios[i];$$('#sc button').forEach((b,j)=>b.classList.toggle('on',i===j));$$('.opt').forEach(o=>{o.classList.toggle('hot',o.dataset.id===s.best);o.classList.toggle('cold',o.dataset.id!==s.best)});$('#v').textContent=s.why}
+$$('#sc button').forEach(b=>b.onclick=()=>pick(+b.dataset.i));pick(0);
+</script></body></html>

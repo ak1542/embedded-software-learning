@@ -1,0 +1,94 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SPI exchange</title>
+<style>:root{color-scheme:light;--bg:#fff;--soft:#f6f7f9;--sunk:#eef0f3;--fg:#1c2330;--muted:#5f6b7a;--line:#dde1e7;--accent:#2563eb;--accent-soft:#e8efff;--on-accent:#fff;
+--rom:#b45309;--romf:#fef3c7;--flash:#6d28d9;--flashf:#ede9fe;--ram:#15803d;--ramf:#d1fae5;--bus:#0e7490;--busf:#cffafe;--bad:#c62828;--badf:#fde8e8;--ok:#15803d;--okf:#dcfce7;--warn:#b45309;--warnf:#fef9c3;--r:10px}
+@media(prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#0f141b;--soft:#161c25;--sunk:#1d2531;--fg:#e4e8ee;--muted:#98a3b3;--line:#2a3441;--accent:#6ea0ff;--accent-soft:#1b2a45;--on-accent:#0b1220;--rom:#fbbf24;--romf:#3a2d0e;--flash:#a78bfa;--flashf:#2a2150;--ram:#4ade80;--ramf:#0f3328;--bus:#22d3ee;--busf:#0c3a44;--bad:#f87171;--badf:#3b1818;--ok:#4ade80;--okf:#12331f;--warn:#fbbf24;--warnf:#3a3210}}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:12px}
+.mono,code,pre{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+h1,h2,h3{margin:0 0 6px;line-height:1.25}h1{font-size:1.15rem}h2{font-size:1rem}
+button{font:inherit;color:inherit;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:6px 12px;cursor:pointer}
+button:hover:not(:disabled){background:var(--sunk)}button:disabled{opacity:.45;cursor:default}
+button.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+button.primary:hover:not(:disabled){background:var(--accent);filter:brightness(1.1)}
+button.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+button:focus-visible,[tabindex]:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+select,input[type=range]{font:inherit;color:inherit}
+select{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:5px 8px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px}
+.panel[hidden]{display:none}
+.card{background:var(--soft);border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.muted{color:var(--muted)}.grow{flex:1}
+.chip{display:inline-block;padding:1px 9px;border-radius:999px;font-size:.8rem;background:var(--sunk);border:1px solid var(--line);white-space:nowrap}
+.narr{min-height:3.4em;padding:10px 12px;border-left:4px solid var(--accent);background:var(--accent-soft);border-radius:0 var(--r) var(--r) 0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+
+svg{width:100%;height:auto;display:block;background:var(--soft);border:1px solid var(--line);border-radius:var(--r)}
+.row{display:flex;gap:10px 16px;flex-wrap:wrap;align-items:center;margin:6px 0}
+.regs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:8px 0}
+.reg{border:2px solid var(--line);border-radius:10px;padding:8px;background:var(--soft)}
+.bitsr{display:flex;gap:3px;margin-top:4px}.bitsr span{flex:1;text-align:center;border:1px solid var(--line);border-radius:5px;padding:3px 0;font-family:ui-monospace,monospace;background:var(--bg)}
+.bitsr span.in{background:var(--okf);border-color:var(--ok)}
+
+</style></head><body>
+<h1>SPI: master and slave swap bytes while the clock ticks</h1>
+<div class="row"><label>Mode <select id="mode"><option value="0">0 (CPOL 0, CPHA 0)</option><option value="1">1 (CPOL 0, CPHA 1)</option><option value="2">2 (CPOL 1, CPHA 0)</option><option value="3">3 (CPOL 1, CPHA 1)</option></select></label>
+<label>Master sends <select id="mb"><option value="165">0xA5</option><option value="15">0x0F</option><option value="170">0xAA</option></select></label>
+<label>Slave sends <select id="sb"><option value="60">0x3C</option><option value="255">0xFF</option><option value="129">0x81</option></select></label></div>
+<svg id="svg" viewBox="0 0 960 300" role="img" aria-label="SPI waveform"></svg>
+<div class="regs"><div class="reg"><b>Master shift register</b><div class="bitsr" id="mr"></div></div><div class="reg"><b>Slave shift register</b><div class="bitsr" id="sr"></div></div></div>
+<div class="narr" id="narr" aria-live="polite"></div>
+<div class="bar" style="margin-top:10px"><button id="prev">◀ Back</button><button id="play" class="primary">▶ Play</button><button id="next">Next ▶</button><button id="reset">↺</button><span class="muted" id="count"></span></div>
+<script>const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const hex=(n,w=8)=>'0x'+(n>>>0).toString(16).toUpperCase().padStart(w,'0');
+// tabs: buttons with data-tab="id" show the .panel with that id
+function initTabs(start=window.__START||0){const btns=$$('.tabs button');const show=id=>{btns.forEach(b=>{const on=b.dataset.tab===id;b.classList.toggle('on',on);b.setAttribute('aria-selected',on)});$$('.panel').forEach(p=>p.hidden=p.id!==id)};btns.forEach(b=>b.addEventListener('click',()=>show(b.dataset.tab)));if(btns[start])show(btns[start].dataset.tab);return show}
+// player: generic step controller. steps = count; render(i) draws step i; returns controls
+function player({count,render,prev,next,play,reset,delay=1800}){let i=0,timer=null;const set=n=>{i=Math.max(0,Math.min(count-1,n));render(i);if(prev)prev.disabled=i===0;if(next)next.disabled=i===count-1;};const stop=()=>{clearInterval(timer);timer=null;if(play)play.textContent='▶ Play'};const go=()=>{if(i>=count-1){stop();return}set(i+1)};
+if(next)next.onclick=()=>{stop();set(i+1)};if(prev)prev.onclick=()=>{stop();set(i-1)};if(reset)reset.onclick=()=>{stop();set(0)};
+if(play)play.onclick=()=>{if(timer){stop();return}if(i>=count-1)set(0);play.textContent='❚❚ Pause';timer=setInterval(go,delay)};
+addEventListener('keydown',e=>{if(e.target.closest('input,select,textarea'))return;if(e.key==='ArrowRight'){stop();set(i+1)}if(e.key==='ArrowLeft'){stop();set(i-1)}});
+set(0);return{set,stop,get i(){return i}}}
+
+
+const NS='http://www.w3.org/2000/svg';const el=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e};
+let P;
+const bitsOf=v=>Array.from({length:8},(_,i)=>(v>>(7-i))&1);
+function draw(k){// k = number of clock cycles completed (0..8), step index = k
+ const mode=+$('#mode').value,cpol=mode>>1,cpha=mode&1,M=bitsOf(+$('#mb').value),S=bitsOf(+$('#sb').value);
+ const svg=$('#svg');svg.innerHTML='';const X0=110,bw=(960-X0-20)/9.5,lane=y=>y;
+ const T=t=>X0+t*bw; // t in bit periods, 0 = CS falls
+ const lanes={CS:40,SCLK:100,MOSI:170,MISO:240};
+ for(const[n,y]of Object.entries(lanes)){const t=el('text',{x:8,y:y+4,'font-size':14,'font-weight':700,fill:'var(--fg)'},svg);t.textContent=n}
+ const H=-16,L=16;
+ const path=(y,pts)=>{let d='';pts.forEach(([t,v],i)=>{const px=T(t),py=y+(v?H:L);d+=(i?` L${px} ${y+((pts[i-1][1])?H:L)} L${px} ${py}`:`M${px} ${py}`)});return d};
+ // CS: high until 0, low until 8.5
+ el('path',{d:`M${T(-0.4)} ${lanes.CS+H} L${T(0)} ${lanes.CS+H} L${T(0)} ${lanes.CS+L} L${T(8.5)} ${lanes.CS+L} L${T(8.5)} ${lanes.CS+H} L${T(9)} ${lanes.CS+H}`,fill:'none',stroke:'var(--muted)','stroke-width':2.5},svg);
+ // clock: cycle j in [j+0.0 , j+1]: leading edge at j+0.5, trailing at j+1 (CS falls at t=0 with clock idle)
+ const idle=cpol;let d=`M${T(-0.4)} ${lanes.SCLK+(idle?H:L)} L${T(0.5)} ${lanes.SCLK+(idle?H:L)}`;
+ for(let j=0;j<8;j++){const a=1-idle;d+=` L${T(j+0.5)} ${lanes.SCLK+(idle?H:L)} L${T(j+0.5)} ${lanes.SCLK+(a?H:L)} L${T(j+1)} ${lanes.SCLK+(a?H:L)} L${T(j+1)} ${lanes.SCLK+(idle?H:L)}`}
+ d+=` L${T(9)} ${lanes.SCLK+(idle?H:L)}`;el('path',{d,fill:'none',stroke:'var(--accent)','stroke-width':2.5},svg);
+ // data: bit j valid from tstart to tend
+ const win=j=>cpha===0?[j===0?0:j,j+1]:[j+0.5,j+1.5];
+ for(const[name,arr,col]of[['MOSI',M,'var(--ok)'],['MISO',S,'var(--rom)']]){const y=lanes[name];
+  arr.forEach((b,j)=>{const[a,z]=win(j);const x1=T(a),x2=T(z);el('path',{d:`M${x1} ${y+L} L${x1+6} ${y+H} L${x2-6} ${y+H} L${x2} ${y+L} L${x2-6} ${y+L+0} L${x1+6} ${y+L} Z`,fill:'none',stroke:col,'stroke-width':1.5,opacity:j<k?1:.55},svg);
+   const t=el('text',{x:(x1+x2)/2,y:y+5,'text-anchor':'middle','font-size':14,'font-family':'monospace',fill:col},svg);t.textContent=b})}
+ // sample markers
+ for(let j=0;j<8;j++){const t=cpha===0?j+0.5:j+1;const x=T(t);el('line',{x1:x,x2:x,y1:70,y2:262,stroke:j<k?'var(--bad)':'var(--line)','stroke-width':1.5,'stroke-dasharray':'3 3'},svg)}
+ const lab=el('text',{x:T(4.2),y:290,'text-anchor':'middle','font-size':12,fill:'var(--muted)'},svg);lab.textContent=`CPOL=${cpol}: clock idles ${cpol?'high':'low'} · CPHA=${cpha}: data is sampled on the ${cpha?'second (trailing)':'first (leading)'} edge · red lines = sample points · MSB first`;
+ // registers
+ const mr=[...M],sr=[...S];const mreg=[],sreg=[];
+ for(let i=0;i<8;i++){mreg.push(i+k<8?M[i+k]:S[i+k-8]);sreg.push(i+k<8?S[i+k]:M[i+k-8])}
+ const box=(id,reg)=>{$(id).innerHTML=reg.map((b,i)=>`<span class="${i>=8-k?'in':''}">${b}</span>`).join('')};box('#mr',mreg);box('#sr',sreg);
+ const hx=a=>'0x'+a.reduce((x,b)=>x*2+b,0).toString(16).toUpperCase().padStart(2,'0');
+ $('#narr').textContent=k===0?'CS goes low: the slave is selected and both shift registers hold their own byte. The master generates the clock.':k<8?`Clock cycle ${k}: the master puts its next bit on MOSI and the slave puts its next bit on MISO at the same time. Each side shifts the received bit in (green). Both registers shift one place.`:`After 8 clocks the bytes have been swapped: the master now holds ${hx(mreg)} and the slave holds ${hx(sreg)}. CS goes high. Every transfer is both a write and a read.`;
+ $('#count').textContent=`Clock ${k} of 8`}
+P=player({count:9,prev:$('#prev'),next:$('#next'),play:$('#play'),reset:$('#reset'),render:draw,delay:1300});
+['mode','mb','sb'].forEach(i=>$('#'+i).addEventListener('change',()=>draw(P.i)));
+
+</script></body></html>

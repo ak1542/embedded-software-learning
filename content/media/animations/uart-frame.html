@@ -1,0 +1,93 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>UART frame</title>
+<style>:root{color-scheme:light;--bg:#fff;--soft:#f6f7f9;--sunk:#eef0f3;--fg:#1c2330;--muted:#5f6b7a;--line:#dde1e7;--accent:#2563eb;--accent-soft:#e8efff;--on-accent:#fff;
+--rom:#b45309;--romf:#fef3c7;--flash:#6d28d9;--flashf:#ede9fe;--ram:#15803d;--ramf:#d1fae5;--bus:#0e7490;--busf:#cffafe;--bad:#c62828;--badf:#fde8e8;--ok:#15803d;--okf:#dcfce7;--warn:#b45309;--warnf:#fef9c3;--r:10px}
+@media(prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#0f141b;--soft:#161c25;--sunk:#1d2531;--fg:#e4e8ee;--muted:#98a3b3;--line:#2a3441;--accent:#6ea0ff;--accent-soft:#1b2a45;--on-accent:#0b1220;--rom:#fbbf24;--romf:#3a2d0e;--flash:#a78bfa;--flashf:#2a2150;--ram:#4ade80;--ramf:#0f3328;--bus:#22d3ee;--busf:#0c3a44;--bad:#f87171;--badf:#3b1818;--ok:#4ade80;--okf:#12331f;--warn:#fbbf24;--warnf:#3a3210}}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:12px}
+.mono,code,pre{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+h1,h2,h3{margin:0 0 6px;line-height:1.25}h1{font-size:1.15rem}h2{font-size:1rem}
+button{font:inherit;color:inherit;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:6px 12px;cursor:pointer}
+button:hover:not(:disabled){background:var(--sunk)}button:disabled{opacity:.45;cursor:default}
+button.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+button.primary:hover:not(:disabled){background:var(--accent);filter:brightness(1.1)}
+button.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+button:focus-visible,[tabindex]:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+select,input[type=range]{font:inherit;color:inherit}
+select{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:5px 8px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px}
+.panel[hidden]{display:none}
+.card{background:var(--soft);border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.muted{color:var(--muted)}.grow{flex:1}
+.chip{display:inline-block;padding:1px 9px;border-radius:999px;font-size:.8rem;background:var(--sunk);border:1px solid var(--line);white-space:nowrap}
+.narr{min-height:3.4em;padding:10px 12px;border-left:4px solid var(--accent);background:var(--accent-soft);border-radius:0 var(--r) var(--r) 0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+
+svg{width:100%;height:auto;display:block;background:var(--soft);border:1px solid var(--line);border-radius:var(--r)}
+.row{display:flex;gap:10px 16px;flex-wrap:wrap;align-items:center;margin:6px 0}
+input[type=text]{font:inherit;width:3em;text-align:center;background:var(--bg);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:4px}
+.res{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+
+</style></head><body>
+<h1>UART frame: what is on the wire for one byte</h1>
+<div class="row"><label>Character <input type="text" id="ch" maxlength="1" value="A"></label>
+<label>Parity <select id="par"><option value="n">none</option><option value="e">even</option><option value="o">odd</option></select></label>
+<label>Stop bits <select id="stp"><option>1</option><option>2</option></select></label>
+<label>Receiver clock error <input type="range" id="err" min="-10" max="10" value="0" step="1"> <b id="ev">0%</b></label></div>
+<svg id="svg" viewBox="0 0 960 230" role="img" aria-label="UART waveform"></svg>
+<div class="res" id="res"></div>
+<div class="narr" id="narr" aria-live="polite"></div>
+<script>const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const hex=(n,w=8)=>'0x'+(n>>>0).toString(16).toUpperCase().padStart(w,'0');
+// tabs: buttons with data-tab="id" show the .panel with that id
+function initTabs(start=window.__START||0){const btns=$$('.tabs button');const show=id=>{btns.forEach(b=>{const on=b.dataset.tab===id;b.classList.toggle('on',on);b.setAttribute('aria-selected',on)});$$('.panel').forEach(p=>p.hidden=p.id!==id)};btns.forEach(b=>b.addEventListener('click',()=>show(b.dataset.tab)));if(btns[start])show(btns[start].dataset.tab);return show}
+// player: generic step controller. steps = count; render(i) draws step i; returns controls
+function player({count,render,prev,next,play,reset,delay=1800}){let i=0,timer=null;const set=n=>{i=Math.max(0,Math.min(count-1,n));render(i);if(prev)prev.disabled=i===0;if(next)next.disabled=i===count-1;};const stop=()=>{clearInterval(timer);timer=null;if(play)play.textContent='▶ Play'};const go=()=>{if(i>=count-1){stop();return}set(i+1)};
+if(next)next.onclick=()=>{stop();set(i+1)};if(prev)prev.onclick=()=>{stop();set(i-1)};if(reset)reset.onclick=()=>{stop();set(0)};
+if(play)play.onclick=()=>{if(timer){stop();return}if(i>=count-1)set(0);play.textContent='❚❚ Pause';timer=setInterval(go,delay)};
+addEventListener('keydown',e=>{if(e.target.closest('input,select,textarea'))return;if(e.key==='ArrowRight'){stop();set(i+1)}if(e.key==='ArrowLeft'){stop();set(i-1)}});
+set(0);return{set,stop,get i(){return i}}}
+
+
+const NS='http://www.w3.org/2000/svg';
+function el(t,a,p){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e}
+function build(){
+ const c=($('#ch').value||'A').charCodeAt(0)&255,par=$('#par').value,stop=+$('#stp').value,err=+$('#err').value/100;$('#ev').textContent=($('#err').value>0?'+':'')+$('#err').value+'%';
+ const bits=[{v:0,l:'START'}];let ones=0;for(let i=0;i<8;i++){const b=(c>>i)&1;ones+=b;bits.push({v:b,l:'D'+i})}
+ if(par!=='n'){const p=par==='e'?ones%2:(ones+1)%2;bits.push({v:p,l:'P'})}
+ for(let i=0;i<stop;i++)bits.push({v:1,l:'STOP'});
+ const n=bits.length,total=n+2,W=960,bw=W/total,top=70,hi=top,lo=top+70;
+ const svg=$('#svg');svg.innerHTML='';
+ const level=t=>{const k=Math.floor(t);if(k<1||k>n)return 1;return bits[k-1].v};
+ // waveform
+ let d='M0 '+(hi);let cur=1;const y=v=>v?hi:lo;
+ for(let k=0;k<total;k++){const v=(k===0||k===total-1)?1:bits[k-1].v;if(v!==cur)d+=` L${k*bw} ${y(cur)} L${k*bw} ${y(v)}`;d+=` L${(k+1)*bw} ${y(v)}`;cur=v}
+ el('path',{d,fill:'none',stroke:'var(--accent)','stroke-width':3},svg);
+ for(let k=0;k<total;k++){el('line',{x1:k*bw,x2:k*bw,y1:30,y2:lo+30,stroke:'var(--line)','stroke-dasharray':'3 4'},svg)}
+ bits.forEach((b,i)=>{const x=(i+1.5)*bw;const t=el('text',{x,y:50,'text-anchor':'middle','font-size':13,fill:b.l==='START'||b.l==='STOP'?'var(--bad)':b.l==='P'?'var(--warn)':'var(--fg)'},svg);t.textContent=b.l;
+  const v=el('text',{x,y:lo+26,'text-anchor':'middle','font-size':15,'font-family':'monospace',fill:'var(--muted)'},svg);v.textContent=b.v});
+ const it=el('text',{x:bw/2,y:hi-8,'text-anchor':'middle','font-size':12,fill:'var(--muted)'},svg);it.textContent='idle';
+ // receiver sampling
+ const rxT=1+err,start=1;const got=[];
+ for(let i=0;i<n;i++){const ts=start+(i+0.5)*rxT;const v=level(ts);got.push(v);const x=ts*bw;
+  el('line',{x1:x,x2:x,y1:hi-14,y2:lo+8,stroke:'var(--bad)','stroke-width':1.5,'stroke-dasharray':'2 3'},svg);
+  el('circle',{cx:x,cy:v?hi:lo,r:5,fill:'var(--bad)'},svg)}
+ const l=el('text',{x:8,y:215,'font-size':12,fill:'var(--bad)'},svg);l.textContent='● receiver samples in the middle of each of ITS bit periods (16× oversampling does this in real hardware)';
+ // decode
+ let rx=0;for(let i=0;i<8;i++)rx|=got[1+i]<<i;
+ const stopOk=got.slice(n-stop).every(v=>v===1);let parOk=true;
+ if(par!=='n'){const cnt=got.slice(1,9).reduce((a,b)=>a+b,0)+got[9];parOk=par==='e'?cnt%2===0:cnt%2===1}
+ const startOk=got[0]===0;
+ const hx=v=>v.toString(16).toUpperCase().padStart(2,'0');
+ const ch=x=>x>=32&&x<127?String.fromCharCode(x):'?';
+ $('#res').innerHTML=`<span class="chip">sent 0x${hx(c)} '${ch(c)}'</span><span class="chip" style="${rx===c&&stopOk&&parOk?'':'color:var(--bad)'}">received 0x${hx(rx)} '${ch(rx)}'</span><span class="chip">${n} bits on the wire for 8 data bits (${Math.round(8/n*100)}% efficient)</span>`;
+ $('#narr').textContent=!startOk?'The receiver did not see a start bit where it expected one.':!stopOk?'FRAMING ERROR: the receiver expected the stop bit to be high but sampled low. A baud-rate mismatch makes the sample points drift away from the middle of the bits until they land in the wrong bit.':!parOk?'PARITY ERROR: the number of 1 bits does not match the parity setting.':rx!==c?'The frame was accepted but the data is wrong: the sample points drifted into a neighbouring bit.':err===0?'Both sides use the same baud rate, so every sample lands in the middle of a bit. Data is sent least-significant bit first. Try a clock error of 8% or more.':'A small error is tolerated: the receiver re-synchronises on every start edge, and it only needs to sample inside the right bit.'
+}
+['ch','par','stp','err'].forEach(i=>$('#'+i).addEventListener('input',build));build();
+
+</script></body></html>

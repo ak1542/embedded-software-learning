@@ -1,0 +1,64 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Open-drain</title>
+<style>:root{color-scheme:light;--bg:#fff;--soft:#f6f7f9;--sunk:#eef0f3;--fg:#1c2330;--muted:#5f6b7a;--line:#dde1e7;--accent:#2563eb;--accent-soft:#e8efff;--on-accent:#fff;
+--rom:#b45309;--romf:#fef3c7;--flash:#6d28d9;--flashf:#ede9fe;--ram:#15803d;--ramf:#d1fae5;--bus:#0e7490;--busf:#cffafe;--bad:#c62828;--badf:#fde8e8;--ok:#15803d;--okf:#dcfce7;--warn:#b45309;--warnf:#fef9c3;--r:10px}
+@media(prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#0f141b;--soft:#161c25;--sunk:#1d2531;--fg:#e4e8ee;--muted:#98a3b3;--line:#2a3441;--accent:#6ea0ff;--accent-soft:#1b2a45;--on-accent:#0b1220;--rom:#fbbf24;--romf:#3a2d0e;--flash:#a78bfa;--flashf:#2a2150;--ram:#4ade80;--ramf:#0f3328;--bus:#22d3ee;--busf:#0c3a44;--bad:#f87171;--badf:#3b1818;--ok:#4ade80;--okf:#12331f;--warn:#fbbf24;--warnf:#3a3210}}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:12px}
+.mono,code,pre{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+h1,h2,h3{margin:0 0 6px;line-height:1.25}h1{font-size:1.15rem}h2{font-size:1rem}
+button{font:inherit;color:inherit;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:6px 12px;cursor:pointer}
+button:hover:not(:disabled){background:var(--sunk)}button:disabled{opacity:.45;cursor:default}
+button.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+button.primary:hover:not(:disabled){background:var(--accent);filter:brightness(1.1)}
+button.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+button:focus-visible,[tabindex]:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+select,input[type=range]{font:inherit;color:inherit}
+select{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:5px 8px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px}
+.panel[hidden]{display:none}
+.card{background:var(--soft);border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.muted{color:var(--muted)}.grow{flex:1}
+.chip{display:inline-block;padding:1px 9px;border-radius:999px;font-size:.8rem;background:var(--sunk);border:1px solid var(--line);white-space:nowrap}
+.narr{min-height:3.4em;padding:10px 12px;border-left:4px solid var(--accent);background:var(--accent-soft);border-radius:0 var(--r) var(--r) 0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+
+.dev{border:2px solid var(--line);border-radius:10px;padding:10px;background:var(--soft);text-align:center;flex:1;min-width:150px}
+.wire{margin:14px 0;border:3px solid var(--line);border-radius:10px;padding:12px;text-align:center;font-weight:700;font-size:1.1rem}
+.wire.hi{border-color:var(--ok);background:var(--okf)}.wire.lo{border-color:var(--accent);background:var(--accent-soft)}.wire.bad{border-color:var(--bad);background:var(--badf)}.wire.fl{border-style:dashed}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:stretch}
+
+</style></head><body>
+<h1>Why I2C lines need pull-up resistors</h1>
+<label>Output type <select id="mode"><option value="od">Open-drain + pull-up resistor (I2C)</option><option value="nopu">Open-drain, pull-up missing</option><option value="pp">Push-pull (like a normal GPIO output)</option></select></label>
+<div class="row" style="margin-top:10px" id="devs"></div>
+<div class="wire" id="wire"></div>
+<div class="narr" id="narr" aria-live="polite"></div>
+<script>const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const hex=(n,w=8)=>'0x'+(n>>>0).toString(16).toUpperCase().padStart(w,'0');
+// tabs: buttons with data-tab="id" show the .panel with that id
+function initTabs(start=window.__START||0){const btns=$$('.tabs button');const show=id=>{btns.forEach(b=>{const on=b.dataset.tab===id;b.classList.toggle('on',on);b.setAttribute('aria-selected',on)});$$('.panel').forEach(p=>p.hidden=p.id!==id)};btns.forEach(b=>b.addEventListener('click',()=>show(b.dataset.tab)));if(btns[start])show(btns[start].dataset.tab);return show}
+// player: generic step controller. steps = count; render(i) draws step i; returns controls
+function player({count,render,prev,next,play,reset,delay=1800}){let i=0,timer=null;const set=n=>{i=Math.max(0,Math.min(count-1,n));render(i);if(prev)prev.disabled=i===0;if(next)next.disabled=i===count-1;};const stop=()=>{clearInterval(timer);timer=null;if(play)play.textContent='▶ Play'};const go=()=>{if(i>=count-1){stop();return}set(i+1)};
+if(next)next.onclick=()=>{stop();set(i+1)};if(prev)prev.onclick=()=>{stop();set(i-1)};if(reset)reset.onclick=()=>{stop();set(0)};
+if(play)play.onclick=()=>{if(timer){stop();return}if(i>=count-1)set(0);play.textContent='❚❚ Pause';timer=setInterval(go,delay)};
+addEventListener('keydown',e=>{if(e.target.closest('input,select,textarea'))return;if(e.key==='ArrowRight'){stop();set(i+1)}if(e.key==='ArrowLeft'){stop();set(i-1)}});
+set(0);return{set,stop,get i(){return i}}}
+
+
+let d={a:'release',b:'release'};
+function render(){const m=$('#mode').value;
+ $('#devs').innerHTML=['a','b'].map(k=>`<div class="dev"><b>Device ${k.toUpperCase()}</b><br><br>${m==='pp'?`<button data-k="${k}" data-v="high" class="${d[k]==='high'?'on':''}">drive HIGH</button> `:`<button data-k="${k}" data-v="release" class="${d[k]==='release'?'on':''}">release line</button> `}<button data-k="${k}" data-v="low" class="${d[k]==='low'?'on':''}">pull LOW</button></div>`).join('');
+ $$('.dev button').forEach(b=>b.onclick=()=>{d[b.dataset.k]=b.dataset.v;render()});
+ const v=[d.a,d.b];const w=$('#wire');let cls,txt,say;
+ if(m==='pp'){if(v.includes('high')&&v.includes('low')){cls='bad';txt='SHORT CIRCUIT: one output drives high while the other drives low';say='With push-pull outputs, two devices that disagree fight each other: a large current flows and the bus level is undefined. That is why a shared bus cannot use push-pull.'}else if(v.includes('low')){cls='lo';txt='line = LOW';say='Only works while at most one device drives the line at a time.'}else{cls='hi';txt='line = HIGH';say='Works for point-to-point links, but not when several devices share one wire.'}}
+ else{const low=v.includes('low');if(low){cls='lo';txt='line = LOW';say='Any device can pull the line low: it just connects it to ground. Two devices pulling low at once is fine, nothing fights.'}else if(m==='od'){cls='hi';txt='line = HIGH (pull-up resistor)';say='When every device releases the line, the pull-up resistor pulls it HIGH. The rule is "low wins": the line is the AND of all devices. This is a wired-AND bus.'}else{cls='fl';txt='line = floating (undefined)';say='Nobody drives it high: an open-drain output can only pull LOW. Without a pull-up the line never returns to a defined high level, so the bus does not work.'}}
+ w.className='wire '+cls;w.textContent=txt;$('#narr').textContent=say}
+$('#mode').onchange=()=>{d={a:$('#mode').value==='pp'?'high':'release',b:$('#mode').value==='pp'?'high':'release'};render()};render();
+
+</script></body></html>
