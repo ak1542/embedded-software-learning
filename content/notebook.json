@@ -15083,6 +15083,34 @@
                 ]
               },
               {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "callout",
+                "attrs": {
+                  "variant": "info"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "We can not use malloc from c std lib , because it  needs some os level api."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
                 "type": "heading",
                 "attrs": {
                   "textAlign": null,
@@ -18114,7 +18142,7 @@
                           },
                           {
                             "type": "text",
-                            "text": ": the time taken is not bounded and the allocator is usually not re-entrant."
+                            "text": ": the time taken is not bounded, and the allocator is usually not re-entrant."
                           }
                         ]
                       }
@@ -18388,6 +18416,27 @@
                   "fit": true,
                   "width": 100,
                   "title": "Heap allocator quiz"
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
                 }
               },
               {
