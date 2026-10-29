@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Build Explorer · Embedded Software Notes</title>
+  <link rel="stylesheet" href="css/app.css" />
+  <link rel="stylesheet" href="css/build.css" />
+</head>
+<body class="build-page">
+  <header class="topbar">
+    <a class="btn" href="./" title="Back to the notes">← Notes</a>
+    <h1 class="site-title">Build Explorer</h1>
+    <span class="grow"></span>
+    <select id="sample" class="btn" aria-label="Load an example"></select>
+    <button id="reset" class="btn" type="button" title="Replace the project with the selected example">Load example</button>
+  </header>
+  <div class="bx">
+    <section class="bx-left" aria-label="Source files and linker script">
+      <div class="bx-files" id="files" role="tablist"></div>
+      <textarea id="editor" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="File contents"></textarea>
+      <div class="bx-opts" id="opts"></div>
+      <p class="bx-hint">Paste or edit your C / C++ files and the linker script (<code>.ld</code>). Results update as you type. This is a <b>teaching simulator</b>, not a real compiler: variable sizes, section names and the memory map follow the real rules, function (code) sizes are estimates.</p>
+    </section>
+    <section class="bx-right" aria-label="Results">
+      <div id="diag"></div>
+      <div class="bx-tabs" id="tabs" role="tablist"></div>
+      <div id="view"></div>
+    </section>
+  </div>
+  <script type="module" src="js/build/app.js"></script>
+</body>
+</html>

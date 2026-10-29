@@ -20,6 +20,19 @@ Click **Edit** and the page itself becomes the editor, like a word processor. Cl
 - **↻ Load latest:** the button next to Save fetches the newest notes straight from the repository (bypassing browser and Pages caches), after asking before it discards unsaved edits.
 - Light and dark theme, works on phones, and unsaved edits are kept in the browser so a closed tab doesn't lose work.
 
+## Build Explorer (compile, link and load)
+
+`build.html` (button **Build Explorer** in the top bar) is a teaching tool for how C / C++ source becomes a program in memory. Paste or type your source files, headers and a **linker script** (`.ld`), and it shows, live:
+
+- **Memory map:** every output section placed in FLASH / RAM from your `MEMORY` and `SECTIONS` commands, with free space, `.data` stored in Flash but running from RAM, and what each block contains (files, functions, variables). Region overflow is reported like the real linker does.
+- **Preprocessed (.i):** the code after `#include`, `#define`, `#if` and comment removal.
+- **Object files (.o):** per file, its sections (`.text.fn`, `.data.var`, `.bss.var`, `.rodata`…), symbols (like `nm`), relocations and the real bytes of initialised data.
+- **Linker output:** which input section from which `.o` landed where, sections removed (`--gc-sections`, duplicate C++ inline code, `/DISCARD/`), orphan sections, linker-script symbols (`_sidata`, `_estack`…), and a downloadable `.map`.
+- **Executable (.axf / .elf):** header, program headers (VirtAddr vs PhysAddr), section headers, size summary (`text data bss`) and a searchable symbol table.
+- **Binary (.bin):** a hex dump of the flat image with the owner of each byte (vector table with the real stack-pointer and Thumb-bit handler addresses, constants, strings, `.data` initial values).
+
+Supports C and C++ (classes, namespaces, virtual functions and vtables, global constructors via `.init_array`, `extern "C"`). It is a **simulator, not a compiler**: section names, variable sizes and alignment, struct padding, the linker rules and the memory map follow the real tools, but machine code is not generated, so function sizes are estimates (shown as `··` in hex dumps), templates are not instantiated, and system headers other than `stdint.h`, `stddef.h` and `stdbool.h` are not expanded. Your project is kept in the browser. The code is in `js/build/` (preprocess, compile, ldscript, link) with tests in `tests/build.test.mjs`.
+
 ## Skill: visual-notes
 
 A Claude Code skill in `.claude/skills/visual-notes/` that turns plain-text notes into illustrated pages. Run `/visual-notes <paste your notes>` (or ask Claude to "use the visual-notes skill").
@@ -78,6 +91,7 @@ js/schema.js          data format version, migrations, defaults
 js/model.js           section tree operations, search text
 js/diagram.js         Mermaid diagram rendering (and diagram-to-picture for Word)
 js/export.js          export to PDF and Word
+build.html            Build Explorer page (js/build/: preprocess, compile, ldscript, link, UI)
 editor/src/anim.js    sandboxed HTML animation node
 js/storage.js         GitHub API, local drafts, media uploads
 editor/src/           editor source (Tiptap setup, picture/video/embed/diagram nodes)
