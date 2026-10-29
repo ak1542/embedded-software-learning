@@ -41,8 +41,7 @@ async function init() {
     if (!store.isConnected()) return fatal(err);
     toast(`Could not load from GitHub (${err.message}). Showing the published copy.`, 'error', 7000);
     try {
-      const res = await fetch(store.NOTEBOOK_PATH, { cache: 'no-store' });
-      loaded = { notebook: await res.json(), sha: null, source: 'site' };
+      loaded = { notebook: await store.fetchPublished(), sha: null, source: 'site' };
     } catch (err2) {
       return fatal(err2);
     }
@@ -751,7 +750,32 @@ function toggleSidebar() {
   syncSidebarState();
 }
 
+async function reloadLatest() {
+  flushDoc();
+  if (state.dirty && !confirm('You have unsaved changes. Reloading discards them and shows the latest saved notes.\n\nOK = discard and reload\nCancel = keep editing')) return;
+  const btn = $('#reload');
+  btn.disabled = true;
+  try {
+    const remote = await store.loadNotebook();
+    state.nb = migrate(remote.notebook);
+    state.sha = remote.sha;
+    state.source = remote.source;
+    state.dirty = false;
+    store.clearDraft();
+    destroyEditor();
+    applySettings();
+    route();
+    updateSaveButton();
+    toast('Loaded the latest notes.', 'success');
+  } catch (err) {
+    toast(`Could not reload: ${err.message}`, 'error', 7000);
+  } finally {
+    btn.disabled = false;
+  }
+}
+
 function wireChrome() {
+  $('#reload').addEventListener('click', reloadLatest);
   $('#edit-toggle').addEventListener('click', toggleEdit);
   $('#save').addEventListener('click', save);
   $('#open-settings').addEventListener('click', openSettings);

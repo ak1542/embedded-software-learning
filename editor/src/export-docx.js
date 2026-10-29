@@ -123,7 +123,7 @@ async function block(node, state, o) {
     case 'heading': {
       const level = Math.min(5, o.titleLevel + (node.attrs?.level || 1));
       const number = state.headingNumbers[state.headingIndex++];
-      return [new Paragraph({ heading: HEADINGS[level], alignment: alignOf(node), children: [...(number ? [new TextRun(`${number}  `)] : []), ...inline(node.content)] })];
+      return [new Paragraph({ heading: HEADINGS[level], alignment: alignOf(node), indent: node.attrs?.indent ? { left: node.attrs.indent * 720 } : undefined, children: [...(number ? [new TextRun(`${number}  `)] : []), ...inline(node.content)] })];
     }
     case 'bulletList':
     case 'orderedList':
@@ -160,6 +160,7 @@ function alignOf(node) {
 
 function paragraph(node, o, extra = {}) {
   const opts = { children: inline(node.content), alignment: alignOf(node), spacing: { after: 120, line: 276 }, ...extra };
+  if (node.attrs?.indent) opts.indent = { left: node.attrs.indent * 720 };
   decorate(opts, o);
   return new Paragraph(opts);
 }

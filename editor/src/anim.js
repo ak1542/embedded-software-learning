@@ -113,7 +113,7 @@ export const HtmlAnimation = Node.create({
         loadedUrl = url;
         measured = 0;
         try {
-          const res = await fetch(url);
+          const res = await fetch(url, { cache: 'reload' });
           if (!res.ok) throw new Error(`HTTP ${res.status}`);
           const html = await res.text();
           if (loadedUrl !== url) return;

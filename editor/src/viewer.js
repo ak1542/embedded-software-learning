@@ -215,7 +215,7 @@ export function openViewer({ kind, src, markup, title, openUrl }) {
     };
     window.addEventListener('message', onMessage);
     dialog.addEventListener('close', () => window.removeEventListener('message', onMessage));
-    fetch(src)
+    fetch(src, { cache: 'reload' })
       .then((r) => (r.ok ? r.text() : Promise.reject(new Error(`HTTP ${r.status}`))))
       .then((html) => (el.srcdoc = withFitScript(html)))
       .catch(() => el.setAttribute('src', src));

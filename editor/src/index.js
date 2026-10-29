@@ -59,6 +59,51 @@ const CodeTab = Extension.create({
 
 // Like Word, always keep an empty paragraph after a table, picture, code block… so there is
 // somewhere to click and keep typing.
+// Right-shift (indent) for paragraphs and headings, 0-6 levels. Stored as an `indent` attribute so
+// older notes (without it) are unaffected. Tab / Shift+Tab inside lists and tables keep their own meaning.
+export const MAX_INDENT = 6;
+const Indent = Extension.create({
+  name: 'indent',
+  addGlobalAttributes() {
+    return [
+      {
+        types: ['paragraph', 'heading'],
+        attributes: {
+          indent: {
+            default: 0,
+            parseHTML: (el) => Number(el.getAttribute('data-indent')) || 0,
+            renderHTML: (attrs) => (attrs.indent ? { 'data-indent': attrs.indent, style: `margin-left:${attrs.indent * 2}rem` } : {}),
+          },
+        },
+      },
+    ];
+  },
+  addCommands() {
+    const shift = (delta) => ({ state, tr, dispatch }) => {
+      const { from, to } = state.selection;
+      let changed = false;
+      state.doc.nodesBetween(from, to, (node, pos) => {
+        if (node.type.name !== 'paragraph' && node.type.name !== 'heading') return;
+        const next = Math.max(0, Math.min(MAX_INDENT, (node.attrs.indent || 0) + delta));
+        if (next !== (node.attrs.indent || 0)) {
+          tr.setNodeMarkup(pos, undefined, { ...node.attrs, indent: next });
+          changed = true;
+        }
+      });
+      if (changed && dispatch) dispatch(tr);
+      return changed;
+    };
+    return { indentMore: () => shift(1), indentLess: () => shift(-1) };
+  },
+  addKeyboardShortcuts() {
+    const own = (e) => !(e.isActive('listItem') || e.isActive('taskItem') || e.isActive('table') || e.isActive('codeBlock'));
+    return {
+      Tab: () => (own(this.editor) ? (this.editor.commands.indentMore(), true) : false),
+      'Shift-Tab': () => (own(this.editor) ? (this.editor.commands.indentLess(), true) : false),
+    };
+  },
+});
+
 const TrailingParagraph = Extension.create({
   name: 'trailingParagraph',
   addProseMirrorPlugins() {
@@ -136,6 +181,7 @@ export function createEditor(element, { content, editable, hooks, onUpdate, numb
       Diagram.configure({ renderDiagram: hooks.renderDiagram }),
       CodeTab,
       TrailingParagraph,
+      Indent,
       ...(numbering ? [HeadingNumbers] : []),
     ],
     editorProps: {

@@ -7,6 +7,7 @@ A notes website for learning embedded software. It runs on free GitHub Pages, so
 Click **Edit** and the page itself becomes the editor, like a word processor. Click and type; a toolbar above the page has the formatting tools.
 
 - **Text:** paragraph styles (Normal, Heading 1–4, Quote), bold, italic, underline, strikethrough, inline code, highlight, text colour, bulleted / numbered lists and checklists, alignment, links. Markdown shortcuts also work: `# ` for a heading, `- ` for a list, `**bold**`.
+- **Shift text right:** the ⇠ / ⇢ buttons (or Tab / Shift+Tab in a normal paragraph or heading) move text in by up to 6 steps, handy for text that belongs under a heading. In lists and tables Tab keeps its usual meaning (nest item / next cell). Indents appear in PDF and Word exports.
 - **Pictures, GIFs and videos:** use the *Image* / *Video* buttons, or paste or drag a file onto the page. Click a picture to pick a size (25 / 50 / 75 / 100 %) and alignment, or drag its round corner handle to resize it freely. Videos have a *Loop* option to play like a GIF.
 - **Tables:** insert one, then add or delete rows and columns from the toolbar that appears while the cursor is in the table.
 - **Code:** a code block with syntax highlighting (C, C++, ARM and x86 assembly, Python, Rust, Verilog, CMake, shell…); pick the language from the toolbar while the cursor is in it.
@@ -16,6 +17,7 @@ Click **Edit** and the page itself becomes the editor, like a word processor. Cl
 - **On this page:** an outline built automatically from your headings (H1–H4). Click an entry to jump there; the one you are reading is highlighted. It sits at the right on wide screens and at the top of the page on narrower ones.
 - **Numbering:** in ⚙ Settings, *Number sections and headings* adds 1, 1.1, 1.2… numbers to the section list, the headings and the outline. Off by default.
 - **Export** (top bar) to **PDF** or **Word (.docx)**: this page, a section with its subsections, or the whole notebook. PDF opens your browser's print window (choose *Save as PDF*) and always prints in light colours. Word files keep headings (so Word's Navigation Pane works), lists, tables, code, pictures and diagrams (as pictures).
+- **↻ Load latest:** the button next to Save fetches the newest notes straight from the repository (bypassing browser and Pages caches), after asking before it discards unsaved edits.
 - Light and dark theme, works on phones, and unsaved edits are kept in the browser so a closed tab doesn't lose work.
 
 ## Skill: visual-notes

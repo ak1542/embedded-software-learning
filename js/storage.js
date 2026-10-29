@@ -84,6 +84,25 @@ export async function testConnection() {
   return repo;
 }
 
+// The published copy, bypassing browser and CDN caches: the repository itself (public repos) first,
+// then the site file with a throwaway query parameter.
+export async function fetchPublished() {
+  const g = guessRepo();
+  if (g.owner) {
+    try {
+      const res = await fetch(`https://api.github.com/repos/${g.owner}/${g.repo}/contents/${NOTEBOOK_PATH}?_=${Date.now()}`, {
+        headers: { Accept: 'application/vnd.github.raw+json' },
+      });
+      if (res.ok) return await res.json();
+    } catch {
+      /* fall back to the site copy */
+    }
+  }
+  const res = await fetch(`${NOTEBOOK_PATH}?_=${Date.now()}`, { cache: 'reload' });
+  if (!res.ok) throw new Error(`Could not load ${NOTEBOOK_PATH} (${res.status})`);
+  return res.json();
+}
+
 export async function loadNotebook() {
   if (isConnected()) {
     try {
@@ -99,9 +118,7 @@ export async function loadNotebook() {
       return { notebook: {}, sha: null, source: 'github' };
     }
   }
-  const res = await fetch(NOTEBOOK_PATH, { cache: 'no-store' });
-  if (!res.ok) throw new Error(`Could not load ${NOTEBOOK_PATH} (${res.status})`);
-  return { notebook: await res.json(), sha: null, source: 'site' };
+  return { notebook: await fetchPublished(), sha: null, source: 'site' };
 }
 
 export async function latestSha() {

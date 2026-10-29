@@ -162,6 +162,10 @@ export function createToolbar({ languages, defaultDiagram, insertFiles, addAnima
       )
     ),
     group(
+      button({ label: '⇠', title: 'Shift left (Shift+Tab)', action: (e) => e.chain().focus().indentLess().run() }),
+      button({ label: '⇢', title: 'Shift right, e.g. to put text under a heading (Tab)', action: (e) => e.chain().focus().indentMore().run() })
+    ),
+    group(
       button({ label: 'Link', title: 'Insert or edit link (Ctrl+K)', className: 'text', active: (e) => e.isActive('link'), action: setLink }),
       button({ label: 'Image', title: 'Insert picture or GIF (you can also paste or drop one)', className: 'text', action: () => imageInput.click() }),
       button({ label: 'Video', title: 'Insert video', className: 'text', action: () => videoInput.click() }),
