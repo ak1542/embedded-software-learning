@@ -313,6 +313,7 @@
                 "type": "heading",
                 "attrs": {
                   "textAlign": null,
+                  "indent": 0,
                   "level": 2
                 },
                 "content": [
@@ -331,7 +332,8 @@
                       {
                         "type": "paragraph",
                         "attrs": {
-                          "textAlign": null
+                          "textAlign": null,
+                          "indent": 0
                         },
                         "content": [
                           {
@@ -357,7 +359,8 @@
                       {
                         "type": "paragraph",
                         "attrs": {
-                          "textAlign": null
+                          "textAlign": null,
+                          "indent": 0
                         },
                         "content": [
                           {
@@ -400,7 +403,8 @@
                       {
                         "type": "paragraph",
                         "attrs": {
-                          "textAlign": null
+                          "textAlign": null,
+                          "indent": 0
                         },
                         "content": [
                           {
@@ -426,7 +430,8 @@
                       {
                         "type": "paragraph",
                         "attrs": {
-                          "textAlign": null
+                          "textAlign": null,
+                          "indent": 0
                         },
                         "content": [
                           {
@@ -444,7 +449,8 @@
                               {
                                 "type": "paragraph",
                                 "attrs": {
-                                  "textAlign": null
+                                  "textAlign": null,
+                                  "indent": 0
                                 },
                                 "content": [
                                   {
@@ -476,7 +482,8 @@
                       {
                         "type": "paragraph",
                         "attrs": {
-                          "textAlign": null
+                          "textAlign": null,
+                          "indent": 0
                         },
                         "content": [
                           {
@@ -504,7 +511,8 @@
                       {
                         "type": "paragraph",
                         "attrs": {
-                          "textAlign": null
+                          "textAlign": null,
+                          "indent": 0
                         },
                         "content": [
                           {
@@ -532,6 +540,7 @@
                 "type": "heading",
                 "attrs": {
                   "textAlign": null,
+                  "indent": 0,
                   "level": 3
                 },
                 "content": [
@@ -554,12 +563,63 @@
                 "type": "heading",
                 "attrs": {
                   "textAlign": null,
+                  "indent": 0,
                   "level": 2
                 },
                 "content": [
                   {
                     "type": "text",
                     "text": "Board vs MCU vs Processor vs Core"
+                  }
+                ]
+              },
+              {
+                "type": "image",
+                "attrs": {
+                  "src": "https://public.www.evernote.com/resources/s456/f1bc9eec-fe73-a69a-59a8-9bcbe5e14f78",
+                  "alt": "",
+                  "width": null,
+                  "align": "center"
+                }
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "These I2C, SPI, UART, timers are all HW IP controllers"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "L1 cache is Part of core , L2, L3 part of processor sub system"
+                          }
+                        ]
+                      }
+                    ]
                   }
                 ]
               },
@@ -577,6 +637,7 @@
                 "type": "heading",
                 "attrs": {
                   "textAlign": null,
+                  "indent": 0,
                   "level": 2
                 },
                 "content": [
@@ -603,7 +664,8 @@
                           {
                             "type": "paragraph",
                             "attrs": {
-                              "textAlign": null
+                              "textAlign": null,
+                              "indent": 0
                             },
                             "content": [
                               {
@@ -625,7 +687,8 @@
                           {
                             "type": "paragraph",
                             "attrs": {
-                              "textAlign": null
+                              "textAlign": null,
+                              "indent": 0
                             },
                             "content": [
                               {
@@ -652,7 +715,8 @@
                           {
                             "type": "paragraph",
                             "attrs": {
-                              "textAlign": null
+                              "textAlign": null,
+                              "indent": 0
                             },
                             "content": [
                               {
@@ -674,7 +738,8 @@
                           {
                             "type": "paragraph",
                             "attrs": {
-                              "textAlign": null
+                              "textAlign": null,
+                              "indent": 0
                             },
                             "content": [
                               {
@@ -701,7 +766,8 @@
                           {
                             "type": "paragraph",
                             "attrs": {
-                              "textAlign": null
+                              "textAlign": null,
+                              "indent": 0
                             },
                             "content": [
                               {
@@ -723,7 +789,8 @@
                           {
                             "type": "paragraph",
                             "attrs": {
-                              "textAlign": null
+                              "textAlign": null,
+                              "indent": 0
                             },
                             "content": [
                               {
@@ -750,7 +817,8 @@
                           {
                             "type": "paragraph",
                             "attrs": {
-                              "textAlign": null
+                              "textAlign": null,
+                              "indent": 0
                             },
                             "content": [
                               {
@@ -772,7 +840,8 @@
                           {
                             "type": "paragraph",
                             "attrs": {
-                              "textAlign": null
+                              "textAlign": null,
+                              "indent": 0
                             },
                             "content": [
                               {
@@ -799,7 +868,8 @@
                           {
                             "type": "paragraph",
                             "attrs": {
-                              "textAlign": null
+                              "textAlign": null,
+                              "indent": 0
                             },
                             "content": [
                               {
@@ -821,7 +891,8 @@
                           {
                             "type": "paragraph",
                             "attrs": {
-                              "textAlign": null
+                              "textAlign": null,
+                              "indent": 0
                             },
                             "content": [
                               {
@@ -857,7 +928,8 @@
                           {
                             "type": "paragraph",
                             "attrs": {
-                              "textAlign": null
+                              "textAlign": null,
+                              "indent": 0
                             },
                             "content": [
                               {
@@ -879,7 +951,8 @@
                           {
                             "type": "paragraph",
                             "attrs": {
-                              "textAlign": null
+                              "textAlign": null,
+                              "indent": 0
                             },
                             "content": [
                               {
@@ -963,7 +1036,8 @@
                           {
                             "type": "paragraph",
                             "attrs": {
-                              "textAlign": null
+                              "textAlign": null,
+                              "indent": 0
                             },
                             "content": [
                               {
@@ -985,7 +1059,8 @@
                           {
                             "type": "paragraph",
                             "attrs": {
-                              "textAlign": null
+                              "textAlign": null,
+                              "indent": 0
                             },
                             "content": [
                               {
@@ -1001,25 +1076,10 @@
                 ]
               },
               {
-                "type": "bulletList",
-                "content": [
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "attrs": {
-                          "textAlign": null
-                        }
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
                 "type": "paragraph",
                 "attrs": {
-                  "textAlign": null
+                  "textAlign": null,
+                  "indent": 0
                 }
               }
             ]
@@ -1030,7 +1090,7 @@
     },
     {
       "id": "s-m4",
-      "title": "Cortex-M4 core",
+      "title": "Cortex-M4 & R8 core",
       "doc": {
         "type": "doc",
         "content": [
@@ -2354,10 +2414,423 @@
                 }
               },
               {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 3
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "ARM Cortex-M4"
+                  }
+                ]
+              },
+              {
                 "type": "paragraph",
                 "attrs": {
                   "textAlign": null,
                   "indent": 0
+                }
+              },
+              {
+                "type": "image",
+                "attrs": {
+                  "src": "https://public.www.evernote.com/resources/s456/1a3cffd4-e83a-032d-73ac-4d64e93ee895",
+                  "alt": "",
+                  "width": null,
+                  "align": "center"
+                }
+              },
+              {
+                "type": "image",
+                "attrs": {
+                  "src": "https://public.www.evernote.com/resources/s456/c9eec68d-5813-66e3-6017-d84abe5057dd",
+                  "alt": "",
+                  "width": null,
+                  "align": "center"
+                }
+              },
+              {
+                "type": "image",
+                "attrs": {
+                  "src": "https://public.www.evernote.com/resources/s456/c90c3bb2-38c7-8f9c-788f-fac8ac608a38",
+                  "alt": "",
+                  "width": null,
+                  "align": "center"
+                }
+              },
+              {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 4
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Feature list"
+                  }
+                ]
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Armv7E-M architecture"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Bus interface 3x AMBA AHB-lite interface (Harvard bus architecture), AMBA ATB interface for CoreSight debug components"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Thumb/Thumb-2 subset instruction support"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "3-stage pipeline"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "DSP extensions: single-cycle 16/32-bit MAC, single-cycle dual 16-bit MAC, 8/16-bit SIMD arithmetic, Hardware Divide (2-12 cycles)"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Optional single-precision Floating Point Unit (FPU), IEEE 754-compliant"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Optional 8 MPU regions with sub-regions and background region"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Integrated bit-field processing instructions and bus-level bit banding"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Non-maskable interrupt and 1 to 240 physical interrupts with 8 to 256 priority levels"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Wake-up interrupt controller"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Integrated WFI and WFE instructions and Sleep-On-Exit capability, Sleep & Deep Sleep signals, optional Retention Mode with Arm Power Management Kit"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Optional JTAG and Serial Wire Debug ports. Up to 8 breakpoints and 4 watchpoints"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Optional Instruction Trace (ETM), Data Trace (DWT), and Instrumentation Trace (ITM)"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "htmlAnimation",
+                "attrs": {
+                  "src": "content/media/animations/cortex-m4-pipeline.html",
+                  "height": 620,
+                  "fit": true,
+                  "width": 100,
+                  "title": "Animation"
+                }
+              },
+              {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 4
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Memory Map"
+                  }
+                ]
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "System memory map"
+                          },
+                          {
+                            "type": "text",
+                            "text": ": memory map for one CPU"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "Interconnect"
+                          },
+                          {
+                            "type": "text",
+                            "text": ": memory map for all CPUs"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "MPU/MCU"
+                          },
+                          {
+                            "type": "text",
+                            "text": " is for the core "
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "image",
+                "attrs": {
+                  "src": "https://public.www.evernote.com/resources/s456/907eec75-46a0-7e00-a7ca-00e53662e2a9",
+                  "alt": "",
+                  "width": null,
+                  "align": "center"
                 }
               },
               {
@@ -15218,134 +15691,6 @@
           },
           {
             "type": "paragraph"
-          }
-        ]
-      },
-      "children": []
-    },
-    {
-      "id": "s-mvtdl2xdjoa0d",
-      "title": "OS Concept ",
-      "doc": {
-        "type": "doc",
-        "content": [
-          {
-            "type": "paragraph",
-            "attrs": {
-              "textAlign": null,
-              "indent": 0
-            },
-            "content": [
-              {
-                "type": "text",
-                "text": "Task,"
-              }
-            ]
-          },
-          {
-            "type": "paragraph",
-            "attrs": {
-              "textAlign": null,
-              "indent": 0
-            },
-            "content": [
-              {
-                "type": "text",
-                "text": "Context switch "
-              }
-            ]
-          },
-          {
-            "type": "paragraph",
-            "attrs": {
-              "textAlign": null,
-              "indent": 0
-            },
-            "content": [
-              {
-                "type": "text",
-                "text": "Heap"
-              }
-            ]
-          },
-          {
-            "type": "paragraph",
-            "attrs": {
-              "textAlign": null,
-              "indent": 0
-            },
-            "content": [
-              {
-                "type": "text",
-                "text": "Stack"
-              }
-            ]
-          },
-          {
-            "type": "paragraph",
-            "attrs": {
-              "textAlign": null,
-              "indent": 0
-            },
-            "content": [
-              {
-                "type": "text",
-                "text": "Scheduler "
-              }
-            ]
-          },
-          {
-            "type": "paragraph",
-            "attrs": {
-              "textAlign": null,
-              "indent": 0
-            }
-          },
-          {
-            "type": "paragraph",
-            "attrs": {
-              "textAlign": null,
-              "indent": 0
-            }
-          },
-          {
-            "type": "paragraph",
-            "attrs": {
-              "textAlign": null,
-              "indent": 0
-            },
-            "content": [
-              {
-                "type": "text",
-                "text": "Todo...."
-              }
-            ]
-          },
-          {
-            "type": "paragraph",
-            "attrs": {
-              "textAlign": null,
-              "indent": 0
-            },
-            "content": [
-              {
-                "type": "text",
-                "text": "Synchronisation "
-              }
-            ]
-          },
-          {
-            "type": "paragraph",
-            "attrs": {
-              "textAlign": null,
-              "indent": 0
-            },
-            "content": [
-              {
-                "type": "text",
-                "text": "LR"
-              }
-            ]
           }
         ]
       },
