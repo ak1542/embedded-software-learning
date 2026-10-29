@@ -1312,17 +1312,10 @@
       "children": [
         {
           "id": "s-m4-boot",
-          "title": "Boot, FMC/XIP and address 0x0",
+          "title": "Corext M4 & R8",
           "doc": {
             "type": "doc",
             "content": [
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                }
-              },
               {
                 "type": "heading",
                 "attrs": {
@@ -2834,54 +2827,62 @@
                 }
               },
               {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 4
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Instruction state "
+                  }
+                ]
+              },
+              {
+                "type": "image",
+                "attrs": {
+                  "src": "content/media/2026-10/mvtno5ca-image.png",
+                  "alt": "image",
+                  "width": null,
+                  "align": "center"
+                }
+              },
+              {
                 "type": "paragraph",
                 "attrs": {
                   "textAlign": null,
                   "indent": 0
                 }
-              }
-            ]
-          },
-          "children": []
-        },
-        {
-          "id": "s-m4-features",
-          "title": "Core features",
-          "doc": {
-            "type": "doc",
-            "content": [
+              },
+              {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 3
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Cortex R8 "
+                  }
+                ]
+              },
               {
                 "type": "paragraph",
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "The Cortex-M4 in one animation: the 3-stage pipeline, what a taken branch or a hardware divide costs, and a tap-to-explain list of the features below."
-                  }
-                ]
-              },
-              {
-                "type": "htmlAnimation",
                 "attrs": {
-                  "src": "content/media/animations/cortex-m4-pipeline.html",
-                  "height": 620,
-                  "width": 100,
-                  "title": "Cortex-M4 pipeline",
-                  "fit": true
+                  "textAlign": null,
+                  "indent": 0
                 }
               },
               {
-                "type": "heading",
-                "attrs": {
-                  "level": 2
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "Feature list"
-                  }
-                ]
-              },
-              {
                 "type": "bulletList",
                 "content": [
                   {
@@ -2889,10 +2890,14 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
-                            "text": "Armv7E-M architecture"
+                            "text": "Many cpu modes (6-7)"
                           }
                         ]
                       }
@@ -2903,10 +2908,14 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
-                            "text": "Bus interface 3x AMBA AHB-lite interface (Harvard bus architecture), AMBA ATB interface for CoreSight debug components"
+                            "text": "bank registers concept"
                           }
                         ]
                       }
@@ -2917,10 +2926,14 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
-                            "text": "Thumb/Thumb-2 subset instruction support"
+                            "text": "ITCM DTCM"
                           }
                         ]
                       }
@@ -2931,10 +2944,14 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
-                            "text": "3-stage pipeline"
+                            "text": "boot flow of draco"
                           }
                         ]
                       }
@@ -2945,923 +2962,21 @@
                     "content": [
                       {
                         "type": "paragraph",
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "DSP extensions: single-cycle 16/32-bit MAC, single-cycle dual 16-bit MAC, 8/16-bit SIMD arithmetic, Hardware Divide (2-12 cycles)"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "Optional single-precision Floating Point Unit (FPU), IEEE 754-compliant"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "Optional 8 MPU regions with sub-regions and background region"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "Integrated bit-field processing instructions and bus-level bit banding"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "Non-maskable interrupt and 1 to 240 physical interrupts with 8 to 256 priority levels"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "Wake-up interrupt controller"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "Integrated WFI and WFE instructions and Sleep-On-Exit capability, Sleep & Deep Sleep signals, optional Retention Mode with Arm Power Management Kit"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "Optional JTAG and Serial Wire Debug ports. Up to 8 breakpoints and 4 watchpoints"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "Optional Instruction Trace (ETM), Data Trace (DWT), and Instrumentation Trace (ITM)"
-                          }
-                        ]
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        }
                       }
                     ]
                   }
                 ]
               },
               {
-                "type": "paragraph"
-              }
-            ]
-          },
-          "children": []
-        },
-        {
-          "id": "s-m4-hier",
-          "title": "Board, MCU, processor, core",
-          "doc": {
-            "type": "doc",
-            "content": [
-              {
-                "type": "bulletList",
-                "content": [
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "The I2C, SPI, UART, TIMERs: all are "
-                          },
-                          {
-                            "type": "text",
-                            "text": "HW IP controllers",
-                            "marks": [
-                              {
-                                "type": "bold"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "L1 cache is part of the core; L2, L3 are part of the processor subsystem"
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "htmlAnimation",
+                "type": "paragraph",
                 "attrs": {
-                  "src": "content/media/animations/board-hierarchy.html",
-                  "height": 340,
-                  "width": 100,
-                  "title": "Board, MCU, processor subsystem and core",
-                  "fit": true
+                  "textAlign": null,
+                  "indent": 0
                 }
-              },
-              {
-                "type": "callout",
-                "attrs": {
-                  "variant": "info"
-                },
-                "content": [
-                  {
-                    "type": "paragraph",
-                    "content": [
-                      {
-                        "type": "text",
-                        "text": "Worth knowing: the Cortex-M4 in the STM32F407 has "
-                      },
-                      {
-                        "type": "text",
-                        "text": "no L1 cache",
-                        "marks": [
-                          {
-                            "type": "bold"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "text",
-                        "text": " (the L1/L2/L3 picture applies to bigger cores such as Cortex-A or Cortex-R8). ST adds an \"ART accelerator\" that prefetches and caches Flash instead."
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "paragraph"
-              }
-            ]
-          },
-          "children": []
-        },
-        {
-          "id": "s-m4-mmap",
-          "title": "Memory map",
-          "doc": {
-            "type": "doc",
-            "content": [
-              {
-                "type": "bulletList",
-                "content": [
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "System memory map",
-                            "marks": [
-                              {
-                                "type": "bold"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "text",
-                            "text": ": memory map for one CPU"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "Interconnect",
-                            "marks": [
-                              {
-                                "type": "bold"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "text",
-                            "text": ": memory map for all CPUs"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "MPU/MCU is for the core"
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "heading",
-                "attrs": {
-                  "level": 2
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "STM32F407 memory map (reference)"
-                  }
-                ]
-              },
-              {
-                "type": "table",
-                "content": [
-                  {
-                    "type": "tableRow",
-                    "content": [
-                      {
-                        "type": "tableHeader",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "Start address"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableHeader",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "Region"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableHeader",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "Notes"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "tableRow",
-                    "content": [
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "0xE000_0000",
-                                "marks": [
-                                  {
-                                    "type": "code"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "Cortex-M4 private peripherals"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "NVIC, SysTick, SCB (including VTOR), MPU, debug"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "tableRow",
-                    "content": [
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "0x4000_0000",
-                                "marks": [
-                                  {
-                                    "type": "code"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "Peripherals"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "APB1, APB2, AHB1, AHB2: GPIO, I2C, SPI, UART, timers…"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "tableRow",
-                    "content": [
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "0x2000_0000",
-                                "marks": [
-                                  {
-                                    "type": "code"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "SRAM (128 KB)"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": ".data",
-                                "marks": [
-                                  {
-                                    "type": "code"
-                                  }
-                                ]
-                              },
-                              {
-                                "type": "text",
-                                "text": ", "
-                              },
-                              {
-                                "type": "text",
-                                "text": ".bss",
-                                "marks": [
-                                  {
-                                    "type": "code"
-                                  }
-                                ]
-                              },
-                              {
-                                "type": "text",
-                                "text": ", heap and stack live here"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "tableRow",
-                    "content": [
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "0x1FFF_0000",
-                                "marks": [
-                                  {
-                                    "type": "code"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "System memory"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "ST ROM bootloader"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "tableRow",
-                    "content": [
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "0x1000_0000",
-                                "marks": [
-                                  {
-                                    "type": "code"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "CCM data RAM (64 KB)"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "CPU access only, no DMA"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "tableRow",
-                    "content": [
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "0x0800_0000",
-                                "marks": [
-                                  {
-                                    "type": "code"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "Main Flash"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "The linker script "
-                              },
-                              {
-                                "type": "text",
-                                "text": "FLASH",
-                                "marks": [
-                                  {
-                                    "type": "code"
-                                  }
-                                ]
-                              },
-                              {
-                                "type": "text",
-                                "text": " region starts here"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "tableRow",
-                    "content": [
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "0x0000_0000",
-                                "marks": [
-                                  {
-                                    "type": "code"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "Boot alias"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "Aliased to Flash, system memory or SRAM by the BOOT pins"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "callout",
-                "attrs": {
-                  "variant": "warning"
-                },
-                "content": [
-                  {
-                    "type": "paragraph",
-                    "content": [
-                      {
-                        "type": "text",
-                        "text": "Reference table added for context; verify the details in RM0090. See "
-                      },
-                      {
-                        "type": "text",
-                        "text": "Boot, FMC/XIP and address 0x0",
-                        "marks": [
-                          {
-                            "type": "link",
-                            "attrs": {
-                              "href": "#/s-m4-boot",
-                              "target": null,
-                              "rel": null,
-                              "class": null
-                            }
-                          }
-                        ]
-                      },
-                      {
-                        "type": "text",
-                        "text": " for the boot-pin animation."
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "paragraph"
               }
             ]
           },
