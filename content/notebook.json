@@ -310,6 +310,19 @@
             "type": "doc",
             "content": [
               {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "level": 2
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Basic details "
+                  }
+                ]
+              },
+              {
                 "type": "bulletList",
                 "content": [
                   {
@@ -317,6 +330,9 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -324,12 +340,12 @@
                           },
                           {
                             "type": "text",
-                            "text": "ARM Cortex-M4",
                             "marks": [
                               {
                                 "type": "bold"
                               }
-                            ]
+                            ],
+                            "text": "ARM Cortex-M4"
                           }
                         ]
                       }
@@ -340,6 +356,9 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -347,12 +366,12 @@
                           },
                           {
                             "type": "text",
-                            "text": "STM32F4 Discovery",
                             "marks": [
                               {
                                 "type": "bold"
                               }
-                            ]
+                            ],
+                            "text": "STM32F4 Discovery"
                           },
                           {
                             "type": "text",
@@ -360,12 +379,12 @@
                           },
                           {
                             "type": "text",
-                            "text": "STM32F407",
                             "marks": [
                               {
                                 "type": "bold"
                               }
-                            ]
+                            ],
+                            "text": "STM32F407"
                           },
                           {
                             "type": "text",
@@ -380,15 +399,18 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null
+                        },
                         "content": [
                           {
                             "type": "text",
-                            "text": "Single core",
                             "marks": [
                               {
                                 "type": "bold"
                               }
-                            ]
+                            ],
+                            "text": "Single core"
                           },
                           {
                             "type": "text",
@@ -403,6 +425,9 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -418,10 +443,12 @@
                             "content": [
                               {
                                 "type": "paragraph",
+                                "attrs": {
+                                  "textAlign": null
+                                },
                                 "content": [
                                   {
                                     "type": "text",
-                                    "text": "UM1472: Discovery kit with STM32F407VG MCU",
                                     "marks": [
                                       {
                                         "type": "link",
@@ -432,7 +459,8 @@
                                           "class": null
                                         }
                                       }
-                                    ]
+                                    ],
+                                    "text": "UM1472: Discovery kit with STM32F407VG MCU"
                                   }
                                 ]
                               }
@@ -447,10 +475,12 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null
+                        },
                         "content": [
                           {
                             "type": "text",
-                            "text": "STM32F4DISCOVERY data brief",
                             "marks": [
                               {
                                 "type": "link",
@@ -461,7 +491,8 @@
                                   "class": null
                                 }
                               }
-                            ]
+                            ],
+                            "text": "STM32F4DISCOVERY data brief"
                           }
                         ]
                       }
@@ -472,10 +503,12 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null
+                        },
                         "content": [
                           {
                             "type": "text",
-                            "text": "STM32F407/417 documentation",
                             "marks": [
                               {
                                 "type": "link",
@@ -486,7 +519,8 @@
                                   "class": null
                                 }
                               }
-                            ]
+                            ],
+                            "text": "STM32F407/417 documentation"
                           }
                         ]
                       }
@@ -497,6 +531,52 @@
               {
                 "type": "heading",
                 "attrs": {
+                  "textAlign": null,
+                  "level": 3
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Board Picture"
+                  }
+                ]
+              },
+              {
+                "type": "image",
+                "attrs": {
+                  "src": "https://public.www.evernote.com/resources/s456/1d591701-ee2e-bb60-9d34-6a4d86e4572d",
+                  "alt": "",
+                  "width": 75,
+                  "align": "center"
+                }
+              },
+              {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "level": 2
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Board vs MCU vs Processor vs Core"
+                  }
+                ]
+              },
+              {
+                "type": "htmlAnimation",
+                "attrs": {
+                  "src": "content/media/animations/stm32-board.html",
+                  "height": 480,
+                  "fit": true,
+                  "width": 100,
+                  "title": "Animation"
+                }
+              },
+              {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
                   "level": 2
                 },
                 "content": [
@@ -522,6 +602,9 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -541,6 +624,9 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -565,6 +651,9 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -584,6 +673,9 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -608,6 +700,9 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -627,6 +722,9 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -651,6 +749,9 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -670,6 +771,9 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -694,6 +798,9 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -713,6 +820,9 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -720,12 +830,12 @@
                               },
                               {
                                 "type": "text",
-                                "text": "localhost:3333",
                                 "marks": [
                                   {
                                     "type": "code"
                                   }
-                                ]
+                                ],
+                                "text": "localhost:3333"
                               }
                             ]
                           }
@@ -746,6 +856,9 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -765,15 +878,18 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null
+                            },
                             "content": [
                               {
                                 "type": "text",
-                                "text": "arm-none-eabi-gcc",
                                 "marks": [
                                   {
                                     "type": "code"
                                   }
-                                ]
+                                ],
+                                "text": "arm-none-eabi-gcc"
                               },
                               {
                                 "type": "text",
@@ -781,12 +897,12 @@
                               },
                               {
                                 "type": "text",
-                                "text": "-ar",
                                 "marks": [
                                   {
                                     "type": "code"
                                   }
-                                ]
+                                ],
+                                "text": "-ar"
                               },
                               {
                                 "type": "text",
@@ -794,12 +910,12 @@
                               },
                               {
                                 "type": "text",
-                                "text": "-objcopy",
                                 "marks": [
                                   {
                                     "type": "code"
                                   }
-                                ]
+                                ],
+                                "text": "-objcopy"
                               },
                               {
                                 "type": "text",
@@ -807,12 +923,12 @@
                               },
                               {
                                 "type": "text",
-                                "text": "-objdump",
                                 "marks": [
                                   {
                                     "type": "code"
                                   }
-                                ]
+                                ],
+                                "text": "-objdump"
                               },
                               {
                                 "type": "text",
@@ -820,12 +936,12 @@
                               },
                               {
                                 "type": "text",
-                                "text": "-gdb",
                                 "marks": [
                                   {
                                     "type": "code"
                                   }
-                                ]
+                                ],
+                                "text": "-gdb"
                               }
                             ]
                           }
@@ -846,6 +962,9 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -865,6 +984,9 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -879,94 +1001,26 @@
                 ]
               },
               {
-                "type": "paragraph"
-              }
-            ]
-          },
-          "children": []
-        },
-        {
-          "id": "s-ms-board",
-          "title": "Board details",
-          "doc": {
-            "type": "doc",
-            "content": [
-              {
-                "type": "heading",
-                "attrs": {
-                  "level": 2
-                },
+                "type": "bulletList",
                 "content": [
                   {
-                    "type": "text",
-                    "text": "Board picture"
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null
+                        }
+                      }
+                    ]
                   }
                 ]
               },
               {
                 "type": "paragraph",
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "Click a block to see what it is. The tab "
-                  },
-                  {
-                    "type": "text",
-                    "text": "Who owns what?",
-                    "marks": [
-                      {
-                        "type": "bold"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "text",
-                    "text": " separates the board, the MCU, the processor subsystem and the core."
-                  }
-                ]
-              },
-              {
-                "type": "htmlAnimation",
                 "attrs": {
-                  "src": "content/media/animations/stm32-board.html",
-                  "height": 480,
-                  "width": 100,
-                  "title": "STM32F4 Discovery block diagram",
-                  "fit": true
+                  "textAlign": null
                 }
-              },
-              {
-                "type": "callout",
-                "attrs": {
-                  "variant": "info"
-                },
-                "content": [
-                  {
-                    "type": "paragraph",
-                    "content": [
-                      {
-                        "type": "text",
-                        "text": "The original note had an empty \"Board picture\" slot. This interactive diagram stands in for it; to add a real photo of your board use "
-                      },
-                      {
-                        "type": "text",
-                        "text": "Edit → Image",
-                        "marks": [
-                          {
-                            "type": "bold"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "text",
-                        "text": "."
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "paragraph"
               }
             ]
           },
@@ -1210,45 +1264,22 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null
+                        },
                         "content": [
                           {
                             "type": "text",
-                            "text": "For any processor, we have "
+                            "text": "The core only issues a fetch to a reset address, i.e "
                           },
                           {
                             "type": "text",
-                            "text": "FMC",
-                            "marks": [
-                              {
-                                "type": "bold"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "text",
-                            "text": " (first mutable code, i.e. BIOS, UEFI, or BootROM), also called "
-                          },
-                          {
-                            "type": "text",
-                            "text": "Execute-in-Place (XIP)",
-                            "marks": [
-                              {
-                                "type": "bold"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "text",
-                            "text": ", because PC and VTOR by default have some value, i.e. "
-                          },
-                          {
-                            "type": "text",
-                            "text": "0x00000000",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
+                            ],
+                            "text": "0x00000000"
                           },
                           {
                             "type": "text",
@@ -1256,90 +1287,25 @@
                           },
                           {
                             "type": "text",
-                            "text": "0x8000000",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "FMC's reset handler checks the boot mode by checking the boot pin (it can be UART, FLASH, SRAM in case of T32)"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "Processor shifts FIMC to FMC"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "The core only issues a fetch to address "
+                            ],
+                            "text": "0xFFFF0000"
                           },
                           {
                             "type": "text",
-                            "text": "0x0",
-                            "marks": [
-                              {
-                                "type": "code"
-                              }
-                            ]
+                            "text": ". It has no idea what sits there. The "
                           },
                           {
                             "type": "text",
-                            "text": ". It has no idea what sits there."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "The "
-                          },
-                          {
-                            "type": "text",
-                            "text": "SoC integrator",
                             "marks": [
                               {
                                 "type": "bold"
                               }
-                            ]
+                            ],
+                            "text": "SoC integrator"
                           },
                           {
                             "type": "text",
@@ -1354,6 +1320,632 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "The reset fetch address depends on the architecture: "
+                          }
+                        ]
+                      },
+                      {
+                        "type": "bulletList",
+                        "content": [
+                          {
+                            "type": "listItem",
+                            "content": [
+                              {
+                                "type": "paragraph",
+                                "attrs": {
+                                  "textAlign": null
+                                },
+                                "content": [
+                                  {
+                                    "type": "text",
+                                    "text": "Cortex-A/R: "
+                                  },
+                                  {
+                                    "type": "text",
+                                    "marks": [
+                                      {
+                                        "type": "code"
+                                      }
+                                    ],
+                                    "text": "0x00000000"
+                                  },
+                                  {
+                                    "type": "text",
+                                    "text": ", or "
+                                  },
+                                  {
+                                    "type": "text",
+                                    "marks": [
+                                      {
+                                        "type": "code"
+                                      }
+                                    ],
+                                    "text": "0xFFFF0000"
+                                  },
+                                  {
+                                    "type": "text",
+                                    "text": " with high vectors."
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "listItem",
+                            "content": [
+                              {
+                                "type": "paragraph",
+                                "attrs": {
+                                  "textAlign": null
+                                },
+                                "content": [
+                                  {
+                                    "type": "text",
+                                    "text": "Cortex-M: the initial SP and reset handler are read from the vector table at VTOR, which typically resets to "
+                                  },
+                                  {
+                                    "type": "text",
+                                    "marks": [
+                                      {
+                                        "type": "code"
+                                      }
+                                    ],
+                                    "text": "0x00000000"
+                                  },
+                                  {
+                                    "type": "text",
+                                    "text": " but is SoC-defined (for example, STM32 flash is at "
+                                  },
+                                  {
+                                    "type": "text",
+                                    "marks": [
+                                      {
+                                        "type": "code"
+                                      }
+                                    ],
+                                    "text": "0x08000000"
+                                  },
+                                  {
+                                    "type": "text",
+                                    "text": " and is aliased to "
+                                  },
+                                  {
+                                    "type": "text",
+                                    "marks": [
+                                      {
+                                        "type": "code"
+                                      }
+                                    ],
+                                    "text": "0x0"
+                                  },
+                                  {
+                                    "type": "text",
+                                    "text": " at boot)."
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "paragraph",
+                                "attrs": {
+                                  "textAlign": null
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "attrs": {
+                  "variant": "info"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": "left"
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "For any processor, we have "
+                      },
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "bold"
+                          }
+                        ],
+                        "text": "FIC"
+                      },
+                      {
+                        "type": "text",
+                        "text": " (first immutable code), that is,  "
+                      },
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "bold"
+                          }
+                        ],
+                        "text": "Execute-in-Place (XIP)"
+                      },
+                      {
+                        "type": "text",
+                        "text": ", because PC and VTOR by default have some value, i.e. "
+                      },
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "code"
+                          }
+                        ],
+                        "text": "0x00000000"
+                      },
+                      {
+                        "type": "text",
+                        "text": " / "
+                      },
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "code"
+                          }
+                        ],
+                        "text": "0xFFFF0000."
+                      },
+                      {
+                        "type": "text",
+                        "text": "  The "
+                      },
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "bold"
+                          }
+                        ],
+                        "text": "FMC"
+                      },
+                      {
+                        "type": "text",
+                        "text": " (first mutable code) is the first stage the ROM loads from external storage, such as the SPL/BL2, or BIOS/UEFI SEC on x86. "
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": "left"
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "The core M reads two words from the vector table at VTOR, which is "
+                          },
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "code"
+                              }
+                            ],
+                            "text": "0x00000000"
+                          },
+                          {
+                            "type": "text",
+                            "text": " at reset. This is a data read through the alias, not code execution: "
+                          }
+                        ]
+                      },
+                      {
+                        "type": "bulletList",
+                        "content": [
+                          {
+                            "type": "listItem",
+                            "content": [
+                              {
+                                "type": "paragraph",
+                                "attrs": {
+                                  "textAlign": null
+                                },
+                                "content": [
+                                  {
+                                    "type": "text",
+                                    "text": "Word 0 is loaded into MSP (the initial stack pointer)."
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "listItem",
+                            "content": [
+                              {
+                                "type": "paragraph",
+                                "attrs": {
+                                  "textAlign": null
+                                },
+                                "content": [
+                                  {
+                                    "type": "text",
+                                    "text": "Word 1 is loaded into PC (the reset handler address)"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "listItem",
+                            "content": [
+                              {
+                                "type": "paragraph",
+                                "attrs": {
+                                  "textAlign": null
+                                },
+                                "content": [
+                                  {
+                                    "type": "text",
+                                    "text": "In core R, word 0:  tells the reset handler location"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "At reset, the BootROM (FIC) reads the boot configuration (the hardware-latched strap pins and/or eFuses) and selects the boot device, for example SPI flash, eMMC, or a UART/USB download. It loads and verifies the first mutable stage (FMC) from that device and jumps to it."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "FMC = the first writable-storage stage. On a PC, that stage is the BIOS/UEFI; on your BMC it is the first-stage bootloader. "
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": "left"
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Typical responsibilities"
+                  }
+                ]
+              },
+              {
+                "type": "orderedList",
+                "attrs": {
+                  "start": 1,
+                  "type": null
+                },
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": "left"
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "Initialize the minimum platform:"
+                          },
+                          {
+                            "type": "text",
+                            "text": " clocks and PLLs, watchdog, pin muxing, and a console UART for debug output."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": "left"
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "Initialize DRAM:"
+                          },
+                          {
+                            "type": "text",
+                            "text": " this is usually its main job. The ROM only has on-chip SRAM, so the FMC configures the DRAM controller, runs training, and makes large memory available."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": "left"
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "Load the next stage into DRAM:"
+                          },
+                          {
+                            "type": "text",
+                            "text": " U-Boot proper, TF-A BL31/BL33, or the kernel, from SPI flash, eMMC, or the network."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": "left"
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "Verify the next stage:"
+                          },
+                          {
+                            "type": "text",
+                            "text": " the ROM authenticates the FMC, and the FMC authenticates what it loads. This is how the secure-boot chain of trust is extended."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": "left"
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "Set up the execution environment:"
+                          },
+                          {
+                            "type": "text",
+                            "text": " exception vectors (VBAR/VTOR or a remap), the security state, stacks, and sometimes the MMU and caches."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": "left"
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "Choose the image and handle failure:"
+                          },
+                          {
+                            "type": "text",
+                            "text": " A/B or golden-image selection, rollback, and recovery paths if the main image is corrupt."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": "left"
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "Hand off:"
+                          },
+                          {
+                            "type": "text",
+                            "text": " jump to the next stage, often passing boot parameters or a device tree, and in some designs pass along the boot source the ROM reported."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Why it is separate from the ROM"
+                  }
+                ]
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "It can be updated to fix bugs or add new DRAM timings and boards."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Its size isn’t limited by the ROM or SRAM constraints of the very first stage."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "It carries the board-specific configuration that a generic ROM can’t hold."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -1361,12 +1953,12 @@
                           },
                           {
                             "type": "text",
-                            "text": "remaps",
                             "marks": [
                               {
                                 "type": "bold"
                               }
-                            ]
+                            ],
+                            "text": "remaps"
                           },
                           {
                             "type": "text",
@@ -1374,12 +1966,12 @@
                           },
                           {
                             "type": "text",
-                            "text": "0x0",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
+                            ],
+                            "text": "0x0"
                           },
                           {
                             "type": "text",
@@ -1394,6 +1986,9 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -1401,12 +1996,12 @@
                           },
                           {
                             "type": "text",
-                            "text": "0x0",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
+                            ],
+                            "text": "0x0"
                           },
                           {
                             "type": "text",
@@ -1414,16 +2009,16 @@
                           },
                           {
                             "type": "text",
-                            "text": "read the strap",
                             "marks": [
                               {
                                 "type": "bold"
                               }
-                            ]
+                            ],
+                            "text": "read the strap"
                           },
                           {
                             "type": "text",
-                            "text": " and jump to or load from the selected device (SPI, eMMC, UART download and so on)."
+                            "text": " and jump to or load from the selected device (SPI, eMMC, UART download, and so on)."
                           }
                         ]
                       }
@@ -1434,6 +2029,7 @@
               {
                 "type": "heading",
                 "attrs": {
+                  "textAlign": null,
                   "level": 3
                 },
                 "content": [
@@ -1446,7 +2042,8 @@
               {
                 "type": "orderedList",
                 "attrs": {
-                  "start": 1
+                  "start": 1,
+                  "type": null
                 },
                 "content": [
                   {
@@ -1454,6 +2051,9 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -1461,12 +2061,12 @@
                           },
                           {
                             "type": "text",
-                            "text": "0x0",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
+                            ],
+                            "text": "0x0"
                           },
                           {
                             "type": "text",
@@ -1481,6 +2081,9 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -1488,12 +2091,12 @@
                           },
                           {
                             "type": "text",
-                            "text": "exception vector table",
                             "marks": [
                               {
                                 "type": "bold"
                               }
-                            ]
+                            ],
+                            "text": "exception vector table"
                           },
                           {
                             "type": "text",
@@ -1508,6 +2111,9 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -1515,12 +2121,12 @@
                           },
                           {
                             "type": "text",
-                            "text": "0x0",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
+                            ],
+                            "text": "0x0"
                           },
                           {
                             "type": "text",
@@ -1535,10 +2141,13 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null
+                        },
                         "content": [
                           {
                             "type": "text",
-                            "text": "From then on, interrupts, aborts and SVC calls read their vectors from RAM, which lets the firmware install its own handlers."
+                            "text": "From then on, interrupts, aborts, and SVC calls read their vectors from RAM, which lets the firmware install its own handlers."
                           }
                         ]
                       }
@@ -1549,15 +2158,18 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null
+                        },
                         "content": [
                           {
                             "type": "text",
-                            "text": "Alternative to remapping",
                             "marks": [
                               {
                                 "type": "bold"
                               }
-                            ]
+                            ],
+                            "text": "Alternative to remapping"
                           },
                           {
                             "type": "text",
@@ -1574,13 +2186,16 @@
                 "attrs": {
                   "src": "content/media/animations/boot-remap.html",
                   "height": 520,
+                  "fit": true,
                   "width": 100,
-                  "title": "Boot sequence with a software remap",
-                  "fit": true
+                  "title": "Boot sequence with a software remap"
                 }
               },
               {
                 "type": "paragraph",
+                "attrs": {
+                  "textAlign": null
+                },
                 "content": [
                   {
                     "type": "text",
@@ -1596,6 +2211,9 @@
                 "content": [
                   {
                     "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null
+                    },
                     "content": [
                       {
                         "type": "text",
@@ -1603,12 +2221,12 @@
                       },
                       {
                         "type": "text",
-                        "text": "Edit → Image",
                         "marks": [
                           {
                             "type": "bold"
                           }
-                        ]
+                        ],
+                        "text": "Edit → Image"
                       },
                       {
                         "type": "text",
@@ -1621,6 +2239,7 @@
               {
                 "type": "heading",
                 "attrs": {
+                  "textAlign": null,
                   "level": 3
                 },
                 "content": [
@@ -1632,6 +2251,9 @@
               },
               {
                 "type": "paragraph",
+                "attrs": {
+                  "textAlign": null
+                },
                 "content": [
                   {
                     "type": "text",
@@ -1639,12 +2261,12 @@
                   },
                   {
                     "type": "text",
-                    "text": "BOOT0 / BOOT1",
                     "marks": [
                       {
                         "type": "bold"
                       }
-                    ]
+                    ],
+                    "text": "BOOT0 / BOOT1"
                   },
                   {
                     "type": "text",
@@ -1652,12 +2274,12 @@
                   },
                   {
                     "type": "text",
-                    "text": "0x0000_0000",
                     "marks": [
                       {
                         "type": "code"
                       }
-                    ]
+                    ],
+                    "text": "0x0000_0000"
                   },
                   {
                     "type": "text",
@@ -1670,9 +2292,9 @@
                 "attrs": {
                   "src": "content/media/animations/stm32-boot-map.html",
                   "height": 600,
+                  "fit": true,
                   "width": 100,
-                  "title": "STM32F407 boot pins and memory map",
-                  "fit": true
+                  "title": "STM32F407 boot pins and memory map"
                 }
               },
               {
@@ -1683,6 +2305,9 @@
                 "content": [
                   {
                     "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null
+                    },
                     "content": [
                       {
                         "type": "text",
@@ -1693,7 +2318,10 @@
                 ]
               },
               {
-                "type": "paragraph"
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null
+                }
               }
             ]
           },
