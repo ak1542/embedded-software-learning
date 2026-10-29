@@ -1,0 +1,73 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Bitmap heap</title>
+<style>:root{color-scheme:light;--bg:#fff;--soft:#f6f7f9;--sunk:#eef0f3;--fg:#1c2330;--muted:#5f6b7a;--line:#dde1e7;--accent:#2563eb;--accent-soft:#e8efff;--on-accent:#fff;
+--rom:#b45309;--romf:#fef3c7;--flash:#6d28d9;--flashf:#ede9fe;--ram:#15803d;--ramf:#d1fae5;--bus:#0e7490;--busf:#cffafe;--bad:#c62828;--badf:#fde8e8;--ok:#15803d;--okf:#dcfce7;--warn:#b45309;--warnf:#fef9c3;--r:10px}
+@media(prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#0f141b;--soft:#161c25;--sunk:#1d2531;--fg:#e4e8ee;--muted:#98a3b3;--line:#2a3441;--accent:#6ea0ff;--accent-soft:#1b2a45;--on-accent:#0b1220;--rom:#fbbf24;--romf:#3a2d0e;--flash:#a78bfa;--flashf:#2a2150;--ram:#4ade80;--ramf:#0f3328;--bus:#22d3ee;--busf:#0c3a44;--bad:#f87171;--badf:#3b1818;--ok:#4ade80;--okf:#12331f;--warn:#fbbf24;--warnf:#3a3210}}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:12px}
+.mono,code,pre{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+h1,h2,h3{margin:0 0 6px;line-height:1.25}h1{font-size:1.15rem}h2{font-size:1rem}
+button{font:inherit;color:inherit;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:6px 12px;cursor:pointer}
+button:hover:not(:disabled){background:var(--sunk)}button:disabled{opacity:.45;cursor:default}
+button.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+button.primary:hover:not(:disabled){background:var(--accent);filter:brightness(1.1)}
+button.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+button:focus-visible,[tabindex]:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+select,input[type=range]{font:inherit;color:inherit}
+select{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:5px 8px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px}
+.panel[hidden]{display:none}
+.card{background:var(--soft);border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.muted{color:var(--muted)}.grow{flex:1}
+.chip{display:inline-block;padding:1px 9px;border-radius:999px;font-size:.8rem;background:var(--sunk);border:1px solid var(--line);white-space:nowrap}
+.narr{min-height:3.4em;padding:10px 12px;border-left:4px solid var(--accent);background:var(--accent-soft);border-radius:0 var(--r) var(--r) 0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+
+.grid{display:grid;grid-template-columns:repeat(16,1fr);gap:3px;margin:10px 0}
+.c{border:1px solid var(--line);border-radius:6px;padding:4px 0;text-align:center;font-size:.78rem;background:var(--soft);cursor:default;min-width:0}
+.c small{display:block;color:var(--muted);font-size:.62rem}
+.c.used{background:var(--accent-soft);border-color:var(--accent);cursor:pointer}
+.c.found{outline:3px solid var(--warn)}
+.c.scan{background:var(--sunk)}
+.words{font-size:.82rem;background:var(--sunk);border-radius:8px;padding:6px 10px;margin:6px 0;overflow-x:auto;white-space:nowrap}
+
+</style></head><body>
+<h1>Bitmap allocator: 1 bit per 32-byte chunk</h1>
+<div class="bar"><span class="muted">malloc chunks:</span><span id="sizes"></span><button id="reset">↺ Reset</button></div>
+<div class="grid" id="grid" role="group" aria-label="32 chunks of 32 bytes"></div>
+<div class="words mono" id="words"></div>
+<div id="tbl" class="muted" style="font-size:.85rem"></div>
+<div class="narr" id="narr" aria-live="polite" style="margin-top:8px"></div>
+<p class="muted" style="font-size:.82rem">Bit 1 = chunk in use, 0 = free. The bitmap says <i>which</i> chunks are taken but not where a block ends, so a small table (or a header) remembers each block's length. Click a used chunk to free its block.</p>
+<script>const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const hex=(n,w=8)=>'0x'+(n>>>0).toString(16).toUpperCase().padStart(w,'0');
+// tabs: buttons with data-tab="id" show the .panel with that id
+function initTabs(start=window.__START||0){const btns=$$('.tabs button');const show=id=>{btns.forEach(b=>{const on=b.dataset.tab===id;b.classList.toggle('on',on);b.setAttribute('aria-selected',on)});$$('.panel').forEach(p=>p.hidden=p.id!==id)};btns.forEach(b=>b.addEventListener('click',()=>show(b.dataset.tab)));if(btns[start])show(btns[start].dataset.tab);return show}
+// player: generic step controller. steps = count; render(i) draws step i; returns controls
+function player({count,render,prev,next,play,reset,delay=1800}){let i=0,timer=null;const set=n=>{i=Math.max(0,Math.min(count-1,n));render(i);if(prev)prev.disabled=i===0;if(next)next.disabled=i===count-1;};const stop=()=>{clearInterval(timer);timer=null;if(play)play.textContent='▶ Play'};const go=()=>{if(i>=count-1){stop();return}set(i+1)};
+if(next)next.onclick=()=>{stop();set(i+1)};if(prev)prev.onclick=()=>{stop();set(i-1)};if(reset)reset.onclick=()=>{stop();set(0)};
+if(play)play.onclick=()=>{if(timer){stop();return}if(i>=count-1)set(0);play.textContent='❚❚ Pause';timer=setInterval(go,delay)};
+addEventListener('keydown',e=>{if(e.target.closest('input,select,textarea'))return;if(e.key==='ArrowRight'){stop();set(i+1)}if(e.key==='ArrowLeft'){stop();set(i-1)}});
+set(0);return{set,stop,get i(){return i}}}
+
+
+const N=32,CH=32;let bits,allocs,next;const L='ABCDEFGHJKLMNPQRSTUVWXYZ';
+function init(){bits=Array(N).fill(0);allocs=[];next=0;[[0,4],[6,3],[14,6]].forEach(([s,l])=>{const id=L[next++];allocs.push({id,s,l});for(let i=s;i<s+l;i++)bits[i]=id});say('Start: three blocks allocated. malloc(n) scans the bitmap for n consecutive 0 bits.');draw()}
+const say=t=>$('#narr').textContent=t;
+function draw(f={}){const g=$('#grid');g.innerHTML='';bits.forEach((b,i)=>{const c=document.createElement('div');c.className='c'+(b?' used':'')+(f.found&&i>=f.found[0]&&i<f.found[0]+f.found[1]?' found':'')+(f.scan&&i<f.scan?' scan':'');c.innerHTML=(b?'1':'0')+'<small>'+(b||i)+'</small>';if(b){c.tabIndex=0;c.onclick=()=>free(b);c.onkeydown=e=>{if(e.key==='Enter')free(b)}}g.appendChild(c)});
+ let w=0;bits.forEach((b,i)=>{if(b)w|=1<<i});$('#words').textContent='bitmap word = 0x'+(w>>>0).toString(16).toUpperCase().padStart(8,'0')+'   (bit 0 = first chunk)';
+ $('#tbl').innerHTML='block table: '+(allocs.length?allocs.map(a=>`${a.id}: chunks ${a.s}–${a.s+a.l-1} (${a.l*CH} B)`).join(' · '):'empty')}
+function malloc(n){let run=0,start=-1,checked=0;for(let i=0;i<N;i++){checked=i+1;if(bits[i]){run=0}else{if(!run)start=i;run++;if(run===n)break}}
+ if(run<n){draw({scan:N});say(`Scanned all ${N} bits: no run of ${n} free chunks. Free chunks exist (${bits.filter(b=>!b).length}) but not next to each other: external fragmentation.`);return}
+ const id=L[next++%L.length];allocs.push({id,s:start,l:n});for(let i=start;i<start+n;i++)bits[i]=id;
+ draw({found:[start,n],scan:start});say(`First run of ${n} zero bits starts at chunk ${start} (skipped ${start} busy/short bits). Set those bits to 1 and record the length: block ${id} = ${n*CH} bytes at offset ${start*CH}.`)}
+function free(id){const a=allocs.find(x=>x.id===id);allocs=allocs.filter(x=>x!==a);for(let i=a.s;i<a.s+a.l;i++)bits[i]=0;say(`free(${id}): clear ${a.l} bits. There is nothing to merge: neighbouring free chunks are already adjacent zeros. That is a strength of bitmaps.`);draw()}
+$('#sizes').innerHTML=[1,2,4,6,10].map(n=>`<button data-n="${n}">${n}</button>`).join('');
+$$('#sizes button').forEach(b=>b.onclick=()=>malloc(+b.dataset.n));$('#reset').onclick=init;init();
+
+</script></body></html>

@@ -1,0 +1,89 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title> Free-list heap</title>
+<style>:root{color-scheme:light;--bg:#fff;--soft:#f6f7f9;--sunk:#eef0f3;--fg:#1c2330;--muted:#5f6b7a;--line:#dde1e7;--accent:#2563eb;--accent-soft:#e8efff;--on-accent:#fff;
+--rom:#b45309;--romf:#fef3c7;--flash:#6d28d9;--flashf:#ede9fe;--ram:#15803d;--ramf:#d1fae5;--bus:#0e7490;--busf:#cffafe;--bad:#c62828;--badf:#fde8e8;--ok:#15803d;--okf:#dcfce7;--warn:#b45309;--warnf:#fef9c3;--r:10px}
+@media(prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#0f141b;--soft:#161c25;--sunk:#1d2531;--fg:#e4e8ee;--muted:#98a3b3;--line:#2a3441;--accent:#6ea0ff;--accent-soft:#1b2a45;--on-accent:#0b1220;--rom:#fbbf24;--romf:#3a2d0e;--flash:#a78bfa;--flashf:#2a2150;--ram:#4ade80;--ramf:#0f3328;--bus:#22d3ee;--busf:#0c3a44;--bad:#f87171;--badf:#3b1818;--ok:#4ade80;--okf:#12331f;--warn:#fbbf24;--warnf:#3a3210}}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:12px}
+.mono,code,pre{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+h1,h2,h3{margin:0 0 6px;line-height:1.25}h1{font-size:1.15rem}h2{font-size:1rem}
+button{font:inherit;color:inherit;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:6px 12px;cursor:pointer}
+button:hover:not(:disabled){background:var(--sunk)}button:disabled{opacity:.45;cursor:default}
+button.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+button.primary:hover:not(:disabled){background:var(--accent);filter:brightness(1.1)}
+button.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+button:focus-visible,[tabindex]:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+select,input[type=range]{font:inherit;color:inherit}
+select{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:5px 8px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px}
+.panel[hidden]{display:none}
+.card{background:var(--soft);border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.muted{color:var(--muted)}.grow{flex:1}
+.chip{display:inline-block;padding:1px 9px;border-radius:999px;font-size:.8rem;background:var(--sunk);border:1px solid var(--line);white-space:nowrap}
+.narr{min-height:3.4em;padding:10px 12px;border-left:4px solid var(--accent);background:var(--accent-soft);border-radius:0 var(--r) var(--r) 0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.heap{display:flex;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--soft);min-height:78px;margin:10px 0}
+.b{position:relative;display:flex;flex-direction:column;justify-content:center;align-items:center;border:0;border-right:1px solid var(--bg);border-radius:0;padding:4px 2px;min-width:0;font-size:.8rem;overflow:hidden;cursor:pointer}
+.b .h{position:absolute;left:0;top:0;bottom:0;width:7px;background:rgba(0,0,0,.28)}
+.b.used{background:var(--accent-soft);color:var(--fg);border-bottom:4px solid var(--accent)}
+.b.free{background:var(--okf);color:var(--fg);border-bottom:4px solid var(--ok);cursor:default}
+.b.pick{outline:3px solid var(--warn);outline-offset:-3px}
+.b.scan{outline:3px dashed var(--muted);outline-offset:-3px}
+.b small{color:var(--muted);font-size:.7rem}
+.list{font-size:.82rem;overflow-x:auto;white-space:nowrap;padding:6px 8px;background:var(--sunk);border-radius:8px;margin:8px 0}
+.stat{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}
+</style></head><body>
+<!-- Free-list heap: 40 units; each allocation has a 1-unit header. Click a used block to free it. -->
+<h1>Free-list heap: first fit vs best fit</h1>
+<div class="bar"><label>Policy <select id="pol"><option value="first">First fit</option><option value="best">Best fit</option></select></label>
+<span class="muted">malloc units:</span><span id="sizes"></span><button id="reset" title="Back to the starting layout">↺ Reset</button></div>
+<div class="heap" id="heap" role="group" aria-label="Heap memory, 40 units"></div>
+<div class="list mono" id="list" aria-label="Free list"></div>
+<div class="stat" id="stat"></div>
+<div class="narr" id="narr" aria-live="polite"></div>
+<p class="muted" style="font-size:.82rem">Each used block starts with a one-unit <b>header</b> (the dark strip) that stores its size. Click a <b>used</b> block to free it: neighbouring free blocks merge.</p>
+<script>const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const hex=(n,w=8)=>'0x'+(n>>>0).toString(16).toUpperCase().padStart(w,'0');
+// tabs: buttons with data-tab="id" show the .panel with that id
+function initTabs(start=window.__START||0){const btns=$$('.tabs button');const show=id=>{btns.forEach(b=>{const on=b.dataset.tab===id;b.classList.toggle('on',on);b.setAttribute('aria-selected',on)});$$('.panel').forEach(p=>p.hidden=p.id!==id)};btns.forEach(b=>b.addEventListener('click',()=>show(b.dataset.tab)));if(btns[start])show(btns[start].dataset.tab);return show}
+// player: generic step controller. steps = count; render(i) draws step i; returns controls
+function player({count,render,prev,next,play,reset,delay=1800}){let i=0,timer=null;const set=n=>{i=Math.max(0,Math.min(count-1,n));render(i);if(prev)prev.disabled=i===0;if(next)next.disabled=i===count-1;};const stop=()=>{clearInterval(timer);timer=null;if(play)play.textContent='▶ Play'};const go=()=>{if(i>=count-1){stop();return}set(i+1)};
+if(next)next.onclick=()=>{stop();set(i+1)};if(prev)prev.onclick=()=>{stop();set(i-1)};if(reset)reset.onclick=()=>{stop();set(0)};
+if(play)play.onclick=()=>{if(timer){stop();return}if(i>=count-1)set(0);play.textContent='❚❚ Pause';timer=setInterval(go,delay)};
+addEventListener('keydown',e=>{if(e.target.closest('input,select,textarea'))return;if(e.key==='ArrowRight'){stop();set(i+1)}if(e.key==='ArrowLeft'){stop();set(i-1)}});
+set(0);return{set,stop,get i(){return i}}}
+
+const TOTAL=40,HDR=1;let blocks,nextId;
+const NAMES='ABCDEFGHJKLMNPQRSTUVWXYZ';
+function init(){blocks=[{len:5,free:false,id:'A'},{len:3,free:true},{len:5,free:false,id:'B'},{len:10,free:true},{len:4,free:false,id:'C'},{len:13,free:true}];nextId=3;say('Starting layout: three used blocks and three free ones. Try malloc(6) with each policy.');draw()}
+const frees=()=>blocks.filter(b=>b.free);
+function draw(hl={}){const heap=$('#heap');heap.innerHTML='';
+ blocks.forEach((b,i)=>{const e=document.createElement('button');e.className='b '+(b.free?'free':'used')+(hl.pick===i?' pick':'')+(hl.scan&&hl.scan.includes(i)?' scan':'');e.style.flex=b.len+' 0 0';
+  e.setAttribute('aria-label',b.free?`free ${b.len} units`:`block ${b.id}, ${b.len} units, click to free`);
+  e.innerHTML=(b.free?'':'<i class="h"></i>')+'<b>'+(b.free?'free':b.id)+'</b>'+(b.len>=3?'<small>'+b.len+'u</small>':'');
+  if(!b.free)e.onclick=()=>doFree(i);heap.appendChild(e)});
+ const fl=frees();$('#list').innerHTML='free list: HEAD → '+(fl.length?fl.map(b=>`[${b.len}u @${addr(b)}]`).join(' → ')+' → NULL':'NULL (no free blocks)');
+ const tot=fl.reduce((a,b)=>a+b.len,0),big=Math.max(0,...fl.map(b=>b.len));
+ $('#stat').innerHTML=`<span class="chip">free total: ${tot} units</span><span class="chip">largest free block: ${big} units</span><span class="chip" style="${tot>big?'color:var(--bad)':''}">${tot>big?'fragmented: free space is split up':'no external fragmentation'}</span>`}
+const addr=b=>{let a=0;for(const x of blocks){if(x===b)return a;a+=x.len}return a};
+const say=t=>$('#narr').textContent=t;
+function malloc(n){const need=n+HDR,pol=$('#pol').value;const scan=[];let pick=-1;
+ blocks.forEach((b,i)=>{if(!b.free)return;if(pol==='first'){if(pick<0){scan.push(i);if(b.len>=need)pick=i}}else{scan.push(i);if(b.len>=need&&(pick<0||b.len<blocks[pick].len))pick=i}});
+ const seen=scan.map(i=>blocks[i].len).join(', ');
+ if(pick<0){draw({scan});const t=frees().reduce((a,b)=>a+b.len,0);say(`${pol==='first'?'First':'Best'} fit looked at free blocks [${seen}] units. malloc(${n}) needs ${need} units (with header) in ONE block: none is big enough → returns NULL`+(t>=need?`, even though ${t} units are free in total. That is external fragmentation.`:'.'));return}
+ const b=blocks[pick],rest=b.len-need,id=NAMES[nextId++%NAMES.length];
+ if(rest>=2){blocks.splice(pick,1,{len:need,free:false,id},{len:rest,free:true});say(`${pol==='first'?'First fit takes the first block that is big enough':'Best fit checks every free block and takes the tightest one'} (looked at [${seen}]). Block of ${b.len} units split: ${need} used (${n} + 1 header) and ${rest} left on the free list.`)}
+ else{blocks[pick]={len:b.len,free:false,id};say(rest===0?`Took the ${b.len}-unit block: it fits exactly, nothing is wasted.`:`Took the ${b.len}-unit block whole. The ${rest} spare unit is too small to be a block of its own, so it is wasted inside this one: internal fragmentation.`)}
+ draw({pick:blocks.findIndex(x=>x.id===id),scan})}
+function doFree(i){const b=blocks[i];const id=b.id;b.free=true;delete b.id;let msg=`free(${id}): block returned to the free list.`;
+ if(blocks[i+1]&&blocks[i+1].free){blocks[i].len+=blocks[i+1].len;blocks.splice(i+1,1);msg+=' Merged with the free block after it.'}
+ if(i>0&&blocks[i-1].free){blocks[i-1].len+=blocks[i].len;blocks.splice(i,1);msg+=' Merged with the free block before it.'}
+ say(msg+' (Without merging, two 4-unit holes could never satisfy a 6-unit request.)');draw()}
+$('#sizes').innerHTML=[2,4,6,8,12].map(n=>`<button data-n="${n}">${n}</button>`).join('');
+$$('#sizes button').forEach(b=>b.onclick=()=>malloc(+b.dataset.n));$('#reset').onclick=init;$('#pol').onchange=()=>say('Policy changed. Free some blocks and allocate again to compare.');init();
+</script></body></html>
