@@ -1257,6 +1257,20 @@
             "type": "doc",
             "content": [
               {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 2
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "What happens when core Reset "
+                  }
+                ]
+              },
+              {
                 "type": "bulletList",
                 "content": [
                   {
@@ -1265,7 +1279,8 @@
                       {
                         "type": "paragraph",
                         "attrs": {
-                          "textAlign": null
+                          "textAlign": null,
+                          "indent": 0
                         },
                         "content": [
                           {
@@ -1321,7 +1336,8 @@
                       {
                         "type": "paragraph",
                         "attrs": {
-                          "textAlign": null
+                          "textAlign": null,
+                          "indent": 0
                         },
                         "content": [
                           {
@@ -1339,7 +1355,8 @@
                               {
                                 "type": "paragraph",
                                 "attrs": {
-                                  "textAlign": null
+                                  "textAlign": null,
+                                  "indent": 0
                                 },
                                 "content": [
                                   {
@@ -1382,7 +1399,8 @@
                               {
                                 "type": "paragraph",
                                 "attrs": {
-                                  "textAlign": null
+                                  "textAlign": null,
+                                  "indent": 0
                                 },
                                 "content": [
                                   {
@@ -1433,7 +1451,8 @@
                               {
                                 "type": "paragraph",
                                 "attrs": {
-                                  "textAlign": null
+                                  "textAlign": null,
+                                  "indent": 0
                                 }
                               }
                             ]
@@ -1453,7 +1472,8 @@
                   {
                     "type": "paragraph",
                     "attrs": {
-                      "textAlign": "left"
+                      "textAlign": "left",
+                      "indent": 0
                     },
                     "content": [
                       {
@@ -1538,7 +1558,8 @@
                       {
                         "type": "paragraph",
                         "attrs": {
-                          "textAlign": "left"
+                          "textAlign": "left",
+                          "indent": 0
                         },
                         "content": [
                           {
@@ -1569,7 +1590,8 @@
                               {
                                 "type": "paragraph",
                                 "attrs": {
-                                  "textAlign": null
+                                  "textAlign": null,
+                                  "indent": 0
                                 },
                                 "content": [
                                   {
@@ -1586,7 +1608,8 @@
                               {
                                 "type": "paragraph",
                                 "attrs": {
-                                  "textAlign": null
+                                  "textAlign": null,
+                                  "indent": 0
                                 },
                                 "content": [
                                   {
@@ -1603,7 +1626,8 @@
                               {
                                 "type": "paragraph",
                                 "attrs": {
-                                  "textAlign": null
+                                  "textAlign": null,
+                                  "indent": 0
                                 },
                                 "content": [
                                   {
@@ -1624,7 +1648,8 @@
                       {
                         "type": "paragraph",
                         "attrs": {
-                          "textAlign": null
+                          "textAlign": null,
+                          "indent": 0
                         },
                         "content": [
                           {
@@ -1641,7 +1666,8 @@
                       {
                         "type": "paragraph",
                         "attrs": {
-                          "textAlign": null
+                          "textAlign": null,
+                          "indent": 0
                         },
                         "content": [
                           {
@@ -1657,7 +1683,8 @@
               {
                 "type": "paragraph",
                 "attrs": {
-                  "textAlign": "left"
+                  "textAlign": "left",
+                  "indent": 0
                 },
                 "content": [
                   {
@@ -1684,7 +1711,8 @@
                       {
                         "type": "paragraph",
                         "attrs": {
-                          "textAlign": "left"
+                          "textAlign": "left",
+                          "indent": 0
                         },
                         "content": [
                           {
@@ -1710,7 +1738,8 @@
                       {
                         "type": "paragraph",
                         "attrs": {
-                          "textAlign": "left"
+                          "textAlign": "left",
+                          "indent": 0
                         },
                         "content": [
                           {
@@ -1736,7 +1765,8 @@
                       {
                         "type": "paragraph",
                         "attrs": {
-                          "textAlign": "left"
+                          "textAlign": "left",
+                          "indent": 0
                         },
                         "content": [
                           {
@@ -1762,7 +1792,8 @@
                       {
                         "type": "paragraph",
                         "attrs": {
-                          "textAlign": "left"
+                          "textAlign": "left",
+                          "indent": 0
                         },
                         "content": [
                           {
@@ -1788,7 +1819,8 @@
                       {
                         "type": "paragraph",
                         "attrs": {
-                          "textAlign": "left"
+                          "textAlign": "left",
+                          "indent": 0
                         },
                         "content": [
                           {
@@ -1814,7 +1846,8 @@
                       {
                         "type": "paragraph",
                         "attrs": {
-                          "textAlign": "left"
+                          "textAlign": "left",
+                          "indent": 0
                         },
                         "content": [
                           {
@@ -1840,7 +1873,8 @@
                       {
                         "type": "paragraph",
                         "attrs": {
-                          "textAlign": "left"
+                          "textAlign": "left",
+                          "indent": 0
                         },
                         "content": [
                           {
@@ -1865,7 +1899,8 @@
               {
                 "type": "paragraph",
                 "attrs": {
-                  "textAlign": null
+                  "textAlign": null,
+                  "indent": 0
                 },
                 "content": [
                   {
@@ -1888,7 +1923,8 @@
                       {
                         "type": "paragraph",
                         "attrs": {
-                          "textAlign": null
+                          "textAlign": null,
+                          "indent": 0
                         },
                         "content": [
                           {
@@ -1905,7 +1941,8 @@
                       {
                         "type": "paragraph",
                         "attrs": {
-                          "textAlign": null
+                          "textAlign": null,
+                          "indent": 0
                         },
                         "content": [
                           {
@@ -1922,7 +1959,8 @@
                       {
                         "type": "paragraph",
                         "attrs": {
-                          "textAlign": null
+                          "textAlign": null,
+                          "indent": 0
                         },
                         "content": [
                           {
@@ -1944,7 +1982,8 @@
                       {
                         "type": "paragraph",
                         "attrs": {
-                          "textAlign": null
+                          "textAlign": null,
+                          "indent": 0
                         },
                         "content": [
                           {
@@ -1987,7 +2026,8 @@
                       {
                         "type": "paragraph",
                         "attrs": {
-                          "textAlign": null
+                          "textAlign": null,
+                          "indent": 0
                         },
                         "content": [
                           {
@@ -2030,6 +2070,7 @@
                 "type": "heading",
                 "attrs": {
                   "textAlign": null,
+                  "indent": 0,
                   "level": 3
                 },
                 "content": [
@@ -2052,7 +2093,8 @@
                       {
                         "type": "paragraph",
                         "attrs": {
-                          "textAlign": null
+                          "textAlign": null,
+                          "indent": 0
                         },
                         "content": [
                           {
@@ -2082,7 +2124,8 @@
                       {
                         "type": "paragraph",
                         "attrs": {
-                          "textAlign": null
+                          "textAlign": null,
+                          "indent": 0
                         },
                         "content": [
                           {
@@ -2112,7 +2155,8 @@
                       {
                         "type": "paragraph",
                         "attrs": {
-                          "textAlign": null
+                          "textAlign": null,
+                          "indent": 0
                         },
                         "content": [
                           {
@@ -2142,7 +2186,8 @@
                       {
                         "type": "paragraph",
                         "attrs": {
-                          "textAlign": null
+                          "textAlign": null,
+                          "indent": 0
                         },
                         "content": [
                           {
@@ -2159,7 +2204,8 @@
                       {
                         "type": "paragraph",
                         "attrs": {
-                          "textAlign": null
+                          "textAlign": null,
+                          "indent": 0
                         },
                         "content": [
                           {
@@ -2197,7 +2243,8 @@
                   {
                     "type": "paragraph",
                     "attrs": {
-                      "textAlign": null
+                      "textAlign": null,
+                      "indent": 0
                     },
                     "content": [
                       {
@@ -2212,6 +2259,7 @@
                 "type": "heading",
                 "attrs": {
                   "textAlign": null,
+                  "indent": 0,
                   "level": 3
                 },
                 "content": [
@@ -2224,7 +2272,8 @@
               {
                 "type": "paragraph",
                 "attrs": {
-                  "textAlign": null
+                  "textAlign": null,
+                  "indent": 0
                 },
                 "content": [
                   {
@@ -2278,7 +2327,8 @@
                   {
                     "type": "paragraph",
                     "attrs": {
-                      "textAlign": null
+                      "textAlign": null,
+                      "indent": 0
                     },
                     "content": [
                       {
@@ -2292,19 +2342,22 @@
               {
                 "type": "paragraph",
                 "attrs": {
-                  "textAlign": null
+                  "textAlign": null,
+                  "indent": 0
                 }
               },
               {
                 "type": "paragraph",
                 "attrs": {
-                  "textAlign": null
+                  "textAlign": null,
+                  "indent": 0
                 }
               },
               {
                 "type": "paragraph",
                 "attrs": {
-                  "textAlign": null
+                  "textAlign": null,
+                  "indent": 0
                 }
               }
             ]
