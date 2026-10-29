@@ -1,6 +1,7 @@
 // Callout boxes, embedded pages/videos and Mermaid diagrams.
 import { Node } from '@tiptap/core';
 import { NodeSelection } from '@tiptap/pm/state';
+import { expandButton, openViewer } from './viewer.js';
 
 export const CALLOUT_VARIANTS = ['info', 'tip', 'warning', 'danger'];
 
@@ -161,7 +162,11 @@ export const Diagram = Node.create({
       ta.spellcheck = false;
       ta.hidden = true;
       ta.rows = 6;
-      dom.append(out, bar, ta);
+      const expand = expandButton(() => {
+        const svg = out.querySelector('svg');
+        if (svg) openViewer({ kind: 'svg', markup: new XMLSerializer().serializeToString(svg), title: 'Diagram' });
+      });
+      dom.append(out, expand, bar, ta);
 
       const draw = () => {
         if (drawn === current.attrs.code) return;
@@ -200,7 +205,7 @@ export const Diagram = Node.create({
         },
         selectNode: () => dom.classList.add('selected'),
         deselectNode: () => dom.classList.remove('selected'),
-        stopEvent: (e) => bar.contains(e.target) || e.target === ta,
+        stopEvent: (e) => bar.contains(e.target) || e.target === ta || expand.contains(e.target),
         ignoreMutation: () => true,
         destroy: () => clearTimeout(timer),
       };

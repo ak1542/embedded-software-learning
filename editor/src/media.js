@@ -3,6 +3,7 @@
 // `width` is a percentage of the page width, so sizes stay sensible on phones too.
 import { Node } from '@tiptap/core';
 import { NodeSelection } from '@tiptap/pm/state';
+import { expandButton, openViewer } from './viewer.js';
 
 const SIZES = [25, 50, 75, 100];
 const ALIGNS = [
@@ -155,7 +156,16 @@ function createMediaNode({ name, tag, extraAttributes = {} }) {
           handle.addEventListener('pointercancel', up);
         });
 
-        frame.append(el, handle, tools);
+        // Images (not videos) get the corner button that opens the zoomable big view.
+        const expand =
+          tag === 'img'
+            ? expandButton(() => {
+                const url = options.resolveMedia(current.attrs.src);
+                openViewer({ kind: 'image', src: url, title: current.attrs.alt || 'Picture', openUrl: url.startsWith('data:') || url.startsWith('blob:') ? null : url });
+              })
+            : null;
+
+        frame.append(el, ...(expand ? [expand] : []), handle, tools);
         dom.append(frame);
         apply();
 
@@ -169,7 +179,7 @@ function createMediaNode({ name, tag, extraAttributes = {} }) {
           },
           selectNode: () => dom.classList.add('selected'),
           deselectNode: () => dom.classList.remove('selected'),
-          stopEvent: (event) => tools.contains(event.target) || handle.contains(event.target),
+          stopEvent: (event) => tools.contains(event.target) || handle.contains(event.target) || Boolean(expand && expand.contains(event.target)),
           ignoreMutation: () => true,
         };
       };

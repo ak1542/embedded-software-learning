@@ -306,14 +306,6 @@ async function insertAnimation() {
   }
 }
 
-function openLightbox(src, alt) {
-  const dialog = h('dialog', { class: 'lightbox' }, h('img', { src, alt: alt || '' }));
-  dialog.addEventListener('click', () => dialog.close());
-  dialog.addEventListener('close', () => dialog.remove());
-  document.body.append(dialog);
-  dialog.showModal();
-}
-
 /* ---------- settings ---------- */
 
 function applySettings() {
@@ -473,10 +465,6 @@ function renderMain() {
   );
   mountEditor(node, host);
   refreshOutline();
-  host.addEventListener('click', (e) => {
-    const img = e.target.closest('.media-img img');
-    if (img && !state.edit) openLightbox(img.src, img.alt);
-  });
 }
 
 function sectionToolbar(node, loc) {
