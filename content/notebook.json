@@ -12,291 +12,11 @@
   },
   "sections": [
     {
-      "id": "s-ms",
-      "title": "MySystem Project",
+      "id": "s-mvtnzpm24r2o2",
+      "title": "Broad Picture of embedded system",
       "doc": {
         "type": "doc",
         "content": [
-          {
-            "type": "paragraph",
-            "content": [
-              {
-                "type": "text",
-                "text": "Notes for the "
-              },
-              {
-                "type": "text",
-                "text": "MySystem Project",
-                "marks": [
-                  {
-                    "type": "bold"
-                  }
-                ]
-              },
-              {
-                "type": "text",
-                "text": ": firmware for an Arm Cortex-M4 (STM32F4 Discovery, also run in the Renode simulator). The sections follow the work from the hardware, through building and debugging, to the linker script and startup code."
-              }
-            ]
-          },
-          {
-            "type": "diagram",
-            "attrs": {
-              "code": "flowchart LR\n  A[\"Requirement<br/>CPU and board\"] --> B[\"Cortex-M4 core<br/>boot and memory map\"]\n  B --> C[\"Compilation<br/>gcc, ar, objcopy\"]\n  C --> D[\"Linker and Loader<br/>sections, VMA and LMA\"]\n  D --> E[\"Startup file<br/>Reset_Handler\"]\n  C --> F[\"Debugger tools<br/>GDB and TRACE32\"]\n  E --> F"
-            }
-          },
-          {
-            "type": "heading",
-            "attrs": {
-              "level": 2
-            },
-            "content": [
-              {
-                "type": "text",
-                "text": "Where to go"
-              }
-            ]
-          },
-          {
-            "type": "orderedList",
-            "attrs": {
-              "start": 1
-            },
-            "content": [
-              {
-                "type": "listItem",
-                "content": [
-                  {
-                    "type": "paragraph",
-                    "content": [
-                      {
-                        "type": "text",
-                        "text": "Requirement",
-                        "marks": [
-                          {
-                            "type": "link",
-                            "attrs": {
-                              "href": "#/s-ms-req",
-                              "target": null,
-                              "rel": null,
-                              "class": null
-                            }
-                          }
-                        ]
-                      },
-                      {
-                        "type": "text",
-                        "text": " and "
-                      },
-                      {
-                        "type": "text",
-                        "text": "Board details",
-                        "marks": [
-                          {
-                            "type": "link",
-                            "attrs": {
-                              "href": "#/s-ms-board",
-                              "target": null,
-                              "rel": null,
-                              "class": null
-                            }
-                          }
-                        ]
-                      },
-                      {
-                        "type": "text",
-                        "text": ": what we are building on"
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "listItem",
-                "content": [
-                  {
-                    "type": "paragraph",
-                    "content": [
-                      {
-                        "type": "text",
-                        "text": "Cortex-M4 core",
-                        "marks": [
-                          {
-                            "type": "link",
-                            "attrs": {
-                              "href": "#/s-m4",
-                              "target": null,
-                              "rel": null,
-                              "class": null
-                            }
-                          }
-                        ]
-                      },
-                      {
-                        "type": "text",
-                        "text": ": boot, features, memory map, what a single core cannot do"
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "listItem",
-                "content": [
-                  {
-                    "type": "paragraph",
-                    "content": [
-                      {
-                        "type": "text",
-                        "text": "Compilation",
-                        "marks": [
-                          {
-                            "type": "link",
-                            "attrs": {
-                              "href": "#/s-build",
-                              "target": null,
-                              "rel": null,
-                              "class": null
-                            }
-                          }
-                        ]
-                      },
-                      {
-                        "type": "text",
-                        "text": ": the arm-none-eabi toolchain step by step"
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "listItem",
-                "content": [
-                  {
-                    "type": "paragraph",
-                    "content": [
-                      {
-                        "type": "text",
-                        "text": "Debugger tools (T32 vs GDB)",
-                        "marks": [
-                          {
-                            "type": "link",
-                            "attrs": {
-                              "href": "#/s-dbg",
-                              "target": null,
-                              "rel": null,
-                              "class": null
-                            }
-                          }
-                        ]
-                      },
-                      {
-                        "type": "text",
-                        "text": ": features and GDB commands"
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "listItem",
-                "content": [
-                  {
-                    "type": "paragraph",
-                    "content": [
-                      {
-                        "type": "text",
-                        "text": "Linker and Loader",
-                        "marks": [
-                          {
-                            "type": "link",
-                            "attrs": {
-                              "href": "#/s-ld",
-                              "target": null,
-                              "rel": null,
-                              "class": null
-                            }
-                          }
-                        ]
-                      },
-                      {
-                        "type": "text",
-                        "text": ": the linker script, VMA/LMA and 30 interview questions"
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "listItem",
-                "content": [
-                  {
-                    "type": "paragraph",
-                    "content": [
-                      {
-                        "type": "text",
-                        "text": "Startup file",
-                        "marks": [
-                          {
-                            "type": "link",
-                            "attrs": {
-                              "href": "#/s-start",
-                              "target": null,
-                              "rel": null,
-                              "class": null
-                            }
-                          }
-                        ]
-                      },
-                      {
-                        "type": "text",
-                        "text": ": what runs between reset and "
-                      },
-                      {
-                        "type": "text",
-                        "text": "main()",
-                        "marks": [
-                          {
-                            "type": "code"
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "type": "callout",
-            "attrs": {
-              "variant": "tip"
-            },
-            "content": [
-              {
-                "type": "paragraph",
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "Most pages have an "
-                  },
-                  {
-                    "type": "text",
-                    "text": "interactive animation",
-                    "marks": [
-                      {
-                        "type": "bold"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "text",
-                    "text": ". Click it in view mode to open it large, step with the buttons or the ← → keys, and try the controls inside."
-                  }
-                ]
-              }
-            ]
-          },
           {
             "type": "paragraph"
           }
@@ -304,261 +24,11 @@
       },
       "children": [
         {
-          "id": "s-ms-req",
-          "title": "Requirement",
+          "id": "s-mvto1oopm05a1",
+          "title": "Embedded System",
           "doc": {
             "type": "doc",
             "content": [
-              {
-                "type": "heading",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0,
-                  "level": 2
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "Basic details "
-                  }
-                ]
-              },
-              {
-                "type": "bulletList",
-                "content": [
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "attrs": {
-                          "textAlign": null,
-                          "indent": 0
-                        },
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "CPU/processor → "
-                          },
-                          {
-                            "type": "text",
-                            "marks": [
-                              {
-                                "type": "bold"
-                              }
-                            ],
-                            "text": "ARM Cortex-M4"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "attrs": {
-                          "textAlign": null,
-                          "indent": 0
-                        },
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "Board → "
-                          },
-                          {
-                            "type": "text",
-                            "marks": [
-                              {
-                                "type": "bold"
-                              }
-                            ],
-                            "text": "STM32F4 Discovery"
-                          },
-                          {
-                            "type": "text",
-                            "text": "; it uses the "
-                          },
-                          {
-                            "type": "text",
-                            "marks": [
-                              {
-                                "type": "bold"
-                              }
-                            ],
-                            "text": "STM32F407"
-                          },
-                          {
-                            "type": "text",
-                            "text": " MCU, whose processor is an Arm Cortex-M4"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "attrs": {
-                          "textAlign": null,
-                          "indent": 0
-                        },
-                        "content": [
-                          {
-                            "type": "text",
-                            "marks": [
-                              {
-                                "type": "bold"
-                              }
-                            ],
-                            "text": "Single core"
-                          },
-                          {
-                            "type": "text",
-                            "text": "; Renode does not have a multicore option"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "attrs": {
-                          "textAlign": null,
-                          "indent": 0
-                        },
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "Board manual:"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "bulletList",
-                        "content": [
-                          {
-                            "type": "listItem",
-                            "content": [
-                              {
-                                "type": "paragraph",
-                                "attrs": {
-                                  "textAlign": null,
-                                  "indent": 0
-                                },
-                                "content": [
-                                  {
-                                    "type": "text",
-                                    "marks": [
-                                      {
-                                        "type": "link",
-                                        "attrs": {
-                                          "href": "https://www.st.com/resource/en/user_manual/um1472-discovery-kit-with-stm32f407vg-mcu-stmicroelectronics.pdf",
-                                          "target": "_blank",
-                                          "rel": "noopener noreferrer nofollow",
-                                          "class": null
-                                        }
-                                      }
-                                    ],
-                                    "text": "UM1472: Discovery kit with STM32F407VG MCU"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "attrs": {
-                          "textAlign": null,
-                          "indent": 0
-                        },
-                        "content": [
-                          {
-                            "type": "text",
-                            "marks": [
-                              {
-                                "type": "link",
-                                "attrs": {
-                                  "href": "https://www.st.com/resource/en/data_brief/stm32f4discovery.pdf",
-                                  "target": "_blank",
-                                  "rel": "noopener noreferrer nofollow",
-                                  "class": null
-                                }
-                              }
-                            ],
-                            "text": "STM32F4DISCOVERY data brief"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "attrs": {
-                          "textAlign": null,
-                          "indent": 0
-                        },
-                        "content": [
-                          {
-                            "type": "text",
-                            "marks": [
-                              {
-                                "type": "link",
-                                "attrs": {
-                                  "href": "https://www.st.com/en/microcontrollers-microprocessors/stm32f407-417/documentation.html",
-                                  "target": "_blank",
-                                  "rel": "noopener noreferrer nofollow",
-                                  "class": null
-                                }
-                              }
-                            ],
-                            "text": "STM32F407/417 documentation"
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "heading",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0,
-                  "level": 3
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "Board Picture"
-                  }
-                ]
-              },
-              {
-                "type": "image",
-                "attrs": {
-                  "src": "https://public.www.evernote.com/resources/s456/1d591701-ee2e-bb60-9d34-6a4d86e4572d",
-                  "alt": "",
-                  "width": 75,
-                  "align": "center"
-                }
-              },
               {
                 "type": "heading",
                 "attrs": {
@@ -597,7 +67,7 @@
                         "content": [
                           {
                             "type": "text",
-                            "text": "These I2C, SPI, UART, timers are all HW IP controllers"
+                            "text": "These I2C, SPI, UART, and timers are all HW IP controllers"
                           }
                         ]
                       }
@@ -632,448 +102,6 @@
                   "width": 100,
                   "title": "Animation"
                 }
-              },
-              {
-                "type": "heading",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0,
-                  "level": 2
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "At a glance"
-                  }
-                ]
-              },
-              {
-                "type": "table",
-                "content": [
-                  {
-                    "type": "tableRow",
-                    "content": [
-                      {
-                        "type": "tableHeader",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "Item"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableHeader",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "Value"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "tableRow",
-                    "content": [
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "CPU core"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "Arm Cortex-M4 (single core)"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "tableRow",
-                    "content": [
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "Board"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "STM32F4 Discovery"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "tableRow",
-                    "content": [
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "MCU"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "STM32F407"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "tableRow",
-                    "content": [
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "Simulator"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "Renode (no multicore option), GDB server on "
-                              },
-                              {
-                                "type": "text",
-                                "marks": [
-                                  {
-                                    "type": "code"
-                                  }
-                                ],
-                                "text": "localhost:3333"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "tableRow",
-                    "content": [
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "Toolchain"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "marks": [
-                                  {
-                                    "type": "code"
-                                  }
-                                ],
-                                "text": "arm-none-eabi-gcc"
-                              },
-                              {
-                                "type": "text",
-                                "text": ", "
-                              },
-                              {
-                                "type": "text",
-                                "marks": [
-                                  {
-                                    "type": "code"
-                                  }
-                                ],
-                                "text": "-ar"
-                              },
-                              {
-                                "type": "text",
-                                "text": ", "
-                              },
-                              {
-                                "type": "text",
-                                "marks": [
-                                  {
-                                    "type": "code"
-                                  }
-                                ],
-                                "text": "-objcopy"
-                              },
-                              {
-                                "type": "text",
-                                "text": ", "
-                              },
-                              {
-                                "type": "text",
-                                "marks": [
-                                  {
-                                    "type": "code"
-                                  }
-                                ],
-                                "text": "-objdump"
-                              },
-                              {
-                                "type": "text",
-                                "text": ", "
-                              },
-                              {
-                                "type": "text",
-                                "marks": [
-                                  {
-                                    "type": "code"
-                                  }
-                                ],
-                                "text": "-gdb"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "tableRow",
-                    "content": [
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "Debuggers"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "GDB, TRACE32 (T32)"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
               },
               {
                 "type": "paragraph",
@@ -14810,6 +13838,1017 @@
         ]
       },
       "children": []
+    },
+    {
+      "id": "s-ms",
+      "title": "MySystem Project",
+      "doc": {
+        "type": "doc",
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "Notes for the "
+              },
+              {
+                "type": "text",
+                "text": "MySystem Project",
+                "marks": [
+                  {
+                    "type": "bold"
+                  }
+                ]
+              },
+              {
+                "type": "text",
+                "text": ": firmware for an Arm Cortex-M4 (STM32F4 Discovery, also run in the Renode simulator). The sections follow the work from the hardware, through building and debugging, to the linker script and startup code."
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "attrs": {
+              "code": "flowchart LR\n  A[\"Requirement<br/>CPU and board\"] --> B[\"Cortex-M4 core<br/>boot and memory map\"]\n  B --> C[\"Compilation<br/>gcc, ar, objcopy\"]\n  C --> D[\"Linker and Loader<br/>sections, VMA and LMA\"]\n  D --> E[\"Startup file<br/>Reset_Handler\"]\n  C --> F[\"Debugger tools<br/>GDB and TRACE32\"]\n  E --> F"
+            }
+          },
+          {
+            "type": "heading",
+            "attrs": {
+              "level": 2
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Where to go"
+              }
+            ]
+          },
+          {
+            "type": "orderedList",
+            "attrs": {
+              "start": 1
+            },
+            "content": [
+              {
+                "type": "listItem",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Requirement",
+                        "marks": [
+                          {
+                            "type": "link",
+                            "attrs": {
+                              "href": "#/s-ms-req",
+                              "target": null,
+                              "rel": null,
+                              "class": null
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "text": " and "
+                      },
+                      {
+                        "type": "text",
+                        "text": "Board details",
+                        "marks": [
+                          {
+                            "type": "link",
+                            "attrs": {
+                              "href": "#/s-ms-board",
+                              "target": null,
+                              "rel": null,
+                              "class": null
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "text": ": what we are building on"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "listItem",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Cortex-M4 core",
+                        "marks": [
+                          {
+                            "type": "link",
+                            "attrs": {
+                              "href": "#/s-m4",
+                              "target": null,
+                              "rel": null,
+                              "class": null
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "text": ": boot, features, memory map, what a single core cannot do"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "listItem",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Compilation",
+                        "marks": [
+                          {
+                            "type": "link",
+                            "attrs": {
+                              "href": "#/s-build",
+                              "target": null,
+                              "rel": null,
+                              "class": null
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "text": ": the arm-none-eabi toolchain step by step"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "listItem",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Debugger tools (T32 vs GDB)",
+                        "marks": [
+                          {
+                            "type": "link",
+                            "attrs": {
+                              "href": "#/s-dbg",
+                              "target": null,
+                              "rel": null,
+                              "class": null
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "text": ": features and GDB commands"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "listItem",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Linker and Loader",
+                        "marks": [
+                          {
+                            "type": "link",
+                            "attrs": {
+                              "href": "#/s-ld",
+                              "target": null,
+                              "rel": null,
+                              "class": null
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "text": ": the linker script, VMA/LMA and 30 interview questions"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "listItem",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Startup file",
+                        "marks": [
+                          {
+                            "type": "link",
+                            "attrs": {
+                              "href": "#/s-start",
+                              "target": null,
+                              "rel": null,
+                              "class": null
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "text": ": what runs between reset and "
+                      },
+                      {
+                        "type": "text",
+                        "text": "main()",
+                        "marks": [
+                          {
+                            "type": "code"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "attrs": {
+              "variant": "tip"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Most pages have an "
+                  },
+                  {
+                    "type": "text",
+                    "text": "interactive animation",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "text": ". Click it in view mode to open it large, step with the buttons or the ← → keys, and try the controls inside."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "paragraph"
+          }
+        ]
+      },
+      "children": [
+        {
+          "id": "s-ms-req",
+          "title": "Requirement",
+          "doc": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 2
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Basic details "
+                  }
+                ]
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "CPU/processor → "
+                          },
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "ARM Cortex-M4"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Board → "
+                          },
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "STM32F4 Discovery"
+                          },
+                          {
+                            "type": "text",
+                            "text": "; it uses the "
+                          },
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "STM32F407"
+                          },
+                          {
+                            "type": "text",
+                            "text": " MCU, whose processor is an Arm Cortex-M4"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "Single core"
+                          },
+                          {
+                            "type": "text",
+                            "text": "; Renode does not have a multicore option"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Board manual:"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "bulletList",
+                        "content": [
+                          {
+                            "type": "listItem",
+                            "content": [
+                              {
+                                "type": "paragraph",
+                                "attrs": {
+                                  "textAlign": null,
+                                  "indent": 0
+                                },
+                                "content": [
+                                  {
+                                    "type": "text",
+                                    "marks": [
+                                      {
+                                        "type": "link",
+                                        "attrs": {
+                                          "href": "https://www.st.com/resource/en/user_manual/um1472-discovery-kit-with-stm32f407vg-mcu-stmicroelectronics.pdf",
+                                          "target": "_blank",
+                                          "rel": "noopener noreferrer nofollow",
+                                          "class": null
+                                        }
+                                      }
+                                    ],
+                                    "text": "UM1472: Discovery kit with STM32F407VG MCU"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "link",
+                                "attrs": {
+                                  "href": "https://www.st.com/resource/en/data_brief/stm32f4discovery.pdf",
+                                  "target": "_blank",
+                                  "rel": "noopener noreferrer nofollow",
+                                  "class": null
+                                }
+                              }
+                            ],
+                            "text": "STM32F4DISCOVERY data brief"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "link",
+                                "attrs": {
+                                  "href": "https://www.st.com/en/microcontrollers-microprocessors/stm32f407-417/documentation.html",
+                                  "target": "_blank",
+                                  "rel": "noopener noreferrer nofollow",
+                                  "class": null
+                                }
+                              }
+                            ],
+                            "text": "STM32F407/417 documentation"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 3
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Board Picture"
+                  }
+                ]
+              },
+              {
+                "type": "image",
+                "attrs": {
+                  "src": "https://public.www.evernote.com/resources/s456/1d591701-ee2e-bb60-9d34-6a4d86e4572d",
+                  "alt": "",
+                  "width": 75,
+                  "align": "center"
+                }
+              },
+              {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 2
+                }
+              },
+              {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 2
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "At a glance"
+                  }
+                ]
+              },
+              {
+                "type": "table",
+                "content": [
+                  {
+                    "type": "tableRow",
+                    "content": [
+                      {
+                        "type": "tableHeader",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Item"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableHeader",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Value"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "tableRow",
+                    "content": [
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "CPU core"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Arm Cortex-M4 (single core)"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "tableRow",
+                    "content": [
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Board"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "STM32F4 Discovery"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "tableRow",
+                    "content": [
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "MCU"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "STM32F407"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "tableRow",
+                    "content": [
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Simulator"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Renode (no multicore option), GDB server on "
+                              },
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "localhost:3333"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "tableRow",
+                    "content": [
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Toolchain"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "arm-none-eabi-gcc"
+                              },
+                              {
+                                "type": "text",
+                                "text": ", "
+                              },
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "-ar"
+                              },
+                              {
+                                "type": "text",
+                                "text": ", "
+                              },
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "-objcopy"
+                              },
+                              {
+                                "type": "text",
+                                "text": ", "
+                              },
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "-objdump"
+                              },
+                              {
+                                "type": "text",
+                                "text": ", "
+                              },
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "-gdb"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "tableRow",
+                    "content": [
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Debuggers"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "GDB, TRACE32 (T32)"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              }
+            ]
+          },
+          "children": []
+        }
+      ]
     }
   ]
 }
