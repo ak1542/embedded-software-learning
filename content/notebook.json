@@ -15222,6 +15222,134 @@
         ]
       },
       "children": []
+    },
+    {
+      "id": "s-mvtdl2xdjoa0d",
+      "title": "OS Concept ",
+      "doc": {
+        "type": "doc",
+        "content": [
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null,
+              "indent": 0
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Task,"
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null,
+              "indent": 0
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Context switch "
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null,
+              "indent": 0
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Heap"
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null,
+              "indent": 0
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Stack"
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null,
+              "indent": 0
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Scheduler "
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null,
+              "indent": 0
+            }
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null,
+              "indent": 0
+            }
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null,
+              "indent": 0
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Todo...."
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null,
+              "indent": 0
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Synchronisation "
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null,
+              "indent": 0
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "LR"
+              }
+            ]
+          }
+        ]
+      },
+      "children": []
     }
   ]
 }
