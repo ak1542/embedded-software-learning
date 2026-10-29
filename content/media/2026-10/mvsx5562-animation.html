@@ -1,0 +1,116 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Boot handoff animation</title><style>:root{--surface-1:#f5f4ed;--surface-2:#fff;--border-strong:#b9b7ae;--text-primary:#1f1e1d;--text-secondary:#5f5e5a;--text-accent:#185fa5;--bg-accent:#e6f1fb;--text-warning:#633806;--bg-warning:#faeeda;--border-warning:#ef9f27;--font-mono:ui-monospace,Menlo,monospace}@media(prefers-color-scheme:dark){:root{--surface-1:#2a2927;--surface-2:#1f1e1d;--border-strong:#5f5e5a;--text-primary:#f1efe8;--text-secondary:#b4b2a9;--text-accent:#85b7eb;--bg-accent:#0c447c;--text-warning:#fac775;--bg-warning:#633806;--border-warning:#ba7517}}.th{font-size:14px;font-weight:500;fill:var(--text-primary)}.ts{font-size:12px;fill:var(--text-secondary)}.sr-only{position:absolute;left:-9999px}button{font:inherit;font-size:14px;padding:6px 12px;border:.5px solid var(--border-strong);border-radius:8px;background:transparent;color:var(--text-primary);cursor:pointer}button:hover{background:var(--surface-1)}</style></head><body style="margin:0;padding:16px;max-width:680px;font-family:system-ui,sans-serif;background:var(--surface-2);color:var(--text-primary)"><div id="root">
+<h2 class="sr-only">Step-by-step animation of a boot handoff using an address remap register on Cortex-A/R, or the VTOR register on Cortex-M, with register values at each step.</h2>
+<div style="display:flex;gap:8px;margin:0 0 12px;flex-wrap:wrap">
+<button id="tA">Remap (Cortex-A/R)</button>
+<button id="tB">VTOR (Cortex-M)</button>
+</div>
+<div style="display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:16px;align-items:start">
+<svg width="100%" viewBox="0 0 400 296" role="img" aria-label="Memory map with PC and vector table locations">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></marker></defs>
+<rect x="6" y="20" width="84" height="40" rx="8" fill="var(--surface-1)" stroke="var(--border-strong)" stroke-width="0.5"></rect>
+<text class="th" x="48" y="33" text-anchor="middle" dominant-baseline="central">Alias</text>
+<text class="ts" x="48" y="49" text-anchor="middle" dominant-baseline="central">0x0000_0000</text>
+<path id="al0" d="M90 40H100V58H110" fill="none" stroke="var(--text-warning)" stroke-width="1.5" marker-end="url(#arrow)" style="transition:opacity .4s"></path>
+<path id="al1" d="M90 40H100V148H110" fill="none" stroke="var(--text-warning)" stroke-width="1.5" marker-end="url(#arrow)" style="transition:opacity .4s"></path>
+<path id="al2" d="M90 40H100V238H110" fill="none" stroke="var(--text-warning)" stroke-width="1.5" marker-end="url(#arrow)" style="transition:opacity .4s"></path>
+<g id="blocks"></g>
+<g id="tPc"><rect width="56" height="20" rx="4" fill="var(--text-accent)"></rect><text class="ts" x="28" y="10" text-anchor="middle" dominant-baseline="central" style="fill:var(--surface-2)">PC</text></g>
+<g id="tVec"><rect width="56" height="20" rx="4" fill="var(--bg-warning)" stroke="var(--border-warning)" stroke-width="0.5"></rect><text class="ts" x="28" y="10" text-anchor="middle" dominant-baseline="central" style="fill:var(--text-warning)">Vectors</text></g>
+</svg>
+<div id="regs" style="border:0.5px solid var(--border-strong);border-radius:12px;overflow:hidden"></div>
+</div>
+<div id="ins" style="font-family:var(--font-mono);font-size:13px;background:var(--surface-1);border-radius:8px;padding:8px 12px;margin:12px 0;min-height:20px;color:var(--text-primary)"></div>
+<div style="display:flex;align-items:center;gap:8px;margin:0 0 8px;flex-wrap:wrap">
+<button id="bPrev" aria-label="Previous step"><i class="ti ti-arrow-left" aria-hidden="true"></i></button>
+<button id="bPlay"><i class="ti ti-player-play" aria-hidden="true"></i> Play</button>
+<button id="bNext" aria-label="Next step"><i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+<button id="bReset"><i class="ti ti-refresh" aria-hidden="true"></i> Reset</button>
+<div id="dots" style="display:flex;gap:6px;margin-left:auto"></div>
+</div>
+<div style="min-height:84px">
+<div id="capT" style="font-size:15px;font-weight:500;color:var(--text-primary)"></div>
+<div id="capD" style="font-size:14px;color:var(--text-secondary);line-height:1.6;margin-top:2px"></div>
+</div>
+<div style="display:flex;align-items:center;gap:10px;margin-top:8px">
+<button id="bCopy"><i class="ti ti-copy" aria-hidden="true"></i> Copy HTML</button>
+<span id="copyMsg" style="font-size:13px;color:var(--text-secondary)"></span>
+</div>
+<textarea id="copyBox" readonly="" rows="5" style="display:none;width:100%;margin-top:8px;font-family:var(--font-mono);font-size:12px"></textarea>
+</div><script id="anim-js">
+var PRISTINE=document.getElementById('root').innerHTML;
+var LT='<',GT='>';
+var CSS_BASE=':root{--surface-1:#f5f4ed;--surface-2:#fff;--border-strong:#b9b7ae;--text-primary:#1f1e1d;--text-secondary:#5f5e5a;--text-accent:#185fa5;--bg-accent:#e6f1fb;--text-warning:#633806;--bg-warning:#faeeda;--border-warning:#ef9f27;--font-mono:ui-monospace,Menlo,monospace}@media(prefers-color-scheme:dark){:root{--surface-1:#2a2927;--surface-2:#1f1e1d;--border-strong:#5f5e5a;--text-primary:#f1efe8;--text-secondary:#b4b2a9;--text-accent:#85b7eb;--bg-accent:#0c447c;--text-warning:#fac775;--bg-warning:#633806;--border-warning:#ba7517}}.th{font-size:14px;font-weight:500;fill:var(--text-primary)}.ts{font-size:12px;fill:var(--text-secondary)}.sr-only{position:absolute;left:-9999px}button{font:inherit;font-size:14px;padding:6px 12px;border:.5px solid var(--border-strong);border-radius:8px;background:transparent;color:var(--text-primary);cursor:pointer}button:hover{background:var(--surface-1)}';
+var $=function(i){return document.getElementById(i)};
+var BY=[20,110,200];
+var SC={
+A:{regs:['PC','R0','STRAP','REMAP','0x0 maps to','IRQ fetch'],
+blocks:[{t:'Boot ROM',a:'@ 0x0400_0000',c:'ROM code + vectors',f:0,p:''},{t:'SRAM',a:'@ 0x1000_0000',c:'FMC + vectors',f:2,p:'Empty'},{t:'DRAM',a:'@ 0x8000_0000',c:'U-Boot + vectors',f:5,p:'Not ready'}],
+steps:[
+{pc:0,vec:0,al:0,r:['0x0000_0000','-','0b01','0','Boot ROM','ROM @0x18'],i:'hw: PC = 0x0000_0000 ; B reset_handler',t:'Reset',d:'The PC starts at 0x0. REMAP is 0, so the alias window points at Boot ROM, and the first vector slot is a branch into the ROM handler.'},
+{pc:0,vec:0,al:0,r:['0x0400_0040','-','0b01','0','Boot ROM','ROM @0x18'],i:'LDR r1, [STRAP]   ; 0b01 = SPI flash',t:'ROM reads the strap',d:'The ROM reads the latched strap register and picks SPI flash as the boot device.'},
+{pc:0,vec:0,al:0,r:['0x0400_0090','-','0b01','0','Boot ROM','ROM @0x18'],i:'BL copy_image     ; flash -> 0x1000_0000',t:'Copy FMC to SRAM',d:'The ROM copies the FMC and its vector table into SRAM and verifies it. Nothing has been remapped yet.'},
+{pc:1,vec:0,al:0,r:['0x1000_0040','0x1000_0040','0b01','0','Boot ROM','ROM @0x18'],i:'BX r0             ; leave ROM before the remap',t:'Jump into SRAM first',d:'The ROM branches to the FMC at its real SRAM address. It must leave the 0x0 window before remapping, or the code under the PC would vanish.'},
+{pc:1,vec:1,al:1,r:['0x1000_00A0','0x1000_0040','0b01','1','SRAM','SRAM @0x1000_0018'],i:'STR r1, [REMAP]   ; r1 = 1',t:'Remap 0x0 to SRAM',d:'Writing the remap register flips the alias. Vector fetches at 0x0 now hit the FMC table in SRAM, so the FMC can install its own handlers.'},
+{pc:1,vec:1,al:1,r:['0x1000_0120','0x1000_0040','0b01','1','SRAM','SRAM @0x1000_0018'],i:'BL dram_init ; BL copy_image  ; -> 0x8000_0000',t:'Init DRAM, copy next stage',d:'The FMC trains DRAM and copies U-Boot and its vector table to DRAM. The alias still points at SRAM.'},
+{pc:1,vec:2,al:2,r:['0x1000_0140','0x1000_0040','0b01','2','DRAM','DRAM @0x8000_0018'],i:'STR r1, [REMAP]   ; r1 = 2',t:'Remap 0x0 to DRAM',d:'The FMC runs from SRAM, so remapping 0x0 to DRAM is safe. Interrupts and aborts will now vector into the U-Boot table.'},
+{pc:2,vec:2,al:2,r:['0x8000_0040','0x8000_0040','0b01','2','DRAM','DRAM @0x8000_0018'],i:'BX r0             ; run U-Boot from DRAM',t:'Jump to the next stage',d:'The FMC branches to the U-Boot entry address in DRAM. The PC and the vectors are both in DRAM now.'},
+{pc:2,vec:2,al:2,r:['0x0000_0018','0x8000_0040','0b01','2','DRAM','DRAM @0x8000_0018'],i:'hw: IRQ -> PC = 0x18 ; B irq_handler',t:'An IRQ arrives',d:'The core fetches 0x18. The alias routes it to the DRAM table, and the branch there lands in the U-Boot handler. On cores with VBAR, writing VBAR would do the same without a remap.'}]},
+B:{regs:['PC','MSP','VTOR','R0 (app base)','R1 (app SP)','R2 (app entry)','Exception fetch'],
+blocks:[{t:'Flash: bootloader',a:'@ 0x0800_0000',c:'Bootloader + vectors',f:0,p:''},{t:'Flash: application',a:'@ 0x0800_8000',c:'App + vectors',f:0,p:''},{t:'SRAM',a:'@ 0x2000_0000',c:'Copy of app vectors',f:7,p:'Empty'}],
+steps:[
+{pc:0,vec:0,al:0,r:['0x0800_01C4','0x2002_0000','0x0000_0000','-','-','-','-'],i:'hw: MSP = [0x0] ; PC = [0x4] & ~1',t:'Reset',d:'VTOR resets to 0x0. The core does a data read of word 0 into MSP and word 1 into PC, dropping bit 0, so it starts in the bootloader.'},
+{pc:0,vec:0,al:0,r:['0x0800_0230','0x2002_0000','0x0000_0000','-','-','-','-'],i:'bootloader: verify app image (CRC / signature)',t:'Bootloader checks the app',d:'The bootloader runs from flash and validates the application before handing over.'},
+{pc:0,vec:0,al:0,r:['0x0800_0250','0x2002_0000','0x0000_0000','0x0800_8000','0x2001_0000','0x0800_8149','-'],i:'LDR r1,[r0] ; LDR r2,[r0,#4]',t:'Read the first two words of the app table',d:'Word 0 of the app table is its stack pointer, and word 1 is its reset handler with bit 0 set for Thumb state.'},
+{pc:0,vec:1,al:-1,r:['0x0800_0260','0x2002_0000','0x0800_8000','0x0800_8000','0x2001_0000','0x0800_8149','-'],i:'CPSID i ; STR r0,[0xE000ED08]   ; VTOR = r0',t:'Point VTOR at the app table',d:'Interrupts are masked first, then SCB->VTOR is written. The table must be aligned to its size rounded up to a power of two, with a minimum of 128 bytes.'},
+{pc:0,vec:1,al:-1,r:['0x0800_0268','0x2001_0000','0x0800_8000','0x0800_8000','0x2001_0000','0x0800_8149','-'],i:'MSR MSP, r1',t:'Load the app stack pointer',d:'The bootloader copies the initial SP of the app into MSP, mimicking what the hardware does at reset.'},
+{pc:1,vec:1,al:-1,r:['0x0800_8148','0x2001_0000','0x0800_8000','0x0800_8000','0x2001_0000','0x0800_8149','-'],i:'BX r2             ; bit 0 = 1 keeps Thumb',t:'Branch to the app reset handler',d:'The PC moves into the application. Bit 0 stays set in the register to keep Thumb state, and the core drops it when loading the PC.'},
+{pc:1,vec:1,al:-1,r:['0x0800_9A40','0x2001_0000','0x0800_8000','0x0800_8000','0x2001_0000','0x0800_8149','[0x0800_803C]'],i:'hw: SysTick (exc 15) -> PC = [VTOR + 0x3C]',t:'An exception arrives',d:'The core reads the handler address from VTOR plus 4 times the exception number. SysTick is exception 15, so the offset is 0x3C.'},
+{pc:1,vec:2,al:-1,r:['0x0800_8190','0x2001_0000','0x2000_0000','0x0800_8000','0x2001_0000','0x0800_8149','[0x2000_003C]'],i:'memcpy(0x2000_0000, 0x0800_8000, n) ; VTOR = 0x2000_0000',t:'Optional: move the table to SRAM',d:'Copying the table to SRAM lets firmware change handlers at run time and avoids flash wait states on interrupt entry.'}]}
+};
+var sc='A',cur=0,playing=false,timer=null,prev=null;
+function build(){
+var h='';for(var i=0;i<3;i++){var y=BY[i];h+='<g><rect id="bk'+i+'" x="110" y="'+y+'" width="210" height="76" rx="8" fill="var(--surface-1)" stroke="var(--border-strong)" stroke-width="0.5"/><text class="th" id="bt'+i+'" x="122" y="'+(y+14)+'" dominant-baseline="central"></text><text class="ts" id="ba'+i+'" x="122" y="'+(y+30)+'" dominant-baseline="central"></text><rect id="bc'+i+'" x="122" y="'+(y+44)+'" width="186" height="24" rx="4" stroke-width="0.5" style="transition:fill .4s"/><text class="ts" id="bx'+i+'" x="215" y="'+(y+56)+'" text-anchor="middle" dominant-baseline="central"></text></g>';}
+$('blocks').innerHTML=h;
+var r='';for(var k=0;k<7;k++){r+='<div id="rr'+k+'" style="display:flex;justify-content:space-between;gap:8px;padding:7px 10px;font-size:13px;'+(k?'border-top:0.5px solid var(--border-strong);':'')+'transition:background 1.2s"><span id="rn'+k+'" style="color:var(--text-secondary)"></span><span id="rv'+k+'" style="font-family:var(--font-mono);text-align:right"></span></div>';}
+$('regs').innerHTML=r;
+$('dots').innerHTML='';
+}
+function dots(){var d=$('dots');d.innerHTML='';SC[sc].steps.forEach(function(_,i){var e=document.createElement('span');e.style.cssText='width:10px;height:10px;border-radius:50%;cursor:pointer;display:inline-block';e.title='Step '+(i+1);e.onclick=function(){stop();go(i,true);};d.appendChild(e);});}
+function setSc(k){stop();sc=k;prev=null;cur=0;
+$('tA').style.background=k==='A'?'var(--bg-accent)':'transparent';$('tB').style.background=k==='B'?'var(--bg-accent)':'transparent';
+var S=SC[k];for(var i=0;i<3;i++){$('bt'+i).textContent=S.blocks[i].t;$('ba'+i).textContent=S.blocks[i].a;}
+for(var j=0;j<7;j++){var on=j<S.regs.length;$('rr'+j).style.display=on?'flex':'none';if(on)$('rn'+j).textContent=S.regs[j];}
+dots();go(0,true);}
+function go(n,quiet){cur=n;var S=SC[sc],s=S.steps[n];
+for(var i=0;i<3;i++){var b=S.blocks[i],filled=n>=b.f;
+ var bk=$('bk'+i),pc=(i===s.pc),vc=(i===s.vec);
+ bk.style.fill=pc?'var(--bg-accent)':'var(--surface-1)';
+ bk.style.stroke=pc?'var(--text-accent)':(vc?'var(--text-warning)':'var(--border-strong)');
+ bk.style.strokeWidth=(pc||vc)?'1.5':'0.5';
+ var c=$('bc'+i);c.style.fill=filled?'var(--surface-2)':'transparent';c.style.stroke='var(--border-strong)';c.setAttribute('stroke-dasharray',filled?'0':'3 3');
+ $('bx'+i).textContent=filled?b.c:b.p;
+ $('al'+i).style.opacity=(i===s.al)?1:0;}
+$('tPc').style.transition='transform .6s ease';$('tPc').style.transform='translate(330px,'+(BY[s.pc]+8)+'px)';
+$('tVec').style.transition='transform .6s ease';$('tVec').style.transform='translate(330px,'+(BY[s.vec]+38)+'px)';
+for(var k=0;k<S.regs.length;k++){var el=$('rv'+k);el.textContent=s.r[k];
+ if(!quiet&&prev&&prev[k]!==s.r[k]){var row=$('rr'+k);row.style.transition='none';row.style.background='var(--bg-warning)';row.getBoundingClientRect();row.style.transition='background 1.2s';row.style.background='transparent';}}
+prev=s.r.slice();
+$('ins').textContent=s.i;$('capT').textContent=(n+1)+' of '+S.steps.length+'. '+s.t;$('capD').textContent=s.d;
+var ds=$('dots').children;for(var j=0;j<ds.length;j++){ds[j].style.background=j===n?'var(--text-accent)':'var(--border-strong)';}}
+function stop(){playing=false;clearTimeout(timer);$('bPlay').innerHTML='<i class="ti ti-player-play" aria-hidden="true"></i> Play';}
+function sched(){clearTimeout(timer);if(!playing)return;timer=setTimeout(function(){if(cur>=SC[sc].steps.length-1){stop();return;}go(cur+1,false);sched();},3200);}
+$('bPlay').onclick=function(){if(playing){stop();return;}playing=true;$('bPlay').innerHTML='<i class="ti ti-player-pause" aria-hidden="true"></i> Pause';if(cur>=SC[sc].steps.length-1){go(0,true);}sched();};
+$('bNext').onclick=function(){stop();if(cur<SC[sc].steps.length-1)go(cur+1,false);};
+$('bPrev').onclick=function(){stop();if(cur>0)go(cur-1,true);};
+$('bReset').onclick=function(){stop();go(0,true);};
+$('tA').onclick=function(){setSc('A');};$('tB').onclick=function(){setSc('B');};
+$('bCopy').onclick=function(){
+var T=function(n,a){return LT+n+(a||'')+GT;};
+var code=LT+'!doctype html'+GT+T('html',' lang="en"')+T('head')+T('meta',' charset="utf-8"')+T('meta',' name="viewport" content="width=device-width,initial-scale=1"')+T('title')+'Boot handoff animation'+T('/title')+T('style')+CSS_BASE+T('/style')+T('/head')+T('body',' style="margin:0;padding:16px;max-width:680px;font-family:system-ui,sans-serif;background:var(--surface-2);color:var(--text-primary)"')+T('div',' id="root"')+PRISTINE+T('/div')+T('script',' id="anim-js"')+$('anim-js').textContent+T('/script')+T('/body')+T('/html');
+var box=$('copyBox'),msg=$('copyMsg');box.value=code;
+function manual(){box.style.display='block';box.select();msg.textContent='Copy blocked here. Text selected, press Ctrl+C.';}
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(code).then(function(){msg.textContent='Copied. Paste into a .html file.';box.style.display='none';},manual);}
+else{box.style.display='block';box.select();var ok=false;try{ok=document.execCommand('copy');}catch(e){}
+ if(ok){msg.textContent='Copied. Paste into a .html file.';box.style.display='none';}else{manual();}}};
+build();setSc('A');
+</script></body></html>
