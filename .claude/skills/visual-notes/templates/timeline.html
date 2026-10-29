@@ -1,0 +1,28 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Timeline</title>
+<style>/*BASE_CSS*/
+.lane{display:grid;grid-template-columns:110px 1fr;gap:8px;align-items:center;margin:6px 0}
+.track{position:relative;height:34px;background:var(--soft);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.seg{position:absolute;top:3px;bottom:3px;border-radius:6px;font-size:.78rem;display:flex;align-items:center;justify-content:center;color:var(--on-accent);background:var(--accent);opacity:0;transition:opacity .25s}
+.seg.vis{opacity:1}.seg.c1{background:var(--ram)}.seg.c2{background:var(--rom)}.seg.c3{background:var(--flash)}
+.cursor{position:absolute;top:0;bottom:0;width:2px;background:var(--bad)}
+</style></head><body>
+<!-- TIMELINE: lanes (tasks, threads, signals) with segments over time; a cursor sweeps left to right. Edit DATA only. -->
+<h1 id="t"></h1><div id="lanes"></div>
+<div class="bar" style="margin-top:10px"><button id="play" class="primary">▶ Play</button><input id="scrub" type="range" min="0" value="0" aria-label="Time"><span class="muted" id="time"></span></div>
+<div class="narr" id="narr" style="margin-top:10px"></div>
+<script>/*BASE_JS*/
+const DATA={
+  title:'Example: two tasks sharing one core',
+  length:10, unit:'ms',
+  lanes:[{name:'Task A',segs:[{from:0,to:3,label:'run',c:1},{from:6,to:9,label:'run',c:1}]},{name:'Task B',segs:[{from:3,to:6,label:'run',c:2}]},{name:'Interrupt',segs:[{from:2,to:3,label:'ISR',c:3}]}],
+  notes:[{at:0,say:'Task A starts running.'},{at:2,say:'An interrupt pre-empts Task A.'},{at:3,say:'The scheduler switches to Task B.'},{at:6,say:'Task A runs again.'}]
+};
+const L=DATA.length,pc=v=>v/L*100;$('#t').textContent=DATA.title;
+$('#lanes').innerHTML=DATA.lanes.map(l=>`<div class="lane"><b>${esc(l.name)}</b><div class="track">${l.segs.map(s=>`<div class="seg c${s.c||0}" data-f="${s.from}" data-t="${s.to}" style="left:${pc(s.from)}%;width:${pc(s.to-s.from)}%">${esc(s.label||'')}</div>`).join('')}<div class="cursor"></div></div></div>`).join('');
+const scrub=$('#scrub');scrub.max=L*10;
+function draw(v){const t=v/10;$$('.seg').forEach(s=>s.classList.toggle('vis',t>=+s.dataset.f));$$('.cursor').forEach(c=>c.style.left=pc(t)+'%');
+ const n=[...DATA.notes].filter(n=>n.at<=t).pop();$('#narr').textContent=n?n.say:'';$('#time').textContent=`t = ${t.toFixed(1)} ${DATA.unit}`}
+scrub.oninput=()=>draw(+scrub.value);let timer=null;
+$('#play').onclick=function(){if(timer){clearInterval(timer);timer=null;this.textContent='▶ Play';return}if(+scrub.value>=+scrub.max)scrub.value=0;this.textContent='❚❚ Pause';timer=setInterval(()=>{scrub.value=+scrub.value+(reduce?10:1);draw(+scrub.value);if(+scrub.value>=+scrub.max){clearInterval(timer);timer=null;$('#play').textContent='▶ Play'}},50)};
+draw(0);
+</script></body></html>

@@ -1,0 +1,21 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Region map</title>
+<style>/*BASE_CSS*/
+.map{display:flex;flex-direction:column-reverse;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.reg{padding:10px 12px;border-top:1px solid var(--line);cursor:pointer;display:flex;justify-content:space-between;gap:10px;background:var(--soft);transition:background .2s;text-align:left;border-radius:0;border-width:0;border-top:1px solid var(--line)}
+.reg:first-child{border-top:0}.reg:hover,.reg.on{background:var(--accent-soft)}.reg.on{box-shadow:inset 4px 0 var(--accent)}
+.reg.k1{border-left:6px solid var(--rom)}.reg.k2{border-left:6px solid var(--ram)}.reg.k3{border-left:6px solid var(--flash)}.reg.k4{border-left:6px solid var(--bus)}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:12px}@media(max-width:560px){.layout{grid-template-columns:1fr}}
+</style></head><body>
+<!-- REGION MAP: stacked address regions (low addresses at the bottom); click one to read what lives there. Edit DATA only. -->
+<h1 id="t"></h1><div class="layout"><div class="map" id="map" role="list"></div><div class="card" id="info" aria-live="polite"></div></div>
+<script>/*BASE_JS*/
+const DATA={
+  title:'Example: microcontroller address map',
+  regions:[{name:'Flash',start:0x08000000,size:0x100000,k:1,say:'Program code and constants. Non-volatile.'},{name:'SRAM',start:0x20000000,size:0x20000,k:2,say:'Variables, heap and stack. Lost at power-off.'},{name:'Peripherals',start:0x40000000,size:0x20000000,k:4,say:'Registers of GPIO, UART, SPI… Accessed like memory.'}]
+};
+$('#t').textContent=DATA.title;
+const fmt=n=>n>=0x100000?(n/0x100000)+' MB':n>=0x400?(n/0x400)+' KB':n+' B';
+$('#map').innerHTML=DATA.regions.map((r,i)=>`<button class="reg k${r.k||0}" data-i="${i}" role="listitem"><b>${esc(r.name)}</b><span class="mono muted">${hex(r.start)} · ${fmt(r.size)}</span></button>`).join('');
+function show(i){const r=DATA.regions[i];$$('.reg').forEach((b,j)=>b.classList.toggle('on',i===j));$('#info').innerHTML=`<h2>${esc(r.name)}</h2><p class="mono">${hex(r.start)} – ${hex(r.start+r.size-1)}</p><p>${esc(r.say)}</p>`}
+$$('.reg').forEach(b=>b.onclick=()=>show(+b.dataset.i));show(0);
+</script></body></html>

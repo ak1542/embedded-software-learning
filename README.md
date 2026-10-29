@@ -18,6 +18,17 @@ Click **Edit** and the page itself becomes the editor, like a word processor. Cl
 - **Export** (top bar) to **PDF** or **Word (.docx)**: this page, a section with its subsections, or the whole notebook. PDF opens your browser's print window (choose *Save as PDF*) and always prints in light colours. Word files keep headings (so Word's Navigation Pane works), lists, tables, code, pictures and diagrams (as pictures).
 - Light and dark theme, works on phones, and unsaved edits are kept in the browser so a closed tab doesn't lose work.
 
+## Skill: visual-notes
+
+A Claude Code skill in `.claude/skills/visual-notes/` that turns plain-text notes into illustrated pages. Run `/visual-notes <paste your notes>` (or ask Claude to "use the visual-notes skill").
+
+1. It cross-checks each point (web sources when available) and labels it ✅ verified, 🟡 plausible, ❓ unverified or ❌ likely wrong.
+2. It suggests improvements and additions and shows a **text preview** (review table, before/after, tick-list of additions, proposed pages and visuals). You approve or change it.
+3. It builds the pages (animations, diagrams, tables, code, revision aids such as recap, common mistakes, flashcards, quiz, checklist) and shows a **visual preview** (screenshots from a throw-away copy of the site).
+4. After your approval it adds the pages to `content/notebook.json`, runs the checks, commits and pushes to `main`. Existing pages are never overwritten without your explicit yes.
+
+Helpers are in `.claude/skills/visual-notes/scripts/` (page builders, import, animation build and browser checks) and eight animation starters in `templates/`.
+
 ## One-time setup
 
 1. **Turn on GitHub Pages**: open **Settings → Pages**, choose *Deploy from a branch*, select branch `main` and folder `/ (root)`, then click Save. After a minute the site is at `https://<your-user>.github.io/embedded-software-learning/`.
@@ -51,7 +62,7 @@ The toolbar is in `js/toolbar.js`; its styles and the page styles are in `css/ap
 
 ```sh
 npm start        # serves the site on http://localhost:8000
-npm test         # unit tests for the data model and migrations
+npm test         # unit tests for the data model, migrations and the skill's page builders
 ```
 
 ## Layout

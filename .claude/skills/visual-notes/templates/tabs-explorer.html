@@ -1,0 +1,18 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Tabs explorer</title>
+<style>/*BASE_CSS*/
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.k{font-weight:600}.row{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);padding:4px 0}
+</style></head><body>
+<!-- TABS EXPLORER: one tab per option/mode/variant; each panel has a summary, facts and a code snippet. Edit DATA only. -->
+<h1 id="t"></h1><div class="tabs" role="tablist" id="tabs"></div><div id="panels"></div>
+<script>/*BASE_JS*/
+const DATA={
+  title:'Example: SPI modes',
+  tabs:[{id:'m0',label:'Mode 0',summary:'Clock idles low, data sampled on the rising edge.',facts:[['CPOL','0'],['CPHA','0']],code:'SPI_CR1 = 0;'},
+        {id:'m3',label:'Mode 3',summary:'Clock idles high, data sampled on the rising edge.',facts:[['CPOL','1'],['CPHA','1']],code:'SPI_CR1 = CPOL | CPHA;'}]
+};
+$('#t').textContent=DATA.title;
+$('#tabs').innerHTML=DATA.tabs.map(t=>`<button role="tab" data-tab="${esc(t.id)}">${esc(t.label)}</button>`).join('');
+$('#panels').innerHTML=DATA.tabs.map(t=>`<section class="panel" id="${esc(t.id)}"><p>${esc(t.summary)}</p><div class="grid"><div class="card">${(t.facts||[]).map(([k,v])=>`<div class="row"><span class="k">${esc(k)}</span><span class="mono">${esc(v)}</span></div>`).join('')}</div>${t.code?`<pre class="card mono" style="margin:0;overflow:auto">${esc(t.code)}</pre>`:''}</div></section>`).join('');
+initTabs();
+</script></body></html>

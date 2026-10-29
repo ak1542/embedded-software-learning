@@ -1,0 +1,31 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>State machine</title>
+<style>/*BASE_CSS*/
+svg{width:100%;height:auto;display:block;background:var(--soft);border:1px solid var(--line);border-radius:var(--r)}
+.s rect{fill:var(--bg);stroke:var(--line);stroke-width:1.5;transition:all .3s}.s text{fill:var(--fg);font-size:13px;text-anchor:middle;dominant-baseline:middle}
+.s.cur rect{fill:var(--accent-soft);stroke:var(--accent);stroke-width:3}.e{stroke:var(--line);stroke-width:2;fill:none}.e.fire{stroke:var(--accent);stroke-width:3}
+.et{fill:var(--muted);font-size:11px;text-anchor:middle}
+</style></head><body>
+<!-- STATE MACHINE: click an event button to move between states. Edit DATA only. -->
+<h1 id="t"></h1><svg id="svg" role="img"></svg><div class="bar" id="ev" style="margin-top:10px"></div><div class="narr" id="narr" aria-live="polite" style="margin-top:10px"></div>
+<div class="bar" style="margin-top:8px"><button id="reset">↺ Reset</button><span class="muted" id="log"></span></div>
+<script>/*BASE_JS*/
+const DATA={
+  title:'Example: a button debouncer',
+  start:'idle',
+  states:[{id:'idle',label:'Idle',x:0,y:0},{id:'wait',label:'Wait 10 ms',x:1,y:0},{id:'pressed',label:'Pressed',x:2,y:0}],
+  transitions:[{from:'idle',to:'wait',event:'edge',say:'An edge arrives, so start the debounce timer.'},{from:'wait',to:'pressed',event:'timer',say:'The level is still low: accept the press.'},{from:'wait',to:'idle',event:'bounce',say:'It bounced back: ignore it.'},{from:'pressed',to:'idle',event:'release',say:'Button released.'}]
+};
+const W=140,H=56,GX=210,GY=110,PAD=24,NS='http://www.w3.org/2000/svg';
+const cols=Math.max(...DATA.states.map(s=>s.x))+1,rows=Math.max(...DATA.states.map(s=>s.y))+1,svg=$('#svg');
+svg.setAttribute('viewBox',`0 0 ${PAD*2+(cols-1)*GX+W} ${PAD*2+(rows-1)*GY+H}`);
+const el=(t,a,p=svg)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e};
+const P=id=>{const s=DATA.states.find(s=>s.id===id);return[PAD+s.x*GX+W/2,PAD+s.y*GY+H/2]};
+const edges=DATA.transitions.map((t,i)=>{const[a,b]=P(t.from),[c,d]=P(t.to);const off=(t.from===t.to?0:(i%2?14:-14));const mx=(a+c)/2,my=(b+d)/2-off*2;
+ const e=el('path',{d:`M${a} ${b} Q${mx} ${my} ${c} ${d}`,class:'e'});const x=el('text',{x:mx,y:my-4,class:'et'});x.textContent=t.event;return e});
+const st={};DATA.states.forEach(s=>{const g=el('g',{class:'s'}),[x,y]=P(s.id);el('rect',{x:x-W/2,y:y-H/2,width:W,height:H,rx:12},g);el('text',{x,y},g).textContent=s.label;st[s.id]=g});
+$('#t').textContent=DATA.title;let cur=DATA.start;
+function render(msg){for(const id in st)st[id].classList.toggle('cur',id===cur);$('#narr').textContent=msg||'Current state: '+DATA.states.find(s=>s.id===cur).label;
+ const avail=DATA.transitions.filter(t=>t.from===cur);$('#ev').innerHTML=avail.map(t=>`<button data-i="${DATA.transitions.indexOf(t)}">${esc(t.event)}</button>`).join('')||'<span class="muted">No events from this state.</span>';
+ $$('#ev button').forEach(b=>b.onclick=()=>{const t=DATA.transitions[+b.dataset.i];edges.forEach((e,i)=>e.classList.toggle('fire',i===+b.dataset.i));cur=t.to;render(t.say)})}
+$('#reset').onclick=()=>{cur=DATA.start;edges.forEach(e=>e.classList.remove('fire'));render()};render();
+</script></body></html>

@@ -1,0 +1,31 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Stepper</title>
+<style>/*BASE_CSS*/
+svg{width:100%;height:auto;display:block;background:var(--soft);border:1px solid var(--line);border-radius:var(--r)}
+.n rect{fill:var(--bg);stroke:var(--line);stroke-width:1.5;transition:all .3s}.n text{fill:var(--fg);font-size:13px;text-anchor:middle;dominant-baseline:middle}
+.n.on rect{fill:var(--accent-soft);stroke:var(--accent);stroke-width:2.5}.n.dim{opacity:.45}
+.l{stroke:var(--line);stroke-width:2;fill:none}.l.on{stroke:var(--accent);stroke-width:3}
+.pulse{fill:var(--accent)}
+</style></head><body>
+<!-- STEPPER: nodes laid out on a grid; each step lights some nodes/links and shows a sentence. Edit DATA only. -->
+<h1 id="t"></h1><svg id="svg" role="img"></svg>
+<div class="narr" id="narr" aria-live="polite" style="margin-top:10px"></div>
+<div class="bar" style="margin-top:10px"><button id="prev">◀ Back</button><button id="play" class="primary">▶ Play</button><button id="next">Next ▶</button><button id="reset">↺</button><span class="muted" id="count"></span></div>
+<script>/*BASE_JS*/
+const DATA={
+  title:'Example: a request travels through a system',
+  nodes:[{id:'a',label:'Application',x:0,y:0},{id:'b',label:'Driver',x:1,y:0},{id:'c',label:'Peripheral',x:2,y:0},{id:'d',label:'Interrupt',x:1,y:1}],
+  links:[['a','b'],['b','c'],['c','d'],['d','a']],
+  steps:[{on:['a'],links:[],say:'The application starts the request.'},{on:['a','b'],links:[['a','b']],say:'It calls the driver.'},{on:['b','c'],links:[['b','c']],say:'The driver programs the peripheral.'},{on:['c','d'],links:[['c','d']],say:'The peripheral raises an interrupt when done.'},{on:['d','a'],links:[['d','a']],say:'The result is handed back.'}]
+};
+const W=170,H=70,GX=230,GY=120,PAD=20,NS='http://www.w3.org/2000/svg';
+const cols=Math.max(...DATA.nodes.map(n=>n.x))+1,rows=Math.max(...DATA.nodes.map(n=>n.y))+1;
+const svg=$('#svg');svg.setAttribute('viewBox',`0 0 ${PAD*2+(cols-1)*GX+W} ${PAD*2+(rows-1)*GY+H}`);
+const el=(t,a,p=svg)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e};
+const pos=id=>{const n=DATA.nodes.find(n=>n.id===id);return{x:PAD+n.x*GX,y:PAD+n.y*GY}};
+const centre=id=>{const p=pos(id);return[p.x+W/2,p.y+H/2]};
+const links=DATA.links.map(([f,t])=>{const[a,b]=centre(f),[c,d]=centre(t);return{f,t,e:el('line',{x1:a,y1:b,x2:c,y2:d,class:'l'})}});
+const nodes={};DATA.nodes.forEach(n=>{const p=pos(n.id),g=el('g',{class:'n'});el('rect',{x:p.x,y:p.y,width:W,height:H,rx:10},g);const t=el('text',{x:p.x+W/2,y:p.y+H/2},g);t.textContent=n.label;nodes[n.id]=g});
+$('#t').textContent=DATA.title;
+player({count:DATA.steps.length,prev:$('#prev'),next:$('#next'),play:$('#play'),reset:$('#reset'),render(i){const s=DATA.steps[i];for(const id in nodes){nodes[id].classList.toggle('on',s.on.includes(id));nodes[id].classList.toggle('dim',!s.on.includes(id))}
+ links.forEach(l=>l.e.classList.toggle('on',(s.links||[]).some(([f,t])=>f===l.f&&t===l.t)));$('#narr').textContent=s.say;$('#count').textContent=`Step ${i+1} of ${DATA.steps.length}`}});
+</script></body></html>

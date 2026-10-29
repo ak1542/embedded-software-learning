@@ -1,0 +1,17 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Flashcards</title>
+<style>/*BASE_CSS*/
+.card3{min-height:170px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:1.1rem;padding:20px;cursor:pointer;background:var(--soft);border:2px solid var(--line);border-radius:var(--r)}
+.card3.back{background:var(--accent-soft);border-color:var(--accent)}.hint{font-size:.8rem}
+</style></head><body>
+<!-- FLASHCARDS: question on the front, answer on the back; mark Got it / Again and see the score. Edit DATA only. -->
+<h1 id="t"></h1><div class="card3" id="c" tabindex="0" role="button" aria-label="Flip card"></div>
+<p class="muted hint">Click the card or press Space to flip.</p>
+<div class="bar"><button id="prev">◀</button><button id="got" class="primary">Got it</button><button id="again">Again</button><button id="next">▶</button><span class="muted" id="sc"></span></div>
+<script>/*BASE_JS*/
+const DATA={title:'Example: quick questions',cards:[{q:'What does the stack pointer point to?',a:'The most recently pushed item (the top of the stack).'},{q:'Which memory loses data at power-off?',a:'RAM (SRAM/DRAM); Flash keeps it.'}]};
+$('#t').textContent=DATA.title;let i=0,flipped=false;const got=new Set();const c=$('#c');
+function draw(){const k=DATA.cards[i];c.textContent=flipped?k.a:k.q;c.classList.toggle('back',flipped);$('#sc').textContent=`Card ${i+1}/${DATA.cards.length} · got ${got.size}`}
+const flip=()=>{flipped=!flipped;draw()},go=n=>{i=(i+n+DATA.cards.length)%DATA.cards.length;flipped=false;draw()};
+c.onclick=flip;c.onkeydown=e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();flip()}};
+$('#next').onclick=()=>go(1);$('#prev').onclick=()=>go(-1);$('#got').onclick=()=>{got.add(i);go(1)};$('#again').onclick=()=>{got.delete(i);go(1)};draw();
+</script></body></html>

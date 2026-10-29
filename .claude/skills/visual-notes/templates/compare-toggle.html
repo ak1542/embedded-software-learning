@@ -1,0 +1,21 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Compare toggle</title>
+<style>/*BASE_CSS*/
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.opt{border:2px solid var(--line);border-radius:var(--r);padding:12px;background:var(--soft);transition:all .25s}
+.opt.hot{border-color:var(--accent);background:var(--accent-soft)}.opt.cold{opacity:.55}
+.opt ul{margin:6px 0 0;padding-left:1.1em}.verdict{margin-top:10px}
+</style></head><body>
+<!-- COMPARE TOGGLE: two or three options side by side; pick a scenario and the best fit lights up with the reason. Edit DATA only. -->
+<h1 id="t"></h1><div class="bar" id="sc" role="group" aria-label="Scenario"></div><div class="cols" id="cols" style="margin-top:10px"></div><div class="narr verdict" id="v" aria-live="polite"></div>
+<script>/*BASE_JS*/
+const DATA={
+  title:'Example: polling vs interrupts',
+  options:[{id:'poll',name:'Polling',points:['Simple code','Wastes CPU cycles','Latency depends on loop time']},{id:'irq',name:'Interrupt',points:['CPU free for other work','Needs ISR care','Low, bounded latency']}],
+  scenarios:[{label:'Rare event, battery powered',best:'irq',why:'The CPU can sleep until the event arrives.'},{label:'Tiny loop, event every cycle',best:'poll',why:'Interrupt overhead costs more than checking a flag.'}]
+};
+$('#t').textContent=DATA.title;
+$('#cols').innerHTML=DATA.options.map(o=>`<div class="opt" data-id="${esc(o.id)}"><h2>${esc(o.name)}</h2><ul>${o.points.map(p=>`<li>${esc(p)}</li>`).join('')}</ul></div>`).join('');
+$('#sc').innerHTML=DATA.scenarios.map((s,i)=>`<button data-i="${i}">${esc(s.label)}</button>`).join('');
+function pick(i){const s=DATA.scenarios[i];$$('#sc button').forEach((b,j)=>b.classList.toggle('on',i===j));$$('.opt').forEach(o=>{o.classList.toggle('hot',o.dataset.id===s.best);o.classList.toggle('cold',o.dataset.id!==s.best)});$('#v').textContent=s.why}
+$$('#sc button').forEach(b=>b.onclick=()=>pick(+b.dataset.i));pick(0);
+</script></body></html>

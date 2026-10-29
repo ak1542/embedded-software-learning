@@ -1,0 +1,15 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Quiz</title>
+<style>/*BASE_CSS*/
+.opts{display:grid;gap:8px;margin:10px 0}.opts button{text-align:left}
+.opts button.right{background:var(--okf);border-color:var(--ok)}.opts button.wrong{background:var(--badf);border-color:var(--bad)}
+</style></head><body>
+<!-- QUIZ: multiple choice with instant feedback and a final score. Edit DATA only. -->
+<h1 id="t"></h1><div id="box"></div>
+<script>/*BASE_JS*/
+const DATA={title:'Example: check yourself',questions:[{q:'Which bus needs a pull-up resistor on its lines?',options:['SPI','I2C','UART'],answer:1,why:'I2C lines are open-drain, so a pull-up brings them high.'},{q:'Which memory keeps its contents without power?',options:['SRAM','Flash'],answer:1,why:'Flash is non-volatile.'}]};
+$('#t').textContent=DATA.title;let i=0,score=0;
+function ask(){const q=DATA.questions[i];$('#box').innerHTML=`<div class="muted">Question ${i+1} of ${DATA.questions.length}</div><h2>${esc(q.q)}</h2><div class="opts">${q.options.map((o,j)=>`<button data-j="${j}">${esc(o)}</button>`).join('')}</div><div class="narr" id="fb" aria-live="polite" hidden></div><div class="bar" style="margin-top:8px"><button id="nx" class="primary" hidden>Next</button></div>`;
+ $$('.opts button').forEach(b=>b.onclick=()=>{const j=+b.dataset.j;$$('.opts button').forEach((x,k)=>{x.disabled=true;if(k===q.answer)x.classList.add('right')});if(j===q.answer)score++;else b.classList.add('wrong');const f=$('#fb');f.hidden=false;f.textContent=(j===q.answer?'Correct. ':'Not quite. ')+q.why;const n=$('#nx');n.hidden=false;n.textContent=i===DATA.questions.length-1?'Finish':'Next';n.onclick=()=>{i++;i<DATA.questions.length?ask():done()}})}
+function done(){$('#box').innerHTML=`<h2>Score: ${score} / ${DATA.questions.length}</h2><button id="re" class="primary">Try again</button>`;$('#re').onclick=()=>{i=0;score=0;ask()}}
+ask();
+</script></body></html>
