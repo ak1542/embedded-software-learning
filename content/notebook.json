@@ -20060,6 +20060,23 @@
               {
                 "type": "htmlAnimation",
                 "attrs": {
+                  "src": "content/media/2026-10/mvumfru1-animation.html",
+                  "height": 420,
+                  "fit": true,
+                  "width": 100,
+                  "title": "Animation"
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "htmlAnimation",
+                "attrs": {
                   "src": "content/media/animations/ctx-switch.html",
                   "height": 470,
                   "fit": true,
