@@ -18567,7 +18567,49 @@
             "type": "doc",
             "content": [
               {
+                "type": "htmlAnimation",
+                "attrs": {
+                  "src": "content/media/2026-10/mvul3mua-animation.html",
+                  "height": 1600,
+                  "fit": false,
+                  "width": 100,
+                  "title": "Animation"
+                }
+              },
+              {
+                "type": "callout",
+                "attrs": {
+                  "variant": "tip"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "We can save task related things in TCB, permission, opened file , page table etc"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
                 "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
                 "content": [
                   {
                     "type": "text",
@@ -18575,12 +18617,12 @@
                   },
                   {
                     "type": "text",
-                    "text": "task",
                     "marks": [
                       {
                         "type": "bold"
                       }
-                    ]
+                    ],
+                    "text": "task"
                   },
                   {
                     "type": "text",
@@ -18588,7 +18630,6 @@
                   },
                   {
                     "type": "text",
-                    "text": "heap allocator",
                     "marks": [
                       {
                         "type": "link",
@@ -18599,7 +18640,8 @@
                           "class": null
                         }
                       }
-                    ]
+                    ],
+                    "text": "heap allocator"
                   },
                   {
                     "type": "text",
@@ -18608,14 +18650,43 @@
                 ]
               },
               {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
                 "type": "heading",
                 "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
                   "level": 2
                 },
                 "content": [
                   {
                     "type": "text",
                     "text": "Task control block (TCB)"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "SW decide TCB, based on requirement it can have different fields "
                   }
                 ]
               },
@@ -18633,6 +18704,10 @@
               },
               {
                 "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
                 "content": [
                   {
                     "type": "text",
@@ -18640,12 +18715,12 @@
                   },
                   {
                     "type": "text",
-                    "text": "sp",
                     "marks": [
                       {
                         "type": "code"
                       }
-                    ]
+                    ],
+                    "text": "sp"
                   },
                   {
                     "type": "text",
@@ -18653,12 +18728,12 @@
                   },
                   {
                     "type": "text",
-                    "text": "[tcb]",
                     "marks": [
                       {
                         "type": "code"
                       }
-                    ]
+                    ],
+                    "text": "[tcb]"
                   },
                   {
                     "type": "text",
@@ -18669,6 +18744,8 @@
               {
                 "type": "heading",
                 "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
                   "level": 2
                 },
                 "content": [
@@ -18693,7 +18770,11 @@
                         },
                         "content": [
                           {
-                            "type": "paragraph"
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            }
                           }
                         ]
                       },
@@ -18707,6 +18788,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -18726,6 +18811,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -18750,6 +18839,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -18769,6 +18862,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -18788,6 +18885,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -18812,6 +18913,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -18831,6 +18936,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -18850,6 +18959,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -18874,6 +18987,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -18893,6 +19010,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -18912,6 +19033,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -18919,12 +19044,12 @@
                               },
                               {
                                 "type": "text",
-                                "text": "SPSEL",
                                 "marks": [
                                   {
                                     "type": "code"
                                   }
-                                ]
+                                ],
+                                "text": "SPSEL"
                               },
                               {
                                 "type": "text",
@@ -18932,12 +19057,12 @@
                               },
                               {
                                 "type": "text",
-                                "text": "CONTROL",
                                 "marks": [
                                   {
                                     "type": "code"
                                   }
-                                ]
+                                ],
+                                "text": "CONTROL"
                               },
                               {
                                 "type": "text",
@@ -18953,6 +19078,10 @@
               },
               {
                 "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
                 "content": [
                   {
                     "type": "text",
@@ -18960,22 +19089,37 @@
                   },
                   {
                     "type": "text",
-                    "text": "PSP",
                     "marks": [
                       {
                         "type": "bold"
                       }
-                    ]
+                    ],
+                    "text": "PSP"
                   },
                   {
                     "type": "text",
-                    "text": " keeps handlers on the shared main stack and makes the context switch simple."
+                    "text": " keeps handlers on the "
+                  },
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "shared main stack "
+                  },
+                  {
+                    "type": "text",
+                    "text": "and makes the context switch simple."
                   }
                 ]
               },
               {
                 "type": "heading",
                 "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
                   "level": 2
                 },
                 "content": [
@@ -19005,6 +19149,10 @@
                 "content": [
                   {
                     "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
                     "content": [
                       {
                         "type": "text",
@@ -19017,6 +19165,8 @@
               {
                 "type": "heading",
                 "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
                   "level": 2
                 },
                 "content": [
@@ -19028,6 +19178,10 @@
               },
               {
                 "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
                 "content": [
                   {
                     "type": "text",
@@ -19035,12 +19189,12 @@
                   },
                   {
                     "type": "text",
-                    "text": "pretend",
                     "marks": [
                       {
                         "type": "bold"
                       }
-                    ]
+                    ],
+                    "text": "pretend"
                   },
                   {
                     "type": "text",
@@ -19076,6 +19230,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -19095,6 +19253,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -19114,6 +19276,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -19138,6 +19304,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -19157,6 +19327,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -19176,6 +19350,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -19200,6 +19378,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -19219,6 +19401,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -19238,6 +19424,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -19262,6 +19452,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -19281,6 +19475,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -19300,6 +19498,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -19324,6 +19526,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -19343,6 +19549,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -19362,6 +19572,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -19386,6 +19600,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -19405,6 +19623,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -19424,6 +19646,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -19448,6 +19674,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -19467,6 +19697,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -19486,6 +19720,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -19510,6 +19748,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -19529,6 +19771,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -19548,6 +19794,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -19572,6 +19822,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -19591,6 +19845,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -19610,6 +19868,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -19634,6 +19896,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -19653,6 +19919,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -19672,6 +19942,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -19693,6 +19967,10 @@
                 "content": [
                   {
                     "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
                     "content": [
                       {
                         "type": "text",
@@ -19700,7 +19978,6 @@
                       },
                       {
                         "type": "text",
-                        "text": "DEV article",
                         "marks": [
                           {
                             "type": "link",
@@ -19711,7 +19988,8 @@
                               "class": null
                             }
                           }
-                        ]
+                        ],
+                        "text": "DEV article"
                       },
                       {
                         "type": "text",
@@ -19719,7 +19997,6 @@
                       },
                       {
                         "type": "text",
-                        "text": "Hackernoon guide",
                         "marks": [
                           {
                             "type": "link",
@@ -19730,7 +20007,8 @@
                               "class": null
                             }
                           }
-                        ]
+                        ],
+                        "text": "Hackernoon guide"
                       },
                       {
                         "type": "text",
@@ -19743,6 +20021,8 @@
               {
                 "type": "heading",
                 "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
                   "level": 2
                 },
                 "content": [
@@ -19766,6 +20046,10 @@
               },
               {
                 "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
                 "content": [
                   {
                     "type": "text",
@@ -19778,14 +20062,16 @@
                 "attrs": {
                   "src": "content/media/animations/ctx-switch.html",
                   "height": 470,
+                  "fit": true,
                   "width": 100,
-                  "title": "Context switch step by step",
-                  "fit": true
+                  "title": "Context switch step by step"
                 }
               },
               {
                 "type": "heading",
                 "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
                   "level": 2
                 },
                 "content": [
@@ -19798,7 +20084,8 @@
               {
                 "type": "orderedList",
                 "attrs": {
-                  "start": 1
+                  "start": 1,
+                  "type": null
                 },
                 "content": [
                   {
@@ -19806,6 +20093,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -19813,12 +20104,12 @@
                           },
                           {
                             "type": "text",
-                            "text": "current_tcb",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
+                            ],
+                            "text": "current_tcb"
                           },
                           {
                             "type": "text",
@@ -19833,6 +20124,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -19840,12 +20135,12 @@
                           },
                           {
                             "type": "text",
-                            "text": "sp",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
+                            ],
+                            "text": "sp"
                           },
                           {
                             "type": "text",
@@ -19853,12 +20148,12 @@
                           },
                           {
                             "type": "text",
-                            "text": "+32",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
+                            ],
+                            "text": "+32"
                           },
                           {
                             "type": "text",
@@ -19866,12 +20161,12 @@
                           },
                           {
                             "type": "text",
-                            "text": "PSP",
                             "marks": [
                               {
                                 "type": "bold"
                               }
-                            ]
+                            ],
+                            "text": "PSP"
                           },
                           {
                             "type": "text",
@@ -19886,6 +20181,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -19893,12 +20192,12 @@
                           },
                           {
                             "type": "text",
-                            "text": "CONTROL.SPSEL = 1",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
+                            ],
+                            "text": "CONTROL.SPSEL = 1"
                           },
                           {
                             "type": "text",
@@ -19906,12 +20205,12 @@
                           },
                           {
                             "type": "text",
-                            "text": "SVC",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
+                            ],
+                            "text": "SVC"
                           },
                           {
                             "type": "text",
@@ -19926,6 +20225,8 @@
               {
                 "type": "heading",
                 "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
                   "level": 2
                 },
                 "content": [
@@ -19951,6 +20252,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -19970,6 +20275,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -19989,6 +20298,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -20013,6 +20326,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -20032,6 +20349,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -20051,6 +20372,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -20075,6 +20400,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -20094,6 +20423,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -20113,6 +20446,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -20137,6 +20474,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -20156,6 +20497,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -20175,6 +20520,10 @@
                         "content": [
                           {
                             "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
                             "content": [
                               {
                                 "type": "text",
@@ -20190,6 +20539,10 @@
               },
               {
                 "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
                 "content": [
                   {
                     "type": "text",
@@ -20197,12 +20550,12 @@
                   },
                   {
                     "type": "text",
-                    "text": "0xFFFFFFE1",
                     "marks": [
                       {
                         "type": "code"
                       }
-                    ]
+                    ],
+                    "text": "0xFFFFFFE1"
                   },
                   {
                     "type": "text",
@@ -20210,12 +20563,12 @@
                   },
                   {
                     "type": "text",
-                    "text": "E9",
                     "marks": [
                       {
                         "type": "code"
                       }
-                    ]
+                    ],
+                    "text": "E9"
                   },
                   {
                     "type": "text",
@@ -20223,12 +20576,12 @@
                   },
                   {
                     "type": "text",
-                    "text": "ED",
                     "marks": [
                       {
                         "type": "code"
                       }
-                    ]
+                    ],
+                    "text": "ED"
                   },
                   {
                     "type": "text",
@@ -20236,12 +20589,12 @@
                   },
                   {
                     "type": "text",
-                    "text": "PendSV priority to the lowest",
                     "marks": [
                       {
                         "type": "bold"
                       }
-                    ]
+                    ],
+                    "text": "PendSV priority to the lowest"
                   },
                   {
                     "type": "text",
@@ -20252,6 +20605,8 @@
               {
                 "type": "heading",
                 "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
                   "level": 2
                 },
                 "content": [
@@ -20263,6 +20618,10 @@
               },
               {
                 "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
                 "content": [
                   {
                     "type": "text",
@@ -20270,12 +20629,12 @@
                   },
                   {
                     "type": "text",
-                    "text": "0xDEADBEEF",
                     "marks": [
                       {
                         "type": "code"
                       }
-                    ]
+                    ],
+                    "text": "0xDEADBEEF"
                   },
                   {
                     "type": "text",
@@ -20286,6 +20645,8 @@
               {
                 "type": "heading",
                 "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
                   "level": 2
                 },
                 "content": [
@@ -20297,6 +20658,10 @@
               },
               {
                 "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
                 "content": [
                   {
                     "type": "text",
@@ -20304,12 +20669,12 @@
                   },
                   {
                     "type": "text",
-                    "text": "S0–S15",
                     "marks": [
                       {
                         "type": "code"
                       }
-                    ]
+                    ],
+                    "text": "S0–S15"
                   },
                   {
                     "type": "text",
@@ -20317,12 +20682,12 @@
                   },
                   {
                     "type": "text",
-                    "text": "FPSCR",
                     "marks": [
                       {
                         "type": "code"
                       }
-                    ]
+                    ],
+                    "text": "FPSCR"
                   },
                   {
                     "type": "text",
@@ -20330,12 +20695,12 @@
                   },
                   {
                     "type": "text",
-                    "text": "lazy stacking",
                     "marks": [
                       {
                         "type": "bold"
                       }
-                    ]
+                    ],
+                    "text": "lazy stacking"
                   },
                   {
                     "type": "text",
@@ -20343,12 +20708,12 @@
                   },
                   {
                     "type": "text",
-                    "text": "S16–S31",
                     "marks": [
                       {
                         "type": "code"
                       }
-                    ]
+                    ],
+                    "text": "S16–S31"
                   },
                   {
                     "type": "text",
@@ -20359,6 +20724,8 @@
               {
                 "type": "heading",
                 "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
                   "level": 2
                 },
                 "content": [
@@ -20376,15 +20743,19 @@
                 "content": [
                   {
                     "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
                     "content": [
                       {
                         "type": "text",
-                        "text": "Quick recap:",
                         "marks": [
                           {
                             "type": "bold"
                           }
-                        ]
+                        ],
+                        "text": "Quick recap:"
                       },
                       {
                         "type": "text",
@@ -20392,12 +20763,12 @@
                       },
                       {
                         "type": "text",
-                        "text": "bx lr",
                         "marks": [
                           {
                             "type": "code"
                           }
-                        ]
+                        ],
+                        "text": "bx lr"
                       },
                       {
                         "type": "text",
@@ -20405,12 +20776,12 @@
                       },
                       {
                         "type": "text",
-                        "text": "0xFFFFFFFD",
                         "marks": [
                           {
                             "type": "code"
                           }
-                        ]
+                        ],
+                        "text": "0xFFFFFFFD"
                       },
                       {
                         "type": "text",
@@ -20428,15 +20799,19 @@
                 "content": [
                   {
                     "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
                     "content": [
                       {
                         "type": "text",
-                        "text": "Common mistakes:",
                         "marks": [
                           {
                             "type": "bold"
                           }
-                        ]
+                        ],
+                        "text": "Common mistakes:"
                       },
                       {
                         "type": "text",
@@ -20444,12 +20819,12 @@
                       },
                       {
                         "type": "text",
-                        "text": "xPSR",
                         "marks": [
                           {
                             "type": "code"
                           }
-                        ]
+                        ],
+                        "text": "xPSR"
                       },
                       {
                         "type": "text",
@@ -20470,6 +20845,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -20487,6 +20866,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -20504,6 +20887,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -20521,6 +20908,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -20533,7 +20924,11 @@
                 ]
               },
               {
-                "type": "paragraph"
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
               }
             ]
           },
