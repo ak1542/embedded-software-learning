@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ARM Cortex-M4 Notes: Function Call and Task Switch</title>
+<style>
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;max-width:640px;margin:0 auto;padding:16px;background:#fff;color:#2c2c2a}
+  h1{font-size:20px;margin:24px 0 12px}
+  .c{border:1px solid #d3d1c7;background:#f5f4ef;border-radius:12px;padding:12px 14px;margin-bottom:10px}
+  .c.h{background:#E6F1FB;border-color:#85B7EB}
+  .c.s{background:#EAF3DE;border-color:#97C459}
+  .c.t{background:#FAEEDA;border-color:#EF9F27}
+  .c.d{background:#FCEBEB;border-color:#F09595}
+  .tag{font-size:11px;color:#5f5e5a;margin:0 0 2px}
+  .ti{font-size:15px;font-weight:600;margin:0 0 6px}
+  .c.h .tag,.c.h .ti{color:#0C447C}
+  .c.s .tag,.c.s .ti{color:#27500A}
+  .c.t .tag,.c.t .ti{color:#633806}
+  .c.d .tag,.c.d .ti{color:#791F1F}
+  ul{margin:0;padding-left:18px}
+  li{font-size:13px;line-height:1.5;margin:2px 0}
+  code,pre{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px}
+  pre{margin:0;padding:10px 12px;background:#fff;border:1px solid #d3d1c7;border-radius:8px;line-height:1.6;white-space:pre-wrap;word-break:break-word}
+  table{width:100%;border-collapse:collapse;font-size:12px;font-family:ui-monospace,Menlo,Consolas,monospace}
+  th{font-family:system-ui,sans-serif;font-weight:600;text-align:left;padding:3px 4px;border-bottom:1px solid #85B7EB}
+  td{padding:4px;border-bottom:1px solid #b5d4f4}
+  .st{display:flex;gap:8px;align-items:flex-start;padding:6px 0;border-bottom:1px solid #d3d1c7;font-size:13px;line-height:1.45}
+  .st:last-child{border-bottom:none}
+  .ch{flex:none;width:44px;text-align:center;font-size:11px;font-weight:600;border-radius:6px;padding:2px 0;margin-top:1px}
+  .hw{background:#E6F1FB;color:#0C447C}
+  .sw{background:#EAF3DE;color:#27500A}
+  .tc{background:#FAEEDA;color:#633806}
+  .sc{background:#e8e6dd;color:#5f5e5a}
+</style>
+</head>
+<body>
+
+<h1>1. Function call and LR</h1>
+
+<div class="c s"><p class="tag">Core rule</p><p class="ti">Function call and LR</p>
+<ul><li><code>BL</code> writes LR, <code>BX LR</code> reads it</li>
+<li>A function that calls another function must save LR first</li></ul></div>
+
+<div class="c"><p class="tag">Example program</p>
+<pre>0x0800_0100 main: BL foo
+0x0800_0104       ADD R2, R0, #1
+0x0800_0200 foo:  PUSH {LR}
+0x0800_0202       BL bar
+0x0800_0206       POP {PC}
+0x0800_0300 bar:  ADDS R0, R0, #1
+0x0800_0302       BX LR</pre></div>
+
+<div class="c h"><p class="tag">Trace</p><p class="ti">PC, LR and stack after each step</p>
+<table>
+<tr><th>Step</th><th>PC</th><th>LR</th><th>Stack</th></tr>
+<tr><td>BL foo</td><td>0x200</td><td>0x105</td><td>empty</td></tr>
+<tr><td>PUSH LR</td><td>0x202</td><td>0x105</td><td>0x105</td></tr>
+<tr><td>BL bar</td><td>0x300</td><td>0x207</td><td>0x105</td></tr>
+<tr><td>BX LR</td><td>0x206</td><td>0x207</td><td>0x105</td></tr>
+<tr><td>POP PC</td><td>0x104</td><td>stale</td><td>empty</td></tr>
+</table></div>
+
+<div class="c d"><p class="tag">Classic bug</p><p class="ti">Skipping the PUSH</p>
+<ul><li>BL bar overwrites LR with 0x207, main's address is lost</li>
+<li>foo returns to itself and loops forever</li></ul></div>
+
+<div class="c t"><p class="tag">Detail</p><p class="ti">Why LR shows 0x105, not 0x104</p>
+<ul><li>Bit 0 is the Thumb flag, set by BL on purpose</li>
+<li>Cortex-M has no ARM mode; bit 0 = 0 causes INVSTATE fault</li>
+<li>CPU ignores bit 0 for the actual jump, so PC = 0x104</li>
+<li>Function pointers are odd too (0x...201)</li></ul></div>
+
+<h1>2. Task switch (PendSV)</h1>
+
+<div class="c"><p class="tag">Triggers</p><p class="ti">SysTick and PendSV</p>
+<ul><li>SysTick fires every 1 ms and sets the PendSV pending bit</li>
+<li>PendSV has the lowest priority, so it runs after all other ISRs</li>
+<li>A task can also trigger it (yield, block on semaphore)</li></ul></div>
+
+<div class="c"><p class="tag">Flow</p><p class="ti">Task A to Task B</p>
+<div class="st"><span class="ch sc">1</span><span>PendSV fires, A interrupted. Handler uses MSP, tasks use PSP</span></div>
+<div class="st"><span class="ch hw">HW</span><span>Pushes xPSR, PC, LR, R12, R3-R0 on PSP. Saved PC is where A resumes, saved LR is A's own LR</span></div>
+<div class="st"><span class="ch sw">SW</span><span><code>MRS R0, PSP</code> then <code>STMDB R0!, {R4-R11}</code></span></div>
+<div class="st"><span class="ch tc">TCB</span><span><code>tcbA-&gt;sp = R0</code>, state READY or BLOCKED</span></div>
+<div class="st"><span class="ch sc">SCH</span><span>Scheduler picks B, <code>currentTCB = tcbB</code></span></div>
+<div class="st"><span class="ch tc">TCB</span><span><code>R0 = tcbB-&gt;sp</code>, state RUNNING</span></div>
+<div class="st"><span class="ch sw">SW</span><span><code>LDMIA R0!, {R4-R11}</code> then <code>MSR PSP, R0</code> (mirror of the push)</span></div>
+<div class="st"><span class="ch hw">HW</span><span><code>LR = 0xFFFFFFFD</code>, <code>BX LR</code>: hardware pops R0-R3, R12, LR, PC, xPSR</span></div>
+<div class="st"><span class="ch sc">9</span><span>B resumes at its saved PC with registers and flags intact</span></div>
+</div>
+
+<div class="c h"><p class="tag">Key facts</p><p class="ti">Easy to mix up</p>
+<ul><li>Stack layout low to high: R4-R11 (software), then R0-R3, R12, LR, PC, xPSR (hardware)</li>
+<li>Inside the handler LR is reused as EXC_RETURN 0xFFFFFFFD (thread mode, PSP). A's real LR is safe on its stack</li>
+<li>xPSR holds flags N Z C V, exception number and T bit; hardware saves and restores it</li></ul></div>
+
+<div class="c t"><p class="tag">New task</p><p class="ti">Fake initial frame</p>
+<ul><li>xPSR = 0x01000000 (T bit set, else fault)</li>
+<li>PC = task function, LR = task_exit, R0 = argument</li>
+<li>R12, R1-R3, R4-R11 = 0</li>
+<li><code>tcb-&gt;sp</code> = address of the R4 slot (lowest word)</li></ul></div>
+
+<div class="c"><p class="tag">Code</p><p class="ti">PendSV handler skeleton</p>
+<pre>PendSV_Handler:
+  MRS   R0, PSP
+  STMDB R0!, {R4-R11}
+  BL    save_sp_and_pick_next
+  LDMIA R0!, {R4-R11}
+  MSR   PSP, R0
+  LDR   LR, =0xFFFFFFFD
+  BX    LR</pre></div>
+
+</body>
+</html>
