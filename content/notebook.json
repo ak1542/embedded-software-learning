@@ -117,6 +117,19 @@
       ]
     },
     {
+      "id": "s-mvupjg7rc20qt",
+      "title": "Embedded C",
+      "doc": {
+        "type": "doc",
+        "content": [
+          {
+            "type": "paragraph"
+          }
+        ]
+      },
+      "children": []
+    },
+    {
       "id": "s-m4",
       "title": "Cortex-M4 & R8 core",
       "doc": {
@@ -27184,6 +27197,19 @@
                   }
                 ]
               },
+              {
+                "type": "paragraph"
+              }
+            ]
+          },
+          "children": []
+        },
+        {
+          "id": "s-mvupic84hzlrh",
+          "title": "GIC",
+          "doc": {
+            "type": "doc",
+            "content": [
               {
                 "type": "paragraph"
               }
