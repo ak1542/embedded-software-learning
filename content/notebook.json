@@ -12,6 +12,19 @@
   },
   "sections": [
     {
+      "id": "s-mvupjg7rc20qt",
+      "title": "Embedded C",
+      "doc": {
+        "type": "doc",
+        "content": [
+          {
+            "type": "paragraph"
+          }
+        ]
+      },
+      "children": []
+    },
+    {
       "id": "s-mvtnzpm24r2o2",
       "title": "Broad Picture of embedded system",
       "doc": {
@@ -115,19 +128,6 @@
           "children": []
         }
       ]
-    },
-    {
-      "id": "s-mvupjg7rc20qt",
-      "title": "Embedded C",
-      "doc": {
-        "type": "doc",
-        "content": [
-          {
-            "type": "paragraph"
-          }
-        ]
-      },
-      "children": []
     },
     {
       "id": "s-m4",
