@@ -1,0 +1,31 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Endianness</title></head><body style="margin:0;padding:4px 0;background:transparent">
+<div class="vn-end" id="vn-end">
+<style>.vn-end{--bg:#f5f4ef;--bd:#d3d1c7;--tx:#2c2c2a;--mu:#5f5e5a;--bl-bg:#E6F1FB;--bl-bd:#85B7EB;--bl-tx:#0C447C;--gr-bg:#EAF3DE;--gr-bd:#97C459;--gr-tx:#27500A;--am-bg:#FAEEDA;--am-bd:#EF9F27;--am-tx:#633806;--rd-bg:#FCEBEB;--rd-bd:#F09595;--rd-tx:#791F1F;font:14px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--tx);box-sizing:border-box}
+@media (prefers-color-scheme:dark){.vn-end{--bg:#2a2a28;--bd:#444441;--tx:#e8e6dd;--mu:#b4b2a9;--bl-bg:#0c2a47;--bl-bd:#378ADD;--bl-tx:#B5D4F4;--gr-bg:#1e3310;--gr-bd:#639922;--gr-tx:#C0DD97;--am-bg:#3a2606;--am-bd:#BA7517;--am-tx:#FAC775;--rd-bg:#3d1515;--rd-bd:#E24B4A;--rd-tx:#F7C1C1}}
+.vn-end *{box-sizing:border-box}
+.vn-end .c{background:var(--bg);border:1px solid var(--bd);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.vn-end .tag{font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--mu)}
+.vn-end .t{font-size:15px;font-weight:700;margin:2px 0 6px}
+.vn-end .mu{color:var(--mu);font-size:13px}
+.vn-end pre{margin:6px 0 0;white-space:pre-wrap;word-break:break-word;font:12.5px/1.45 ui-monospace,Menlo,Consolas,monospace;background:transparent;color:inherit}
+.vn-end .mono{font-family:ui-monospace,Menlo,Consolas,monospace}
+.vn-end .bl{background:var(--bl-bg);border-color:var(--bl-bd);color:var(--bl-tx)}.vn-end .gr{background:var(--gr-bg);border-color:var(--gr-bd);color:var(--gr-tx)}.vn-end .am{background:var(--am-bg);border-color:var(--am-bd);color:var(--am-tx)}.vn-end .rd{background:var(--rd-bg);border-color:var(--rd-bd);color:var(--rd-tx)}
+.vn-end .row{display:flex;gap:10px;flex-wrap:wrap}.vn-end .row>*{flex:1 1 220px;min-width:0}
+.vn-end .arr{text-align:center;color:var(--mu);line-height:1.3;margin:2px 0;font-size:12px}
+.vn-end .bits{display:flex;gap:3px;flex-wrap:nowrap}
+.vn-end .b{flex:1 1 0;min-width:0;text-align:center;border:1px solid var(--bd);border-radius:6px;padding:3px 0;font:600 13px ui-monospace,Menlo,Consolas,monospace;background:var(--bg);color:var(--tx)}
+.vn-end .b.am{background:var(--am-bg);border-color:var(--am-bd);color:var(--am-tx)}.vn-end .b.gr{background:var(--gr-bg);border-color:var(--gr-bd);color:var(--gr-tx)}
+.vn-end .lab{font-size:12px;color:var(--mu);margin:6px 0 2px}
+.vn-end svg{display:block;width:100%;height:auto}
+@keyframes vnp{0%,100%{opacity:1}50%{opacity:.45}}
+@keyframes vnm{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
+.vn-end .pulse{animation:vnp 2.4s ease-in-out infinite}.vn-end .nudge{animation:vnm 2s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.vn-end .pulse,.vn-end .nudge{animation:none}}</style>
+<div class="c"><div class="tag">byte order</div><div class="t">uint32_t x = 0x12345678; stored at address 0x1000</div>
+<div class="mu">0x12 is the <b>most</b> significant byte (MSB), 0x78 the <b>least</b> significant (LSB).</div></div>
+<div class="c bl"><div class="t">Little-endian (ARM Cortex-M, x86)</div><div style="font-size:13px">LSB at the lowest address</div><div class="row" style="gap:4px;flex-wrap:nowrap"><div class="c am" style="flex:1 1 0;margin:0;text-align:center;padding:8px 2px"><div class="mono" style="font-size:16px;font-weight:700">78</div><div style="font-size:11px">+0</div></div><div class="c bl" style="flex:1 1 0;margin:0;text-align:center;padding:8px 2px"><div class="mono" style="font-size:16px;font-weight:700">56</div><div style="font-size:11px">+1</div></div><div class="c bl" style="flex:1 1 0;margin:0;text-align:center;padding:8px 2px"><div class="mono" style="font-size:16px;font-weight:700">34</div><div style="font-size:11px">+2</div></div><div class="c gr" style="flex:1 1 0;margin:0;text-align:center;padding:8px 2px"><div class="mono" style="font-size:16px;font-weight:700">12</div><div style="font-size:11px">+3</div></div></div><div style="font-size:12px;margin-top:4px">0x1000 → 0x1003 (LSB first)</div></div>
+<div class="c gr"><div class="t">Big-endian (network byte order)</div><div style="font-size:13px">MSB at the lowest address</div><div class="row" style="gap:4px;flex-wrap:nowrap"><div class="c gr" style="flex:1 1 0;margin:0;text-align:center;padding:8px 2px"><div class="mono" style="font-size:16px;font-weight:700">12</div><div style="font-size:11px">+0</div></div><div class="c bl" style="flex:1 1 0;margin:0;text-align:center;padding:8px 2px"><div class="mono" style="font-size:16px;font-weight:700">34</div><div style="font-size:11px">+1</div></div><div class="c bl" style="flex:1 1 0;margin:0;text-align:center;padding:8px 2px"><div class="mono" style="font-size:16px;font-weight:700">56</div><div style="font-size:11px">+2</div></div><div class="c am" style="flex:1 1 0;margin:0;text-align:center;padding:8px 2px"><div class="mono" style="font-size:16px;font-weight:700">78</div><div style="font-size:11px">+3</div></div></div><div style="font-size:12px;margin-top:4px">0x1000 → 0x1003 (MSB first)</div></div>
+<div class="c"><div class="tag">detect at run time</div><pre>uint16_t one = 1;
+int little = (*(uint8_t *)&amp;one == 1);</pre>
+<div class="mu">It matters only at boundaries: network protocols, files, DMA, or registers accessed bytewise. Convert with explicit shifts instead of casting a byte pointer.</div></div>
+</div></body></html>

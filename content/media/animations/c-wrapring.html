@@ -1,0 +1,30 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sequence wraparound</title></head><body style="margin:0;padding:4px 0;background:transparent">
+<div class="vn-ring" id="vn-ring">
+<style>.vn-ring{--bg:#f5f4ef;--bd:#d3d1c7;--tx:#2c2c2a;--mu:#5f5e5a;--bl-bg:#E6F1FB;--bl-bd:#85B7EB;--bl-tx:#0C447C;--gr-bg:#EAF3DE;--gr-bd:#97C459;--gr-tx:#27500A;--am-bg:#FAEEDA;--am-bd:#EF9F27;--am-tx:#633806;--rd-bg:#FCEBEB;--rd-bd:#F09595;--rd-tx:#791F1F;font:14px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--tx);box-sizing:border-box}
+@media (prefers-color-scheme:dark){.vn-ring{--bg:#2a2a28;--bd:#444441;--tx:#e8e6dd;--mu:#b4b2a9;--bl-bg:#0c2a47;--bl-bd:#378ADD;--bl-tx:#B5D4F4;--gr-bg:#1e3310;--gr-bd:#639922;--gr-tx:#C0DD97;--am-bg:#3a2606;--am-bd:#BA7517;--am-tx:#FAC775;--rd-bg:#3d1515;--rd-bd:#E24B4A;--rd-tx:#F7C1C1}}
+.vn-ring *{box-sizing:border-box}
+.vn-ring .c{background:var(--bg);border:1px solid var(--bd);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.vn-ring .tag{font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--mu)}
+.vn-ring .t{font-size:15px;font-weight:700;margin:2px 0 6px}
+.vn-ring .mu{color:var(--mu);font-size:13px}
+.vn-ring pre{margin:6px 0 0;white-space:pre-wrap;word-break:break-word;font:12.5px/1.45 ui-monospace,Menlo,Consolas,monospace;background:transparent;color:inherit}
+.vn-ring .mono{font-family:ui-monospace,Menlo,Consolas,monospace}
+.vn-ring .bl{background:var(--bl-bg);border-color:var(--bl-bd);color:var(--bl-tx)}.vn-ring .gr{background:var(--gr-bg);border-color:var(--gr-bd);color:var(--gr-tx)}.vn-ring .am{background:var(--am-bg);border-color:var(--am-bd);color:var(--am-tx)}.vn-ring .rd{background:var(--rd-bg);border-color:var(--rd-bd);color:var(--rd-tx)}
+.vn-ring .row{display:flex;gap:10px;flex-wrap:wrap}.vn-ring .row>*{flex:1 1 220px;min-width:0}
+.vn-ring .arr{text-align:center;color:var(--mu);line-height:1.3;margin:2px 0;font-size:12px}
+.vn-ring .bits{display:flex;gap:3px;flex-wrap:nowrap}
+.vn-ring .b{flex:1 1 0;min-width:0;text-align:center;border:1px solid var(--bd);border-radius:6px;padding:3px 0;font:600 13px ui-monospace,Menlo,Consolas,monospace;background:var(--bg);color:var(--tx)}
+.vn-ring .b.am{background:var(--am-bg);border-color:var(--am-bd);color:var(--am-tx)}.vn-ring .b.gr{background:var(--gr-bg);border-color:var(--gr-bd);color:var(--gr-tx)}
+.vn-ring .lab{font-size:12px;color:var(--mu);margin:6px 0 2px}
+.vn-ring svg{display:block;width:100%;height:auto}
+@keyframes vnp{0%,100%{opacity:1}50%{opacity:.45}}
+@keyframes vnm{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
+.vn-ring .pulse{animation:vnp 2.4s ease-in-out infinite}.vn-ring .nudge{animation:vnm 2s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.vn-ring .pulse,.vn-ring .nudge{animation:none}}</style>
+<div class="c"><div class="tag">8-bit sequence numbers</div><div class="t">The number line is a ring: 255 → 0</div><svg viewBox="0 0 320 330" role="img" aria-label="Ring of 256 sequence numbers: 1 to 127 steps ahead is newer, 128 is ambiguous, 129 to 255 is older"><path d="M161.0 50.0 A110 110 0 0 1 162.7 270.0" fill="none" stroke="var(--gr-bd)" stroke-width="22"/><path d="M157.3 270.0 A110 110 0 0 1 159.0 50.0" fill="none" stroke="var(--rd-bd)" stroke-width="22"/><line x1="160.0" y1="256.0" x2="160.0" y2="284.0" stroke="var(--am-bd)" stroke-width="5"/><circle cx="160.0" cy="50.0" r="9" fill="var(--bl-bd)" class="pulse"/><circle cx="149.2" cy="50.5" r="7" fill="var(--rd-tx)"/><text x="160" y="152" text-anchor="middle" font-size="12" fill="var(--tx)" font-weight="700">distance = (uint8_t)(seq - newest)</text><text x="160" y="172" text-anchor="middle" font-size="12" fill="var(--mu)">arithmetic is modulo 256</text><text x="180" y="24" font-size="12" fill="var(--bl-tx)">newest = 3</text><text x="137" y="54" text-anchor="end" font-size="12" fill="var(--rd-tx)">seq = 255</text><text x="210" y="210" font-size="12" fill="var(--gr-tx)">1–127: newer</text><text x="160" y="306" text-anchor="middle" font-size="12" fill="var(--am-tx)">128: ambiguous → reject</text><text x="110" y="210" text-anchor="end" font-size="12" fill="var(--rd-tx)">129–255: older</text></svg></div>
+<div class="row"><div class="c gr"><div class="tag">forward distance</div><div class="t">Is seq ahead of newest?</div><pre>uint8_t d = (uint8_t)(seq - newest);</pre>
+<div style="font-size:13px">1–127 newer · 0 duplicate · 128 reject · 129–255 older</div></div>
+<div class="c rd"><div class="tag">backward distance</div><div class="t">How far behind?</div><pre>uint8_t d = (uint8_t)(newest - seq);
+// newest=3, seq=255 → 4</pre>
+<div style="font-size:13px">3 → 2 → 1 → 0 → 255: four steps back</div></div></div>
+</div></body></html>

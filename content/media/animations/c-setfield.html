@@ -1,0 +1,28 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>set_field</title></head><body style="margin:0;padding:4px 0;background:transparent">
+<div class="vn-setfield" id="vn-setfield">
+<style>.vn-setfield{--bg:#f5f4ef;--bd:#d3d1c7;--tx:#2c2c2a;--mu:#5f5e5a;--bl-bg:#E6F1FB;--bl-bd:#85B7EB;--bl-tx:#0C447C;--gr-bg:#EAF3DE;--gr-bd:#97C459;--gr-tx:#27500A;--am-bg:#FAEEDA;--am-bd:#EF9F27;--am-tx:#633806;--rd-bg:#FCEBEB;--rd-bd:#F09595;--rd-tx:#791F1F;font:14px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--tx);box-sizing:border-box}
+@media (prefers-color-scheme:dark){.vn-setfield{--bg:#2a2a28;--bd:#444441;--tx:#e8e6dd;--mu:#b4b2a9;--bl-bg:#0c2a47;--bl-bd:#378ADD;--bl-tx:#B5D4F4;--gr-bg:#1e3310;--gr-bd:#639922;--gr-tx:#C0DD97;--am-bg:#3a2606;--am-bd:#BA7517;--am-tx:#FAC775;--rd-bg:#3d1515;--rd-bd:#E24B4A;--rd-tx:#F7C1C1}}
+.vn-setfield *{box-sizing:border-box}
+.vn-setfield .c{background:var(--bg);border:1px solid var(--bd);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.vn-setfield .tag{font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--mu)}
+.vn-setfield .t{font-size:15px;font-weight:700;margin:2px 0 6px}
+.vn-setfield .mu{color:var(--mu);font-size:13px}
+.vn-setfield pre{margin:6px 0 0;white-space:pre-wrap;word-break:break-word;font:12.5px/1.45 ui-monospace,Menlo,Consolas,monospace;background:transparent;color:inherit}
+.vn-setfield .mono{font-family:ui-monospace,Menlo,Consolas,monospace}
+.vn-setfield .bl{background:var(--bl-bg);border-color:var(--bl-bd);color:var(--bl-tx)}.vn-setfield .gr{background:var(--gr-bg);border-color:var(--gr-bd);color:var(--gr-tx)}.vn-setfield .am{background:var(--am-bg);border-color:var(--am-bd);color:var(--am-tx)}.vn-setfield .rd{background:var(--rd-bg);border-color:var(--rd-bd);color:var(--rd-tx)}
+.vn-setfield .row{display:flex;gap:10px;flex-wrap:wrap}.vn-setfield .row>*{flex:1 1 220px;min-width:0}
+.vn-setfield .arr{text-align:center;color:var(--mu);line-height:1.3;margin:2px 0;font-size:12px}
+.vn-setfield .bits{display:flex;gap:3px;flex-wrap:nowrap}
+.vn-setfield .b{flex:1 1 0;min-width:0;text-align:center;border:1px solid var(--bd);border-radius:6px;padding:3px 0;font:600 13px ui-monospace,Menlo,Consolas,monospace;background:var(--bg);color:var(--tx)}
+.vn-setfield .b.am{background:var(--am-bg);border-color:var(--am-bd);color:var(--am-tx)}.vn-setfield .b.gr{background:var(--gr-bg);border-color:var(--gr-bd);color:var(--gr-tx)}
+.vn-setfield .lab{font-size:12px;color:var(--mu);margin:6px 0 2px}
+.vn-setfield svg{display:block;width:100%;height:auto}
+@keyframes vnp{0%,100%{opacity:1}50%{opacity:.45}}
+@keyframes vnm{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
+.vn-setfield .pulse{animation:vnp 2.4s ease-in-out infinite}.vn-setfield .nudge{animation:vnm 2s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.vn-setfield .pulse,.vn-setfield .nudge{animation:none}}</style>
+<div class="c"><div class="tag">bit manipulation</div><div class="t">set_field(reg, value, mask)</div>
+<div class="mu">Replace only the bits selected by <b>mask</b>; keep every other bit of <b>reg</b>.</div>
+<pre>(reg &amp; ~mask) | (value &amp; mask)</pre></div>
+<div class="c"><div class="lab">reg</div><div class="bits"><span class="b">1</span><span class="b">0</span><span class="b">1</span><span class="b">1</span><span class="b">0</span><span class="b">1</span><span class="b">1</span><span class="b">0</span></div><div class="lab">mask (amber = the field)</div><div class="bits"><span class="b">0</span><span class="b">0</span><span class="b am">1</span><span class="b am">1</span><span class="b am">1</span><span class="b am">1</span><span class="b">0</span><span class="b">0</span></div><div class="lab">value</div><div class="bits"><span class="b">0</span><span class="b">0</span><span class="b">1</span><span class="b">0</span><span class="b">1</span><span class="b">0</span><span class="b">0</span><span class="b">0</span></div><div class="arr nudge">↓ step 1: reg &amp; ~mask clears the field</div><div class="lab">reg &amp; ~mask</div><div class="bits"><span class="b">1</span><span class="b">0</span><span class="b am">0</span><span class="b am">0</span><span class="b am">0</span><span class="b am">0</span><span class="b">1</span><span class="b">0</span></div><div class="arr nudge">↓ step 2: value &amp; mask keeps only the field bits of the new value</div><div class="lab">value &amp; mask</div><div class="bits"><span class="b">0</span><span class="b">0</span><span class="b am">1</span><span class="b am">0</span><span class="b am">1</span><span class="b am">0</span><span class="b">0</span><span class="b">0</span></div><div class="arr nudge">↓ step 3: OR them together</div><div class="lab">result</div><div class="bits"><span class="b ">1</span><span class="b ">0</span><span class="b gr pulse">1</span><span class="b gr pulse">0</span><span class="b gr pulse">1</span><span class="b gr pulse">0</span><span class="b ">1</span><span class="b ">0</span></div><div class="mu" style="margin-top:8px">Bits outside the mask are unchanged. Without <span class="mono">value &amp; mask</span>, a value with extra bits set would corrupt neighbouring fields.</div></div>
+</div></body></html>

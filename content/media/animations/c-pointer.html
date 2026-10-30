@@ -1,0 +1,38 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Pointer arithmetic</title></head><body style="margin:0;padding:4px 0;background:transparent">
+<div class="vn-ptr" id="vn-ptr">
+<style>.vn-ptr{--bg:#f5f4ef;--bd:#d3d1c7;--tx:#2c2c2a;--mu:#5f5e5a;--bl-bg:#E6F1FB;--bl-bd:#85B7EB;--bl-tx:#0C447C;--gr-bg:#EAF3DE;--gr-bd:#97C459;--gr-tx:#27500A;--am-bg:#FAEEDA;--am-bd:#EF9F27;--am-tx:#633806;--rd-bg:#FCEBEB;--rd-bd:#F09595;--rd-tx:#791F1F;font:14px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--tx);box-sizing:border-box}
+@media (prefers-color-scheme:dark){.vn-ptr{--bg:#2a2a28;--bd:#444441;--tx:#e8e6dd;--mu:#b4b2a9;--bl-bg:#0c2a47;--bl-bd:#378ADD;--bl-tx:#B5D4F4;--gr-bg:#1e3310;--gr-bd:#639922;--gr-tx:#C0DD97;--am-bg:#3a2606;--am-bd:#BA7517;--am-tx:#FAC775;--rd-bg:#3d1515;--rd-bd:#E24B4A;--rd-tx:#F7C1C1}}
+.vn-ptr *{box-sizing:border-box}
+.vn-ptr .c{background:var(--bg);border:1px solid var(--bd);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.vn-ptr .tag{font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--mu)}
+.vn-ptr .t{font-size:15px;font-weight:700;margin:2px 0 6px}
+.vn-ptr .mu{color:var(--mu);font-size:13px}
+.vn-ptr pre{margin:6px 0 0;white-space:pre-wrap;word-break:break-word;font:12.5px/1.45 ui-monospace,Menlo,Consolas,monospace;background:transparent;color:inherit}
+.vn-ptr .mono{font-family:ui-monospace,Menlo,Consolas,monospace}
+.vn-ptr .bl{background:var(--bl-bg);border-color:var(--bl-bd);color:var(--bl-tx)}.vn-ptr .gr{background:var(--gr-bg);border-color:var(--gr-bd);color:var(--gr-tx)}.vn-ptr .am{background:var(--am-bg);border-color:var(--am-bd);color:var(--am-tx)}.vn-ptr .rd{background:var(--rd-bg);border-color:var(--rd-bd);color:var(--rd-tx)}
+.vn-ptr .row{display:flex;gap:10px;flex-wrap:wrap}.vn-ptr .row>*{flex:1 1 220px;min-width:0}
+.vn-ptr .arr{text-align:center;color:var(--mu);line-height:1.3;margin:2px 0;font-size:12px}
+.vn-ptr .bits{display:flex;gap:3px;flex-wrap:nowrap}
+.vn-ptr .b{flex:1 1 0;min-width:0;text-align:center;border:1px solid var(--bd);border-radius:6px;padding:3px 0;font:600 13px ui-monospace,Menlo,Consolas,monospace;background:var(--bg);color:var(--tx)}
+.vn-ptr .b.am{background:var(--am-bg);border-color:var(--am-bd);color:var(--am-tx)}.vn-ptr .b.gr{background:var(--gr-bg);border-color:var(--gr-bd);color:var(--gr-tx)}
+.vn-ptr .lab{font-size:12px;color:var(--mu);margin:6px 0 2px}
+.vn-ptr svg{display:block;width:100%;height:auto}
+@keyframes vnp{0%,100%{opacity:1}50%{opacity:.45}}
+@keyframes vnm{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
+.vn-ptr .pulse{animation:vnp 2.4s ease-in-out infinite}.vn-ptr .nudge{animation:vnm 2s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.vn-ptr .pulse,.vn-ptr .nudge{animation:none}}</style>
+<div class="c"><div class="tag">pointer arithmetic</div><div class="t">p + n moves n <b>elements</b>, not n bytes</div>
+<pre>int32_t a[4];
+int32_t *p = a;      // p = 0x2000
+p + 1                // 0x2004  (+ 1 * sizeof(int32_t))
+((char *)p) + 1      // 0x2001  (+ 1 * sizeof(char))</pre></div>
+<div class="c"><div class="lab">int32_t a[4] at 0x2000 (each cell = 4 bytes)</div>
+<div class="row" style="gap:4px;flex-wrap:nowrap">
+<div class="c bl pulse" style="flex:1 1 0;margin:0;text-align:center;padding:6px 2px"><b>a[0]</b><div class="mono" style="font-size:11px">0x2000</div><div style="font-size:11px">p</div></div>
+<div class="c gr" style="flex:1 1 0;margin:0;text-align:center;padding:6px 2px"><b>a[1]</b><div class="mono" style="font-size:11px">0x2004</div><div style="font-size:11px">p+1</div></div>
+<div class="c" style="flex:1 1 0;margin:0;text-align:center;padding:6px 2px"><b>a[2]</b><div class="mono" style="font-size:11px">0x2008</div><div style="font-size:11px">p+2</div></div>
+<div class="c" style="flex:1 1 0;margin:0;text-align:center;padding:6px 2px"><b>a[3]</b><div class="mono" style="font-size:11px">0x200C</div><div style="font-size:11px">p+3</div></div></div></div>
+<div class="row"><div class="c am"><div class="t">Pointer difference</div><pre>&amp;a[3] - &amp;a[0] == 3
+// elements, not 12 bytes</pre><div style="font-size:13px">The result type is ptrdiff_t.</div></div>
+<div class="c rd"><div class="t">Pitfalls</div><div style="font-size:13px">· <span class="mono">a[i]</span> is <span class="mono">*(a + i)</span><br>· arithmetic on <span class="mono">void *</span> is not standard C (GCC treats it as bytes)<br>· going more than one past the end of an array is undefined behaviour</div></div></div>
+</div></body></html>

@@ -1,0 +1,41 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>W1C</title></head><body style="margin:0;padding:4px 0;background:transparent">
+<div class="vn-w1c" id="vn-w1c">
+<style>.vn-w1c{--bg:#f5f4ef;--bd:#d3d1c7;--tx:#2c2c2a;--mu:#5f5e5a;--bl-bg:#E6F1FB;--bl-bd:#85B7EB;--bl-tx:#0C447C;--gr-bg:#EAF3DE;--gr-bd:#97C459;--gr-tx:#27500A;--am-bg:#FAEEDA;--am-bd:#EF9F27;--am-tx:#633806;--rd-bg:#FCEBEB;--rd-bd:#F09595;--rd-tx:#791F1F;font:14px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--tx);box-sizing:border-box}
+@media (prefers-color-scheme:dark){.vn-w1c{--bg:#2a2a28;--bd:#444441;--tx:#e8e6dd;--mu:#b4b2a9;--bl-bg:#0c2a47;--bl-bd:#378ADD;--bl-tx:#B5D4F4;--gr-bg:#1e3310;--gr-bd:#639922;--gr-tx:#C0DD97;--am-bg:#3a2606;--am-bd:#BA7517;--am-tx:#FAC775;--rd-bg:#3d1515;--rd-bd:#E24B4A;--rd-tx:#F7C1C1}}
+.vn-w1c *{box-sizing:border-box}
+.vn-w1c .c{background:var(--bg);border:1px solid var(--bd);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.vn-w1c .tag{font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--mu)}
+.vn-w1c .t{font-size:15px;font-weight:700;margin:2px 0 6px}
+.vn-w1c .mu{color:var(--mu);font-size:13px}
+.vn-w1c pre{margin:6px 0 0;white-space:pre-wrap;word-break:break-word;font:12.5px/1.45 ui-monospace,Menlo,Consolas,monospace;background:transparent;color:inherit}
+.vn-w1c .mono{font-family:ui-monospace,Menlo,Consolas,monospace}
+.vn-w1c .bl{background:var(--bl-bg);border-color:var(--bl-bd);color:var(--bl-tx)}.vn-w1c .gr{background:var(--gr-bg);border-color:var(--gr-bd);color:var(--gr-tx)}.vn-w1c .am{background:var(--am-bg);border-color:var(--am-bd);color:var(--am-tx)}.vn-w1c .rd{background:var(--rd-bg);border-color:var(--rd-bd);color:var(--rd-tx)}
+.vn-w1c .row{display:flex;gap:10px;flex-wrap:wrap}.vn-w1c .row>*{flex:1 1 220px;min-width:0}
+.vn-w1c .arr{text-align:center;color:var(--mu);line-height:1.3;margin:2px 0;font-size:12px}
+.vn-w1c .bits{display:flex;gap:3px;flex-wrap:nowrap}
+.vn-w1c .b{flex:1 1 0;min-width:0;text-align:center;border:1px solid var(--bd);border-radius:6px;padding:3px 0;font:600 13px ui-monospace,Menlo,Consolas,monospace;background:var(--bg);color:var(--tx)}
+.vn-w1c .b.am{background:var(--am-bg);border-color:var(--am-bd);color:var(--am-tx)}.vn-w1c .b.gr{background:var(--gr-bg);border-color:var(--gr-bd);color:var(--gr-tx)}
+.vn-w1c .lab{font-size:12px;color:var(--mu);margin:6px 0 2px}
+.vn-w1c svg{display:block;width:100%;height:auto}
+@keyframes vnp{0%,100%{opacity:1}50%{opacity:.45}}
+@keyframes vnm{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
+.vn-w1c .pulse{animation:vnp 2.4s ease-in-out infinite}.vn-w1c .nudge{animation:vnm 2s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.vn-w1c .pulse,.vn-w1c .nudge{animation:none}}</style>
+<div class="c"><div class="tag">hardware register</div><div class="t">W1C: write-1-to-clear</div>
+<div class="mu">Writing a <b>1</b> to a bit clears it. Writing a 0 does nothing. Example: STATUS = <span class="mono">0b111</span>, we want to clear <b>bit 0</b> only.</div></div>
+<div class="row">
+<div class="c rd"><div class="tag">normal read-modify-write</div><div class="t">❌ Clears the wrong bits</div>
+<pre>status  = *reg;      // 0b111
+status &amp;= ~0x1;     // 0b110
+*reg    = status;   // write 0b110</pre>
+<div class="arr nudge">↓</div>
+<div style="font-size:13px">Bits 1 and 2 are written as <b>1</b> → the hardware clears them.</div>
+<div class="t mono" style="margin-top:6px">STATUS = 0b001 ✖ (wanted 0b110)</div></div>
+<div class="c gr"><div class="tag">correct</div><div class="t">✅ Write only the bit to clear</div>
+<pre>*reg = (1U &lt;&lt; 0);   // write 0b001</pre>
+<div class="arr nudge">↓</div>
+<div style="font-size:13px">Only bit 0 is written as <b>1</b>; the zeros leave the other bits alone.</div>
+<div class="t mono" style="margin-top:6px">STATUS = 0b110 ✔</div></div></div>
+<div class="c am"><div class="tag">rule</div><div class="t">Check the access type of every bit in the datasheet</div>
+<div style="font-size:13px">RW (normal), W1C, W1S, RO, RC (clear on read)… A normal <span class="mono">reg &amp;= ~mask</span> is only safe for plain RW bits. A RAM variable is fine; a hardware register can have side effects on read and on write.</div></div>
+</div></body></html>
