@@ -1,0 +1,68 @@
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><div class="vn-ctx" id="vn-ctx">
+<style>
+.vn-ctx{--bg:#f5f4ef;--bd:#d3d1c7;--tx:#2c2c2a;--mu:#5f5e5a;--bf:#E6F1FB;--bs:#85B7EB;--bx:#0C447C;--gf:#EAF3DE;--gs:#97C459;--gx:#27500A;--af:#FAEEDA;--as:#EF9F27;--ax:#633806;font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--tx);max-width:760px}
+@media (prefers-color-scheme:dark){.vn-ctx{--bg:#2a2a28;--bd:#444441;--tx:#e8e6dd;--mu:#b4b2a9;--bf:#0c2a47;--bs:#378ADD;--bx:#B5D4F4;--gf:#1e3310;--gs:#639922;--gx:#C0DD97;--af:#3a2606;--as:#BA7517;--ax:#FAC775}}
+.vn-ctx .vn-bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0 0 10px}
+.vn-ctx .vn-bar button{font:inherit;font-size:13px;padding:4px 10px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);cursor:pointer}
+.vn-ctx .vn-ok{font-size:12px;color:var(--mu)}
+.vn-ctx .lg{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 10px;font-size:12px}
+.vn-ctx .lg b{font-weight:400;padding:1px 9px;border:1px solid;border-radius:10px}
+.vn-ctx .gr{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:10px}
+.vn-ctx .c{background:var(--bg);border:1px solid var(--bd);border-radius:12px;padding:12px 14px}
+.vn-ctx .tg{font-size:12px;color:var(--mu)}
+.vn-ctx .t{font-size:15px;font-weight:600;margin:1px 0 8px}
+.vn-ctx .b{background:var(--bf);border-color:var(--bs);color:var(--bx)}
+.vn-ctx .a{background:var(--af);border-color:var(--as);color:var(--ax)}
+.vn-ctx .g{background:var(--gf);border-color:var(--gs);color:var(--gx)}
+.vn-ctx .d{background:transparent;border-color:var(--bd);color:var(--mu)}
+.vn-ctx .s{display:flex;gap:8px;align-items:flex-start;margin:5px 0;font-size:13px}
+.vn-ctx .s i{flex:0 0 36px;text-align:center;font:600 11px/20px ui-monospace,Menlo,Consolas,monospace;border:1px solid;border-radius:6px;font-style:normal}
+.vn-ctx .gh{font-size:12px;color:var(--mu);margin:10px 0 3px}
+.vn-ctx .w{display:flex;justify-content:space-between;gap:8px;border:1px solid;border-radius:4px;margin:2px 0;padding:2px 8px;font:600 12px ui-monospace,Menlo,Consolas,monospace}
+.vn-ctx .w span{font:400 11px ui-monospace,Menlo,Consolas,monospace;opacity:.9;text-align:right}
+.vn-ctx .o{border-style:dashed}
+.vn-ctx .nt{font-size:12px;color:var(--mu);margin:8px 0 0}
+</style>
+
+<div class="lg"><b class="b">saved by hardware</b><b class="a">saved by software</b><b class="g">stack pointer / TCB</b><b class="d">scheduler, optional</b></div>
+<div class="gr">
+
+<div class="c"><div class="tg">Cortex-M4 · PendSV switch</div><div class="t">8 words by hardware, 9 by software</div>
+<div class="s"><i class="d">OS</i><span>SysTick sets PendSV pending, runs after other ISRs</span></div>
+<div class="s"><i class="b">HW</i><span>Pushes 8-word frame onto PSP, enters PendSV</span></div>
+<div class="s"><i class="a">SW</i><span>Pushes R4–R11 and EXC_RETURN, saves PSP in TCB</span></div>
+<div class="s"><i class="d">OS</i><span>Picks next task, loads its SP, pops its R4–R11</span></div>
+<div class="s"><i class="b">HW</i><span>BX LR with EXC_RETURN pops the 8-word frame, task resumes</span></div>
+<div class="gh">Task stack, high address first</div>
+<div class="w b">xPSR<span>pushed first</span></div>
+<div class="w b">PC<span>resume address</span></div>
+<div class="w b">LR</div>
+<div class="w b">R12</div>
+<div class="w b">R3</div>
+<div class="w b">R2</div>
+<div class="w b">R1</div>
+<div class="w b">R0<span>SP after HW push</span></div>
+<div class="w a o">S16–S31<span>only if FPU used</span></div>
+<div class="w a">EXC_RETURN<span>saved LR</span></div>
+<div class="w a">R11</div><div class="w a">R10</div><div class="w a">R9</div><div class="w a">R8</div><div class="w a">R7</div><div class="w a">R6</div><div class="w a">R5</div>
+<div class="w a">R4</div>
+<div class="w g">saved SP → TCB<span>lowest address</span></div>
+<p class="nt">FreeRTOS-style order. FPU frame: hardware also pushes S0–S15, FPSCR (lazy). A plain C ISR needs no wrapper.</p></div>
+
+<div class="c"><div class="tg">Cortex-R8 · IRQ tick switch</div><div class="t">0 words by hardware, 16 by software</div>
+<div class="s"><i class="b">HW</i><span>LR_irq = return + 4, SPSR_irq = CPSR, IRQ mode, I = 1. No memory write</span></div>
+<div class="s"><i class="a">SW</i><span>SUB LR, LR, #4 then SRSDB sp!, #0x1F stores PC and CPSR</span></div>
+<div class="s"><i class="a">SW</i><span>CPS to System mode, STMFD sp!, {r0-r12, lr}</span></div>
+<div class="s"><i class="d">OS</i><span>Saves SP in TCB, picks next task, loads its SP</span></div>
+<div class="s"><i class="a">SW</i><span>LDMFD, then RFEIA sp! reloads PC and CPSR together</span></div>
+<div class="gh">Task stack, high address first</div>
+<div class="w a">CPSR<span>from SPSR_irq, by SRS</span></div>
+<div class="w a">PC<span>from LR_irq, by SRS</span></div>
+<div class="w a">LR<span>task R14, by STMFD</span></div>
+<div class="w a">R12</div><div class="w a">R11</div><div class="w a">R10</div><div class="w a">R9</div><div class="w a">R8</div><div class="w a">R7</div><div class="w a">R6</div><div class="w a">R5</div><div class="w a">R4</div><div class="w a">R3</div><div class="w a">R2</div><div class="w a">R1</div>
+<div class="w a">R0</div>
+<div class="w a o">D0–D15, FPSCR, FPEXC<span>only if FPU used</span></div>
+<div class="w g">saved SP → TCB<span>lowest address</span></div>
+<p class="nt">Hardware only banks LR and SPSR. Set SP_irq, SP_fiq, SP_svc, SP_abt and SP_und at boot. FIQ banks R8–R12, so a FIQ handler can skip saving them.</p></div>
+
+</div></div>
