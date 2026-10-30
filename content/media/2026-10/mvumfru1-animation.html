@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cortex-M4 Stack Overflow Detection Notes</title>
+<style>
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;max-width:640px;margin:0 auto;padding:16px;background:#fff;color:#2c2c2a}
+  h1{font-size:20px;margin:8px 0 12px}
+  .c{border:1px solid #d3d1c7;background:#f5f4ef;border-radius:12px;padding:12px 14px;margin-bottom:10px}
+  .c.h{background:#E6F1FB;border-color:#85B7EB}
+  .c.s{background:#EAF3DE;border-color:#97C459}
+  .c.t{background:#FAEEDA;border-color:#EF9F27}
+  .c.d{background:#FCEBEB;border-color:#F09595}
+  .tag{font-size:11px;color:#5f5e5a;margin:0 0 2px}
+  .ti{font-size:15px;font-weight:600;margin:0 0 6px}
+  .c.h .tag,.c.h .ti{color:#0C447C}
+  .c.s .tag,.c.s .ti{color:#27500A}
+  .c.t .tag,.c.t .ti{color:#633806}
+  .c.d .tag,.c.d .ti{color:#791F1F}
+  ul{margin:0;padding-left:18px}
+  li{font-size:13px;line-height:1.5;margin:2px 0}
+  code,pre{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px}
+  pre{margin:8px 0 0;padding:10px 12px;background:#fff;border:1px solid #d3d1c7;border-radius:8px;line-height:1.6;white-space:pre-wrap;word-break:break-word;color:#2c2c2a}
+  table{width:100%;border-collapse:collapse;font-size:12px}
+  th{font-weight:600;text-align:left;padding:4px;border-bottom:1px solid #d3d1c7}
+  td{padding:5px 4px;border-bottom:1px solid #d3d1c7;vertical-align:top}
+</style>
+</head>
+<body>
+
+<h1>Task stack overflow detection (Cortex-M4)</h1>
+
+<div class="c d"><p class="tag">Problem</p><p class="ti">Stack overflow on Cortex-M4</p>
+<ul><li>No automatic stack-limit check (PSPLIM exists only on ARMv8-M, like M33)</li>
+<li>Stack grows down, so overflow means going below <code>stack_base</code></li></ul></div>
+
+<div class="c h"><p class="tag">Method 1</p><p class="ti">Fill pattern and watermark</p>
+<ul><li>Fill the whole stack with 0xA5A5A5A5 at task creation</li>
+<li>Count untouched words from the bottom to get the free space</li>
+<li>Free count near 0 means near overflow</li></ul>
+<pre>void stack_fill(uint32_t *base, size_t words) {
+  for (size_t i = 0; i &lt; words; i++) base[i] = FILL;
+}
+size_t stack_free_words(const uint32_t *base) {
+  size_t n = 0;
+  while (base[n] == FILL) n++;
+  return n;
+}</pre></div>
+
+<div class="c s"><p class="tag">Method 2</p><p class="ti">Check at every context switch</p>
+<ul><li>Run it in the scheduler right after saving A's SP</li>
+<li>Catches overflow only at switch time</li></ul>
+<pre>if (tcb-&gt;sp &lt; tcb-&gt;stack_base + 8 ||
+    tcb-&gt;stack_base[0] != FILL)
+  stack_overflow_hook(tcb);</pre></div>
+
+<div class="c t"><p class="tag">Method 3</p><p class="ti">MPU guard region</p>
+<ul><li>Small no-access region (about 32 bytes) at the stack bottom</li>
+<li>Write into it raises a MemManage fault at the exact instruction</li>
+<li>Reprogram the region in PendSV on every switch</li>
+<li>Region size is a power of 2 and aligned to its size</li>
+<li>M4 MPU is optional and has 8 regions, check your chip</li></ul></div>
+
+<div class="c"><p class="tag">Compare</p><p class="ti">Which one to use</p>
+<table>
+<tr><th>Method</th><th>Catches</th><th>Cost</th></tr>
+<tr><td>Watermark</td><td>Peak usage, after the fact</td><td>Low</td></tr>
+<tr><td>Switch check</td><td>At next switch</td><td>Low</td></tr>
+<tr><td>MPU guard</td><td>Instantly, exact instruction</td><td>Medium</td></tr>
+</table></div>
+
+<div class="c s"><p class="tag">Prevention</p><p class="ti">Habits</p>
+<ul><li>Compile with <code>-fstack-usage</code> to see per-function cost</li>
+<li>Avoid big local arrays and deep recursion</li>
+<li>Keep 25-30% margin over the measured watermark</li>
+<li>MSP (used by ISRs) can overflow too, check it the same way</li></ul></div>
+
+</body>
+</html>
