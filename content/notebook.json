@@ -23300,7 +23300,7 @@
         },
         {
           "id": "s-os-task",
-          "title": "Task creation (bare metal)",
+          "title": "Task creation M4 (bare metal)",
           "doc": {
             "type": "doc",
             "content": [
@@ -25776,6 +25776,19 @@
                   "textAlign": null,
                   "indent": 0
                 }
+              }
+            ]
+          },
+          "children": []
+        },
+        {
+          "id": "s-mvuw0gfnmgd9g",
+          "title": "Task creations for R8",
+          "doc": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph"
               }
             ]
           },
