@@ -23340,6 +23340,98 @@
                 "attrs": {
                   "textAlign": null,
                   "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Task/thread = function + private stack + cpu register "
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Process= heap+ code + .data, .bss everything seperate."
+                  }
+                ]
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Handler mode MSP"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Thread mode PSP in M4, it has two mode only "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "In R8, we have 7-9 mode , almost each mode has its own stack pointer"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
                 }
               },
               {
