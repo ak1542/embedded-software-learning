@@ -218,6 +218,9 @@ body.editing .doc .ProseMirror:focus-within { border-color: var(--accent); box-s
 .media-node[data-align='center'] { align-items: center; }
 .media-node[data-align='right'] { align-items: flex-end; }
 .media-frame { position: relative; max-width: 100%; line-height: 0; }
+.media-broken { line-height: 1.4; padding: 14px 16px; border: 1px dashed var(--warning); border-radius: 8px; color: var(--warning); background: var(--bg-soft); font-size: .9rem; }
+.media-frame.broken img { display: none; }
+.media-frame.broken .media-expand { display: none; }
 .media-frame img, .media-frame video { display: block; max-width: 100%; height: auto; border-radius: 8px; }
 .media-frame[style*='width'] img, .media-frame[style*='width'] video { width: 100%; }
 .ProseMirror[contenteditable='true'] .media-video video { pointer-events: none; }

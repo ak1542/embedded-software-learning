@@ -81,6 +81,7 @@ function createMediaNode({ name, tag, extraAttributes = {} }) {
         if (tag === 'img') {
           el.draggable = false;
           el.loading = 'lazy';
+          el.referrerPolicy = 'no-referrer'; // some hosts refuse pictures linked from another site
         } else {
           el.playsInline = true;
           el.preload = 'metadata';
@@ -165,7 +166,27 @@ function createMediaNode({ name, tag, extraAttributes = {} }) {
               })
             : null;
 
-        frame.append(el, ...(expand ? [expand] : []), handle, tools);
+        // A picture that cannot load (blocked or expired external link, deleted file) shows a notice instead of an empty gap.
+        const broken = document.createElement('div');
+        broken.className = 'media-broken';
+        broken.hidden = true;
+        if (tag === 'img') {
+          el.addEventListener('error', () => {
+            if (!el.getAttribute('src')) return;
+            const ext = /^https?:/.test(current.attrs.src || '');
+            broken.textContent = ext
+              ? '⚠ This picture is an external link that could not be loaded (the site may block it or the link expired). Edit the page, delete it and add the picture again from a file.'
+              : '⚠ This picture file could not be loaded. Check that it still exists in the repository.';
+            broken.hidden = false;
+            frame.classList.add('broken');
+          });
+          el.addEventListener('load', () => {
+            broken.hidden = true;
+            frame.classList.remove('broken');
+          });
+        }
+
+        frame.append(el, broken, ...(expand ? [expand] : []), handle, tools);
         dom.append(frame);
         apply();
 
