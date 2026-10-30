@@ -23315,17 +23315,13 @@
                 }
               },
               {
-                "type": "paragraph",
+                "type": "htmlAnimation",
                 "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                }
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
+                  "src": "content/media/2026-10/mvv3fsx0-animation.html",
+                  "height": 420,
+                  "fit": true,
+                  "width": 100,
+                  "title": "Animation"
                 }
               },
               {
