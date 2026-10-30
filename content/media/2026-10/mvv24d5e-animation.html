@@ -1,0 +1,103 @@
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><div class="vn-arm" id="vn-arm">
+<style>
+.vn-arm{--bg:#f5f4ef;--bd:#d3d1c7;--tx:#2c2c2a;--mu:#5f5e5a;--bf:#E6F1FB;--bs:#85B7EB;--bx:#0C447C;--gf:#EAF3DE;--gs:#97C459;--gx:#27500A;--af:#FAEEDA;--as:#EF9F27;--ax:#633806;--rf:#FCEBEB;--rs:#F09595;--rx:#791F1F;font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--tx);max-width:720px}
+@media (prefers-color-scheme:dark){.vn-arm{--bg:#2a2a28;--bd:#444441;--tx:#e8e6dd;--mu:#b4b2a9;--bf:#0c2a47;--bs:#378ADD;--bx:#B5D4F4;--gf:#1e3310;--gs:#639922;--gx:#C0DD97;--af:#3a2606;--as:#BA7517;--ax:#FAC775;--rf:#3d1515;--rs:#E24B4A;--rx:#F7C1C1}}
+.vn-arm .vn-bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0 0 10px}
+.vn-arm .vn-bar button{font:inherit;font-size:13px;padding:4px 10px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);cursor:pointer}
+.vn-arm .vn-ok{font-size:12px;color:var(--mu)}
+.vn-arm .sec{margin:16px 0 8px;padding:8px 14px;border:1px solid var(--bd);border-radius:12px;font-size:17px;font-weight:600}
+.vn-arm .sec span{display:block;font-size:12px;font-weight:400;color:var(--mu)}
+.vn-arm .c{background:var(--bg);border:1px solid var(--bd);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.vn-arm .tg{font-size:12px;color:var(--mu)}
+.vn-arm .t{font-size:15px;font-weight:600;margin:1px 0 8px}
+.vn-arm .r{display:flex;gap:10px;align-items:center;margin:5px 0}
+.vn-arm .r span{font-size:13px}
+.vn-arm .n{flex:0 0 74px;text-align:center;padding:3px 4px;border:1px solid;border-radius:6px;font:600 12px ui-monospace,Menlo,Consolas,monospace}
+.vn-arm .b{background:var(--bf);border-color:var(--bs);color:var(--bx)}
+.vn-arm .g{background:var(--gf);border-color:var(--gs);color:var(--gx)}
+.vn-arm .a{background:var(--af);border-color:var(--as);color:var(--ax)}
+.vn-arm .x{background:var(--rf);border-color:var(--rs);color:var(--rx)}
+.vn-arm .d{background:transparent;border-color:var(--bd);color:var(--mu)}
+.vn-arm .st{display:grid;grid-template-columns:repeat(32,1fr);gap:1px;margin:8px 0 2px}
+.vn-arm .st i{font:normal 600 11px/26px ui-monospace,Menlo,Consolas,monospace;text-align:center;border:1px solid;border-radius:3px;overflow:hidden;white-space:nowrap}
+.vn-arm .rl{display:flex;justify-content:space-between;font-size:11px;color:var(--mu)}
+.vn-arm .nt{font-size:12px;color:var(--mu);margin:6px 0 0}
+.vn-arm .fr{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:4px}
+.vn-arm .fr div{text-align:center;border:1px solid;border-radius:6px;padding:3px 0;font:600 12px ui-monospace,Menlo,Consolas,monospace}
+.vn-arm .fr small{display:block;font-weight:400;font-size:11px;opacity:.85}
+.vn-arm table{width:100%;table-layout:fixed;border-collapse:separate;border-spacing:2px;font:600 12px ui-monospace,Menlo,Consolas,monospace}
+.vn-arm td,.vn-arm th{padding:5px 1px;text-align:center;border:1px solid var(--bd);border-radius:4px}
+.vn-arm th{background:transparent;color:var(--tx);font-size:12px}
+.vn-arm th small{display:block;font-weight:400;font-size:11px;color:var(--mu)}
+.vn-arm td.l{text-align:left;padding-left:5px;border-color:transparent;color:var(--tx)}
+.vn-arm .lg{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;font-size:12px}
+.vn-arm .lg b{font-weight:400;padding:1px 8px;border:1px solid;border-radius:10px}
+</style>
+
+
+<div class="sec">Cortex-M4 registers<span>ARMv7E-M · Thumb-2 only · Thread and Handler modes · all registers 32-bit</span></div>
+
+<div class="c"><div class="tg">Core registers</div><div class="t">R0–R15 (13 general + SP, LR, PC)</div>
+<div class="r"><b class="n g">R0–R3</b><span>Arguments, results, scratch (caller-saved)</span></div>
+<div class="r"><b class="n g">R4–R11</b><span>Local variables (callee-saved)</span></div>
+<div class="r"><b class="n g">R12</b><span>IP, intra-call scratch</span></div>
+<div class="r"><b class="n b">R13 SP</b><span>Banked: MSP (reset) or PSP, chosen by CONTROL.SPSEL</span></div>
+<div class="r"><b class="n b">R14 LR</b><span>Return address, or EXC_RETURN in a handler</span></div>
+<div class="r"><b class="n b">R15 PC</b><span>Bit 0 always reads 0 (Thumb state kept in EPSR.T)</span></div></div>
+
+<div class="c"><div class="tg">Special registers</div><div class="t">Status, masks and control</div>
+<div class="r"><b class="n b">xPSR</b><span>APSR flags + IPSR exception number + EPSR (T, IT/ICI)</span></div>
+<div class="r"><b class="n x">PRIMASK</b><span>1 bit. 1 blocks all exceptions except NMI and HardFault</span></div>
+<div class="r"><b class="n x">FAULTMASK</b><span>1 bit. 1 blocks all except NMI (cleared on exception return)</span></div>
+<div class="r"><b class="n x">BASEPRI</b><span>8 bits. Blocks priorities numerically ≥ value, 0 = off</span></div>
+<div class="r"><b class="n a">CONTROL</b><span>[0] nPRIV · [1] SPSEL (0 MSP, 1 PSP) · [2] FPCA</span></div>
+<div class="tg" style="margin-top:10px">xPSR bit layout (31 → 0)</div>
+<div class="st"><i class="b" style="grid-column:span 1">N</i><i class="b">Z</i><i class="b">C</i><i class="b">V</i><i class="b">Q</i><i class="a" style="grid-column:span 2">IT</i><i class="a">T</i><i class="d" style="grid-column:span 4">—</i><i class="b" style="grid-column:span 4">GE</i><i class="a" style="grid-column:span 6">ICI/IT</i><i class="d">—</i><i class="g" style="grid-column:span 9">IPSR</i></div>
+<div class="rl"><span>31</span><span>0</span></div>
+<p class="nt">N 31 · Z 30 · C 29 · V 28 · Q 27 (APSR). IT/ICI 26:25 and 15:10, T 24 (EPSR). GE 19:16 (SIMD). IPSR 8:0 = active exception number, 0 in Thread mode.</p></div>
+
+<div class="c"><div class="tg">Optional FPU (single precision)</div><div class="t">S0–S31 and FPSCR</div>
+<div class="r"><b class="n g">S0–S31</b><span>32 single-precision regs, pairs alias D0–D15</span></div>
+<div class="r"><b class="n b">FPSCR</b><span>N Z C V 31:28 · AHP 26 · DN 25 · FZ 24 · RMode 23:22 · sticky flags IDC, IXC, UFC, OFC, DZC, IOC</span></div>
+<div class="r"><b class="n a">S0–S15</b><span>Caller-saved. S16–S31 callee-saved</span></div></div>
+
+<div class="c"><div class="tg">Hardware stacking on exception entry</div><div class="t">8-word frame, SP after push → R0 (lowest address)</div>
+<div class="fr"><div class="g">R0<small>+0x00</small></div><div class="g">R1<small>+0x04</small></div><div class="g">R2<small>+0x08</small></div><div class="g">R3<small>+0x0C</small></div><div class="g">R12<small>+0x10</small></div><div class="b">LR<small>+0x14</small></div><div class="b">PC<small>+0x18</small></div><div class="b">xPSR<small>+0x1C</small></div></div>
+<p class="nt">With CONTROL.FPCA = 1 the frame grows to 26 words: S0–S15 and FPSCR are added above xPSR.</p></div>
+
+<div class="sec">Cortex-R8 registers<span>ARMv7-R · ARM and Thumb-2 · 7 processor modes · 37 registers (no Security or Hyp mode)</span></div>
+
+<div class="c"><div class="tg">Banked register file</div><div class="t">Which copy you see in each mode</div>
+<table><tbody><tr><th style="width:15%"></th><th>Usr<small>0x10</small></th><th>Sys<small>0x1F</small></th><th>FIQ<small>0x11</small></th><th>IRQ<small>0x12</small></th><th>SVC<small>0x13</small></th><th>ABT<small>0x17</small></th><th>UND<small>0x1B</small></th></tr>
+<tr><td class="l">R0–R7</td><td class="g">·</td><td class="g">·</td><td class="g">·</td><td class="g">·</td><td class="g">·</td><td class="g">·</td><td class="g">·</td></tr>
+<tr><td class="l">R8–R12</td><td class="g">·</td><td class="g">·</td><td class="a">_fiq</td><td class="g">·</td><td class="g">·</td><td class="g">·</td><td class="g">·</td></tr>
+<tr><td class="l">R13 SP</td><td class="g">·</td><td class="g">·</td><td class="a">_fiq</td><td class="a">_irq</td><td class="a">_svc</td><td class="a">_abt</td><td class="a">_und</td></tr>
+<tr><td class="l">R14 LR</td><td class="g">·</td><td class="g">·</td><td class="a">_fiq</td><td class="a">_irq</td><td class="a">_svc</td><td class="a">_abt</td><td class="a">_und</td></tr>
+<tr><td class="l">R15 PC</td><td class="g">·</td><td class="g">·</td><td class="g">·</td><td class="g">·</td><td class="g">·</td><td class="g">·</td><td class="g">·</td></tr>
+<tr><td class="l">CPSR</td><td class="b">·</td><td class="b">·</td><td class="b">·</td><td class="b">·</td><td class="b">·</td><td class="b">·</td><td class="b">·</td></tr>
+<tr><td class="l">SPSR</td><td class="d">—</td><td class="d">—</td><td class="a">_fiq</td><td class="a">_irq</td><td class="a">_svc</td><td class="a">_abt</td><td class="a">_und</td></tr></tbody></table>
+<div class="lg"><b class="g">· shared with User</b><b class="a">banked copy</b><b class="b">status</b><b class="d">none</b></div>
+<p class="nt">Usr is unprivileged, all other modes privileged. Sys shares Usr registers. Count: 31 general + CPSR + 5 SPSR = 37. FIQ banks R8–R12 so the handler needs no register save.</p></div>
+
+<div class="c"><div class="tg">Status register</div><div class="t">CPSR bit layout (31 → 0)</div>
+<div class="st"><i class="b">N</i><i class="b">Z</i><i class="b">C</i><i class="b">V</i><i class="b">Q</i><i class="a" style="grid-column:span 2">IT</i><i class="d">J</i><i class="d" style="grid-column:span 4">—</i><i class="b" style="grid-column:span 4">GE</i><i class="a" style="grid-column:span 6">IT[7:2]</i><i class="x">E</i><i class="x">A</i><i class="x">I</i><i class="x">F</i><i class="a">T</i><i class="g" style="grid-column:span 5">Mode</i></div>
+<div class="rl"><span>31</span><span>0</span></div>
+<p class="nt">Flags N Z C V Q 31:27 · IT 26:25 and 15:10 · J 24 (reads 0) · GE 19:16 · E 9 data endianness · A 8 async abort mask · I 7 IRQ mask · F 6 FIQ mask · T 5 Thumb state · M[4:0] mode. Each exception copies CPSR into its SPSR.</p></div>
+
+<div class="c"><div class="tg">Exception entry</div><div class="t">Which mode and vector offset</div>
+<table style="font-weight:400">
+<tbody><tr><th style="text-align:left;padding-left:5px">Exception</th><th>Enters</th><th>Offset</th></tr>
+<tr><td style="text-align:left;padding-left:5px">Reset</td><td class="a">SVC</td><td>0x00</td></tr>
+<tr><td style="text-align:left;padding-left:5px">Undefined instruction</td><td class="a">UND</td><td>0x04</td></tr>
+<tr><td style="text-align:left;padding-left:5px">Supervisor call (SVC)</td><td class="a">SVC</td><td>0x08</td></tr>
+<tr><td style="text-align:left;padding-left:5px">Prefetch abort</td><td class="a">ABT</td><td>0x0C</td></tr>
+<tr><td style="text-align:left;padding-left:5px">Data abort</td><td class="a">ABT</td><td>0x10</td></tr>
+<tr><td style="text-align:left;padding-left:5px">IRQ</td><td class="a">IRQ</td><td>0x18</td></tr>
+<tr><td style="text-align:left;padding-left:5px">FIQ</td><td class="a">FIQ</td><td>0x1C</td></tr></tbody></table>
+<p class="nt">Vector base: 0x0000_0000, or 0xFFFF_0000 when SCTLR.V = 1, or VBAR. Entry saves return address in LR_mode and CPSR in SPSR_mode.</p></div>
+
+<div class="c"><div class="tg">Optional FPU</div><div class="t">VFP register file</div>
+<div class="r"><b class="n g">S0–S31</b><span>Alias D0–D15 (VFPv3-D16). Config dependent</span></div>
+<div class="r"><b class="n b">FPSCR</b><span>Flags and rounding control, same layout idea as M4</span></div>
+<div class="r"><b class="n a">FPEXC</b><span>EN bit enables the FPU, set it before first use</span></div></div>
+</div>
