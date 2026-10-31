@@ -1,0 +1,169 @@
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><div class="vn-cstatic" id="vn-cstatic">
+<style>
+.vn-cstatic{--bg:#f5f4ef;--bd:#d3d1c7;--tx:#2c2c2a;--mu:#5f5e5a;--bl-bg:#E6F1FB;--bl-bd:#85B7EB;--bl-tx:#0C447C;--gr-bg:#EAF3DE;--gr-bd:#97C459;--gr-tx:#27500A;--am-bg:#FAEEDA;--am-bd:#EF9F27;--am-tx:#633806;--rd-bg:#FCEBEB;--rd-bd:#F09595;--rd-tx:#791F1F;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--tx);line-height:1.5;max-width:720px}
+@media (prefers-color-scheme:dark){.vn-cstatic{--bg:#2a2a28;--bd:#444441;--tx:#e8e6dd;--mu:#b4b2a9;--bl-bg:#0c2a47;--bl-bd:#378ADD;--bl-tx:#B5D4F4;--gr-bg:#1e3310;--gr-bd:#639922;--gr-tx:#C0DD97;--am-bg:#3a2606;--am-bd:#BA7517;--am-tx:#FAC775;--rd-bg:#3d1515;--rd-bd:#E24B4A;--rd-tx:#F7C1C1}}
+.vn-cstatic .c{background:var(--bg);border:1px solid var(--bd);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.vn-cstatic .tag{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mu);margin:0 0 2px}
+.vn-cstatic h3{font-size:15px;font-weight:700;margin:0 0 6px}
+.vn-cstatic ul{margin:0;padding-left:18px;font-size:14px}
+.vn-cstatic li{margin-bottom:3px}
+.vn-cstatic p{margin:0 0 6px;font-size:14px}
+.vn-cstatic .bl{background:var(--bl-bg);border-color:var(--bl-bd);color:var(--bl-tx)}
+.vn-cstatic .gr{background:var(--gr-bg);border-color:var(--gr-bd);color:var(--gr-tx)}
+.vn-cstatic .am{background:var(--am-bg);border-color:var(--am-bd);color:var(--am-tx)}
+.vn-cstatic .rd{background:var(--rd-bg);border-color:var(--rd-bd);color:var(--rd-tx)}
+.vn-cstatic .row{display:flex;gap:10px;flex-wrap:wrap}
+.vn-cstatic .row .c{flex:1 1 220px}
+.vn-cstatic svg{width:100%;height:auto;display:block}
+.vn-cstatic svg text{font-size:13px;font-family:inherit}
+.vn-cstatic table{width:100%;border-collapse:collapse;font-size:13px}
+.vn-cstatic th,.vn-cstatic td{border:1px solid var(--bd);padding:5px 7px;text-align:left;vertical-align:top;word-break:break-word}
+.vn-cstatic th{background:var(--bl-bg);color:var(--bl-tx)}
+.vn-cstatic pre{margin:0;background:var(--bg);border:1px solid var(--bd);border-radius:8px;padding:10px;font-size:12.5px;white-space:pre-wrap;word-break:break-word;font-family:ui-monospace,Menlo,Consolas,monospace}
+.vn-cstatic code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px}
+.vn-cstatic .key{font-weight:700}
+.vn-cstatic .legend{font-size:12px;color:var(--mu)}
+</style>
+
+<div class="c bl">
+<p class="tag">Core idea</p>
+<h3>Scope and lifetime are different things</h3>
+<ul>
+<li><span class="key">Scope</span> = where the <i>name</i> can be used (compile time).</li>
+<li><span class="key">Lifetime</span> = how long the <i>memory</i> exists (run time).</li>
+<li><code>static</code> on a local variable keeps the scope local but makes the lifetime the whole program.</li>
+</ul>
+</div>
+
+<div class="c">
+<p class="tag">Diagram</p>
+<h3>Program memory layout</h3>
+<svg viewBox="0 0 340 262" role="img" aria-label="Memory layout from stack at the top to text segment at the bottom">
+<rect x="1" y="6" width="338" height="34" rx="6" class="bl" fill="var(--bl-bg)" stroke="var(--bl-bd)"/>
+<text x="12" y="28" fill="var(--bl-tx)" font-weight="700">Stack</text><text x="110" y="28" fill="var(--bl-tx)">normal locals, call frames</text>
+<rect x="1" y="46" width="338" height="34" rx="6" fill="var(--bl-bg)" stroke="var(--bl-bd)"/>
+<text x="12" y="68" fill="var(--bl-tx)" font-weight="700">Heap</text><text x="110" y="68" fill="var(--bl-tx)">malloc / new</text>
+<rect x="1" y="86" width="338" height="34" rx="6" fill="var(--gr-bg)" stroke="var(--gr-bd)"/>
+<text x="12" y="108" fill="var(--gr-tx)" font-weight="700">BSS</text><text x="110" y="108" fill="var(--gr-tx)">static/global = 0 or none</text>
+<rect x="1" y="126" width="338" height="34" rx="6" fill="var(--gr-bg)" stroke="var(--gr-bd)"/>
+<text x="12" y="148" fill="var(--gr-tx)" font-weight="700">Data</text><text x="110" y="148" fill="var(--gr-tx)">static/global = non-zero</text>
+<rect x="1" y="166" width="338" height="34" rx="6" fill="var(--am-bg)" stroke="var(--am-bd)"/>
+<text x="12" y="188" fill="var(--am-tx)" font-weight="700">.rodata</text><text x="110" y="188" fill="var(--am-tx)">const globals, string literals</text>
+<rect x="1" y="206" width="338" height="34" rx="6" fill="var(--am-bg)" stroke="var(--am-bd)"/>
+<text x="12" y="228" fill="var(--am-tx)" font-weight="700">.text</text><text x="110" y="228" fill="var(--am-tx)">machine code</text>
+<text x="1" y="256" fill="var(--mu)" style="font-size:11px">high address at top, low address at bottom</text>
+</svg>
+<p class="legend">Blue = dynamic (created and destroyed at run time). Green = static storage (lives whole program). Amber = read-only.</p>
+</div>
+
+<div class="c">
+<p class="tag">Meanings</p>
+<h3>What <code>static</code> does</h3>
+<table>
+<tr><th>Where</th><th>Effect</th><th>Lang</th></tr>
+<tr><td>Local variable</td><td>Keeps value between calls, initialized once</td><td>C, C++</td></tr>
+<tr><td>Global variable / function</td><td>Internal linkage: visible only in this file</td><td>C, C++</td></tr>
+<tr><td>Class data member</td><td>One copy shared by all objects</td><td>C++</td></tr>
+<tr><td>Class member function</td><td>Callable without an object, no <code>this</code></td><td>C++</td></tr>
+</table>
+</div>
+
+<div class="c gr">
+<p class="tag">Reasoning</p>
+<h3>Why a local static lives in the Data segment</h3>
+<p>A stack frame is destroyed when the function returns. If <code>a</code> lived there, its value would vanish every time.</p>
+<table>
+<tr><th>Call</th><th>Normal local (stack)</th><th>Static local (data)</th></tr>
+<tr><td>1st</td><td>a = 5, then 6, frame destroyed</td><td>a = 5, then 6, stays</td></tr>
+<tr><td>2nd</td><td>fresh a = 5, then 6 again</td><td>continues at 6, then 7</td></tr>
+<tr><td>3rd</td><td>6 again</td><td>7, then 8</td></tr>
+</table>
+<p style="margin-top:6px">To remember the value, the variable must live somewhere that survives the return. That place is the Data (or BSS) segment. The compiler still hides the name from other functions, so only the name is local.</p>
+</div>
+
+<div class="row">
+<div class="c rd">
+<p class="tag">Bug</p>
+<h3>Normal local</h3>
+<pre>int *bad() {
+  int a = 5;
+  return &amp;a;  // dangling: frame gone
+}</pre>
+</div>
+<div class="c gr">
+<p class="tag">Safe</p>
+<h3>Static local</h3>
+<pre>int *ok() {
+  static int a = 5;
+  return &amp;a;  // memory still alive
+}</pre>
+</div>
+</div>
+
+<div class="c">
+<p class="tag">Reference</p>
+<h3>Where each declaration is stored</h3>
+<table>
+<tr><th>Declaration</th><th>Memory</th></tr>
+<tr><td><code>int a = 5;</code> (global)</td><td>Data</td></tr>
+<tr><td><code>int a;</code> (global)</td><td>BSS</td></tr>
+<tr><td><code>static int a = 5;</code> (global)</td><td>Data, file-private</td></tr>
+<tr><td><code>static int a;</code> (global)</td><td>BSS, file-private</td></tr>
+<tr><td><code>const int a = 5;</code> (global)</td><td>.rodata</td></tr>
+<tr><td><code>static const int a = 5;</code> (global)</td><td>.rodata, file-private</td></tr>
+<tr><td><code>int a = 5;</code> (local)</td><td>Stack</td></tr>
+<tr><td><code>const int a = 5;</code> (local)</td><td>Stack (or folded into code)</td></tr>
+<tr><td><code>static int a = 5;</code> (local)</td><td>Data</td></tr>
+<tr><td><code>static int a;</code> (local)</td><td>BSS</td></tr>
+<tr><td><code>static const int a = 5;</code> (local)</td><td>.rodata</td></tr>
+</table>
+</div>
+
+<div class="c">
+<p class="tag">Code</p>
+<h3>All combinations in one place</h3>
+<pre>int g1 = 10;              // Data
+int g2;                   // BSS
+static int g3 = 20;       // Data (file-private)
+static int g4;            // BSS (file-private)
+const int g5 = 30;        // .rodata
+static const int g6 = 40; // .rodata (file-private)
+
+void f() {
+  int a = 1;              // Stack
+  const int b = 2;        // Stack (or folded)
+  static int c = 3;       // Data
+  static int d;           // BSS
+  static const int e = 4; // .rodata
+}</pre>
+</div>
+
+<div class="c am">
+<p class="tag">Pointers and strings</p>
+<h3>Two things to place: the pointer and its target</h3>
+<pre>const char *p = "hello";  // p: Data (global) or Stack (local)
+                          // "hello": .rodata
+char arr[] = "hello";     // own writable copy (Data or Stack)
+const char *const r = "yo"; // both read-only</pre>
+<p style="margin-top:6px"><code>p[0]='H'</code> crashes (read-only literal). <code>arr[0]='H'</code> works (its own copy).</p>
+</div>
+
+<div class="c rd">
+<p class="tag">Gotchas</p>
+<h3>Remember these</h3>
+<ul>
+<li><code>const</code> does not always mean read-only memory. A local <code>const</code> is on the stack.</li>
+<li>In C++, a global <code>const</code> has internal linkage by default. In C it has external linkage.</li>
+<li>Static and non-static globals use the same memory. Only visibility differs.</li>
+<li>Statics are zero-initialized automatically. Normal locals hold garbage.</li>
+<li>C++ static locals with non-constant initializers are initialized on first call, guarded by a hidden flag.</li>
+<li>Exact sections depend on compiler and linker (GCC/Clang on Linux shown).</li>
+</ul>
+</div>
+
+<div class="c bl">
+<p class="tag">Summary</p>
+<h3>One line</h3>
+<p>The name is local, but the storage is global: <code>static</code> hides the name inside the function and keeps the memory alive for the whole program.</p>
+</div>
+</div>
