@@ -25,7 +25,7 @@
       "children": [
         {
           "id": "s-ec-volatile",
-          "title": "Volatile Const Static Local",
+          "title": "Data type , .data, .bss .rodata, Endianness, padding , Volatile Const Static Local",
           "doc": {
             "type": "doc",
             "content": [
