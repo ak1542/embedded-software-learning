@@ -24,6 +24,235 @@
       },
       "children": [
         {
+          "id": "s-ec-volatile",
+          "title": "Const Static",
+          "doc": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "image",
+                "attrs": {
+                  "src": "content/media/2026-10/mvw2zg2t-image.png",
+                  "alt": "image",
+                  "width": 100,
+                  "align": "center"
+                }
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Static on a global makes it private to the file "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": " Static on a local makes it have a lifetime for the program by storing it in the data/bss section"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Static + Global -> bss/data/,  Global -> bss/data, in .ro if const used"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Static Local -> .bss/data, .rodata if const is used,"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "local will stay in sack"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "codeBlock",
+                "attrs": {
+                  "language": "c"
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "const char *p = \"hello\";     // p: Data (global) or Stack (local)\n                             // \"hello\": .rodata\n\nchar arr[] = \"hello\";        // global: Data   |   local: Stack (copy of the string)\n\nstatic const char *q = \"hi\"; // q: Data (static)\n                             // \"hi\": .rodata\n\nconst char *const r = \"yo\";  // r: .rodata (pointer itself is const)\n                             // \"yo\": .rodata"
+                  }
+                ]
+              },
+              {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 4
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Use case of local Variable "
+                  }
+                ]
+              },
+              {
+                "type": "codeBlock",
+                "attrs": {
+                  "language": "c"
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "int *get_ptr() {\n    static int a = 5;\n    return &a;          // safe: memory is still alive after return\n}\n\nint main() {\n    int *p = get_ptr();\n    *p = 100;           // works, writes to the same static memory\n}"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Multiple calls of a, print 6,7,8,9,10... every time will not be init "
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "codeBlock",
+                "attrs": {
+                  "language": "c"
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "void counter() {\n    static int a = 5;   // name visible only here, memory lives forever\n    a++;\n    printf(\"%d\\n\", a);\n}"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              }
+            ]
+          },
+          "children": []
+        },
+        {
           "id": "s-ec-bits",
           "title": "Bit manipulation & registers",
           "doc": {
@@ -982,267 +1211,6 @@
                   {
                     "type": "text",
                     "text": ", so the same struct can lay out differently on another compiler. They also hide read-modify-write accesses. For hardware registers prefer masks and shifts."
-                  }
-                ]
-              },
-              {
-                "type": "paragraph"
-              }
-            ]
-          },
-          "children": []
-        },
-        {
-          "id": "s-ec-volatile",
-          "title": "volatile",
-          "doc": {
-            "type": "doc",
-            "content": [
-              {
-                "type": "paragraph",
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "volatile",
-                    "marks": [
-                      {
-                        "type": "code"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "text",
-                    "text": " tells the compiler that the variable's value can change unexpectedly outside the normal program flow, so every read or write must be treated as an observable memory access and cannot be optimised away or cached in a register."
-                  }
-                ]
-              },
-              {
-                "type": "htmlAnimation",
-                "attrs": {
-                  "src": "content/media/animations/c-volatile.html",
-                  "height": 620,
-                  "width": 100,
-                  "title": "volatile: what the compiler may and may not do",
-                  "fit": true
-                }
-              },
-              {
-                "type": "heading",
-                "attrs": {
-                  "level": 2
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "volatile does NOT mean"
-                  }
-                ]
-              },
-              {
-                "type": "bulletList",
-                "content": [
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "❌ atomic"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "❌ thread-safe"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "❌ race-free"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "❌ memory synchronisation (no barrier between cores)"
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "callout",
-                "attrs": {
-                  "variant": "warning"
-                },
-                "content": [
-                  {
-                    "type": "paragraph",
-                    "content": [
-                      {
-                        "type": "text",
-                        "text": "A "
-                      },
-                      {
-                        "type": "text",
-                        "text": "volatile",
-                        "marks": [
-                          {
-                            "type": "code"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "text",
-                        "text": " counter incremented in an ISR and in a task still needs a critical section or an atomic operation. See "
-                      },
-                      {
-                        "type": "text",
-                        "text": "Synchronization",
-                        "marks": [
-                          {
-                            "type": "link",
-                            "attrs": {
-                              "href": "#/s-os-sync",
-                              "target": null,
-                              "rel": null,
-                              "class": null
-                            }
-                          }
-                        ]
-                      },
-                      {
-                        "type": "text",
-                        "text": "."
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "heading",
-                "attrs": {
-                  "level": 2
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "Where it is needed"
-                  }
-                ]
-              },
-              {
-                "type": "codeBlock",
-                "attrs": {
-                  "language": "c"
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "#define GPIOA_ODR (*(volatile uint32_t *)0x40020014u)   /* memory-mapped register */\n#define ADC_DR    (*(const volatile uint16_t *)0x4001204Cu)   /* read-only register (Added) */\n\nvolatile uint8_t data_ready;        /* set in an ISR, polled in main */\nvoid ISR(void)  { data_ready = 1; }\nvoid main_loop(void) { while (!data_ready) { } /* re-read every time */ }"
-                  }
-                ]
-              },
-              {
-                "type": "bulletList",
-                "content": [
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "Hardware registers",
-                            "marks": [
-                              {
-                                "type": "bold"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "text",
-                            "text": " (memory-mapped I/O)."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "Variables shared with an ISR",
-                            "marks": [
-                              {
-                                "type": "bold"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "text",
-                            "text": " (still needs care for multi-word values)."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "const volatile",
-                            "marks": [
-                              {
-                                "type": "code"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "text",
-                            "text": " for registers the program may read but never write."
-                          }
-                        ]
-                      }
-                    ]
                   }
                 ]
               },
