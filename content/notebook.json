@@ -5692,10 +5692,25 @@
                 }
               },
               {
-                "type": "paragraph",
+                "type": "heading",
                 "attrs": {
                   "textAlign": null,
-                  "indent": 0
+                  "indent": 0,
+                  "level": 3
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "More Questions "
+                  }
+                ]
+              },
+              {
+                "type": "pdf",
+                "attrs": {
+                  "src": "content/media/2026-10/mvwk4sob-1790430991860-compressed.pdf",
+                  "title": "1790430991860_compressed",
+                  "height": 1000
                 }
               },
               {
