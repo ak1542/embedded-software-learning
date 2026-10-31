@@ -39,6 +39,664 @@
                 "content": [
                   {
                     "type": "text",
+                    "text": "Data type "
+                  }
+                ]
+              },
+              {
+                "type": "table",
+                "content": [
+                  {
+                    "type": "tableRow",
+                    "content": [
+                      {
+                        "type": "tableHeader",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Type"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableHeader",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Size"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableHeader",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Typical use"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "tableRow",
+                    "content": [
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "uint8_t"
+                              },
+                              {
+                                "type": "text",
+                                "text": " / "
+                              },
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "int8_t"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "8-bit"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "bytes, buffers, small registers, protocol fields"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "tableRow",
+                    "content": [
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "uint16_t"
+                              },
+                              {
+                                "type": "text",
+                                "text": " / "
+                              },
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "int16_t"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "16-bit"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "ADC samples, lengths, 16-bit registers"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "tableRow",
+                    "content": [
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "uint32_t"
+                              },
+                              {
+                                "type": "text",
+                                "text": " / "
+                              },
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "int32_t"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "32-bit"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "MMIO registers, addresses, timestamps, CRC32"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "tableRow",
+                    "content": [
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "uint64_t"
+                              },
+                              {
+                                "type": "text",
+                                "text": " / "
+                              },
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "int64_t"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "64-bit"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "large counters, 64-bit timestamps (not atomic on 32-bit cores)"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "tableRow",
+                    "content": [
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "uintptr_t"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "pointer-sized"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "storing an address as an integer"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "tableRow",
+                    "content": [
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "size_t"
+                              },
+                              {
+                                "type": "text",
+                                "text": " / "
+                              },
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "ptrdiff_t"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "pointer-sized"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "sizes, indices, pointer differences"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 3
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Some example "
+                  }
+                ]
+              },
+              {
+                "type": "codeBlock",
+                "attrs": {
+                  "language": "c"
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "// Register map overlay\ntypedef struct {\n    volatile uint32_t CTRL;     // 0x00\n    volatile uint32_t STATUS;   // 0x04\n    volatile uint32_t DATA;     // 0x08\n} I2C_Regs_t;\n#define I2C0 ((I2C_Regs_t *)0x1E78A000u)\n\n// Packed protocol header (MCTP/PLDM-style)\ntypedef struct __attribute__((packed)) {\n    uint8_t  hdr_version;\n    uint8_t  dest_eid;\n    uint8_t  src_eid;\n    uint8_t  flags_tag;\n} mctp_hdr_t;\n\n// Function pointer dispatch table\ntypedef int (*cmd_handler_t)(const uint8_t *req, uint8_t *resp);\nstatic const cmd_handler_t handlers[] = { cmd_get_id, cmd_set_state };\n\ntypedef union {\n    uint32_t raw;                  // whole register\n    struct {\n        uint32_t enable   : 1;     // bit 0\n        uint32_t mode     : 2;     // bits 2:1\n        uint32_t reserved : 5;     // bits 7:3\n        uint32_t divider  : 8;     // bits 15:8\n        uint32_t          : 16;    // bits 31:16 unused\n    } bits;\n} ctrl_reg_t;"
+                  }
+                ]
+              },
+              {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 2
+                },
+                "content": [
+                  {
+                    "type": "text",
                     "text": "Volatile and const"
                   }
                 ]
@@ -4762,6 +5420,272 @@
           "doc": {
             "type": "doc",
             "content": [
+              {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 2
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Imported concept"
+                  }
+                ]
+              },
+              {
+                "type": "orderedList",
+                "attrs": {
+                  "start": 1,
+                  "type": null
+                },
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "code"
+                              }
+                            ],
+                            "text": "uint32_t"
+                          },
+                          {
+                            "type": "text",
+                            "text": " → only 32 bits."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Shifting by "
+                          },
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "code"
+                              }
+                            ],
+                            "text": "32"
+                          },
+                          {
+                            "type": "text",
+                            "text": " or more is "
+                          },
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "undefined behavior"
+                          },
+                          {
+                            "type": "text",
+                            "text": " in C"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "INT_MAX = (1U<<31)-1, INT_MIN = - (1U<<31)"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "And of all numbers from  left <= right ? queston "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "a & -a , return right most bit all other 0"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": " ((to - from) % y + y) % y; why like this  ? In mathematics, the result of "
+                          },
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "−𝟏𝟎(𝐦𝐨𝐝𝟖) is 𝟔 ,but in c it is -2 "
+                          },
+                          {
+                            "type": "text",
+                            "text": "."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "   A-B+1 = including A and B "
+                          },
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "and"
+                          },
+                          {
+                            "type": "text",
+                            "text": " A-B => only including B"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
               {
                 "type": "heading",
                 "attrs": {
