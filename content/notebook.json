@@ -25,7 +25,7 @@
       "children": [
         {
           "id": "s-ec-volatile",
-          "title": "Const Static",
+          "title": "Const Static Local",
           "doc": {
             "type": "doc",
             "content": [
