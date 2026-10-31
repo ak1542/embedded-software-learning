@@ -25,7 +25,7 @@
       "children": [
         {
           "id": "s-ec-volatile",
-          "title": "Data type , .data, .bss .rodata, Endianness, padding , Volatile Const Static Local",
+          "title": "Data type , .data, .bss .rodata, Endianness, padding , Volatile Const Static Local etc",
           "doc": {
             "type": "doc",
             "content": [
@@ -5435,11 +5435,7 @@
                 ]
               },
               {
-                "type": "orderedList",
-                "attrs": {
-                  "start": 1,
-                  "type": null
-                },
+                "type": "bulletList",
                 "content": [
                   {
                     "type": "listItem",
@@ -5453,65 +5449,26 @@
                         "content": [
                           {
                             "type": "text",
-                            "marks": [
-                              {
-                                "type": "code"
-                              }
-                            ],
-                            "text": "uint32_t"
-                          },
-                          {
-                            "type": "text",
-                            "text": " → only 32 bits."
+                            "text": "See operator precedence first "
                           }
                         ]
                       }
                     ]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "attrs": {
-                          "textAlign": null,
-                          "indent": 0
-                        },
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "Shifting by "
-                          },
-                          {
-                            "type": "text",
-                            "marks": [
-                              {
-                                "type": "code"
-                              }
-                            ],
-                            "text": "32"
-                          },
-                          {
-                            "type": "text",
-                            "text": " or more is "
-                          },
-                          {
-                            "type": "text",
-                            "marks": [
-                              {
-                                "type": "bold"
-                              }
-                            ],
-                            "text": "undefined behavior"
-                          },
-                          {
-                            "type": "text",
-                            "text": " in C"
-                          }
-                        ]
-                      }
-                    ]
-                  },
+                  }
+                ]
+              },
+              {
+                "type": "image",
+                "attrs": {
+                  "src": "https://public.www.evernote.com/resources/s456/f7c994b3-b628-56b0-2167-f169784f41a8",
+                  "alt": "",
+                  "width": null,
+                  "align": "center"
+                }
+              },
+              {
+                "type": "bulletList",
+                "content": [
                   {
                     "type": "listItem",
                     "content": [
@@ -5542,43 +5499,7 @@
                         "content": [
                           {
                             "type": "text",
-                            "text": "And of all numbers from  left <= right ? queston "
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "attrs": {
-                          "textAlign": null,
-                          "indent": 0
-                        },
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "a & -a , return right most bit all other 0"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "attrs": {
-                          "textAlign": null,
-                          "indent": 0
-                        },
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": " ((to - from) % y + y) % y; why like this  ? In mathematics, the result of "
+                            "text": " "
                           },
                           {
                             "type": "text",
@@ -5587,11 +5508,54 @@
                                 "type": "bold"
                               }
                             ],
-                            "text": "−𝟏𝟎(𝐦𝐨𝐝𝟖) is 𝟔 ,but in c it is -2 "
+                            "text": "((to - from) % y + y) % y; "
                           },
                           {
                             "type": "text",
-                            "text": "."
+                            "text": "why like this? In mathematics, the result of "
+                          },
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "−𝟏𝟎(𝐦𝐨𝐝𝟖) is 𝟔, but in C it is -2"
+                          },
+                          {
+                            "type": "text",
+                            "text": "., used in difference calculation in circulr array "
+                          }
+                        ]
+                      },
+                      {
+                        "type": "callout",
+                        "attrs": {
+                          "variant": "info"
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 1
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "((3-255)%256 +256 )%256 ~=  uint8_t(3-255) .. "
+                              },
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "bold"
+                                  }
+                                ],
+                                "text": "same thing"
+                              }
+                            ]
                           }
                         ]
                       }
@@ -5609,20 +5573,7 @@
                         "content": [
                           {
                             "type": "text",
-                            "text": "   A-B+1 = including A and B "
-                          },
-                          {
-                            "type": "text",
-                            "marks": [
-                              {
-                                "type": "bold"
-                              }
-                            ],
-                            "text": "and"
-                          },
-                          {
-                            "type": "text",
-                            "text": " A-B => only including B"
+                            "text": "   A-B+1 = including A and B; A-B => only including B"
                           }
                         ]
                       }
@@ -5638,6 +5589,72 @@
                 }
               },
               {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 2
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "code"
+                      }
+                    ],
+                    "text": "uint32_t"
+                  },
+                  {
+                    "type": "text",
+                    "text": " → only 32 bits; shifting by "
+                  },
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "code"
+                      }
+                    ],
+                    "text": "32"
+                  },
+                  {
+                    "type": "text",
+                    "text": " or more is undefined behavior in C"
+                  }
+                ]
+              },
+              {
+                "type": "image",
+                "attrs": {
+                  "src": "content/media/2026-10/mvwg6sbe-image.png",
+                  "alt": "image",
+                  "width": null,
+                  "align": "center"
+                }
+              },
+              {
+                "type": "image",
+                "attrs": {
+                  "src": "content/media/2026-10/mvwg766o-image.png",
+                  "alt": "image",
+                  "width": null,
+                  "align": "center"
+                }
+              },
+              {
+                "type": "codeBlock",
+                "attrs": {
+                  "language": "c"
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "// guard the count\nuint32_t shl32(uint32_t x, unsigned n) { return n < 32 ? x << n : 0; }\n\n// mask of n low bits, n in 0..32\nuint32_t low_mask(unsigned n) { return n >= 32 ? 0xFFFFFFFFu : (1u << n) - 1; }\n\n// or widen first\nuint32_t low_mask2(unsigned n) { return (uint32_t)((1ull << n) - 1); } // n <= 63"
+                  }
+                ]
+              },
+              {
                 "type": "paragraph",
                 "attrs": {
                   "textAlign": null,
@@ -5645,10 +5662,26 @@
                 }
               },
               {
-                "type": "paragraph",
+                "type": "heading",
                 "attrs": {
                   "textAlign": null,
-                  "indent": 0
+                  "indent": 0,
+                  "level": 2
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "a & -a, returns the rightmost set bit "
+                  }
+                ]
+              },
+              {
+                "type": "image",
+                "attrs": {
+                  "src": "content/media/2026-10/mvwg1w49-image.png",
+                  "alt": "image",
+                  "width": null,
+                  "align": "center"
                 }
               },
               {
@@ -33170,6 +33203,1064 @@
               },
               {
                 "type": "paragraph"
+              }
+            ]
+          },
+          "children": []
+        },
+        {
+          "id": "s-mvwi12bg84usi",
+          "title": "Concepts",
+          "doc": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 3
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Stack Overflow vs heap overflow"
+                  }
+                ]
+              },
+              {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 3
+                }
+              },
+              {
+                "type": "image",
+                "attrs": {
+                  "src": "content/media/2026-10/mvwi44ce-image.png",
+                  "alt": "image",
+                  "width": null,
+                  "align": "center"
+                }
+              },
+              {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 4
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "How would you detect a memory leak in an embedded system with no OS and limited RAM?"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "attrs": {
+                  "variant": "info"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": "left",
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "bold"
+                          }
+                        ],
+                        "text": "How I’d answer in an interview:"
+                      },
+                      {
+                        "type": "text",
+                        "text": " “I’d first instrument heap usage with a high-water mark and alloc/free counters, run a steady-state workload, and look for monotonic growth. To find the source, I’d wrap "
+                      },
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "code"
+                          }
+                        ],
+                        "text": "malloc"
+                      },
+                      {
+                        "type": "text",
+                        "text": "/"
+                      },
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "code"
+                          }
+                        ],
+                        "text": "free"
+                      },
+                      {
+                        "type": "text",
+                        "text": " with a small tracking table keyed by caller address. Long term, I’d remove the heap in favor of static pools so leaks can’t happen.”"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 3
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "memory-mapped I/O vs port-mapped I/O"
+                  }
+                ]
+              },
+              {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 4
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Definitions"
+                  }
+                ]
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "MMIO:"
+                          },
+                          {
+                            "type": "text",
+                            "text": " peripheral registers (GPIO, UART, ADC...) sit at fixed addresses in the "
+                          },
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "italic"
+                              }
+                            ],
+                            "text": "same"
+                          },
+                          {
+                            "type": "text",
+                            "text": " address space as RAM and Flash. You access them with normal load/store instructions, so ordinary C pointers work."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "PMIO:"
+                          },
+                          {
+                            "type": "text",
+                            "text": " devices live in a "
+                          },
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "italic"
+                              }
+                            ],
+                            "text": "separate"
+                          },
+                          {
+                            "type": "text",
+                            "text": " I/O address space. You need special instructions ("
+                          },
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "code"
+                              }
+                            ],
+                            "text": "IN"
+                          },
+                          {
+                            "type": "text",
+                            "text": "/"
+                          },
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "code"
+                              }
+                            ],
+                            "text": "OUT"
+                          },
+                          {
+                            "type": "text",
+                            "text": " on x86), so plain C pointers can't reach them."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 2
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Comparison"
+                  }
+                ]
+              },
+              {
+                "type": "table",
+                "content": [
+                  {
+                    "type": "tableRow",
+                    "content": [
+                      {
+                        "type": "tableHeader",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableHeader",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "MMIO"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableHeader",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "PMIO"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "tableRow",
+                    "content": [
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Address space"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Shared with memory"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Separate I/O space"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "tableRow",
+                    "content": [
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Access"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Regular pointers in C"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Special instructions ("
+                              },
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "IN"
+                              },
+                              {
+                                "type": "text",
+                                "text": "/"
+                              },
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "OUT"
+                              },
+                              {
+                                "type": "text",
+                                "text": ")"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "tableRow",
+                    "content": [
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Portability"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "ARM, RISC-V, AVR, most MCUs"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Mainly x86"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "tableRow",
+                    "content": [
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Embedded use"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Standard"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Almost never"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 2
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Pros and cons"
+                  }
+                ]
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "MMIO pros:"
+                          },
+                          {
+                            "type": "text",
+                            "text": " Plain C syntax, no special instructions, one unified address space."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "PMIO cons:"
+                          },
+                          {
+                            "type": "text",
+                            "text": " architecture-specific, needs assembly or intrinsics, a separate address space to manage."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 2
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Corrections and things to add (interview-worthy)"
+                  }
+                ]
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "code"
+                              }
+                            ],
+                            "text": "|="
+                          },
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": " on "
+                          },
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "code"
+                              }
+                            ],
+                            "text": "ODR"
+                          },
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": " is read-modify-write."
+                          },
+                          {
+                            "type": "text",
+                            "text": " If an interrupt also changes the register between the read and write, you can lose bits. On STM32 prefer "
+                          },
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "code"
+                              }
+                            ],
+                            "text": "GPIOA->BSRR = (1u << 5)"
+                          },
+                          {
+                            "type": "text",
+                            "text": " for atomic set, and "
+                          },
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "code"
+                              }
+                            ],
+                            "text": "(1u << (5 + 16))"
+                          },
+                          {
+                            "type": "text",
+                            "text": " for clear."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "\"PMIO is slower\" is not a reliable claim."
+                          },
+                          {
+                            "type": "text",
+                            "text": " The real drawbacks are portability and needing special instructions."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "x86 also uses MMIO"
+                          },
+                          {
+                            "type": "text",
+                            "text": ", for example PCIe BARs and the APIC. PMIO is just a legacy extra there."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "Watch for:"
+                          },
+                          {
+                            "type": "text",
+                            "text": " access width and alignment (a 32-bit register needs a 32-bit access), ordering (use "
+                          },
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "code"
+                              }
+                            ],
+                            "text": "DSB"
+                          },
+                          {
+                            "type": "text",
+                            "text": "/"
+                          },
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "code"
+                              }
+                            ],
+                            "text": "DMB"
+                          },
+                          {
+                            "type": "text",
+                            "text": " barriers where needed), and cache attributes (peripheral regions must be device/non-cacheable memory)."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "The base address depends on the chip."
+                          },
+                          {
+                            "type": "text",
+                            "text": " "
+                          },
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "code"
+                              }
+                            ],
+                            "text": "0x40020000"
+                          },
+                          {
+                            "type": "text",
+                            "text": " is GPIOA on STM32F4, but it differs on other families, so always check the reference manual."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 2
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "One-line answer for interviews"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "\"MMIO maps peripheral registers into the normal address space so I access them with "
+                  },
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "code"
+                      }
+                    ],
+                    "text": "volatile"
+                  },
+                  {
+                    "type": "text",
+                    "text": " pointers and ordinary loads and stores. PMIO uses a separate I/O space with dedicated instructions like "
+                  },
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "code"
+                      }
+                    ],
+                    "text": "IN"
+                  },
+                  {
+                    "type": "text",
+                    "text": "/"
+                  },
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "code"
+                      }
+                    ],
+                    "text": "OUT"
+                  },
+                  {
+                    "type": "text",
+                    "text": ". Embedded ARM and RISC-V use MMIO.\""
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
               }
             ]
           },
