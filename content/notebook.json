@@ -6780,13 +6780,6 @@
                     "text": ", so the same struct can lay out differently on another compiler. They also hide read-modify-write accesses. For hardware registers prefer masks and shifts."
                   }
                 ]
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                }
               }
             ]
           },
@@ -12442,6 +12435,40 @@
                   },
                   {
                     "type": "paragraph"
+                  }
+                ]
+              },
+              "children": []
+            },
+            {
+              "id": "s-mvwkvkllqtox9",
+              "title": "More Question Practice",
+              "doc": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "link",
+                            "attrs": {
+                              "href": "https://embeddedinterviewlab.com/coding/sequence-number-wraparound/",
+                              "target": "_blank",
+                              "rel": "noopener noreferrer",
+                              "class": null
+                            }
+                          }
+                        ],
+                        "text": "https://embeddedinterviewlab.com/coding/sequence-number-wraparound/"
+                      }
+                    ]
                   }
                 ]
               },
