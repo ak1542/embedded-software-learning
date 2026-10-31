@@ -238,6 +238,17 @@ async function insertFiles(files, pos) {
         toast('Animation added. Click “Done editing” to play it.', 'success', 5000);
         continue;
       }
+      if (file.type === 'application/pdf' || /\.pdf$/i.test(file.name)) {
+        if (store.isConnected()) toast(`Uploading ${file.name}…`, 'info', 10000);
+        const src = await store.uploadMedia(file);
+        if (editor.isDestroyed) return;
+        const node = { type: 'pdf', attrs: { src, title: file.name.replace(/\.pdf$/i, '') || 'PDF document' } };
+        const chain = editor.chain().focus();
+        (at == null ? chain.insertContent(node) : chain.insertContentAt(at, node)).run();
+        at = null;
+        toast('PDF added. Use Preview, Open or Download on the card.', 'success', 4000);
+        continue;
+      }
       const isVideo = file.type.startsWith('video/');
       if (store.isConnected()) toast(`Uploading ${file.name}…`, 'info', 10000);
       const src = await store.uploadMedia(file);

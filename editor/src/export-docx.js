@@ -145,6 +145,8 @@ async function block(node, state, o) {
       return [linkLine('Video', node.attrs?.src, state)];
     case 'htmlAnimation':
       return [linkLine('Interactive animation (play it in the online notes)', node.attrs?.src, state, true)];
+    case 'pdf':
+      return [linkLine(`PDF: ${node.attrs?.title || 'document'}`, node.attrs?.src, state)];
     case 'embed':
       return [linkLine('Embedded page', node.attrs?.url, state, true)];
     case 'diagram':

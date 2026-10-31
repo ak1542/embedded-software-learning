@@ -80,6 +80,7 @@ export function createToolbar({ languages, defaultDiagram, insertFiles, addAnima
     });
   const imageInput = fileInput('image/*');
   const videoInput = fileInput('video/*', false);
+  const pdfInput = fileInput('application/pdf,.pdf', false);
 
   const currentStyle = (e) => {
     for (let level = 1; level <= 4; level++) if (e.isActive('heading', { level })) return `h${level}`;
@@ -169,6 +170,7 @@ export function createToolbar({ languages, defaultDiagram, insertFiles, addAnima
       button({ label: 'Link', title: 'Insert or edit link (Ctrl+K)', className: 'text', active: (e) => e.isActive('link'), action: setLink }),
       button({ label: 'Image', title: 'Insert picture or GIF (you can also paste or drop one)', className: 'text', action: () => imageInput.click() }),
       button({ label: 'Video', title: 'Insert video', className: 'text', action: () => videoInput.click() }),
+      button({ label: 'PDF', title: 'Add a PDF file (you can also drop one on the page)', className: 'text', action: () => pdfInput.click() }),
       button({
         label: 'Table',
         title: 'Insert table',
@@ -211,7 +213,8 @@ export function createToolbar({ languages, defaultDiagram, insertFiles, addAnima
     codeGroup,
     tableGroup,
     imageInput,
-    videoInput
+    videoInput,
+    pdfInput
   );
   codeGroup.hidden = true;
   tableGroup.hidden = true;

@@ -25,6 +25,7 @@ import verilog from 'highlight.js/lib/languages/verilog';
 import cmake from 'highlight.js/lib/languages/cmake';
 import { Image, Video } from './media.js';
 import { HtmlAnimation } from './anim.js';
+import { Pdf } from './pdf.js';
 import { numberHeadings } from './numbering.js';
 import { Callout, CALLOUT_VARIANTS, Embed, Diagram, DEFAULT_DIAGRAM, embedUrl } from './nodes.js';
 
@@ -147,7 +148,8 @@ const HeadingNumbers = Extension.create({
 export const EMPTY_DOC = { type: 'doc', content: [{ type: 'paragraph' }] };
 
 const isHtmlFile = (f) => f.type === 'text/html' || /\.html?$/i.test(f.name);
-const isMedia = (f) => f.type.startsWith('image/') || f.type.startsWith('video/') || isHtmlFile(f);
+const isPdfFile = (f) => f.type === 'application/pdf' || /\.pdf$/i.test(f.name);
+const isMedia = (f) => f.type.startsWith('image/') || f.type.startsWith('video/') || isHtmlFile(f) || isPdfFile(f);
 const looksLikeWebPage = (text) => /^\s*(<!doctype html|<html[\s>])/i.test(text);
 
 // hooks: { resolveMedia(src), renderDiagram(el, code), insertFiles(files, pos),
@@ -178,6 +180,7 @@ export function createEditor(element, { content, editable, hooks, onUpdate, numb
       Callout,
       Embed,
       HtmlAnimation.configure({ resolveMedia: hooks.resolveMedia }),
+      Pdf.configure({ resolveMedia: hooks.resolveMedia }),
       Diagram.configure({ renderDiagram: hooks.renderDiagram }),
       CodeTab,
       TrailingParagraph,

@@ -245,6 +245,21 @@ body.editing .doc .ProseMirror:focus-within { border-color: var(--accent); box-s
 .media-btn.on { background: var(--accent); color: var(--accent-fg); }
 .media-btn.danger:hover { background: #c62828; }
 
+/* PDF files */
+.pdf-node { margin: 1em 0; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-soft); padding: 10px 12px; }
+.pdf-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.pdf-icon { font-size: 1.4rem; }
+.pdf-title { font-weight: 600; flex: 1 1 140px; min-width: 0; overflow-wrap: anywhere; }
+.pdf-badge { font-size: .7rem; border: 1px solid var(--border); border-radius: 999px; padding: 0 7px; color: var(--fg-muted); }
+.pdf-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+.pdf-btn { font: inherit; font-size: .85rem; padding: 3px 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--fg); cursor: pointer; text-decoration: none; }
+.pdf-btn:hover { background: var(--bg-sunk); }
+.pdf-btn.danger:hover { background: #c62828; color: #fff; }
+.pdf-frame { display: block; width: 100%; margin-top: 10px; border: 1px solid var(--border); border-radius: 8px; background: #fff; }
+.pdf-hint { font-size: .8rem; color: var(--fg-muted); margin-top: 4px; }
+.pdf-node.selected { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media print { .pdf-actions, .pdf-frame, .pdf-hint { display: none !important; } }
+
 /* embeds and diagrams */
 .embed-node { margin: 1em 0; }
 .embed-node iframe { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: var(--radius); }

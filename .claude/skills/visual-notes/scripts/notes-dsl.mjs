@@ -46,6 +46,7 @@ export const CALLOUT = (variant, ...paras) => ({ type: 'callout', attrs: { varia
 export const ANIM = (file, height, title) => ({ type: 'htmlAnimation', attrs: { src: `content/media/animations/${file}.html`, height, width: 100, title, fit: true } });
 export const DIAGRAM = (mermaid) => ({ type: 'diagram', attrs: { code: mermaid } });
 export const IMAGE = (src, alt = '', width = null) => ({ type: 'image', attrs: { src, alt, width, align: 'center' } });
+export const PDF = (src, title = 'PDF document', height = 600) => ({ type: 'pdf', attrs: { src, title, height } });
 export const HR = () => ({ type: 'horizontalRule' });
 export const doc = (...nodes) => ({ type: 'doc', content: [...nodes, P()] });
 

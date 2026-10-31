@@ -20,6 +20,7 @@ The site stores everything in `content/notebook.json`:
 | diagram | `DIAGRAM("flowchart LR\n A-->B")` | Mermaid text (flowchart, stateDiagram, sequenceDiagram) |
 | animation | `ANIM("name", height, "Title")` (file name without .html) | file lives in `content/media/animations/`; height is only the starting height, the frame auto-fits |
 | image | `IMAGE("content/media/x.png","alt",50)` | width in %; only for files that exist |
+| pdf | `PDF("content/media/x.pdf","Title",600)` | a PDF file that exists in the repository: card with Preview / Open / Download |
 | rule | `HR()` | |
 
 ## Ids and structure
