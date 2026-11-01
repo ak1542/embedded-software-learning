@@ -38041,7 +38041,7 @@
                 "content": [
                   {
                     "type": "text",
-                    "text": "We can save task related things in TCB, permission, opened file , page table etc"
+                    "text": "We can save task-related things in TCB: permissions, opened file, page table, etc"
                   }
                 ]
               },
@@ -38067,7 +38067,7 @@
                 "content": [
                   {
                     "type": "text",
-                    "text": "Process= heap+ code + .data, .bss everything seperate."
+                    "text": "Process= heap+ code + .data, .bss; everything separate."
                   }
                 ]
               },
@@ -38104,7 +38104,7 @@
                         "content": [
                           {
                             "type": "text",
-                            "text": "Thread mode PSP in M4, it has two mode only "
+                            "text": "Thread mode PSP in M4; it has two modes only "
                           }
                         ]
                       }
@@ -38122,7 +38122,7 @@
                         "content": [
                           {
                             "type": "text",
-                            "text": "In R8, we have 7-9 mode , almost each mode has its own stack pointer"
+                            "text": "In R8, we have 7-9 mode; almost every mode has its own stack pointer"
                           }
                         ]
                       }
@@ -38166,7 +38166,7 @@
                   },
                   {
                     "type": "text",
-                    "text": " is an independent flow of execution with its own stack and saved registers. On bare metal there is no OS to create it: we build the data structures ourselves. This page covers the task control block, the task stack taken from the "
+                    "text": " is an independent flow of execution with its own stack and saved registers. On bare metal, there is no OS to create it: we build the data structures ourselves. This page covers the task control block, the task stack taken from the "
                   },
                   {
                     "type": "text",
@@ -38226,7 +38226,7 @@
                 "content": [
                   {
                     "type": "text",
-                    "text": "SW decide TCB, based on requirement it can have different fields "
+                    "text": "SW decides the TCB; based on requirements, it can have different fields "
                   }
                 ]
               },
