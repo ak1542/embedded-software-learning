@@ -37905,6 +37905,27 @@
             "type": "doc",
             "content": [
               {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 2
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Register details for M4 and R8"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
                 "type": "htmlAnimation",
                 "attrs": {
                   "src": "content/media/2026-10/mvv24d5e-animation.html",
