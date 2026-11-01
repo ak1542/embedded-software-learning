@@ -37925,11 +37925,81 @@
                 }
               },
               {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                }
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "These register are saved when switching between mode. "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "in R8 nothing is saved"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "in m4 , 8 registers are saved '"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "R8, saved its banked registers when task context swiching happen "
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
               },
               {
                 "type": "htmlAnimation",
