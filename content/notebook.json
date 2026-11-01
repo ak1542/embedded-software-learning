@@ -37908,7 +37908,7 @@
                 "type": "htmlAnimation",
                 "attrs": {
                   "src": "content/media/2026-10/mvv24d5e-animation.html",
-                  "height": 420,
+                  "height": 2189,
                   "fit": true,
                   "width": 100,
                   "title": "Animation"
@@ -38006,7 +38006,7 @@
                 "attrs": {
                   "src": "content/media/2026-10/mvul3mua-animation.html",
                   "height": 1600,
-                  "fit": false,
+                  "fit": true,
                   "width": 100,
                   "title": "Animation"
                 }
