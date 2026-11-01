@@ -14,7 +14,7 @@ export const HtmlAnimation = Node.create({
   draggable: true,
 
   addOptions() {
-    return { resolveMedia: (src) => src };
+    return { resolveMedia: (src) => src, editSource: null };
   },
 
   addAttributes() {
@@ -24,6 +24,7 @@ export const HtmlAnimation = Node.create({
       fit: { default: true }, // grow to the animation's own height; false = use `height`
       width: { default: 100, parseHTML: (el) => Number(el.getAttribute('data-width')) || 100 },
       title: { default: 'Animation' },
+      rev: { default: 0, rendered: false }, // bumped when the file is edited so the frame reloads
     };
   },
 
@@ -83,6 +84,17 @@ export const HtmlAnimation = Node.create({
       tools.append(
         ...widthButtons,
         fitButton,
+        ...(options.editSource
+          ? [
+              button('✎ Code', 'Edit the HTML code of this animation', () =>
+                options.editSource({
+                  src: current.attrs.src,
+                  title: current.attrs.title,
+                  save: (newSrc) => patch({ src: newSrc, rev: (current.attrs.rev || 0) + 1 }),
+                })
+              ),
+            ]
+          : []),
         button('↻', 'Restart the animation', () => {
           loadedUrl = null;
           apply();
@@ -108,19 +120,21 @@ export const HtmlAnimation = Node.create({
 
       // Show the page through srcdoc so the height script can be added; fall back to the plain
       // address if the file cannot be read.
+      const keyOf = () => `${options.resolveMedia(current.attrs.src)}#${current.attrs.rev || 0}`;
       const load = async () => {
         const url = options.resolveMedia(current.attrs.src);
-        loadedUrl = url;
+        const key = keyOf();
+        loadedUrl = key;
         measured = 0;
         try {
           const res = await fetch(url, { cache: 'reload' });
           if (!res.ok) throw new Error(`HTTP ${res.status}`);
           const html = await res.text();
-          if (loadedUrl !== url) return;
+          if (loadedUrl !== key) return;
           iframe.removeAttribute('src');
           iframe.srcdoc = withFitScript(html);
         } catch {
-          if (loadedUrl !== url) return;
+          if (loadedUrl !== key) return;
           iframe.removeAttribute('srcdoc');
           iframe.setAttribute('src', url);
         }
@@ -144,7 +158,7 @@ export const HtmlAnimation = Node.create({
 
       const apply = () => {
         const a = current.attrs;
-        if (loadedUrl !== options.resolveMedia(a.src)) load();
+        if (loadedUrl !== keyOf()) load();
         iframe.title = a.title || 'Animation';
         frame.style.width = `${a.width}%`;
         applyHeight();

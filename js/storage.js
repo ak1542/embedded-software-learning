@@ -171,6 +171,39 @@ export async function uploadMedia(file) {
   return path;
 }
 
+// Read a stored text file (an animation's HTML). Connected: straight from the repository, so it is never stale.
+export async function readText(src) {
+  if (src.startsWith('data:') || /^https?:/.test(src)) return (await fetch(src)).text();
+  if (isConnected() && src.startsWith('content/')) {
+    try {
+      return await (await gh(`contents/${src}?ref=${branchRef()}`, { headers: { Accept: 'application/vnd.github.raw+json' } })).text();
+    } catch {
+      /* fall through to the published copy */
+    }
+  }
+  const res = await fetch(resolveMedia(src), { cache: 'reload' });
+  if (!res.ok) throw new Error(`Could not read ${src} (${res.status})`);
+  return res.text();
+}
+
+// Replace the contents of a stored text file. Returns the path or address the page should use afterwards.
+export async function writeText(src, text, mimeType = 'text/html') {
+  const file = new File([text], src.split('/').pop() || 'animation.html', { type: mimeType });
+  if (!isConnected() || !src.startsWith('content/media/')) return uploadMedia(file); // new data address / new file
+  let sha;
+  try {
+    sha = (await (await gh(`contents/${src}?ref=${branchRef()}`)).json()).sha;
+  } catch (err) {
+    if (err.status !== 404) throw err;
+  }
+  await gh(`contents/${src}`, {
+    method: 'PUT',
+    body: JSON.stringify({ message: `Edit ${src.split('/').pop()}`, content: bytesToBase64(new TextEncoder().encode(text)), branch: getConfig().branch || 'main', ...(sha ? { sha } : {}) }),
+  });
+  pendingMedia.set(src, URL.createObjectURL(file));
+  return src;
+}
+
 export function resolveMedia(src) {
   return (src && pendingMedia.get(src)) || src || '';
 }

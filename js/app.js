@@ -155,6 +155,7 @@ function mountEditor(node, host) {
       resolveMedia: store.resolveMedia,
       renderDiagram,
       insertFiles,
+      editAnimation: openAnimationEditor,
       addAnimation: (html, pos) => addAnimationFromSource(html, pos).catch((err) => toast(err.message, 'error', 6000)),
       confirmAnimation: () => confirm('This looks like a web page. Add it as an animation?\n\nOK = add it as an animation\nCancel = paste it as plain text'),
     },
@@ -295,6 +296,50 @@ async function addAnimationFromSource(source, pos = null) {
   const chain = editor.chain().focus();
   (pos == null ? chain.insertContent(node) : chain.insertContentAt(pos, node)).run();
   return true;
+}
+
+// Edit the HTML file of an animation that is already on the page.
+let animEdit = null;
+async function openAnimationEditor(info) {
+  animEdit = info;
+  const area = $('#anim-edit-code');
+  $('#anim-edit-title').textContent = `Edit animation code: ${info.title || 'Animation'}`;
+  $('#anim-edit-status').textContent = 'Loading…';
+  $('#anim-edit-preview').hidden = true;
+  $('#anim-edit-save').disabled = true;
+  area.value = '';
+  $('#anim-edit-dialog').showModal();
+  try {
+    area.value = await store.readText(info.src);
+    $('#anim-edit-status').textContent = '';
+    $('#anim-edit-save').disabled = false;
+  } catch (err) {
+    $('#anim-edit-status').textContent = `Could not load the file: ${err.message}`;
+  }
+}
+
+async function saveAnimationEdit() {
+  const code = $('#anim-edit-code').value;
+  const status = $('#anim-edit-status');
+  if (!/<[a-z!]/i.test(code)) return (status.textContent = 'That does not look like HTML code.');
+  $('#anim-edit-save').disabled = true;
+  status.textContent = 'Saving…';
+  try {
+    const newSrc = await store.writeText(animEdit.src, prepareAnimationHtml(code));
+    animEdit.save(newSrc);
+    $('#anim-edit-dialog').close();
+    toast('Animation updated.', 'success', 2500);
+  } catch (err) {
+    status.textContent = err.message;
+  } finally {
+    $('#anim-edit-save').disabled = false;
+  }
+}
+
+function testAnimationEdit() {
+  const frame = $('#anim-edit-preview');
+  frame.hidden = false;
+  frame.srcdoc = prepareAnimationHtml($('#anim-edit-code').value);
 }
 
 async function insertAnimation() {
@@ -802,6 +847,9 @@ function wireChrome() {
   $('#export-go').addEventListener('click', guarded(runExport));
   $('#anim-insert').addEventListener('click', guarded(insertAnimation));
   $('#close-anim').addEventListener('click', () => $('#anim-dialog').close());
+  $('#close-anim-edit').addEventListener('click', () => $('#anim-edit-dialog').close());
+  $('#anim-edit-save').addEventListener('click', guarded(saveAnimationEdit));
+  $('#anim-edit-test').addEventListener('click', testAnimationEdit);
   $('#close-export').addEventListener('click', () => $('#export-dialog').close());
   $('#nav-toggle').addEventListener('click', toggleSidebar);
   syncSidebarState();

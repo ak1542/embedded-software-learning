@@ -179,7 +179,7 @@ export function createEditor(element, { content, editable, hooks, onUpdate, numb
       Video.configure({ resolveMedia: hooks.resolveMedia }),
       Callout,
       Embed,
-      HtmlAnimation.configure({ resolveMedia: hooks.resolveMedia }),
+      HtmlAnimation.configure({ resolveMedia: hooks.resolveMedia, editSource: hooks.editAnimation || null }),
       Pdf.configure({ resolveMedia: hooks.resolveMedia }),
       Diagram.configure({ renderDiagram: hooks.renderDiagram }),
       CodeTab,

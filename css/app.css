@@ -349,13 +349,13 @@ body.nav-collapsed main { max-width: calc(var(--content) + 120px); }
 body.editing .ProseMirror h1, body.editing .ProseMirror h2, body.editing .ProseMirror h3, body.editing .ProseMirror h4 { scroll-margin-top: calc(var(--topbar) + 110px); }
 
 /* settings dialog */
-dialog#settings, dialog#export-dialog, dialog#anim-dialog {
+dialog#settings, dialog#export-dialog, dialog#anim-dialog, dialog#anim-edit-dialog {
   width: min(640px, calc(100vw - 32px)); max-height: calc(100vh - 32px);
   padding: 0; border: 1px solid var(--border); border-radius: 14px;
   background: var(--bg); color: var(--fg); box-shadow: var(--shadow);
 }
-dialog#settings::backdrop, dialog#export-dialog::backdrop, dialog#anim-dialog::backdrop { background: rgba(0, 0, 0, 0.45); }
-dialog#settings form, dialog#export-dialog form, dialog#anim-dialog form { padding: 0 20px 20px; }
+dialog#settings::backdrop, dialog#export-dialog::backdrop, dialog#anim-dialog::backdrop, dialog#anim-edit-dialog::backdrop { background: rgba(0, 0, 0, 0.45); }
+dialog#settings form, dialog#export-dialog form, dialog#anim-dialog form, dialog#anim-edit-dialog form { padding: 0 20px 20px; }
 .dialog-head { display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; background: var(--bg); padding: 12px 0; z-index: 1; }
 .dialog-head h2 { margin: 0; font-size: 1.2rem; }
 fieldset { border: 1px solid var(--border); border-radius: var(--radius); margin: 0 0 14px; padding: 12px 14px; }
@@ -478,3 +478,7 @@ dialog.viewer::backdrop { background: rgba(0, 0, 0, 0.8); }
   #print-root .html-anim iframe { display: block; width: 100%; border: 1px solid #c9ced6; border-radius: 4pt; }
   #print-root .media-expand, #print-root .html-anim-handle, #print-root .media-tools { display: none !important; }
 }
+
+#anim-edit-dialog { width: min(900px, 96vw); }
+#anim-edit-dialog textarea { width: 100%; min-height: 40vh; }
+#anim-edit-preview { width: 100%; height: 360px; border: 1px solid var(--border); border-radius: var(--radius); background: #fff; margin: 8px 0; }
