@@ -4,8 +4,9 @@
   "type": "module",
   "scripts": {
     "test": "node --test tests/*.test.mjs",
+    "stamp": "node scripts/stamp.mjs",
     "start": "python3 -m http.server 8000",
-    "build:editor": "esbuild editor/src/index.js --bundle --format=esm --minify --target=es2020 --legal-comments=none --outfile=vendor/editor.bundle.js && esbuild editor/src/export-docx.js --bundle --format=esm --minify --target=es2020 --legal-comments=none --outfile=vendor/export-docx.bundle.js"
+    "build:editor": "esbuild editor/src/index.js --bundle --format=esm --minify --target=es2020 --legal-comments=none --outfile=vendor/editor.bundle.js && esbuild editor/src/export-docx.js --bundle --format=esm --minify --target=es2020 --legal-comments=none --outfile=vendor/export-docx.bundle.js && node scripts/stamp.mjs"
   },
   "devDependencies": {
     "@tiptap/core": "2.27.3",

@@ -63,6 +63,10 @@ Notes are stored as **data, not HTML**, in `content/notebook.json`: each section
 - **Format changes are migrations.** The notebook carries a `schemaVersion`. If the stored shape ever has to change, bump `SCHEMA_VERSION` in `js/schema.js` and add a migration; older notebooks are upgraded when they load. (Version 1 notes, made of typed blocks, are converted to documents this way.)
 - **Nothing unknown is thrown away.** Unknown fields are kept when saving, and a notebook written by a newer version of the site is refused instead of being damaged.
 
+## Always loading the latest code
+
+Browsers (and GitHub Pages) may keep a copy of a script for several minutes. To avoid showing old code after an update, `version.json` holds a content hash of every script, style and editor bundle. Both pages fetch it fresh on every visit and load each file as `file?v=<hash>`, so a changed file is downloaded again while unchanged ones stay cached. After changing any code, run `npm run stamp` (`npm run build:editor` does it for you); `npm test` fails if `version.json` is out of date. Notes, animation files and pictures you replace are always read fresh from the repository when you are connected.
+
 ## Changing the editor
 
 The editor is [Tiptap](https://tiptap.dev), bundled into `vendor/editor.bundle.js` from `editor/src/` (and the Word exporter into `vendor/export-docx.bundle.js`). Those bundles are committed, so the site needs no build step to run. After changing anything in `editor/src/` (a new extension, a custom node), rebuild it:

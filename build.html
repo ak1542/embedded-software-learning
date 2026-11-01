@@ -4,8 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Build Explorer · Embedded Software Notes</title>
-  <link rel="stylesheet" href="css/app.css" />
-  <link rel="stylesheet" href="css/build.css" />
+  <link rel="stylesheet" href="css/app.css" data-v="css/app.css" />
+  <link rel="stylesheet" href="css/build.css" data-v="css/build.css" />
 </head>
 <body class="build-page">
   <header class="topbar">
@@ -28,6 +28,32 @@
       <div id="view"></div>
     </section>
   </div>
-  <script type="module" src="js/build/app.js"></script>
+    <script>
+      /* Load the site's code by content hash (version.json is fetched fresh each visit), so a changed file is never served from a stale browser cache. */
+      (function () {
+        var entry = 'js/build/app.js';
+        function go(v) {
+          try {
+            if (v && v.files) {
+              var map = { imports: {} };
+              Object.keys(v.files).forEach(function (p) {
+                var u = new URL(p, document.baseURI).href;
+                map.imports[u] = u + '?v=' + v.files[p];
+              });
+              var s = document.createElement('script');
+              s.type = 'importmap';
+              s.textContent = JSON.stringify(map);
+              document.head.appendChild(s);
+              document.querySelectorAll('link[data-v]').forEach(function (l) {
+                var p = l.getAttribute('data-v');
+                if (v.files[p]) l.href = p + '?v=' + v.files[p];
+              });
+            }
+          } catch (e) {}
+          import(new URL(entry, document.baseURI).href);
+        }
+        fetch('version.json?_=' + Date.now()).then(function (r) { return r.json(); }).then(go, function () { go(null); });
+      })();
+    </script>
 </body>
 </html>

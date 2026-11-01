@@ -1,0 +1,26 @@
+{
+ "files": {
+  "css/app.css": "1efa5270a7",
+  "css/build.css": "27ec2e387e",
+  "js/app.js": "c298755754",
+  "js/build/app.js": "f06927616d",
+  "js/build/compile.js": "90c4bf7b48",
+  "js/build/hexview.js": "9904f9cf2a",
+  "js/build/ldscript.js": "93437b99ee",
+  "js/build/lex.js": "5639daa265",
+  "js/build/link.js": "a040d6726f",
+  "js/build/pipeline.js": "818ab83502",
+  "js/build/preprocess.js": "4f72ab83d1",
+  "js/build/samples.js": "c6b436b67a",
+  "js/diagram.js": "deb2a40f02",
+  "js/dom.js": "62c57fd78c",
+  "js/export.js": "0cf4ec0a77",
+  "js/model.js": "70a54502de",
+  "js/schema.js": "70a9eeb6c6",
+  "js/storage.js": "ba6b47834f",
+  "js/toolbar.js": "7985458696",
+  "vendor/editor.bundle.js": "d811a4dabc",
+  "vendor/export-docx.bundle.js": "6dac34b4cb",
+  "vendor/highlight-github-dark.min.css": "a1ed034f5a"
+ }
+}
