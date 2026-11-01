@@ -37960,7 +37960,7 @@
                         "content": [
                           {
                             "type": "text",
-                            "text": "These register are saved when switching between mode. "
+                            "text": "These registers are saved when switching between modes. "
                           }
                         ]
                       }
@@ -37978,7 +37978,7 @@
                         "content": [
                           {
                             "type": "text",
-                            "text": "in R8 nothing is saved"
+                            "text": "In R8, nothing is saved"
                           }
                         ]
                       }
@@ -37996,7 +37996,7 @@
                         "content": [
                           {
                             "type": "text",
-                            "text": "in m4 , 8 registers are saved '"
+                            "text": "In M4, 8 registers are saved '"
                           }
                         ]
                       }
@@ -38014,7 +38014,7 @@
                         "content": [
                           {
                             "type": "text",
-                            "text": "R8, saved its banked registers when task context swiching happen "
+                            "text": "R8, saves its banked registers when task context switching happens "
                           }
                         ]
                       }
@@ -38033,23 +38033,15 @@
                 }
               },
               {
-                "type": "callout",
+                "type": "paragraph",
                 "attrs": {
-                  "variant": "tip"
+                  "textAlign": null,
+                  "indent": 0
                 },
                 "content": [
                   {
-                    "type": "paragraph",
-                    "attrs": {
-                      "textAlign": null,
-                      "indent": 0
-                    },
-                    "content": [
-                      {
-                        "type": "text",
-                        "text": "We can save task related things in TCB, permission, opened file , page table etc"
-                      }
-                    ]
+                    "type": "text",
+                    "text": "We can save task related things in TCB, permission, opened file , page table etc"
                   }
                 ]
               },
