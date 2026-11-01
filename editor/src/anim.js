@@ -86,7 +86,7 @@ export const HtmlAnimation = Node.create({
         fitButton,
         ...(options.editSource
           ? [
-              button('✎ Code', 'Edit the HTML code of this animation', () =>
+              button('✎ Edit', 'Edit this animation (texts, content or HTML code)', () =>
                 options.editSource({
                   src: current.attrs.src,
                   title: current.attrs.title,

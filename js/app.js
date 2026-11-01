@@ -2,6 +2,7 @@ import { h, fill, debounce, toast } from './dom.js';
 import { migrate } from './schema.js';
 import * as model from './model.js';
 import * as store from './storage.js';
+import { buildVisualEditor } from './anim-edit.js';
 import { renderDiagram } from './diagram.js';
 import { createToolbar } from './toolbar.js';
 
@@ -298,21 +299,40 @@ async function addAnimationFromSource(source, pos = null) {
   return true;
 }
 
-// Edit the HTML file of an animation that is already on the page.
+// Edit an animation that is already on the page: visually (texts and content) or as HTML code.
 let animEdit = null;
+const showEditTab = (tab) => {
+  $('#ae-visual').hidden = tab !== 'visual';
+  $('#ae-code-wrap').hidden = tab !== 'code';
+  $('#ae-tab-visual').classList.toggle('on', tab === 'visual');
+  $('#ae-tab-code').classList.toggle('on', tab === 'code');
+};
+const refreshEditPreview = debounce(() => {
+  $('#anim-edit-preview').srcdoc = prepareAnimationHtml($('#anim-edit-code').value);
+}, 400);
+function renderVisualEdit() {
+  const area = $('#anim-edit-code');
+  buildVisualEditor($('#ae-visual'), () => area.value, (next) => {
+    area.value = next;
+    refreshEditPreview();
+  });
+}
 async function openAnimationEditor(info) {
   animEdit = info;
   const area = $('#anim-edit-code');
-  $('#anim-edit-title').textContent = `Edit animation code: ${info.title || 'Animation'}`;
+  $('#anim-edit-title').textContent = `Edit animation: ${info.title || 'Animation'}`;
   $('#anim-edit-status').textContent = 'Loading…';
-  $('#anim-edit-preview').hidden = true;
   $('#anim-edit-save').disabled = true;
+  $('#ae-visual').replaceChildren();
   area.value = '';
+  showEditTab('visual');
   $('#anim-edit-dialog').showModal();
   try {
     area.value = await store.readText(info.src);
     $('#anim-edit-status').textContent = '';
     $('#anim-edit-save').disabled = false;
+    renderVisualEdit();
+    $('#anim-edit-preview').srcdoc = prepareAnimationHtml(area.value);
   } catch (err) {
     $('#anim-edit-status').textContent = `Could not load the file: ${err.message}`;
   }
@@ -337,9 +357,7 @@ async function saveAnimationEdit() {
 }
 
 function testAnimationEdit() {
-  const frame = $('#anim-edit-preview');
-  frame.hidden = false;
-  frame.srcdoc = prepareAnimationHtml($('#anim-edit-code').value);
+  $('#anim-edit-preview').srcdoc = prepareAnimationHtml($('#anim-edit-code').value);
 }
 
 async function insertAnimation() {
@@ -850,6 +868,9 @@ function wireChrome() {
   $('#close-anim-edit').addEventListener('click', () => $('#anim-edit-dialog').close());
   $('#anim-edit-save').addEventListener('click', guarded(saveAnimationEdit));
   $('#anim-edit-test').addEventListener('click', testAnimationEdit);
+  $('#ae-tab-visual').addEventListener('click', () => { renderVisualEdit(); showEditTab('visual'); });
+  $('#ae-tab-code').addEventListener('click', () => showEditTab('code'));
+  $('#anim-edit-code').addEventListener('input', refreshEditPreview);
   $('#close-export').addEventListener('click', () => $('#export-dialog').close());
   $('#nav-toggle').addEventListener('click', toggleSidebar);
   syncSidebarState();

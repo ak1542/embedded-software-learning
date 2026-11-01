@@ -1,8 +1,9 @@
 {
  "files": {
-  "css/app.css": "1efa5270a7",
+  "css/app.css": "0bdbd211dc",
   "css/build.css": "27ec2e387e",
-  "js/app.js": "c298755754",
+  "js/anim-edit.js": "e8c527dea4",
+  "js/app.js": "f096017084",
   "js/build/app.js": "f06927616d",
   "js/build/compile.js": "90c4bf7b48",
   "js/build/hexview.js": "9904f9cf2a",
@@ -19,7 +20,7 @@
   "js/schema.js": "70a9eeb6c6",
   "js/storage.js": "ba6b47834f",
   "js/toolbar.js": "7985458696",
-  "vendor/editor.bundle.js": "d811a4dabc",
+  "vendor/editor.bundle.js": "fa3161b0be",
   "vendor/export-docx.bundle.js": "6dac34b4cb",
   "vendor/highlight-github-dark.min.css": "a1ed034f5a"
  }

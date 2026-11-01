@@ -83,14 +83,19 @@
     <dialog id="anim-edit-dialog" aria-labelledby="anim-edit-title">
       <form method="dialog" onsubmit="return false">
         <div class="dialog-head">
-          <h2 id="anim-edit-title">Edit animation code</h2>
+          <h2 id="anim-edit-title">Edit animation</h2>
           <button id="close-anim-edit" class="btn icon-btn" type="button" aria-label="Close">✕</button>
         </div>
-        <p class="muted">This is the HTML file of the animation. Change it, press <b>Test</b> to run it here, then <b>Save changes</b>. The animation on the page updates at once.</p>
-        <label class="field"><span>HTML code</span><textarea id="anim-edit-code" class="mono" rows="16" spellcheck="false"></textarea></label>
+        <div class="ae-tabs" role="tablist">
+          <button type="button" class="btn on" id="ae-tab-visual" role="tab">Visual</button>
+          <button type="button" class="btn" id="ae-tab-code" role="tab">HTML code</button>
+        </div>
+        <div id="ae-visual"></div>
+        <label class="field" id="ae-code-wrap" hidden><span>HTML code</span><textarea id="anim-edit-code" class="mono" rows="16" spellcheck="false"></textarea></label>
         <p id="anim-edit-status" class="muted"></p>
-        <iframe id="anim-edit-preview" title="Test run" hidden sandbox="allow-scripts allow-popups allow-forms allow-modals allow-pointer-lock"></iframe>
-        <div class="row"><button id="anim-edit-test" class="btn" type="button">Test</button><button id="anim-edit-save" class="btn primary" type="button">Save changes</button></div>
+        <p class="muted">Preview (your changes run here, not on the page until you save):</p>
+        <iframe id="anim-edit-preview" title="Preview" sandbox="allow-scripts allow-popups allow-forms allow-modals allow-pointer-lock"></iframe>
+        <div class="row"><button id="anim-edit-test" class="btn" type="button">Refresh preview</button><button id="anim-edit-save" class="btn primary" type="button">Save changes</button></div>
       </form>
     </dialog>
 
