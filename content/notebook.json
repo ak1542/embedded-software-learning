@@ -43963,6 +43963,75 @@
             ]
           },
           "children": []
+        },
+        {
+          "id": "s-os-boot",
+          "title": "Boot up",
+          "doc": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Handwritten notes on the boot flow of the Cortex-R8 SoC: Boot ROM, bootloader and main firmware (6 pages). Use "
+                  },
+                  {
+                    "type": "text",
+                    "text": "Preview",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "text": " to read them here, or "
+                  },
+                  {
+                    "type": "text",
+                    "text": "Open",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "text": " / "
+                  },
+                  {
+                    "type": "text",
+                    "text": "Download",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "text": " for a full-size copy."
+                  }
+                ]
+              },
+              {
+                "type": "pdf",
+                "attrs": {
+                  "src": "content/media/2026-11/1a1977d63c9-boot-flow-notes.pdf",
+                  "title": "Boot flow notes: Boot ROM, bootloader, main firmware",
+                  "height": 800
+                }
+              },
+              {
+                "type": "paragraph"
+              }
+            ]
+          },
+          "children": []
         }
       ]
     },
