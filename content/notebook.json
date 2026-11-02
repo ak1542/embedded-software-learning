@@ -19350,6 +19350,19 @@
       ]
     },
     {
+      "id": "s-mvzddke0xsoki",
+      "title": "Coding",
+      "doc": {
+        "type": "doc",
+        "content": [
+          {
+            "type": "paragraph"
+          }
+        ]
+      },
+      "children": []
+    },
+    {
       "id": "s-mvtnzpm24r2o2",
       "title": "Broad Picture of embedded system",
       "doc": {
