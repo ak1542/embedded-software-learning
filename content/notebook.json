@@ -6547,16 +6547,6 @@
                 ]
               },
               {
-                "type": "htmlAnimation",
-                "attrs": {
-                  "src": "content/media/animations/c-w1c.html",
-                  "height": 620,
-                  "fit": true,
-                  "width": 100,
-                  "title": "Why read-modify-write fails on a W1C register"
-                }
-              },
-              {
                 "type": "codeBlock",
                 "attrs": {
                   "language": "c"
@@ -7139,16 +7129,6 @@
                     ]
                   }
                 ]
-              },
-              {
-                "type": "htmlAnimation",
-                "attrs": {
-                  "src": "content/media/animations/c-bittricks.html",
-                  "height": 900,
-                  "fit": true,
-                  "width": 100,
-                  "title": "Bit tricks on 0b01101000"
-                }
               },
               {
                 "type": "heading",
@@ -13066,20 +13046,505 @@
                     "content": [
                       {
                         "type": "text",
+                        "text": "Some basic questions?"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    }
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Union and structure?"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "How to use packed?"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "How to define a macro?"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "What is a static class?"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "some questions"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
                         "marks": [
                           {
                             "type": "link",
                             "attrs": {
-                              "href": "https://embeddedinterviewlab.com/coding/sequence-number-wraparound/",
+                              "href": "https://claude.ai/artifact/BP9N6MfUEyzcMiJSZURrfU#52e44781-9f8f",
                               "target": "_blank",
                               "rel": "noopener noreferrer",
                               "class": null
                             }
                           }
                         ],
-                        "text": "https://embeddedinterviewlab.com/coding/sequence-number-wraparound/"
+                        "text": "https://claude.ai/artifact/BP9N6MfUEyzcMiJSZURrfU#52e44781-9f8f"
                       }
                     ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    }
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    }
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    }
+                  },
+                  {
+                    "type": "bulletList",
+                    "content": [
+                      {
+                        "type": "listItem",
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "link",
+                                    "attrs": {
+                                      "href": "https://embeddedinterviewlab.com/coding/implement-memcpy/",
+                                      "target": "_blank",
+                                      "rel": "noopener noreferrer",
+                                      "class": null
+                                    }
+                                  }
+                                ],
+                                "text": "https://embeddedinterviewlab.com/coding/implement-memcpy/"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": "left",
+                      "indent": 1
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "bold"
+                          }
+                        ],
+                        "text": "Yes, in "
+                      },
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "code"
+                          }
+                        ],
+                        "text": "memcpy"
+                      },
+                      {
+                        "type": "text",
+                        "text": ", the source and destination memory addresses must not overlap. If the memory regions do overlap, the behavior of "
+                      },
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "code"
+                          }
+                        ],
+                        "text": "memcpy"
+                      },
+                      {
+                        "type": "text",
+                        "text": " is "
+                      },
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "bold"
+                          }
+                        ],
+                        "text": "undefined"
+                      },
+                      {
+                        "type": "text",
+                        "text": ", which can lead to data corruption. As you correctly noted, if there is any chance of an overlap, you must use "
+                      },
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "code"
+                          }
+                        ],
+                        "text": "memmove"
+                      },
+                      {
+                        "type": "text",
+                        "text": " instead"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": "left",
+                      "indent": 1
+                    },
+                    "content": [
+                      {
+                        "type": "hardBreak"
+                      },
+                      {
+                        "type": "text",
+                        "text": "=> always"
+                      },
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "textStyle",
+                            "attrs": {
+                              "color": "rgb(23, 76, 211)"
+                            }
+                          },
+                          {
+                            "type": "bold"
+                          }
+                        ],
+                        "text": " use unsigned char"
+                      },
+                      {
+                        "type": "text",
+                        "text": " for byte copy "
+                      }
+                    ]
+                  },
+                  {
+                    "type": "bulletList",
+                    "content": [
+                      {
+                        "type": "listItem",
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "link",
+                                    "attrs": {
+                                      "href": "https://embeddedinterviewlab.com/coding/implement-memmove/",
+                                      "target": "_blank",
+                                      "rel": "noopener noreferrer",
+                                      "class": null
+                                    }
+                                  }
+                                ],
+                                "text": "https://embeddedinterviewlab.com/coding/implement-memmove/"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "listItem",
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "link",
+                                    "attrs": {
+                                      "href": "https://embeddedinterviewlab.com/coding/sequence-number-wraparound/",
+                                      "target": "_blank",
+                                      "rel": "noopener noreferrer",
+                                      "class": null
+                                    }
+                                  }
+                                ],
+                                "text": "https://embeddedinterviewlab.com/coding/sequence-number-wraparound/"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    }
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "textStyle",
+                            "attrs": {
+                              "color": "rgb(129, 0, 194)"
+                            }
+                          }
+                        ],
+                        "text": "const"
+                      },
+                      {
+                        "type": "text",
+                        "text": " "
+                      },
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "textStyle",
+                            "attrs": {
+                              "color": "rgb(129, 0, 194)"
+                            }
+                          }
+                        ],
+                        "text": "char"
+                      },
+                      {
+                        "type": "text",
+                        "text": " *a"
+                      },
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "textStyle",
+                            "attrs": {
+                              "color": "rgb(43, 48, 59)"
+                            }
+                          }
+                        ],
+                        "text": ";"
+                      },
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "textStyle",
+                            "attrs": {
+                              "color": "rgb(110, 118, 135)"
+                            }
+                          }
+                        ],
+                        "text": " // pointer to const char"
+                      },
+                      {
+                        "type": "text",
+                        "text": " "
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "textStyle",
+                            "attrs": {
+                              "color": "rgb(129, 0, 194)"
+                            }
+                          }
+                        ],
+                        "text": "char"
+                      },
+                      {
+                        "type": "text",
+                        "text": " "
+                      },
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "textStyle",
+                            "attrs": {
+                              "color": "rgb(129, 0, 194)"
+                            }
+                          }
+                        ],
+                        "text": "const"
+                      },
+                      {
+                        "type": "text",
+                        "text": " *a"
+                      },
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "textStyle",
+                            "attrs": {
+                              "color": "rgb(43, 48, 59)"
+                            }
+                          }
+                        ],
+                        "text": ";"
+                      },
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "textStyle",
+                            "attrs": {
+                              "color": "rgb(110, 118, 135)"
+                            }
+                          }
+                        ],
+                        "text": " // pointer to const char (identical)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "char * const a = \"abc\";  // const pointer to char"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "image",
+                    "attrs": {
+                      "src": "https://public.www.evernote.com/resources/s456/e7f008fc-8184-2e88-56f4-a17ee0b3b6f6",
+                      "alt": "",
+                      "width": null,
+                      "align": "left"
+                    }
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    }
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    }
                   }
                 ]
               },
@@ -19350,13 +19815,43 @@
       ]
     },
     {
-      "id": "s-mvzddke0xsoki",
-      "title": "Coding",
+      "id": "s-mvzgrm6ia2xwl",
+      "title": "TODO",
       "doc": {
         "type": "doc",
         "content": [
           {
-            "type": "paragraph"
+            "type": "taskList",
+            "content": [
+              {
+                "type": "taskItem",
+                "attrs": {
+                  "checked": false
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "CRC32"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null,
+              "indent": 0
+            }
           }
         ]
       },
@@ -19451,7 +19946,8 @@
                   "height": 480,
                   "fit": true,
                   "width": 100,
-                  "title": "Animation"
+                  "title": "Animation",
+                  "rev": 0
                 }
               },
               {
@@ -19459,7 +19955,33 @@
                 "attrs": {
                   "textAlign": null,
                   "indent": 0
-                }
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "textStyle",
+                        "attrs": {
+                          "color": ""
+                        }
+                      }
+                    ],
+                    "text": "The primary difference is that "
+                  },
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      },
+                      {
+                        "type": "highlight"
+                      }
+                    ],
+                    "text": "a microprocessor is a single Central Processing Unit (CPU) chip that requires external components to function, while a microcontroller is an all-in-one system-on-a-chip containing a CPU, memory, and input/output peripherals"
+                  }
+                ]
               }
             ]
           },
