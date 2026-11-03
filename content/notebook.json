@@ -50568,6 +50568,337 @@
                     "text": "“The I2C target receives bytes with a per-byte interrupt into a buffer. On the STOP interrupt, the driver checks the SMBus command code and PEC to confirm it’s MCTP, and hands the payload to the MCTP layer. MCTP checks SOM, EOM, and sequence number, and keeps reassembling until the EOM packet arrives. Then it reads the message type from the message body, and for type 1 passes the message to the PLDM layer, which decodes the PLDM header and dispatches the command\""
                   }
                 ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "image",
+                "attrs": {
+                  "src": "content/media/2026-11/mw0wc156-image.png",
+                  "alt": "image",
+                  "width": null,
+                  "align": "center"
+                }
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "I2C driver (teal):"
+                          },
+                          {
+                            "type": "text",
+                            "text": " per-byte interrupt, STOP interrupt, header and PEC check, then the hand-off to MCTP."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "MCTP layer (purple):"
+                          },
+                          {
+                            "type": "text",
+                            "text": " the transport header check, then the “EOM set?” decision. The dashed arrow is the “No” path. It loops back to the first lane because the next packet arrives as a new I2C frame and goes through the same steps. Only when EOM is set does MCTP read the message type."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "image",
+                "attrs": {
+                  "src": "content/media/2026-11/mw0we27z-image.png",
+                  "alt": "image",
+                  "width": null,
+                  "align": "center"
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "then pldm type 0 commands"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "image",
+                "attrs": {
+                  "src": "content/media/2026-11/mw0wfjql-image.png",
+                  "alt": "image",
+                  "width": null,
+                  "align": "center"
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "pldm type 5"
+                  }
+                ]
+              },
+              {
+                "type": "image",
+                "attrs": {
+                  "src": "content/media/2026-11/mw0whf12-image.png",
+                  "alt": "image",
+                  "width": null,
+                  "align": "center"
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "image",
+                "attrs": {
+                  "src": "content/media/2026-11/mw0wh0ld-image.png",
+                  "alt": "image",
+                  "width": null,
+                  "align": "center"
+                }
+              },
+              {
+                "type": "image",
+                "attrs": {
+                  "src": "content/media/2026-11/mw0wjqnw-image.png",
+                  "alt": "image",
+                  "width": null,
+                  "align": "center"
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "PLDM type 6:"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "commands statemachine "
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "ocp recover "
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "dcu"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
               }
             ]
           },
