@@ -21152,15 +21152,15 @@
                 "content": [
                   {
                     "type": "text",
-                    "text": "Board vs MCU vs Processor vs Core"
+                    "text": "Board vs MCU vs Processor (Microprocessor) vs Core"
                   }
                 ]
               },
               {
                 "type": "image",
                 "attrs": {
-                  "src": "https://public.www.evernote.com/resources/s456/f1bc9eec-fe73-a69a-59a8-9bcbe5e14f78",
-                  "alt": "",
+                  "src": "content/media/2026-11/mw0v6v47-1add9571-da14-4ea1-93eb-b637d445b95e-1-.png",
+                  "alt": "1add9571-da14-4ea1-93eb-b637d445b95e (1)",
                   "width": null,
                   "align": "center"
                 }
@@ -21719,7 +21719,7 @@
                       },
                       {
                         "type": "text",
-                        "text": " (first immutable code), that is,  "
+                        "text": " (first immutable code), which can be "
                       },
                       {
                         "type": "text",
@@ -22462,7 +22462,8 @@
                   "height": 420,
                   "fit": true,
                   "width": 100,
-                  "title": "Animation"
+                  "title": "Animation",
+                  "rev": 0
                 }
               },
               {
@@ -22543,7 +22544,8 @@
                   "height": 600,
                   "fit": true,
                   "width": 100,
-                  "title": "STM32F407 boot pins and memory map"
+                  "title": "STM32F407 boot pins and memory map",
+                  "rev": 0
                 }
               },
               {
@@ -22882,7 +22884,8 @@
                   "height": 620,
                   "fit": true,
                   "width": 100,
-                  "title": "Animation"
+                  "title": "Animation",
+                  "rev": 0
                 }
               },
               {
@@ -23122,12 +23125,7 @@
                             "text": "boot flow of draco"
                           }
                         ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [
+                      },
                       {
                         "type": "paragraph",
                         "attrs": {
@@ -24122,23 +24120,6 @@
             "type": "doc",
             "content": [
               {
-                "type": "callout",
-                "attrs": {
-                  "variant": "info"
-                },
-                "content": [
-                  {
-                    "type": "paragraph",
-                    "content": [
-                      {
-                        "type": "text",
-                        "text": "Notes to be added. The original note had an empty \"Arm cortex R8\" heading here."
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
                 "type": "bulletList",
                 "content": [
                   {
@@ -24146,6 +24127,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -24153,12 +24138,12 @@
                           },
                           {
                             "type": "text",
-                            "text": "vector base register (VBAR)",
                             "marks": [
                               {
                                 "type": "bold"
                               }
-                            ]
+                            ],
+                            "text": "vector base register (VBAR)"
                           },
                           {
                             "type": "text",
@@ -24166,12 +24151,12 @@
                           },
                           {
                             "type": "text",
-                            "text": "TCM",
                             "marks": [
                               {
                                 "type": "bold"
                               }
-                            ]
+                            ],
+                            "text": "TCM"
                           },
                           {
                             "type": "text",
@@ -24186,6 +24171,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -24193,7 +24182,6 @@
                           },
                           {
                             "type": "text",
-                            "text": "Boot, FMC/XIP and address 0x0",
                             "marks": [
                               {
                                 "type": "link",
@@ -24204,7 +24192,8 @@
                                   "class": null
                                 }
                               }
-                            ]
+                            ],
+                            "text": "Boot, FMC/XIP and address 0x0"
                           },
                           {
                             "type": "text",
@@ -24217,7 +24206,11 @@
                 ]
               },
               {
-                "type": "paragraph"
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
               }
             ]
           },
