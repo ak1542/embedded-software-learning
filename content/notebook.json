@@ -783,7 +783,7 @@
                 "content": [
                   {
                     "type": "text",
-                    "text": "Nothing in the loop writes "
+                    "text": "Nothing in the loop writes"
                   },
                   {
                     "type": "text",
@@ -796,7 +796,7 @@
                   },
                   {
                     "type": "text",
-                    "text": ", so the compiler assumes it never changes and hoists the load out of the loop."
+                    "text": ", so the compiler assumes it never changes, and so in machine code it only reads status values once, that is, before the loop"
                   }
                 ]
               },
@@ -2589,6 +2589,25 @@
                 }
               },
               {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": "left",
+                  "indent": 0,
+                  "level": 4
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "underline"
+                      }
+                    ],
+                    "text": "Concepts"
+                  }
+                ]
+              },
+              {
                 "type": "bulletList",
                 "content": [
                   {
@@ -2678,13 +2697,1754 @@
                             "text": "Local will stay on the stack"
                           }
                         ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 3
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "1. String declarations and memory"
+                  }
+                ]
+              },
+              {
+                "type": "table",
+                "content": [
+                  {
+                    "type": "tableRow",
+                    "content": [
+                      {
+                        "type": "tableHeader",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Declaration"
+                              }
+                            ]
+                          }
+                        ]
                       },
                       {
-                        "type": "paragraph",
+                        "type": "tableHeader",
                         "attrs": {
-                          "textAlign": null,
-                          "indent": 0
-                        }
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Variable ("
+                              },
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "p"
+                              },
+                              {
+                                "type": "text",
+                                "text": "/"
+                              },
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "arr"
+                              },
+                              {
+                                "type": "text",
+                                "text": ") lives in"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableHeader",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Characters live in"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableHeader",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Can modify chars?"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableHeader",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Can reassign name?"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "tableRow",
+                    "content": [
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "const char *p = \"hello\";"
+                              },
+                              {
+                                "type": "text",
+                                "text": " (global)  - p -> constant char"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": ".data"
+                              },
+                              {
+                                "type": "text",
+                                "text": " (pointer, 4 bytes)"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": ".rodata"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "No"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Yes ("
+                              },
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "p = \"world\""
+                              },
+                              {
+                                "type": "text",
+                                "text": ")"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "tableRow",
+                    "content": [
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "const char *p = \"hello\";"
+                              },
+                              {
+                                "type": "text",
+                                "text": " (local)"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Stack/register (pointer)"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": ".rodata"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "No"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Yes"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "tableRow",
+                    "content": [
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "char *p = \"hello\";"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Same as above"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": ".rodata"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "bold"
+                                  }
+                                ],
+                                "text": "No (UB)"
+                              },
+                              {
+                                "type": "text",
+                                "text": ", compiles in C, error in C++"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Yes"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "tableRow",
+                    "content": [
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "static const char *q = \"hi\";"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": ".data"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": ".rodata"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "No"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Yes"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "tableRow",
+                    "content": [
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "const char *const r = \"yo\";"
+                              },
+                              {
+                                "type": "text",
+                                "text": " (global/static)"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": ".rodata"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": ".rodata"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "No"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "No"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "tableRow",
+                    "content": [
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "const char *const r = \"yo\";"
+                              },
+                              {
+                                "type": "text",
+                                "text": " (local)"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Stack/register (often optimized away)"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": ".rodata"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "No"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "No"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "tableRow",
+                    "content": [
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "char arr[] = \"hello\";"
+                              },
+                              {
+                                "type": "text",
+                                "text": " (global)"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": ".data"
+                              },
+                              {
+                                "type": "text",
+                                "text": " (the array itself, 6 bytes)"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "In "
+                              },
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "arr"
+                              },
+                              {
+                                "type": "text",
+                                "text": " itself"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "bold"
+                                  }
+                                ],
+                                "text": "Yes"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "No (not a variable)"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "tableRow",
+                    "content": [
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "char arr[] = \"hello\";"
+                              },
+                              {
+                                "type": "text",
+                                "text": " (local)"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Stack (the array itself, 6 bytes)"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "In "
+                              },
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "arr"
+                              },
+                              {
+                                "type": "text",
+                                "text": " itself, copied each call"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "bold"
+                                  }
+                                ],
+                                "text": "Yes"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "No"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "tableRow",
+                    "content": [
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "static char arr[] = \"hello\";"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": ".data"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "In "
+                              },
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "arr"
+                              },
+                              {
+                                "type": "text",
+                                "text": " itself"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "bold"
+                                  }
+                                ],
+                                "text": "Yes"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "No"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "tableRow",
+                    "content": [
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "char arr[10];"
+                              },
+                              {
+                                "type": "text",
+                                "text": " (global/static)"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": ".bss"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "In "
+                              },
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "arr"
+                              },
+                              {
+                                "type": "text",
+                                "text": " itself (zeroed)"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "bold"
+                                  }
+                                ],
+                                "text": "Yes"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "No"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "tableRow",
+                    "content": [
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "const char arr[] = \"hello\";"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": ".rodata"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "In "
+                              },
+                              {
+                                "type": "text",
+                                "marks": [
+                                  {
+                                    "type": "code"
+                                  }
+                                ],
+                                "text": "arr"
+                              },
+                              {
+                                "type": "text",
+                                "text": " itself"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "No"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "tableCell",
+                        "attrs": {
+                          "colspan": 1,
+                          "rowspan": 1,
+                          "colwidth": null
+                        },
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "No"
+                              }
+                            ]
+                          }
+                        ]
                       }
                     ]
                   }
@@ -2698,7 +4458,7 @@
                 "content": [
                   {
                     "type": "text",
-                    "text": "const char *p = \"hello\";     // p: Data (global) or Stack (local)\n                             // \"hello\": .rodata\n\nchar arr[] = \"hello\";        // global: Data   |   local: Stack (copy of the string)\n\nstatic const char *q = \"hi\"; // q: Data (static)\n                             // \"hi\": .rodata\n\nconst char *const r = \"yo\";  // r: .rodata (pointer itself is const)\n                             // \"yo\": .rodata"
+                    "text": "char *p = \"hello\";    // two things: pointer variable p (4 bytes on 32-bit) + the literal in .rodata\nchar arr[] = \"hello\"; // one thing: 6 bytes of chars. No pointer variable."
                   }
                 ]
               },
@@ -2711,7 +4471,7 @@
                 "content": [
                   {
                     "type": "text",
-                    "text": "Use case of local Variable "
+                    "text": "Use case of static in local Variable "
                   }
                 ]
               },
@@ -3912,7 +5672,7 @@
                 "content": [
                   {
                     "type": "text",
-                    "text": "This is portable, free of alignment issues, and independent of compiler layout. Verify layouts with "
+                    "text": "This is portable, avoids alignment issues, and doesn't depend on compiler layout. Verify layouts with "
                   },
                   {
                     "type": "text",
@@ -3957,116 +5717,110 @@
                 ]
               },
               {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                },
+                "type": "bulletList",
                 "content": [
                   {
-                    "type": "text",
-                    "marks": [
+                    "type": "listItem",
+                    "content": [
                       {
-                        "type": "bold"
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "Little-endian:"
+                          },
+                          {
+                            "type": "text",
+                            "text": " least significant byte at the lowest address."
+                          }
+                        ]
                       }
-                    ],
-                    "text": "Question"
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "Explain little-endian and big-endian, on the wire and on ARM."
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": " Why can't you detect endianness with int v= 1,  "
+                    ]
                   },
                   {
-                    "type": "text",
-                    "marks": [
+                    "type": "listItem",
+                    "content": [
                       {
-                        "type": "code"
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "Big-endian:"
+                          },
+                          {
+                            "type": "text",
+                            "text": " most significant byte at the lowest address."
+                          }
+                        ]
+                      },
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": " "
+                          }
+                        ]
                       }
-                    ],
-                    "text": "v & 1 == 1"
+                    ]
                   },
                   {
-                    "type": "text",
-                    "text": "?; "
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "marks": [
+                    "type": "listItem",
+                    "content": [
                       {
-                        "type": "bold"
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "For "
+                          },
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "code"
+                              }
+                            ],
+                            "text": "uint32_t x = 0x12345678"
+                          },
+                          {
+                            "type": "text",
+                            "text": " stored at 0x100:"
+                          }
+                        ]
                       }
-                    ],
-                    "text": "Answer"
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "Endianness is the order in which the bytes of a multi-byte value are stored in memory or sent over a link. A CPU register has no endianness; it only appears when a value is split into bytes at an address, on a wire, or in a file."
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "For "
-                  },
-                  {
-                    "type": "text",
-                    "marks": [
-                      {
-                        "type": "code"
-                      }
-                    ],
-                    "text": "uint32_t x = 0x12345678"
-                  },
-                  {
-                    "type": "text",
-                    "text": " stored at 0x100:"
+                    ]
                   }
                 ]
               },
@@ -4436,65 +6190,6 @@
                 ]
               },
               {
-                "type": "bulletList",
-                "content": [
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "attrs": {
-                          "textAlign": null,
-                          "indent": 0
-                        },
-                        "content": [
-                          {
-                            "type": "text",
-                            "marks": [
-                              {
-                                "type": "bold"
-                              }
-                            ],
-                            "text": "Little-endian:"
-                          },
-                          {
-                            "type": "text",
-                            "text": " least significant byte at the lowest address."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "attrs": {
-                          "textAlign": null,
-                          "indent": 0
-                        },
-                        "content": [
-                          {
-                            "type": "text",
-                            "marks": [
-                              {
-                                "type": "bold"
-                              }
-                            ],
-                            "text": "Big-endian:"
-                          },
-                          {
-                            "type": "text",
-                            "text": " most significant byte at the lowest address."
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
                 "type": "paragraph",
                 "attrs": {
                   "textAlign": null,
@@ -4512,7 +6207,7 @@
                   },
                   {
                     "type": "text",
-                    "text": " ARM is bi-endian by architecture but nearly always runs little-endian, including Cortex-M and Linux on SoCs like Aspeed BMC parts. Check the TRM for Cortex-R and legacy designs. x86 and RISC-V are little-endian. Classic PowerPC, SPARC and some MIPS and network processors are big-endian."
+                    "text": " ARM is bi-endian by architecture but nearly always runs little-endian, including Cortex-M and Linux on SoCs like Aspeed BMC parts. Check the TRM for Cortex-R and legacy designs. x86 and RISC-V are little-endian. Classic PowerPC, SPARC, and some MIPS and network processors are big-endian."
                   }
                 ]
               },
@@ -4646,10 +6341,11 @@
                 ]
               },
               {
-                "type": "paragraph",
+                "type": "heading",
                 "attrs": {
                   "textAlign": null,
-                  "indent": 0
+                  "indent": 0,
+                  "level": 4
                 },
                 "content": [
                   {
@@ -4782,158 +6478,6 @@
                         "type": "bold"
                       }
                     ],
-                    "text": "Tools:"
-                  },
-                  {
-                    "type": "text",
-                    "text": " ARM has "
-                  },
-                  {
-                    "type": "text",
-                    "marks": [
-                      {
-                        "type": "code"
-                      }
-                    ],
-                    "text": "REV"
-                  },
-                  {
-                    "type": "text",
-                    "text": ", "
-                  },
-                  {
-                    "type": "text",
-                    "marks": [
-                      {
-                        "type": "code"
-                      }
-                    ],
-                    "text": "REV16"
-                  },
-                  {
-                    "type": "text",
-                    "text": ", "
-                  },
-                  {
-                    "type": "text",
-                    "marks": [
-                      {
-                        "type": "code"
-                      }
-                    ],
-                    "text": "REVSH"
-                  },
-                  {
-                    "type": "text",
-                    "text": "; GCC exposes "
-                  },
-                  {
-                    "type": "text",
-                    "marks": [
-                      {
-                        "type": "code"
-                      }
-                    ],
-                    "text": "__builtin_bswap16/32/64"
-                  },
-                  {
-                    "type": "text",
-                    "text": ". Linux has "
-                  },
-                  {
-                    "type": "text",
-                    "marks": [
-                      {
-                        "type": "code"
-                      }
-                    ],
-                    "text": "cpu_to_le32"
-                  },
-                  {
-                    "type": "text",
-                    "text": ", "
-                  },
-                  {
-                    "type": "text",
-                    "marks": [
-                      {
-                        "type": "code"
-                      }
-                    ],
-                    "text": "le32_to_cpu"
-                  },
-                  {
-                    "type": "text",
-                    "text": ", "
-                  },
-                  {
-                    "type": "text",
-                    "marks": [
-                      {
-                        "type": "code"
-                      }
-                    ],
-                    "text": "cpu_to_be32"
-                  },
-                  {
-                    "type": "text",
-                    "text": " and the "
-                  },
-                  {
-                    "type": "text",
-                    "marks": [
-                      {
-                        "type": "code"
-                      }
-                    ],
-                    "text": "__le32"
-                  },
-                  {
-                    "type": "text",
-                    "text": "/"
-                  },
-                  {
-                    "type": "text",
-                    "marks": [
-                      {
-                        "type": "code"
-                      }
-                    ],
-                    "text": "__be32"
-                  },
-                  {
-                    "type": "text",
-                    "text": " types that "
-                  },
-                  {
-                    "type": "text",
-                    "marks": [
-                      {
-                        "type": "code"
-                      }
-                    ],
-                    "text": "sparse"
-                  },
-                  {
-                    "type": "text",
-                    "text": " can check."
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "marks": [
-                      {
-                        "type": "bold"
-                      }
-                    ],
                     "text": "Detect host endianness at runtime:"
                   }
                 ]
@@ -4964,7 +6508,7 @@
                         "type": "bold"
                       }
                     ],
-                    "text": "Why "
+                    "text": "Why ("
                   },
                   {
                     "type": "text",
@@ -4973,7 +6517,7 @@
                         "type": "code"
                       }
                     ],
-                    "text": "v & 1 == 1"
+                    "text": "v & 1) == 1"
                   },
                   {
                     "type": "text",
@@ -4989,89 +6533,6 @@
               {
                 "type": "bulletList",
                 "content": [
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "attrs": {
-                          "textAlign": null,
-                          "indent": 0
-                        },
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "Precedence: "
-                          },
-                          {
-                            "type": "text",
-                            "marks": [
-                              {
-                                "type": "code"
-                              }
-                            ],
-                            "text": "=="
-                          },
-                          {
-                            "type": "text",
-                            "text": " binds tighter than "
-                          },
-                          {
-                            "type": "text",
-                            "marks": [
-                              {
-                                "type": "code"
-                              }
-                            ],
-                            "text": "&"
-                          },
-                          {
-                            "type": "text",
-                            "text": ", so "
-                          },
-                          {
-                            "type": "text",
-                            "marks": [
-                              {
-                                "type": "code"
-                              }
-                            ],
-                            "text": "v & 1 == 1"
-                          },
-                          {
-                            "type": "text",
-                            "text": " parses as "
-                          },
-                          {
-                            "type": "text",
-                            "marks": [
-                              {
-                                "type": "code"
-                              }
-                            ],
-                            "text": "v & (1 == 1)"
-                          },
-                          {
-                            "type": "text",
-                            "text": ". Write "
-                          },
-                          {
-                            "type": "text",
-                            "marks": [
-                              {
-                                "type": "code"
-                              }
-                            ],
-                            "text": "(v & 1) == 1"
-                          },
-                          {
-                            "type": "text",
-                            "text": ". This is why MISRA requires parentheses around bitwise operations."
-                          }
-                        ]
-                      }
-                    ]
-                  },
                   {
                     "type": "listItem",
                     "content": [
@@ -5130,282 +6591,6 @@
                     ]
                   }
                 ]
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "marks": [
-                      {
-                        "type": "bold"
-                      }
-                    ],
-                    "text": "Interview line:"
-                  },
-                  {
-                    "type": "text",
-                    "text": " \""
-                  },
-                  {
-                    "type": "text",
-                    "marks": [
-                      {
-                        "type": "bold"
-                      }
-                    ],
-                    "text": "Arithmetic and bitwise operators see values, so they are endian-independent."
-                  },
-                  {
-                    "type": "text",
-                    "text": " Only byte-granular memory access exposes endianness.\""
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "marks": [
-                      {
-                        "type": "bold"
-                      }
-                    ],
-                    "text": "Quick check 1"
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "A temperature sensor returns bytes "
-                  },
-                  {
-                    "type": "text",
-                    "marks": [
-                      {
-                        "type": "code"
-                      }
-                    ],
-                    "text": "0x19 0x80"
-                  },
-                  {
-                    "type": "text",
-                    "text": " over I2C and its datasheet says \"MSB first\". What is the 16-bit value in C?"
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "marks": [
-                      {
-                        "type": "bold"
-                      }
-                    ],
-                    "text": "Answer"
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "The first byte is the most significant, so combine with shifts, which work on any host:"
-                  }
-                ]
-              },
-              {
-                "type": "codeBlock",
-                "attrs": {
-                  "language": "c"
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "uint16_t raw = ((uint16_t)buf[0] << 8) | buf[1];   // 0x1980 = 6528"
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "Reading it with a "
-                  },
-                  {
-                    "type": "text",
-                    "marks": [
-                      {
-                        "type": "code"
-                      }
-                    ],
-                    "text": "uint16_t *"
-                  },
-                  {
-                    "type": "text",
-                    "text": " cast on a little-endian CPU would give 0x8019, which is wrong."
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "marks": [
-                      {
-                        "type": "bold"
-                      }
-                    ],
-                    "text": "Quick check 2"
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "Why is "
-                  },
-                  {
-                    "type": "text",
-                    "marks": [
-                      {
-                        "type": "code"
-                      }
-                    ],
-                    "text": "ntohl(x)"
-                  },
-                  {
-                    "type": "text",
-                    "text": " free on a big-endian CPU?"
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "marks": [
-                      {
-                        "type": "bold"
-                      }
-                    ],
-                    "text": "Answer"
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "Network byte order is big-endian. On a big-endian host, host order already equals network order, so "
-                  },
-                  {
-                    "type": "text",
-                    "marks": [
-                      {
-                        "type": "code"
-                      }
-                    ],
-                    "text": "ntohl"
-                  },
-                  {
-                    "type": "text",
-                    "text": " and "
-                  },
-                  {
-                    "type": "text",
-                    "marks": [
-                      {
-                        "type": "code"
-                      }
-                    ],
-                    "text": "htonl"
-                  },
-                  {
-                    "type": "text",
-                    "text": " are identity operations that the compiler removes. On a little-endian host they become a byte swap (for example, the ARM "
-                  },
-                  {
-                    "type": "text",
-                    "marks": [
-                      {
-                        "type": "code"
-                      }
-                    ],
-                    "text": "REV"
-                  },
-                  {
-                    "type": "text",
-                    "text": " instruction)."
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                }
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                }
               },
               {
                 "type": "paragraph",
