@@ -24226,6 +24226,71 @@
         "content": [
           {
             "type": "paragraph",
+            "attrs": {
+              "textAlign": null,
+              "indent": 0
+            },
+            "content": [
+              {
+                "type": "text",
+                "marks": [
+                  {
+                    "type": "bold"
+                  }
+                ],
+                "text": "Overview"
+              }
+            ]
+          },
+          {
+            "type": "image",
+            "attrs": {
+              "src": "content/media/2026-11/mw0vhmxl-image.png",
+              "alt": "image",
+              "width": null,
+              "align": "center"
+            }
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null,
+              "indent": 0
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": " "
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null,
+              "indent": 0
+            }
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null,
+              "indent": 0
+            }
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null,
+              "indent": 0
+            }
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null,
+              "indent": 0
+            },
             "content": [
               {
                 "type": "text",
@@ -24236,6 +24301,8 @@
           {
             "type": "heading",
             "attrs": {
+              "textAlign": null,
+              "indent": 0,
               "level": 2
             },
             "content": [
@@ -24247,15 +24314,19 @@
           },
           {
             "type": "paragraph",
+            "attrs": {
+              "textAlign": null,
+              "indent": 0
+            },
             "content": [
               {
                 "type": "text",
-                "text": "1–3. Clean.",
                 "marks": [
                   {
                     "type": "bold"
                   }
-                ]
+                ],
+                "text": "1–3. Clean."
               },
               {
                 "type": "text",
@@ -24263,12 +24334,12 @@
               },
               {
                 "type": "text",
-                "text": "make clean",
                 "marks": [
                   {
                     "type": "code"
                   }
-                ]
+                ],
+                "text": "make clean"
               },
               {
                 "type": "text",
@@ -24290,15 +24361,19 @@
           },
           {
             "type": "paragraph",
+            "attrs": {
+              "textAlign": null,
+              "indent": 0
+            },
             "content": [
               {
                 "type": "text",
-                "text": "4. Compile",
                 "marks": [
                   {
                     "type": "bold"
                   }
-                ]
+                ],
+                "text": "4. Compile"
               },
               {
                 "type": "text",
@@ -24320,15 +24395,19 @@
           },
           {
             "type": "paragraph",
+            "attrs": {
+              "textAlign": null,
+              "indent": 0
+            },
             "content": [
               {
                 "type": "text",
-                "text": "5. Make a library:",
                 "marks": [
                   {
                     "type": "bold"
                   }
-                ]
+                ],
+                "text": "5. Make a library:"
               }
             ]
           },
@@ -24346,15 +24425,19 @@
           },
           {
             "type": "paragraph",
+            "attrs": {
+              "textAlign": null,
+              "indent": 0
+            },
             "content": [
               {
                 "type": "text",
-                "text": "6. Compile the rest and link",
                 "marks": [
                   {
                     "type": "bold"
                   }
-                ]
+                ],
+                "text": "6. Compile the rest and link"
               },
               {
                 "type": "text",
@@ -24376,15 +24459,19 @@
           },
           {
             "type": "paragraph",
+            "attrs": {
+              "textAlign": null,
+              "indent": 0
+            },
             "content": [
               {
                 "type": "text",
-                "text": "7. Raw binary:",
                 "marks": [
                   {
                     "type": "bold"
                   }
-                ]
+                ],
+                "text": "7. Raw binary:"
               }
             ]
           },
@@ -24402,15 +24489,19 @@
           },
           {
             "type": "paragraph",
+            "attrs": {
+              "textAlign": null,
+              "indent": 0
+            },
             "content": [
               {
                 "type": "text",
-                "text": "8. Disassembly mixed with C source:",
                 "marks": [
                   {
                     "type": "bold"
                   }
-                ]
+                ],
+                "text": "8. Disassembly mixed with C source:"
               }
             ]
           },
@@ -24428,15 +24519,19 @@
           },
           {
             "type": "paragraph",
+            "attrs": {
+              "textAlign": null,
+              "indent": 0
+            },
             "content": [
               {
                 "type": "text",
-                "text": "9. Start Renode",
                 "marks": [
                   {
                     "type": "bold"
                   }
-                ]
+                ],
+                "text": "9. Start Renode"
               },
               {
                 "type": "text",
@@ -24444,12 +24539,12 @@
               },
               {
                 "type": "text",
-                "text": "run.resc",
                 "marks": [
                   {
                     "type": "code"
                   }
-                ]
+                ],
+                "text": "run.resc"
               },
               {
                 "type": "text",
@@ -24471,15 +24566,19 @@
           },
           {
             "type": "paragraph",
+            "attrs": {
+              "textAlign": null,
+              "indent": 0
+            },
             "content": [
               {
                 "type": "text",
-                "text": "10–11. Attach GDB:",
                 "marks": [
                   {
                     "type": "bold"
                   }
-                ]
+                ],
+                "text": "10–11. Attach GDB:"
               }
             ]
           },
@@ -24497,6 +24596,10 @@
           },
           {
             "type": "paragraph",
+            "attrs": {
+              "textAlign": null,
+              "indent": 0
+            },
             "content": [
               {
                 "type": "text",
@@ -24504,12 +24607,12 @@
               },
               {
                 "type": "text",
-                "text": "-g3",
                 "marks": [
                   {
                     "type": "code"
                   }
-                ]
+                ],
+                "text": "-g3"
               },
               {
                 "type": "text",
@@ -24525,6 +24628,10 @@
             "content": [
               {
                 "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
                 "content": [
                   {
                     "type": "text",
@@ -24532,12 +24639,12 @@
                   },
                   {
                     "type": "text",
-                    "text": "-mcpu=cortex-m7",
                     "marks": [
                       {
                         "type": "code"
                       }
-                    ]
+                    ],
+                    "text": "-mcpu=cortex-m7"
                   },
                   {
                     "type": "text",
@@ -24545,12 +24652,12 @@
                   },
                   {
                     "type": "text",
-                    "text": "i2c_stm32f7",
                     "marks": [
                       {
                         "type": "code"
                       }
-                    ]
+                    ],
+                    "text": "i2c_stm32f7"
                   },
                   {
                     "type": "text",
@@ -24558,12 +24665,12 @@
                   },
                   {
                     "type": "text",
-                    "text": "Cortex-M4",
                     "marks": [
                       {
                         "type": "bold"
                       }
-                    ]
+                    ],
+                    "text": "Cortex-M4"
                   },
                   {
                     "type": "text",
@@ -24571,12 +24678,12 @@
                   },
                   {
                     "type": "text",
-                    "text": "-mcpu=cortex-m4",
                     "marks": [
                       {
                         "type": "code"
                       }
-                    ]
+                    ],
+                    "text": "-mcpu=cortex-m4"
                   },
                   {
                     "type": "text",
@@ -24584,12 +24691,12 @@
                   },
                   {
                     "type": "text",
-                    "text": "-mfpu=fpv4-sp-d16 -mfloat-abi=hard",
                     "marks": [
                       {
                         "type": "code"
                       }
-                    ]
+                    ],
+                    "text": "-mfpu=fpv4-sp-d16 -mfloat-abi=hard"
                   },
                   {
                     "type": "text",
@@ -24602,6 +24709,8 @@
           {
             "type": "heading",
             "attrs": {
+              "textAlign": null,
+              "indent": 0,
               "level": 2
             },
             "content": [
@@ -24616,14 +24725,17 @@
             "attrs": {
               "src": "content/media/animations/build-pipeline.html",
               "height": 440,
+              "fit": true,
               "width": 100,
               "title": "Build pipeline",
-              "fit": true
+              "rev": 0
             }
           },
           {
             "type": "heading",
             "attrs": {
+              "textAlign": null,
+              "indent": 0,
               "level": 2
             },
             "content": [
@@ -24649,6 +24761,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -24668,6 +24784,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -24692,15 +24812,19 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
-                            "text": "-mcpu=cortex-m7",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
+                            ],
+                            "text": "-mcpu=cortex-m7"
                           }
                         ]
                       }
@@ -24716,6 +24840,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -24740,15 +24868,19 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
-                            "text": "-mthumb",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
+                            ],
+                            "text": "-mthumb"
                           }
                         ]
                       }
@@ -24764,6 +24896,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -24788,15 +24924,19 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
-                            "text": "-std=c11",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
+                            ],
+                            "text": "-std=c11"
                           }
                         ]
                       }
@@ -24812,6 +24952,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -24836,15 +24980,19 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
-                            "text": "-ffreestanding",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
+                            ],
+                            "text": "-ffreestanding"
                           }
                         ]
                       }
@@ -24860,6 +25008,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -24884,15 +25036,19 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
-                            "text": "-fno-builtin",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
+                            ],
+                            "text": "-fno-builtin"
                           }
                         ]
                       }
@@ -24908,6 +25064,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -24932,15 +25092,19 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
-                            "text": "-ffunction-sections",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
+                            ],
+                            "text": "-ffunction-sections"
                           }
                         ]
                       }
@@ -24956,6 +25120,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -24980,15 +25148,19 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
-                            "text": "-fdata-sections",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
+                            ],
+                            "text": "-fdata-sections"
                           }
                         ]
                       }
@@ -25004,6 +25176,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -25028,15 +25204,19 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
-                            "text": "-Wall -Wextra",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
+                            ],
+                            "text": "-Wall -Wextra"
                           }
                         ]
                       }
@@ -25052,6 +25232,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -25076,15 +25260,19 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
-                            "text": "-Werror",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
+                            ],
+                            "text": "-Werror"
                           }
                         ]
                       }
@@ -25100,6 +25288,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -25124,15 +25316,19 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
-                            "text": "-Og",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
+                            ],
+                            "text": "-Og"
                           }
                         ]
                       }
@@ -25148,6 +25344,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -25172,15 +25372,19 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
-                            "text": "-g3",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
+                            ],
+                            "text": "-g3"
                           }
                         ]
                       }
@@ -25196,6 +25400,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -25220,15 +25428,19 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
-                            "text": "-Iinclude",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
+                            ],
+                            "text": "-Iinclude"
                           }
                         ]
                       }
@@ -25244,6 +25456,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -25251,12 +25467,12 @@
                           },
                           {
                             "type": "text",
-                            "text": "include/",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
+                            ],
+                            "text": "include/"
                           },
                           {
                             "type": "text",
@@ -25281,15 +25497,19 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
-                            "text": "-c",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
+                            ],
+                            "text": "-c"
                           }
                         ]
                       }
@@ -25305,6 +25525,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -25321,6 +25545,8 @@
           {
             "type": "heading",
             "attrs": {
+              "textAlign": null,
+              "indent": 0,
               "level": 2
             },
             "content": [
@@ -25350,15 +25576,19 @@
                 "content": [
                   {
                     "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
                     "content": [
                       {
                         "type": "text",
-                        "text": ".axf",
                         "marks": [
                           {
                             "type": "code"
                           }
-                        ]
+                        ],
+                        "text": ".axf"
                       },
                       {
                         "type": "text",
@@ -25366,12 +25596,12 @@
                       },
                       {
                         "type": "text",
-                        "text": ".axf",
                         "marks": [
                           {
                             "type": "code"
                           }
-                        ]
+                        ],
+                        "text": ".axf"
                       },
                       {
                         "type": "text",
@@ -25379,12 +25609,12 @@
                       },
                       {
                         "type": "text",
-                        "text": ".elf",
                         "marks": [
                           {
                             "type": "code"
                           }
-                        ]
+                        ],
+                        "text": ".elf"
                       },
                       {
                         "type": "text",
@@ -25392,12 +25622,12 @@
                       },
                       {
                         "type": "text",
-                        "text": ".axf",
                         "marks": [
                           {
                             "type": "code"
                           }
-                        ]
+                        ],
+                        "text": ".axf"
                       },
                       {
                         "type": "text",
@@ -25412,15 +25642,19 @@
                 "content": [
                   {
                     "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
                     "content": [
                       {
                         "type": "text",
-                        "text": ".bin",
                         "marks": [
                           {
                             "type": "code"
                           }
-                        ]
+                        ],
+                        "text": ".bin"
                       },
                       {
                         "type": "text",
@@ -25428,12 +25662,12 @@
                       },
                       {
                         "type": "text",
-                        "text": ".hex",
                         "marks": [
                           {
                             "type": "code"
                           }
-                        ]
+                        ],
+                        "text": ".hex"
                       },
                       {
                         "type": "text",
@@ -25448,15 +25682,19 @@
                 "content": [
                   {
                     "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
                     "content": [
                       {
                         "type": "text",
-                        "text": ".exe",
                         "marks": [
                           {
                             "type": "code"
                           }
-                        ]
+                        ],
+                        "text": ".exe"
                       },
                       {
                         "type": "text",
@@ -25464,12 +25702,12 @@
                       },
                       {
                         "type": "text",
-                        "text": ".bat",
                         "marks": [
                           {
                             "type": "code"
                           }
-                        ]
+                        ],
+                        "text": ".bat"
                       },
                       {
                         "type": "text",
@@ -25477,12 +25715,12 @@
                       },
                       {
                         "type": "text",
-                        "text": "\\bin",
                         "marks": [
                           {
                             "type": "code"
                           }
-                        ]
+                        ],
+                        "text": "\\bin"
                       },
                       {
                         "type": "text",
@@ -25497,6 +25735,8 @@
           {
             "type": "heading",
             "attrs": {
+              "textAlign": null,
+              "indent": 0,
               "level": 2
             },
             "content": [
@@ -25514,6 +25754,10 @@
             "content": [
               {
                 "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
                 "content": [
                   {
                     "type": "text",
@@ -25521,7 +25765,6 @@
                   },
                   {
                     "type": "text",
-                    "text": "Debugger tools (T32 vs GDB)",
                     "marks": [
                       {
                         "type": "link",
@@ -25532,7 +25775,8 @@
                           "class": null
                         }
                       }
-                    ]
+                    ],
+                    "text": "Debugger tools (T32 vs GDB)"
                   },
                   {
                     "type": "text",
@@ -25543,7 +25787,11 @@
             ]
           },
           {
-            "type": "paragraph"
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null,
+              "indent": 0
+            }
           }
         ]
       },
@@ -25558,6 +25806,8 @@
           {
             "type": "heading",
             "attrs": {
+              "textAlign": null,
+              "indent": 0,
               "level": 2
             },
             "content": [
@@ -25566,6 +25816,28 @@
                 "text": "Features"
               }
             ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null,
+              "indent": 0
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "JTAG & SWD"
+              }
+            ]
+          },
+          {
+            "type": "image",
+            "attrs": {
+              "src": "content/media/2026-11/mw0vlyry-image.png",
+              "alt": "image",
+              "width": null,
+              "align": "center"
+            }
           },
           {
             "type": "table",
@@ -25583,6 +25855,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -25602,6 +25878,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -25621,6 +25901,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -25645,6 +25929,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -25664,6 +25952,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -25683,6 +25975,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -25707,6 +26003,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -25726,6 +26026,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -25745,6 +26049,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -25769,6 +26077,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -25788,6 +26100,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -25807,6 +26123,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -25831,6 +26151,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -25850,6 +26174,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -25869,6 +26197,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -25893,6 +26225,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -25912,6 +26248,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -25931,6 +26271,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -25955,6 +26299,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -25974,6 +26322,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -25993,6 +26345,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -26017,6 +26373,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -26036,6 +26396,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -26055,6 +26419,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -26079,6 +26447,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -26098,6 +26470,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -26117,6 +26493,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -26141,6 +26521,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -26160,6 +26544,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -26179,15 +26567,19 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
-                            "text": "Very strong",
                             "marks": [
                               {
                                 "type": "bold"
                               }
-                            ]
+                            ],
+                            "text": "Very strong"
                           }
                         ]
                       }
@@ -26208,6 +26600,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -26227,6 +26623,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -26246,15 +26646,19 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
-                            "text": "Strong",
                             "marks": [
                               {
                                 "type": "bold"
                               }
-                            ]
+                            ],
+                            "text": "Strong"
                           }
                         ]
                       }
@@ -26275,6 +26679,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -26294,6 +26702,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -26313,15 +26725,19 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
-                            "text": "Excellent for complex SoCs",
                             "marks": [
                               {
                                 "type": "bold"
                               }
-                            ]
+                            ],
+                            "text": "Excellent for complex SoCs"
                           }
                         ]
                       }
@@ -26342,6 +26758,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -26361,6 +26781,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -26380,6 +26804,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -26404,6 +26832,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -26423,6 +26855,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -26442,6 +26878,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -26458,6 +26898,8 @@
           {
             "type": "heading",
             "attrs": {
+              "textAlign": null,
+              "indent": 0,
               "level": 2
             },
             "content": [
@@ -26469,6 +26911,10 @@
           },
           {
             "type": "paragraph",
+            "attrs": {
+              "textAlign": null,
+              "indent": 0
+            },
             "content": [
               {
                 "type": "text",
@@ -26476,12 +26922,12 @@
               },
               {
                 "type": "text",
-                "text": "si",
                 "marks": [
                   {
                     "type": "code"
                   }
-                ]
+                ],
+                "text": "si"
               },
               {
                 "type": "text",
@@ -26489,12 +26935,12 @@
               },
               {
                 "type": "text",
-                "text": "ni",
                 "marks": [
                   {
                     "type": "code"
                   }
-                ]
+                ],
+                "text": "ni"
               },
               {
                 "type": "text",
@@ -26502,12 +26948,12 @@
               },
               {
                 "type": "text",
-                "text": "finish",
                 "marks": [
                   {
                     "type": "code"
                   }
-                ]
+                ],
+                "text": "finish"
               },
               {
                 "type": "text",
@@ -26515,12 +26961,12 @@
               },
               {
                 "type": "text",
-                "text": "continue",
                 "marks": [
                   {
                     "type": "code"
                   }
-                ]
+                ],
+                "text": "continue"
               },
               {
                 "type": "text",
@@ -26533,14 +26979,17 @@
             "attrs": {
               "src": "content/media/animations/debugger.html",
               "height": 820,
+              "fit": true,
               "width": 100,
               "title": "Debug chain and GDB stepper",
-              "fit": true
+              "rev": 0
             }
           },
           {
             "type": "heading",
             "attrs": {
+              "textAlign": null,
+              "indent": 0,
               "level": 2
             },
             "content": [
@@ -26578,6 +27027,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -26597,6 +27050,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -26621,15 +27078,19 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
-                            "text": "continue",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
+                            ],
+                            "text": "continue"
                           },
                           {
                             "type": "text",
@@ -26637,12 +27098,12 @@
                           },
                           {
                             "type": "text",
-                            "text": "c",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
+                            ],
+                            "text": "c"
                           }
                         ]
                       }
@@ -26658,6 +27119,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -26682,15 +27147,19 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
-                            "text": "step",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
+                            ],
+                            "text": "step"
                           },
                           {
                             "type": "text",
@@ -26698,12 +27167,12 @@
                           },
                           {
                             "type": "text",
-                            "text": "s",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
+                            ],
+                            "text": "s"
                           }
                         ]
                       }
@@ -26719,6 +27188,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -26743,15 +27216,19 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
-                            "text": "next",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
+                            ],
+                            "text": "next"
                           },
                           {
                             "type": "text",
@@ -26759,12 +27236,12 @@
                           },
                           {
                             "type": "text",
-                            "text": "n",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
+                            ],
+                            "text": "n"
                           }
                         ]
                       }
@@ -26780,6 +27257,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -26804,15 +27285,19 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
-                            "text": "finish",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
+                            ],
+                            "text": "finish"
                           }
                         ]
                       }
@@ -26828,6 +27313,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -26852,15 +27341,19 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
-                            "text": "until",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
+                            ],
+                            "text": "until"
                           }
                         ]
                       }
@@ -26876,6 +27369,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -26900,15 +27397,19 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
-                            "text": "si",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
+                            ],
+                            "text": "si"
                           }
                         ]
                       }
@@ -26924,6 +27425,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -26948,15 +27453,19 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
-                            "text": "ni",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
+                            ],
+                            "text": "ni"
                           }
                         ]
                       }
@@ -26972,6 +27481,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -26996,15 +27509,19 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
-                            "text": "run",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
+                            ],
+                            "text": "run"
                           }
                         ]
                       }
@@ -27020,6 +27537,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -27044,15 +27565,19 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
-                            "text": "interrupt",
                             "marks": [
                               {
                                 "type": "code"
                               }
-                            ]
+                            ],
+                            "text": "interrupt"
                           }
                         ]
                       }
@@ -27068,6 +27593,10 @@
                     "content": [
                       {
                         "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
                         "content": [
                           {
                             "type": "text",
@@ -27084,6 +27613,8 @@
           {
             "type": "heading",
             "attrs": {
+              "textAlign": null,
+              "indent": 0,
               "level": 2
             },
             "content": [
@@ -27106,7 +27637,11 @@
             ]
           },
           {
-            "type": "paragraph"
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null,
+              "indent": 0
+            }
           }
         ]
       },
@@ -42327,7 +42862,7 @@
                 "content": [
                   {
                     "type": "text",
-                    "text": "Function call."
+                    "text": "Function call.,, LR"
                   }
                 ]
               },
@@ -50000,7 +50535,44 @@
             "type": "doc",
             "content": [
               {
-                "type": "paragraph"
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Overview :"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "“The I2C target receives bytes with a per-byte interrupt into a buffer. On the STOP interrupt, the driver checks the SMBus command code and PEC to confirm it’s MCTP, and hands the payload to the MCTP layer. MCTP checks SOM, EOM, and sequence number, and keeps reassembling until the EOM packet arrives. Then it reads the message type from the message body, and for type 1 passes the message to the PLDM layer, which decodes the PLDM header and dispatches the command\""
+                  }
+                ]
               }
             ]
           },
