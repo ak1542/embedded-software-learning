@@ -45543,6 +45543,23 @@
                 }
               },
               {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 2
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Interview Question practice"
+                  }
+                ]
+              },
+              {
+                "type": "horizontalRule"
+              },
+              {
                 "type": "paragraph",
                 "attrs": {
                   "textAlign": null,
@@ -45551,16 +45568,131 @@
                 "content": [
                   {
                     "type": "text",
-                    "text": "Question practice"
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Q1. Tell me about yourself."
                   }
                 ]
+              },
+              {
+                "type": "blockquote",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "\"Hi, I'm Akhil Kumar. I have over three years of experience as an Embedded Firmware Engineer at Samsung Semiconductor in Bengaluru. At Samsung, we are working on ARM-based firmware for a CXL device. In Cxl FW , I own  multiple  end to end modules, from analizing , requirements gathering from specs  and "
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": " My key works includes :"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": ","
+                      },
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "bold"
+                          }
+                        ],
+                        "text": "PLDM Type 5  for Side band firmware update. PLDM Type 6, To enable the Redfish  services on Device."
+                      },
+                      {
+                        "type": "text",
+                        "text": " "
+                      },
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "bold"
+                          }
+                        ],
+                        "text": "DCU, the Direct Control Unit."
+                      },
+                      {
+                        "type": "text",
+                        "text": " which is hardware IP to tests DDR5 memory. "
+                      },
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "bold"
+                          }
+                        ],
+                        "text": "OCP firmware recovery. Where "
+                      },
+                      {
+                        "type": "text",
+                        "text": " I worked on secure recovery flows with Caliptra as the root of trust."
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Apart from these, whenever I get bandwidth I help the wider team. I debug issues in other modules, I've improved our firmware design, for example by designing a common test handler, and I helped the team develop BMC-side PLDM support so we could test our device end to end."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "horizontalRule"
               },
               {
                 "type": "paragraph",
                 "attrs": {
                   "textAlign": null,
                   "indent": 0
-                }
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Q2. Tell me about your PLDM projects."
+                  }
+                ]
               },
               {
                 "type": "paragraph",
@@ -45623,7 +45755,7 @@
                   },
                   {
                     "type": "text",
-                    "text": " covers platform monitoring and control, meaning sensors and effecters. "
+                    "text": " covers platform monitoring and control, meaning sensors and effectors. "
                   },
                   {
                     "type": "text",
@@ -45636,7 +45768,7 @@
                   },
                   {
                     "type": "text",
-                    "text": " is for firmware update, where the BMC can update device firmware in a standard way. "
+                    "text": " is for firmware updates, where the BMC can update device firmware in a standard way. "
                   },
                   {
                     "type": "text",
@@ -45678,7 +45810,1230 @@
                 "attrs": {
                   "textAlign": null,
                   "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "More on PLDM type "
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
                 }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "PLDM type 5:"
+                  }
+                ]
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "It is a standard to Update fw, sideband (without the host running),  when the host-to-device link is down ( CCI command) "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "BMC  -> switch ->D1  and D2, simaltenously  update on both device"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "my work "
+                  }
+                ]
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "PLDM handler implementation "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "End-to-end command Implementation "
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "attrs": {
+                  "variant": "info"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "PMB, smb -> CCI command"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "DOC -> DOE discovery, compliance DOE"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "vdm -> mctp -> pldm"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "smbus -> mctp -> pldm "
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "challenges:"
+                  }
+                ]
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Toughest modules, no experience, new to everyone, even in the market"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "ambiguity in module,"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Testing with BMC "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "device to host "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "timeout "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "slot number "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "RDE multipart "
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "PLDM type 6 :"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "The third is "
+                  },
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "PLDM Type 6"
+                  },
+                  {
+                    "type": "text",
+                    "text": ", which is Redfish Device Enablement. "
+                  }
+                ]
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "No need for full Redfish server functionality on the device side; the Redfish server is huge, and more resource-intensive memory processing is needed"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Redfish is for common use, so it's in JSON format; the same Redfish tool can work on our "
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "my work"
+                  }
+                ]
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Define database and schema "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Define PDR for database connection"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Dictionary storage mechanism "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Integrated BEJ encoding/decoding lib"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "All mandatory commands "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Common framework for RDE multipart"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Timeout state machine:  everything"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Challenges:"
+                  }
+                ]
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Multiple specs: Redfish, resource, PLDM type 6, CXL Redfish mapping "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "discretionary storage"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Making connections between multiple specs "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Testing "
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "DCU :"
+                  }
+                ]
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "HW IP to test "
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "OCP "
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "blockquote",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Now I'm working on OCP Recovery, which brings a device back to a good state when its firmware is broken.\""
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "blockquote",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": " DCU, a hardware IP that tests DRAM at boot time. I added a vendor-defined command that runs test patterns, like March algorithms, on the DRAM. This helps us catch memory faults early."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "horizontalRule"
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Q1. What are your strengths?"
+                  }
+                ]
+              },
+              {
+                "type": "blockquote",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "\"I have two main strengths. First, I take full ownership. I owned PLDM Type 5 from requirements to testing. Second, I'm good at debugging. I measure first, find the real cause, and then fix it. For example, in the image transfer timeout issue, I found the delay came from logging and fixed it.\""
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "horizontalRule"
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Q2. What is your weakness?"
+                  }
+                ]
+              },
+              {
+                "type": "blockquote",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "\"In the past, I didn't write documentation clearly enough. I got feedback on my state machine document in PLDM Type 5. After that, I changed my habit. I now write clear states, events, and transitions before coding. I did this from day one in PLDM Type 6, and it worked better.\""
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "horizontalRule"
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Q3. Why do you want to change jobs?"
+                  }
+                ]
+              },
+              {
+                "type": "blockquote",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "\"I enjoyed my time at Samsung, and I learned a lot. Now I want to grow further. I want to work on [bigger systems / new areas like ___ / more ownership]. I think this role is a good next step for that.\""
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "horizontalRule"
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Q4. Why do you want to join our company?"
+                  }
+                ]
+              },
+              {
+                "type": "blockquote",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "\"I like the kind of work your team does in [area]. I have three years of experience in firmware, BMC, and protocol work, and I think my skills fit well. I also want to learn from [something specific about them, like their products or team]. I believe I can add value quickly and keep growing here.\""
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Read the job description and company page before the interview so this sounds real."
+                  }
+                ]
+              },
+              {
+                "type": "horizontalRule"
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Q5. Tell me about a time you had a disagreement with a teammate."
+                  }
+                ]
+              },
+              {
+                "type": "blockquote",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "\"In one project, a teammate and I had different ideas about [the design / how to handle a case]. I listened to his reasons first. Then I explained mine with data from the spec. We decided to test both ways quickly. [Result: we picked ___ because ___.] I learned that a calm talk with facts solves most disagreements.\""
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "horizontalRule"
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Q6. How do you handle a tight deadline?"
+                  }
+                ]
+              },
+              {
+                "type": "blockquote",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "\"First, I list what must be done and what can wait. Then I tell my lead early about any risk, so there are no surprises. I focus on the most important work first and test as I go. [Example: in ___ project, I delivered ___ on time this way.]\""
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "horizontalRule"
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Q7. Tell me about a mistake you made."
+                  }
+                ]
+              },
+              {
+                "type": "blockquote",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "\"In PLDM Type 5, my first state machine document was not clear. Reviewers had many questions, and it slowed us down a little. I fixed it quickly and asked for feedback. After that, I made a checklist for my documents. I haven't repeated that mistake.\""
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "horizontalRule"
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Q8. How do you handle pressure?"
+                  }
+                ]
+              },
+              {
+                "type": "blockquote",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "\"I stay calm and break the problem into small steps. When the BMC update was failing, many people were waiting for a fix. I didn't guess. I collected data, found the cause, and fixed it step by step. Also, I keep my team updated, so people feel less stress.\""
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "horizontalRule"
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Q9. Where do you see yourself in five years?"
+                  }
+                ]
+              },
+              {
+                "type": "blockquote",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "\"I want to become a strong senior firmware engineer. I want to own larger parts of the system and design them well. I also want to help junior engineers grow. I'm not thinking of one title. I'm thinking about skills and responsibility.\""
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "horizontalRule"
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Q10. Do you have any questions for us?"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Always ask 2 or 3. Good ones:"
+                  }
+                ]
+              },
+              {
+                "type": "blockquote",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "\"What does a typical project look like for this team?\""
+                      },
+                      {
+                        "type": "hardBreak"
+                      },
+                      {
+                        "type": "text",
+                        "text": "\"How does the team do code reviews and share knowledge?\""
+                      },
+                      {
+                        "type": "hardBreak"
+                      },
+                      {
+                        "type": "text",
+                        "text": "\"What would success look like in the first six months for this role?\""
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "\"AI tool\""
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    }
+                  }
+                ]
               },
               {
                 "type": "paragraph",
@@ -45888,7 +47243,33 @@
                       },
                       {
                         "type": "text",
-                        "text": " as a PCIe function with the CXL DVSEC, and learns its capacity through mailbox commands like Identify Memory Device. Then the host programs HDM decoders, Host-managed Device Memory decoders, to map a range of host physical addresses to the device's memory. After that, a normal CPU load or store to that address goes out through the root port as a CXL.mem request. The device translates the host physical address to a device physical address and accesses its media. The OS usually sees this memory as a CPU-less NUMA node, with somewhat higher latency than local DRAM. In parallel, the device firmware handles management through the mailbox: health info, event logs, poison and error handling, firmware update, and sanitize.\""
+                        "text": " as a PCIe function with the CXL DVSEC, and learns its capacity through mailbox commands like Identify Memory Device. Then the host programs HDM decoders"
+                      },
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "bold"
+                          }
+                        ],
+                        "text": ", Host-managed Device Memory decoders"
+                      },
+                      {
+                        "type": "text",
+                        "text": ", to map a range of host physical addresses to the device's memory. After that, a "
+                      },
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "bold"
+                          }
+                        ],
+                        "text": "normal CPU load or store"
+                      },
+                      {
+                        "type": "text",
+                        "text": " to that address goes out through the root port as a CXL.mem request. The device translates the host physical address to a device physical address and accesses its media. The OS usually sees this memory as a CPU-less NUMA node, with somewhat higher latency than local DRAM. In parallel, the device firmware handles management through the mailbox: health info, event logs, poison and error handling, firmware update, and sanitize.\""
                       }
                     ]
                   }
