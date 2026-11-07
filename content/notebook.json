@@ -14911,20 +14911,238 @@
                             "content": [
                               {
                                 "type": "text",
-                                "text": "What is a static class and static function and veriable in class ?"
+                                "text": "What is a static class, static function, and static variable in a class?"
                               }
                             ]
                           }
                         ]
+                      },
+                      {
+                        "type": "listItem",
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Implementation of malloc using a linked list, "
+                              }
+                            ]
+                          },
+                          {
+                            "type": "bulletList",
+                            "content": [
+                              {
+                                "type": "listItem",
+                                "content": [
+                                  {
+                                    "type": "paragraph",
+                                    "attrs": {
+                                      "textAlign": "left",
+                                      "indent": 0
+                                    },
+                                    "content": [
+                                      {
+                                        "type": "text",
+                                        "text": "Include headers also in size and node "
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "listItem",
+                                "content": [
+                                  {
+                                    "type": "paragraph",
+                                    "attrs": {
+                                      "textAlign": "left",
+                                      "indent": 0
+                                    },
+                                    "content": [
+                                      {
+                                        "type": "text",
+                                        "text": "Allocate aligned memory and size ( 32 or 64 bit) => header + memory "
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "listItem",
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": "left",
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Implement aligned_malloc;   malloc returns a standard aligned address (8,16,32 etc.)"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "bulletList",
+                            "content": [
+                              {
+                                "type": "listItem",
+                                "content": [
+                                  {
+                                    "type": "paragraph",
+                                    "attrs": {
+                                      "textAlign": "left",
+                                      "indent": 0
+                                    },
+                                    "content": [
+                                      {
+                                        "type": "text",
+                                        "text": "Allocate ( "
+                                      },
+                                      {
+                                        "type": "text",
+                                        "marks": [
+                                          {
+                                            "type": "bold"
+                                          }
+                                        ],
+                                        "text": "Aligned-1 + Pointer "
+                                      },
+                                      {
+                                        "type": "text",
+                                        "text": ") extra memory "
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "listItem",
+                                "content": [
+                                  {
+                                    "type": "paragraph",
+                                    "attrs": {
+                                      "textAlign": "left",
+                                      "indent": 0
+                                    },
+                                    "content": [
+                                      {
+                                        "type": "text",
+                                        "marks": [
+                                          {
+                                            "type": "code"
+                                          }
+                                        ],
+                                        "text": "Next aligned address ->  uintptr_t addr = ((uintptr_t)malloc_address + sizeof(void *) + align - 1) & ~(uintptr_t)(align - 1);"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "listItem",
+                                "content": [
+                                  {
+                                    "type": "paragraph",
+                                    "attrs": {
+                                      "textAlign": "left",
+                                      "indent": 0
+                                    },
+                                    "content": [
+                                      {
+                                        "type": "text",
+                                        "marks": [
+                                          {
+                                            "type": "code"
+                                          }
+                                        ],
+                                        "text": "Previous aligned addresss  -> address & aligned - 1"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "listItem",
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Hashing implementation "
+                              }
+                            ]
+                          },
+                          {
+                            "type": "bulletList",
+                            "content": [
+                              {
+                                "type": "listItem",
+                                "content": [
+                                  {
+                                    "type": "paragraph",
+                                    "attrs": {
+                                      "textAlign": null,
+                                      "indent": 0
+                                    },
+                                    "content": [
+                                      {
+                                        "type": "text",
+                                        "text": "hash =  ("
+                                      },
+                                      {
+                                        "type": "text",
+                                        "marks": [
+                                          {
+                                            "type": "bold"
+                                          }
+                                        ],
+                                        "text": "key % size)"
+                                      },
+                                      {
+                                        "type": "text",
+                                        "text": "  and linked list on collision "
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "listItem",
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            }
+                          }
+                        ]
                       }
                     ]
-                  },
-                  {
-                    "type": "paragraph",
-                    "attrs": {
-                      "textAlign": null,
-                      "indent": 0
-                    }
                   },
                   {
                     "type": "paragraph",
@@ -40594,7 +40812,7 @@
                 "content": [
                   {
                     "type": "text",
-                    "text": "\"MMIO maps peripheral registers into the normal address space so I access them with "
+                    "text": "\"MMIO maps peripheral registers into the normal address space, so I access them with "
                   },
                   {
                     "type": "text",
@@ -40633,7 +40851,7 @@
                   },
                   {
                     "type": "text",
-                    "text": ". Embedded ARM and RISC-V use MMIO.\""
+                    "text": ". Embedded ARM and RISC-V use MMIO."
                   }
                 ]
               },
@@ -45288,6 +45506,745 @@
                   "textAlign": null,
                   "indent": 0
                 }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Question practice"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "What is PLDM : "
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "“PLDM, the Platform Level Data Model, is a DMTF standard for communication between a management controller, like a BMC, and the devices on the platform, such as NICs, GPUs, drives and CXL modules. PLDM messages are carried over MCTP, and MCTP in turn runs over different physical bindings like SMBus/I2C, PCIe VDM and I3C."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "PLDM is not one spec but a family, and each type serves a different purpose. "
+                  },
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Type 0"
+                  },
+                  {
+                    "type": "text",
+                    "text": " is the base spec. It defines the common PLDM header, which has the request/response bit, the instance ID, the PLDM type and the command code. It also defines the discovery commands such as GetTID, GetPLDMVersion, GetPLDMTypes and GetPLDMCommands. Every other PLDM type builds on this base. "
+                  },
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Type 2"
+                  },
+                  {
+                    "type": "text",
+                    "text": " covers platform monitoring and control, meaning sensors and effecters. "
+                  },
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Type 5"
+                  },
+                  {
+                    "type": "text",
+                    "text": " is for firmware update, where the BMC can update device firmware in a standard way. "
+                  },
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Type 6"
+                  },
+                  {
+                    "type": "text",
+                    "text": " is Redfish Device Enablement, RDE. It lets a device expose its data in Redfish form without running a full Redfish server. The device uses a compact binary encoding of JSON called BEJ, and the BMC translates this into standard Redfish for the outside world."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "So the main benefit of PLDM is that the BMC can manage devices from different vendors in a standard way, over a simple transport, without each vendor needing a custom protocol.”"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "CXL"
+                  }
+                ]
+              },
+              {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 2
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "1. What is CXL?"
+                  }
+                ]
+              },
+              {
+                "type": "blockquote",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "\"CXL, Compute Express Link, is an open interconnect that runs on top of the PCIe physical layer, so it uses the same lanes and connectors. The difference is that PCIe is not cache-coherent, so  software cache management to share data with the CPU. CXL adds hardware coherency, so CPUs, accelerators, and memory devices can share memory directly. It does this with three protocols on one link: "
+                      },
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "link",
+                            "attrs": {
+                              "href": "http://CXL.io",
+                              "target": "_blank",
+                              "rel": "noopener noreferrer",
+                              "class": null
+                            }
+                          }
+                        ],
+                        "text": "CXL.io"
+                      },
+                      {
+                        "type": "text",
+                        "text": ", which is basically PCIe and handles enumeration, config, and interrupts; CXL.cache, where a device caches host memory; and CXL.mem, where the host accesses device memory with normal load/store.\""
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Go deeper:"
+                  },
+                  {
+                    "type": "text",
+                    "text": " "
+                  },
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "link",
+                        "attrs": {
+                          "href": "http://CXL.io",
+                          "target": "_blank",
+                          "rel": "noopener noreferrer",
+                          "class": null
+                        }
+                      }
+                    ],
+                    "text": "CXL.io"
+                  },
+                  {
+                    "type": "text",
+                    "text": " is mandatory for every device. Device types are defined by which protocols they support: Type 1 is io + cache, Type 2 is io + cache + mem, and Type 3 is io + mem."
+                  }
+                ]
+              },
+              {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 2
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "2. What is a Type 3 device?"
+                  }
+                ]
+              },
+              {
+                "type": "blockquote",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "\"A Type 3 device is a memory expander. It supports "
+                      },
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "link",
+                            "attrs": {
+                              "href": "http://CXL.io",
+                              "target": "_blank",
+                              "rel": "noopener noreferrer",
+                              "class": null
+                            }
+                          }
+                        ],
+                        "text": "CXL.io"
+                      },
+                      {
+                        "type": "text",
+                        "text": " and CXL.mem but not CXL.cache. It's essentially DRAM, or persistent memory, behind a CXL endpoint with a memory controller, and it has no compute for the host to use. It's used to add capacity and bandwidth beyond what the CPU's DDR channels allow. The device is a passive target: it only responds to host requests and never initiates coherent requests to the host.\""
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 2
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "3. How does it work?"
+                  }
+                ]
+              },
+              {
+                "type": "blockquote",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "\"First, the host enumerates it over "
+                      },
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "link",
+                            "attrs": {
+                              "href": "http://CXL.io",
+                              "target": "_blank",
+                              "rel": "noopener noreferrer",
+                              "class": null
+                            }
+                          }
+                        ],
+                        "text": "CXL.io"
+                      },
+                      {
+                        "type": "text",
+                        "text": " as a PCIe function with the CXL DVSEC, and learns its capacity through mailbox commands like Identify Memory Device. Then the host programs HDM decoders, Host-managed Device Memory decoders, to map a range of host physical addresses to the device's memory. After that, a normal CPU load or store to that address goes out through the root port as a CXL.mem request. The device translates the host physical address to a device physical address and accesses its media. The OS usually sees this memory as a CPU-less NUMA node, with somewhat higher latency than local DRAM. In parallel, the device firmware handles management through the mailbox: health info, event logs, poison and error handling, firmware update, and sanitize.\""
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Go deeper:"
+                  },
+                  {
+                    "type": "text",
+                    "text": " HDM decoders can also interleave across several devices for bandwidth. On Linux, the driver stack is "
+                  },
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "code"
+                      }
+                    ],
+                    "text": "cxl_acpi"
+                  },
+                  {
+                    "type": "text",
+                    "text": ", "
+                  },
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "code"
+                      }
+                    ],
+                    "text": "cxl_pci"
+                  },
+                  {
+                    "type": "text",
+                    "text": ", "
+                  },
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "code"
+                      }
+                    ],
+                    "text": "cxl_mem"
+                  },
+                  {
+                    "type": "text",
+                    "text": ", and "
+                  },
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "code"
+                      }
+                    ],
+                    "text": "cxl_region"
+                  },
+                  {
+                    "type": "text",
+                    "text": "."
+                  }
+                ]
+              },
+              {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 2
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "4. How does the host cache device memory?"
+                  }
+                ]
+              },
+              {
+                "type": "blockquote",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "\"Because the device memory is mapped into the host physical address space as HDM, the CPU treats it like normal memory. Lines are cached in L1, L2, and LLC, with no special software. CXL.mem carries the requests: the host sends M2S requests like MemRd and MemWr, and the device answers with S2M responses, data or completions. For a Type 3 device, the device doesn't cache host memory and doesn't modify lines behind the host's back, so there's no coherency problem to resolve. The host can cache freely and write back dirty lines on eviction. For Type 2 devices, where the device can also modify its memory, CXL uses bias-based coherency, host bias versus device bias, to decide who has to be consulted. In CXL 3.x, Back-Invalidate lets a device invalidate lines the host has cached, which matters for memory sharing across hosts.\""
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 2
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "5. How does a device cache host memory?"
+                  }
+                ]
+              },
+              {
+                "type": "blockquote",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "\"That's CXL.cache, which Type 1 and Type 2 devices support, but Type 3 does not. The device has its own coherent cache and sends requests to the host over the D2H channel, such as read-shared or read-own. The host's home agent tracks the device as a sharer or owner. If a CPU core later needs a line the device holds, the host sends a snoop over H2D, and the device responds with its state and writes back data if the line is modified. All of this is done in hardware, with no software flush or DMA sync.\""
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 2
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Likely follow-ups"
+                  }
+                ]
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "\"Why not just use PCIe?\""
+                          },
+                          {
+                            "type": "text",
+                            "text": " Because PCIe lacks coherency. You'd need pinned buffers, DMA descriptors, and software flushes, and you can't use the device memory as ordinary load/store memory."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "\"CXL vs NUMA?\""
+                          },
+                          {
+                            "type": "text",
+                            "text": " It shows up as a CPU-less NUMA node, so the OS handles it with existing NUMA and tiering policies."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "\"What does your firmware do on the device?\""
+                          },
+                          {
+                            "type": "text",
+                            "text": " Tie it to your own work here: mailbox command handling, requirements through implementation and testing, plus any RAS, error, or management features you own. Be ready with one concrete example you can walk through, such as how a mailbox command flows from the host through to your firmware handler."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "\"How is it managed out of band?\""
+                          },
+                          {
+                            "type": "text",
+                            "text": " CCI over MCTP, which connects directly to your MCTP/PLDM experience."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 2
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Tips for delivery"
+                  }
+                ]
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Start with one sentence (\"coherent interconnect on PCIe\"), then go deeper only if they ask."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Draw a quick picture if there's a whiteboard: CPU, root port, CXL link, Type 3 device with DRAM, and label the three protocols."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Don't claim hands-on experience with parts you haven't touched (for example, Type 1 or Type 2 bias flows). Say \"I know the concept; my hands-on work is on the Type 3 side.\""
+                          }
+                        ]
+                      },
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
               }
             ]
           },
@@ -48661,43 +49618,6 @@
           "children": []
         }
       ]
-    },
-    {
-      "id": "s-mw3lr839xl7bj",
-      "title": "Revision",
-      "doc": {
-        "type": "doc",
-        "content": [
-          {
-            "type": "paragraph",
-            "attrs": {
-              "textAlign": null,
-              "indent": 0
-            },
-            "content": [
-              {
-                "type": "text",
-                "text": " "
-              }
-            ]
-          },
-          {
-            "type": "paragraph",
-            "attrs": {
-              "textAlign": null,
-              "indent": 0
-            }
-          },
-          {
-            "type": "paragraph",
-            "attrs": {
-              "textAlign": null,
-              "indent": 0
-            }
-          }
-        ]
-      },
-      "children": []
     }
   ]
 }
