@@ -45716,7 +45716,7 @@
                 "content": [
                   {
                     "type": "text",
-                    "text": "“PLDM, the Platform Level Data Model, is a DMTF standard for communication between a management controller, like a BMC, and the devices on the platform, such as NICs, GPUs, drives and CXL modules. PLDM messages are carried over MCTP, and MCTP in turn runs over different physical bindings like SMBus/I2C, PCIe VDM and I3C."
+                    "text": "“PLDM, the Platform Level Data Model, is a DMTF standard for communication between a management controller, like a BMC, and the devices on the platform, such as NICs, GPUs, drives and CXL modules. PLDM messages are carried over MCTP, and MCTP in turn runs over different physical bindings like SMBus/I2C, PCIe VDM, and I3C."
                   }
                 ]
               },
@@ -45742,7 +45742,7 @@
                   },
                   {
                     "type": "text",
-                    "text": " is the base spec. It defines the common PLDM header, which has the request/response bit, the instance ID, the PLDM type and the command code. It also defines the discovery commands such as GetTID, GetPLDMVersion, GetPLDMTypes and GetPLDMCommands. Every other PLDM type builds on this base. "
+                    "text": " is the base spec. It defines the common PLDM header, which has the request/response bit, the instance ID, the PLDM type and the command code. It also defines the discovery commands such as GetTID, GetPLDMVersion, GetPLDMTypes, and GetPLDMCommands. Every other PLDM type builds on this base. "
                   },
                   {
                     "type": "text",
@@ -45781,7 +45781,7 @@
                   },
                   {
                     "type": "text",
-                    "text": " is Redfish Device Enablement, RDE. It lets a device expose its data in Redfish form without running a full Redfish server. The device uses a compact binary encoding of JSON called BEJ, and the BMC translates this into standard Redfish for the outside world."
+                    "text": " is Redfish Device Enablement, RDE. It lets a device expose its data in Redfish form without running a full Redfish server. The device uses a compact binary JSON encoding called BEJ, and the BMC translates it into standard Redfish for the outside world."
                   }
                 ]
               },
@@ -46541,6 +46541,219 @@
                     "text": "OCP "
                   }
                 ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "OCP Secure Firmware Recovery is an open standard for rescuing a device whose firmware is corrupted, malicious, or too broken to boot, using a very simple protocol that works even when the device’s normal software is dead."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "MCU ROM"
+                  }
+                ]
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Streaming boot -> BMC sends over I3C, RI handles it, no mu involvement "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Flash boot "
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Decided by the hw strap"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "MCU ROM gets Caliptra runtime and MCU runtime"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "MCU RT -> get SOC images over PLDM type 5"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "My work :"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Testing flash boot flow at hw level"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "image",
+                "attrs": {
+                  "src": "content/media/2026-11/mw6kqqrn-image.png",
+                  "alt": "image",
+                  "width": null,
+                  "align": "center"
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "image",
+                "attrs": {
+                  "src": "content/media/2026-11/mw6ks9un-image.png",
+                  "alt": "image",
+                  "width": null,
+                  "align": "center"
+                }
               },
               {
                 "type": "paragraph",
@@ -47537,78 +47750,10 @@
                         ]
                       }
                     ]
-                  }
-                ]
-              },
-              {
-                "type": "heading",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0,
-                  "level": 2
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "Tips for delivery"
-                  }
-                ]
-              },
-              {
-                "type": "bulletList",
-                "content": [
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "attrs": {
-                          "textAlign": null,
-                          "indent": 0
-                        },
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "Start with one sentence (\"coherent interconnect on PCIe\"), then go deeper only if they ask."
-                          }
-                        ]
-                      }
-                    ]
                   },
                   {
                     "type": "listItem",
                     "content": [
-                      {
-                        "type": "paragraph",
-                        "attrs": {
-                          "textAlign": null,
-                          "indent": 0
-                        },
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "Draw a quick picture if there's a whiteboard: CPU, root port, CXL link, Type 3 device with DRAM, and label the three protocols."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "attrs": {
-                          "textAlign": null,
-                          "indent": 0
-                        },
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "Don't claim hands-on experience with parts you haven't touched (for example, Type 1 or Type 2 bias flows). Say \"I know the concept; my hands-on work is on the Type 3 side.\""
-                          }
-                        ]
-                      },
                       {
                         "type": "paragraph",
                         "attrs": {
