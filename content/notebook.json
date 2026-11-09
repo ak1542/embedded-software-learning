@@ -38310,1125 +38310,6 @@
                 "content": [
                   {
                     "type": "text",
-                    "text": "When two "
-                  },
-                  {
-                    "type": "text",
-                    "marks": [
-                      {
-                        "type": "bold"
-                      }
-                    ],
-                    "text": "tasks"
-                  },
-                  {
-                    "type": "text",
-                    "text": " share data, the order in which their instructions interleave can change the result. "
-                  },
-                  {
-                    "type": "text",
-                    "marks": [
-                      {
-                        "type": "bold"
-                      }
-                    ],
-                    "text": "Synchronization"
-                  },
-                  {
-                    "type": "text",
-                    "text": " makes sure shared data is used safely. (On bare metal, all tasks share one address space, so we call them tasks rather than processes.)"
-                  }
-                ]
-              },
-              {
-                "type": "heading",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0,
-                  "level": 2
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "The problem: a race condition"
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "marks": [
-                      {
-                        "type": "code"
-                      }
-                    ],
-                    "text": "counter++"
-                  },
-                  {
-                    "type": "text",
-                    "text": " looks like one step but is three: load, add, store. If a task switch lands in the middle, both tasks can read the same old value."
-                  }
-                ]
-              },
-              {
-                "type": "table",
-                "content": [
-                  {
-                    "type": "tableRow",
-                    "content": [
-                      {
-                        "type": "tableHeader",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "Step"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableHeader",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "Task A"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableHeader",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "Task B"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableHeader",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "counter"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "tableRow",
-                    "content": [
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "1"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "load counter (0)"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            }
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "0"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "tableRow",
-                    "content": [
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "2"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            }
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "load counter (0)"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "0"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "tableRow",
-                    "content": [
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "3"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "add 1, store"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            }
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "1"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "tableRow",
-                    "content": [
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "4"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            }
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "add 1, store"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "1 (should be 2)"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "htmlAnimation",
-                "attrs": {
-                  "src": "content/media/animations/sync-race.html",
-                  "height": 440,
-                  "fit": true,
-                  "width": 100,
-                  "title": "Race condition and mutex"
-                }
-              },
-              {
-                "type": "heading",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0,
-                  "level": 2
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "Critical sections and the tools"
-                  }
-                ]
-              },
-              {
-                "type": "table",
-                "content": [
-                  {
-                    "type": "tableRow",
-                    "content": [
-                      {
-                        "type": "tableHeader",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "Tool"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableHeader",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "What it does"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableHeader",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "Use when"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "tableRow",
-                    "content": [
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "Disable interrupts ("
-                              },
-                              {
-                                "type": "text",
-                                "marks": [
-                                  {
-                                    "type": "code"
-                                  }
-                                ],
-                                "text": "PRIMASK"
-                              },
-                              {
-                                "type": "text",
-                                "text": ")"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "nothing can pre-empt"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "very short sections, also protects against ISRs"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "tableRow",
-                    "content": [
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "marks": [
-                                  {
-                                    "type": "bold"
-                                  }
-                                ],
-                                "text": "Mutex"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "only one task inside; the owner must unlock"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "protecting shared data or hardware"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "tableRow",
-                    "content": [
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "marks": [
-                                  {
-                                    "type": "bold"
-                                  }
-                                ],
-                                "text": "Binary semaphore"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "a flag one side gives and the other takes"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "signalling an event"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "tableRow",
-                    "content": [
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "marks": [
-                                  {
-                                    "type": "bold"
-                                  }
-                                ],
-                                "text": "Counting semaphore"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "a counter of available items/slots"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "tableCell",
-                        "attrs": {
-                          "colspan": 1,
-                          "rowspan": 1,
-                          "colwidth": null
-                        },
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "producer/consumer, resource pools"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "codeBlock",
-                "attrs": {
-                  "language": "c"
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "/* producer / consumer with two counting semaphores */\nsem_t slots_free = SEM_INIT(N);   /* empty slots in the buffer */\nsem_t items_ready = SEM_INIT(0);  /* filled slots */\n\nvoid producer(void) { sem_take(&slots_free); put(buf, x); sem_give(&items_ready); }\nvoid consumer(void) { sem_take(&items_ready); x = get(buf); sem_give(&slots_free); }"
-                  }
-                ]
-              },
-              {
-                "type": "heading",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0,
-                  "level": 2
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "Atomic operations: LDREX / STREX (Added)"
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "On Cortex-M3/M4 a lock can be built without disabling interrupts. "
-                  },
-                  {
-                    "type": "text",
-                    "marks": [
-                      {
-                        "type": "code"
-                      }
-                    ],
-                    "text": "LDREX"
-                  },
-                  {
-                    "type": "text",
-                    "text": " reads a word and marks it for exclusive access; "
-                  },
-                  {
-                    "type": "text",
-                    "marks": [
-                      {
-                        "type": "code"
-                      }
-                    ],
-                    "text": "STREX"
-                  },
-                  {
-                    "type": "text",
-                    "text": " writes only if nothing else touched it since, and returns 0 on success."
-                  }
-                ]
-              },
-              {
-                "type": "codeBlock",
-                "attrs": {
-                  "language": "c"
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "void lock(volatile uint32_t *m)\n{\n  do {\n    while (__LDREXW(m) != 0) { yield(); }   /* wait while locked */\n  } while (__STREXW(1, m) != 0);            /* retry if someone got in first */\n  __DMB();                                  /* memory barrier */\n}\nvoid unlock(volatile uint32_t *m) { __DMB(); *m = 0; }"
-                  }
-                ]
-              },
-              {
-                "type": "callout",
-                "attrs": {
-                  "variant": "warning"
-                },
-                "content": [
-                  {
-                    "type": "paragraph",
-                    "attrs": {
-                      "textAlign": null,
-                      "indent": 0
-                    },
-                    "content": [
-                      {
-                        "type": "text",
-                        "text": "Added note: "
-                      },
-                      {
-                        "type": "text",
-                        "marks": [
-                          {
-                            "type": "code"
-                          }
-                        ],
-                        "text": "LDREX/STREX"
-                      },
-                      {
-                        "type": "text",
-                        "text": " and the "
-                      },
-                      {
-                        "type": "text",
-                        "marks": [
-                          {
-                            "type": "code"
-                          }
-                        ],
-                        "text": "__LDREXW"
-                      },
-                      {
-                        "type": "text",
-                        "text": " / "
-                      },
-                      {
-                        "type": "text",
-                        "marks": [
-                          {
-                            "type": "code"
-                          }
-                        ],
-                        "text": "__STREXW"
-                      },
-                      {
-                        "type": "text",
-                        "text": " intrinsics are from my general knowledge of Cortex-M3/M4 and CMSIS and were not checked in this session. They are not available on Cortex-M0."
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "heading",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0,
-                  "level": 2
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "Priority inversion and inheritance (Added)"
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                },
-                "content": [
-                  {
-                    "type": "text",
                     "text": "A "
                   },
                   {
@@ -39438,24 +38319,11 @@
                         "type": "bold"
                       }
                     ],
-                    "text": "low"
+                    "text": "mutex"
                   },
                   {
                     "type": "text",
-                    "text": "-priority task holds a lock. A "
-                  },
-                  {
-                    "type": "text",
-                    "marks": [
-                      {
-                        "type": "bold"
-                      }
-                    ],
-                    "text": "high"
-                  },
-                  {
-                    "type": "text",
-                    "text": "-priority task waits for it. A "
+                    "text": " (mutual exclusion lock) is a lock that lets "
                   },
                   {
                     "type": "text",
@@ -39464,40 +38332,29 @@
                         "type": "bold"
                       }
                     ],
-                    "text": "medium"
+                    "text": "only one thread or task at a time"
                   },
                   {
                     "type": "text",
-                    "text": "-priority task then runs and keeps the low one from finishing, so the high task is effectively blocked by the medium one. "
-                  },
-                  {
-                    "type": "text",
-                    "marks": [
-                      {
-                        "type": "bold"
-                      }
-                    ],
-                    "text": "Priority inheritance"
-                  },
-                  {
-                    "type": "text",
-                    "text": " fixes it: while it holds the lock, the low task temporarily runs at the waiter's priority."
+                    "text": " into a critical section, the code that touches shared data or hardware. A task locks it before using the resource and unlocks it afterward. Anyone else who tries to lock it in the meantime sleeps until it’s released."
                   }
                 ]
               },
               {
-                "type": "heading",
+                "type": "paragraph",
                 "attrs": {
                   "textAlign": null,
-                  "indent": 0,
-                  "level": 2
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "Deadlock (Added)"
-                  }
-                ]
+                  "indent": 0
+                }
+              },
+              {
+                "type": "image",
+                "attrs": {
+                  "src": "content/media/2026-11/mw9d0b7p-image.png",
+                  "alt": "image",
+                  "width": null,
+                  "align": "center"
+                }
               },
               {
                 "type": "paragraph",
@@ -39508,34 +38365,12 @@
                 "content": [
                   {
                     "type": "text",
-                    "text": "Task A holds lock 1 and waits for lock 2, while task B holds lock 2 and waits for lock 1: neither can ever continue. Avoid it by always taking locks in the "
-                  },
-                  {
-                    "type": "text",
                     "marks": [
                       {
                         "type": "bold"
                       }
                     ],
-                    "text": "same global order"
-                  },
-                  {
-                    "type": "text",
-                    "text": ", holding locks for as short a time as possible, and using timeouts."
-                  }
-                ]
-              },
-              {
-                "type": "heading",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0,
-                  "level": 2
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "Using primitives from an ISR (Added)"
+                    "text": "1. Why can't an ISR take a mutex?"
                   }
                 ]
               },
@@ -39554,7 +38389,7 @@
                         "content": [
                           {
                             "type": "text",
-                            "text": "An ISR must "
+                            "text": "A mutex can "
                           },
                           {
                             "type": "text",
@@ -39563,11 +38398,11 @@
                                 "type": "bold"
                               }
                             ],
-                            "text": "never block"
+                            "text": "block"
                           },
                           {
                             "type": "text",
-                            "text": ": there is no task to put to sleep."
+                            "text": ", and an ISR has no task context to put to sleep. Blocking would stall the CPU or deadlock the system."
                           }
                         ]
                       }
@@ -39585,7 +38420,20 @@
                         "content": [
                           {
                             "type": "text",
-                            "text": "Use the non-blocking \"give from ISR\" style call to signal a task, and let the task do the long work."
+                            "text": "A mutex has an "
+                          },
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "owner"
+                          },
+                          {
+                            "type": "text",
+                            "text": ", and an ISR isn't a schedulable task, so ownership and priority inheritance make no sense."
                           }
                         ]
                       }
@@ -39603,199 +38451,989 @@
                         "content": [
                           {
                             "type": "text",
-                            "text": "Keep ISRs short: set a flag or give a semaphore, then return."
+                            "text": "If the mutex is already held, the ISR would wait for a task that can't run until the ISR returns."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "Instead:"
+                          },
+                          {
+                            "type": "text",
+                            "text": " the ISR gives a semaphore or sends a queue or notification ("
+                          },
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "code"
+                              }
+                            ],
+                            "text": "...FromISR"
+                          },
+                          {
+                            "type": "text",
+                            "text": "), and a task does the work. For shared data, briefly disable interrupts or use a lock-free ring buffer."
                           }
                         ]
                       }
                     ]
                   }
                 ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "2. Explain priority inversion and give two fixes."
+                  }
+                ]
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "A low-priority task L holds a lock that high-priority H needs. A medium-priority M preempts L, so L can't release the lock and H is effectively blocked by M."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "Fix 1:"
+                          },
+                          {
+                            "type": "text",
+                            "text": " priority inheritance. L is temporarily boosted to H's priority, finishes, and releases the lock."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "Fix 2:"
+                          },
+                          {
+                            "type": "text",
+                            "text": " priority ceiling. The lock holder runs at the mutex's ceiling priority. (Others: a gatekeeper task, or shorter critical sections.)"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "3. Implement a counting semaphore using a mutex and a condition variable."
+                  }
+                ]
+              },
+              {
+                "type": "codeBlock",
+                "attrs": {
+                  "language": "c"
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "typedef struct {\n    int count;\n    pthread_mutex_t m;\n    pthread_cond_t  cv;\n} my_sem_t;\n\nvoid my_sem_wait(my_sem_t *s) {\n    pthread_mutex_lock(&s->m);\n    while (s->count == 0)               // while, not if\n        pthread_cond_wait(&s->cv, &s->m);\n    s->count--;\n    pthread_mutex_unlock(&s->m);\n}\n\nvoid my_sem_post(my_sem_t *s) {\n    pthread_mutex_lock(&s->m);\n    s->count++;\n    pthread_cond_signal(&s->cv);\n    pthread_mutex_unlock(&s->m);\n}\n"
+                  }
+                ]
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "The mutex protects "
+                          },
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "code"
+                              }
+                            ],
+                            "text": "count"
+                          },
+                          {
+                            "type": "text",
+                            "text": "."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "The condvar puts waiters to sleep until "
+                          },
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "code"
+                              }
+                            ],
+                            "text": "count > 0"
+                          },
+                          {
+                            "type": "text",
+                            "text": "."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Use "
+                          },
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "code"
+                              }
+                            ],
+                            "text": "while"
+                          },
+                          {
+                            "type": "text",
+                            "text": " because of "
+                          },
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "spurious wakeups"
+                          },
+                          {
+                            "type": "text",
+                            "text": ", and because another waiter may grab the count first."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "4. Why does "
+                  },
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "code"
+                      }
+                    ],
+                    "text": "sem_take"
+                  },
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": " need to be atomic?"
+                  }
+                ]
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "The check and decrement are two steps: "
+                          },
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "code"
+                              }
+                            ],
+                            "text": "if (count > 0) count--"
+                          },
+                          {
+                            "type": "text",
+                            "text": "."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "With "
+                          },
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "code"
+                              }
+                            ],
+                            "text": "count == 1"
+                          },
+                          {
+                            "type": "text",
+                            "text": ", tasks A and B both read 1, both pass the check, and both decrement. The count goes to -1 and "
+                          },
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "two tasks enter a section meant for one"
+                          },
+                          {
+                            "type": "text",
+                            "text": "."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "The fix is to make the check and decrement indivisible: disable interrupts (single core), use an atomic compare-and-swap, or use a spinlock (SMP)."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Likewise, adding the task to the wait queue must be atomic with the check, or a "
+                          },
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "code"
+                              }
+                            ],
+                            "text": "give"
+                          },
+                          {
+                            "type": "text",
+                            "text": " between them causes a "
+                          },
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "lost wakeup"
+                          },
+                          {
+                            "type": "text",
+                            "text": "."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "5. What if a task holding a mutex is deleted or crashes?"
+                  }
+                ]
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "The mutex stays locked forever, and every task waiting on it blocks. Most RTOSes, including FreeRTOS, do "
+                          },
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "not"
+                          },
+                          {
+                            "type": "text",
+                            "text": " auto-release it."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "Mitigations:"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "bulletList",
+                        "content": [
+                          {
+                            "type": "listItem",
+                            "content": [
+                              {
+                                "type": "paragraph",
+                                "attrs": {
+                                  "textAlign": null,
+                                  "indent": 0
+                                },
+                                "content": [
+                                  {
+                                    "type": "text",
+                                    "text": "Use "
+                                  },
+                                  {
+                                    "type": "text",
+                                    "marks": [
+                                      {
+                                        "type": "bold"
+                                      }
+                                    ],
+                                    "text": "robust mutexes"
+                                  },
+                                  {
+                                    "type": "text",
+                                    "text": " ("
+                                  },
+                                  {
+                                    "type": "text",
+                                    "marks": [
+                                      {
+                                        "type": "code"
+                                      }
+                                    ],
+                                    "text": "PTHREAD_MUTEX_ROBUST"
+                                  },
+                                  {
+                                    "type": "text",
+                                    "text": "). The next locker gets "
+                                  },
+                                  {
+                                    "type": "text",
+                                    "marks": [
+                                      {
+                                        "type": "code"
+                                      }
+                                    ],
+                                    "text": "EOWNERDEAD"
+                                  },
+                                  {
+                                    "type": "text",
+                                    "text": " and can repair the state and mark it consistent."
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "listItem",
+                            "content": [
+                              {
+                                "type": "paragraph",
+                                "attrs": {
+                                  "textAlign": null,
+                                  "indent": 0
+                                },
+                                "content": [
+                                  {
+                                    "type": "text",
+                                    "text": "Use "
+                                  },
+                                  {
+                                    "type": "text",
+                                    "marks": [
+                                      {
+                                        "type": "bold"
+                                      }
+                                    ],
+                                    "text": "timeouts"
+                                  },
+                                  {
+                                    "type": "text",
+                                    "text": " on lock calls ("
+                                  },
+                                  {
+                                    "type": "text",
+                                    "marks": [
+                                      {
+                                        "type": "code"
+                                      }
+                                    ],
+                                    "text": "xSemaphoreTake(m, ticks)"
+                                  },
+                                  {
+                                    "type": "text",
+                                    "text": ") and handle failure."
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "listItem",
+                            "content": [
+                              {
+                                "type": "paragraph",
+                                "attrs": {
+                                  "textAlign": null,
+                                  "indent": 0
+                                },
+                                "content": [
+                                  {
+                                    "type": "text",
+                                    "text": "Never delete a task while it holds a lock. Signal it to exit cleanly instead."
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "listItem",
+                            "content": [
+                              {
+                                "type": "paragraph",
+                                "attrs": {
+                                  "textAlign": null,
+                                  "indent": 0
+                                },
+                                "content": [
+                                  {
+                                    "type": "text",
+                                    "text": "Use cleanup handlers ("
+                                  },
+                                  {
+                                    "type": "text",
+                                    "marks": [
+                                      {
+                                        "type": "code"
+                                      }
+                                    ],
+                                    "text": "pthread_cleanup_push"
+                                  },
+                                  {
+                                    "type": "text",
+                                    "text": ") or RAII-style wrappers."
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "listItem",
+                            "content": [
+                              {
+                                "type": "paragraph",
+                                "attrs": {
+                                  "textAlign": null,
+                                  "indent": 0
+                                },
+                                "content": [
+                                  {
+                                    "type": "text",
+                                    "text": "Use a "
+                                  },
+                                  {
+                                    "type": "text",
+                                    "marks": [
+                                      {
+                                        "type": "bold"
+                                      }
+                                    ],
+                                    "text": "watchdog"
+                                  },
+                                  {
+                                    "type": "text",
+                                    "text": " to recover the system if everything hangs."
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "6. Can a semaphore replace a mutex? What do you lose?"
+                  }
+                ]
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Functionally, yes. A binary semaphore initialized to 1 gives mutual exclusion."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "You lose:"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "bulletList",
+                        "content": [
+                          {
+                            "type": "listItem",
+                            "content": [
+                              {
+                                "type": "paragraph",
+                                "attrs": {
+                                  "textAlign": null,
+                                  "indent": 0
+                                },
+                                "content": [
+                                  {
+                                    "type": "text",
+                                    "marks": [
+                                      {
+                                        "type": "bold"
+                                      }
+                                    ],
+                                    "text": "Ownership."
+                                  },
+                                  {
+                                    "type": "text",
+                                    "text": " Any task can release it so a bug can unlock someone else's critical section."
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "listItem",
+                            "content": [
+                              {
+                                "type": "paragraph",
+                                "attrs": {
+                                  "textAlign": null,
+                                  "indent": 0
+                                },
+                                "content": [
+                                  {
+                                    "type": "text",
+                                    "marks": [
+                                      {
+                                        "type": "bold"
+                                      }
+                                    ],
+                                    "text": "Priority inheritance"
+                                  },
+                                  {
+                                    "type": "text",
+                                    "text": ", so you're exposed to priority inversion."
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "listItem",
+                            "content": [
+                              {
+                                "type": "paragraph",
+                                "attrs": {
+                                  "textAlign": null,
+                                  "indent": 0
+                                },
+                                "content": [
+                                  {
+                                    "type": "text",
+                                    "marks": [
+                                      {
+                                        "type": "bold"
+                                      }
+                                    ],
+                                    "text": "Recursive locking."
+                                  },
+                                  {
+                                    "type": "text",
+                                    "text": " The same task locking twice deadlocks itself."
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "listItem",
+                            "content": [
+                              {
+                                "type": "paragraph",
+                                "attrs": {
+                                  "textAlign": null,
+                                  "indent": 0
+                                },
+                                "content": [
+                                  {
+                                    "type": "text",
+                                    "marks": [
+                                      {
+                                        "type": "bold"
+                                      }
+                                    ],
+                                    "text": "Misuse detection."
+                                  },
+                                  {
+                                    "type": "text",
+                                    "text": " Mutexes can assert that the unlocker is the owner, and semaphores can't."
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "bold"
+                              }
+                            ],
+                            "text": "Rule:"
+                          },
+                          {
+                            "type": "text",
+                            "text": " use a mutex for protection and a semaphore for signaling."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Want me to continue the mock interview, or make a one-page cheat sheet of these?"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
               },
               {
                 "type": "heading",
                 "attrs": {
                   "textAlign": null,
                   "indent": 0,
-                  "level": 2
+                  "level": 3
                 },
                 "content": [
                   {
                     "type": "text",
-                    "text": "Revise"
+                    "text": "Ring buffer: consumer and producer problem "
                   }
                 ]
               },
               {
-                "type": "callout",
+                "type": "codeBlock",
                 "attrs": {
-                  "variant": "tip"
+                  "language": "c"
                 },
                 "content": [
                   {
-                    "type": "paragraph",
-                    "attrs": {
-                      "textAlign": null,
-                      "indent": 0
-                    },
-                    "content": [
-                      {
-                        "type": "text",
-                        "marks": [
-                          {
-                            "type": "bold"
-                          }
-                        ],
-                        "text": "Quick recap:"
-                      },
-                      {
-                        "type": "text",
-                        "text": " shared data + interleaving = race. Protect the critical section with a mutex (ownership, priority inheritance) or signal with semaphores. Never block in an ISR. Lock in a fixed order to avoid deadlock."
-                      }
-                    ]
+                    "type": "text",
+                    "text": "#define N 64                       // power of 2\nstatic uint8_t buf[N];\nstatic volatile uint32_t head;     // written ONLY by ISR\nstatic volatile uint32_t tail;     // written ONLY by task\n\nvoid rx_isr(void) {                // producer\n    uint32_t next = (head + 1) & (N - 1);\n    if (next != tail) {            // not full\n        buf[head] = HW_RX_REG;\n        __DMB();                   // data visible before index\n        head = next;\n    } else {\n        overflow_count++;          // drop and count\n    }\n    sem_give_from_isr(&data_sem);  // wake the task\n}\n\nvoid rx_task(void) {               // consumer\n    for (;;) {\n        sem_take(&data_sem, FOREVER);   // sleeps until the ISR signals\n        while (tail != head) {          // DRAIN everything\n            uint8_t b = buf[tail];\n            __DMB();\n            tail = (tail + 1) & (N - 1);\n            process(b);\n        }\n    }\n}"
                   }
                 ]
               },
               {
-                "type": "callout",
+                "type": "paragraph",
                 "attrs": {
-                  "variant": "warning"
-                },
-                "content": [
-                  {
-                    "type": "paragraph",
-                    "attrs": {
-                      "textAlign": null,
-                      "indent": 0
-                    },
-                    "content": [
-                      {
-                        "type": "text",
-                        "marks": [
-                          {
-                            "type": "bold"
-                          }
-                        ],
-                        "text": "Common mistakes:"
-                      },
-                      {
-                        "type": "text",
-                        "text": " forgetting to unlock on an early "
-                      },
-                      {
-                        "type": "text",
-                        "marks": [
-                          {
-                            "type": "code"
-                          }
-                        ],
-                        "text": "return"
-                      },
-                      {
-                        "type": "text",
-                        "text": "; a mutex used from an ISR; holding a lock while calling something slow; taking two locks in different orders in different tasks; using a binary semaphore where a mutex (with inheritance) is needed."
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "htmlAnimation",
-                "attrs": {
-                  "src": "content/media/animations/quiz-sync.html",
-                  "height": 360,
-                  "fit": true,
-                  "width": 100,
-                  "title": "Synchronization quiz"
+                  "textAlign": null,
+                  "indent": 0
                 }
               },
               {
-                "type": "taskList",
-                "content": [
-                  {
-                    "type": "taskItem",
-                    "attrs": {
-                      "checked": false
-                    },
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "attrs": {
-                          "textAlign": null,
-                          "indent": 0
-                        },
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "I can explain a race using load/add/store"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "taskItem",
-                    "attrs": {
-                      "checked": false
-                    },
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "attrs": {
-                          "textAlign": null,
-                          "indent": 0
-                        },
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "I can explain mutex vs semaphore"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "taskItem",
-                    "attrs": {
-                      "checked": false
-                    },
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "attrs": {
-                          "textAlign": null,
-                          "indent": 0
-                        },
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "I can explain priority inversion and deadlock"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "taskItem",
-                    "attrs": {
-                      "checked": false
-                    },
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "attrs": {
-                          "textAlign": null,
-                          "indent": 0
-                        },
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "I can say what an ISR may and may not do"
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
               },
               {
                 "type": "paragraph",
