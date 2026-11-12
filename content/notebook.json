@@ -3701,6 +3701,20 @@
                                 "text": "No"
                               }
                             ]
+                          },
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            }
+                          },
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            }
                           }
                         ]
                       }
@@ -3716,7 +3730,7 @@
                 "content": [
                   {
                     "type": "text",
-                    "text": "char *p = \"hello\";    // two things: pointer variable p (4 bytes on 32-bit) + the literal in .rodata\nchar arr[] = \"hello\"; // one thing: 6 bytes of chars. No pointer variable."
+                    "text": "char *p = \"hello\";    // two things: pointer variable p (4 bytes on 32-bit) + the literal in .rodata\nchar arr[] = \"hello\"; // one thing: 6 bytes of chars. No pointer variable .\n\n\"hello\" string can be in .rodata which will be copied in arr, or ot can be part of .ext , next instruction."
                   }
                 ]
               },
@@ -33063,7 +33077,8 @@
                   "height": 2189,
                   "fit": true,
                   "width": 100,
-                  "title": "Animation"
+                  "title": "Animation",
+                  "rev": 0
                 }
               },
               {
@@ -33073,7 +33088,8 @@
                   "height": 420,
                   "fit": true,
                   "width": 100,
-                  "title": "Animation"
+                  "title": "Animation",
+                  "rev": 0
                 }
               },
               {
@@ -33154,13 +33170,387 @@
                 ]
               },
               {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "ARM Cortex R8 "
+                  }
+                ]
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "When mode changes, PSR_{cur_mode} = PSR_{pre_mode}, LR_{cur_mode} = next inext address in previous mode"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "1. After reset"
+                  }
+                ]
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "The core starts in SVC mode, with IRQ and FIQ masked."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Every banked register (SP and LR of each mode) holds an unknown value."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Nothing is running in the other modes yet."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "2. Startup code sets up the stacks (software)"
+                  },
+                  {
+                    "type": "hardBreak"
+                  },
+                  {
+                    "type": "text",
+                    "text": "It uses "
+                  },
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "code"
+                      }
+                    ],
+                    "text": "CPS"
+                  },
+                  {
+                    "type": "text",
+                    "text": " to visit each mode and load only the SP. This is the only setup a mode needs. Do it before enabling interrupts, or the first IRQ will use a garbage SP."
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "attrs": {
+                  "variant": "info"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "CPS #0x12   @ IRQ mode"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "LDR sp, =irq_stack_top"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "CPS #0x13   @ SVC mode"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "LDR sp, =svc_stack_top"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "@ ... same for FIQ, ABT, UND, SYS"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "3. LR and SPSR need no setup (hardware fills them)"
+                  },
+                  {
+                    "type": "hardBreak"
+                  },
+                  {
+                    "type": "text",
+                    "text": "When an IRQ fires, the hardware does this by itself:"
+                  }
+                ]
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "code"
+                              }
+                            ],
+                            "text": "LR_irq"
+                          },
+                          {
+                            "type": "text",
+                            "text": " = return address + offset"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "marks": [
+                              {
+                                "type": "code"
+                              }
+                            ],
+                            "text": "SPSR_irq"
+                          },
+                          {
+                            "type": "text",
+                            "text": " = CPSR of the interrupted code"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "the mode changes to IRQ, and SP_irq now points to your prepared stack"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
                 "type": "htmlAnimation",
                 "attrs": {
                   "src": "content/media/2026-10/mvul3mua-animation.html",
                   "height": 1600,
                   "fit": true,
                   "width": 100,
-                  "title": "Animation"
+                  "title": "Animation",
+                  "rev": 0
                 }
               },
               {
@@ -34735,7 +35125,8 @@
                   "height": 420,
                   "fit": true,
                   "width": 100,
-                  "title": "Animation"
+                  "title": "Animation",
+                  "rev": 0
                 }
               },
               {
@@ -34752,7 +35143,8 @@
                   "height": 470,
                   "fit": true,
                   "width": 100,
-                  "title": "Context switch step by step"
+                  "title": "Context switch step by step",
+                  "rev": 0
                 }
               },
               {
