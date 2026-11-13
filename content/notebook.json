@@ -13172,7 +13172,7 @@
                             "content": [
                               {
                                 "type": "text",
-                                "text": "Implementation of malloc using a linked list, "
+                                "text": "Implementation of malloc using a linked list "
                               }
                             ]
                           },
@@ -13209,7 +13209,7 @@
                                     "content": [
                                       {
                                         "type": "text",
-                                        "text": "Allocate aligned memory and size ( 32 or 64 bit) => header + memory "
+                                        "text": "Allocate aligned memory and size (32 or 64 bit) => header + memory "
                                       }
                                     ]
                                   }
@@ -13388,10 +13388,11 @@
                     ]
                   },
                   {
-                    "type": "paragraph",
+                    "type": "heading",
                     "attrs": {
                       "textAlign": null,
-                      "indent": 0
+                      "indent": 0,
+                      "level": 2
                     },
                     "content": [
                       {
@@ -13595,6 +13596,42 @@
                                   }
                                 ],
                                 "text": "https://embeddedinterviewlab.com/coding/sequence-number-wraparound/"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "listItem",
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "impelemt min heap"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "listItem",
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "implemet ring buffer (0 slot waster and 1 waste)"
                               }
                             ]
                           }
