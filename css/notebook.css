@@ -1,0 +1,120 @@
+/* "Handwritten notebook" note style (Settings → Note style). It only changes how pages look:
+   ruled cream paper, a red margin line, blue handwriting, red underlined headings, circled
+   numbers and yellow highlighter. The notes themselves are not changed. */
+
+@font-face { font-family: 'Caveat'; font-style: normal; font-weight: 400; font-display: swap; src: url('../vendor/fonts/caveat-latin-400-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Caveat'; font-style: normal; font-weight: 700; font-display: swap; src: url('../vendor/fonts/caveat-latin-700-normal.woff2') format('woff2'); }
+
+:root[data-note-style='notebook'] {
+  --nb-paper: #fffdf5; --nb-edge: #e5dfc8; --nb-rule: #cfe0f2; --nb-margin: #e58a8a;
+  --nb-ink: #1f3a8a; --nb-red: #c0392b; --nb-green: #2e7d32; --nb-orange: #b45309; --nb-muted: #5b6b8a;
+  --nb-hl: #fde68a; --nb-hl-ink: #1f3a8a; --nb-note: #fff8d6; --nb-line: 28px;
+  --nb-hand: 'Caveat', 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive;
+}
+@media (prefers-color-scheme: dark) {
+  :root[data-note-style='notebook']:not([data-theme='light']) {
+    --nb-paper: #1f1e1a; --nb-edge: #3a372e; --nb-rule: #2b3a4d; --nb-margin: #7a3b3b;
+    --nb-ink: #a9c7ff; --nb-red: #ff8f80; --nb-green: #8fd694; --nb-orange: #f6b26b; --nb-muted: #a7b3c9;
+    --nb-hl: #5e4f14; --nb-hl-ink: #fff3c4; --nb-note: #2a2617;
+  }
+}
+:root[data-note-style='notebook'][data-theme='dark'] {
+  --nb-paper: #1f1e1a; --nb-edge: #3a372e; --nb-rule: #2b3a4d; --nb-margin: #7a3b3b;
+  --nb-ink: #a9c7ff; --nb-red: #ff8f80; --nb-green: #8fd694; --nb-orange: #f6b26b; --nb-muted: #a7b3c9;
+  --nb-hl: #5e4f14; --nb-hl-ink: #fff3c4; --nb-note: #2a2617;
+}
+
+/* the page */
+[data-note-style='notebook'] .page-title {
+  font-family: var(--nb-hand); font-weight: 700; color: var(--nb-red); font-size: 2.7rem; line-height: 1.1;
+  text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 7px;
+}
+[data-note-style='notebook'] .doc {
+  background-color: var(--nb-paper);
+  background-image:
+    linear-gradient(to right, transparent 34px, var(--nb-margin) 34px, var(--nb-margin) 35px, transparent 35px),
+    repeating-linear-gradient(to bottom, transparent 0, transparent calc(var(--nb-line) - 1px), var(--nb-rule) calc(var(--nb-line) - 1px), var(--nb-rule) var(--nb-line));
+  background-position: 0 14px;
+  border: 1px solid var(--nb-edge); border-radius: 6px;
+  padding: 14px 18px 26px 52px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+[data-note-style='notebook'] body.editing .doc .ProseMirror { background: transparent; border-color: transparent; box-shadow: none; padding: 0; }
+[data-note-style='notebook'] .doc .ProseMirror {
+  font-family: var(--nb-hand); color: var(--nb-ink);
+  font-size: calc(var(--font-size, 16px) * 1.32); line-height: var(--nb-line);
+}
+[data-note-style='notebook'] .doc .ProseMirror p { margin: 0; }
+[data-note-style='notebook'] .doc .ProseMirror p:empty, [data-note-style='notebook'] .doc .ProseMirror p:has(> br:only-child) { min-height: var(--nb-line); }
+
+/* headings: red, underlined, sitting on the lines */
+[data-note-style='notebook'] .doc .ProseMirror :is(h1, h2, h3, h4) {
+  font-family: var(--nb-hand); font-weight: 700; color: var(--nb-red); border: 0; padding: 0;
+  margin: var(--nb-line) 0 0; text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 5px;
+}
+[data-note-style='notebook'] .doc .ProseMirror > :first-child { margin-top: 0; }
+[data-note-style='notebook'] .doc .ProseMirror h1 { font-size: 1.75em; line-height: calc(var(--nb-line) * 2); }
+[data-note-style='notebook'] .doc .ProseMirror h2 { font-size: 1.45em; line-height: calc(var(--nb-line) * 2); }
+[data-note-style='notebook'] .doc .ProseMirror h3 { font-size: 1.2em; line-height: var(--nb-line); }
+[data-note-style='notebook'] .doc .ProseMirror h4 { font-size: 1.05em; line-height: var(--nb-line); }
+[data-note-style='notebook'][data-numbering='true'] .doc .ProseMirror [data-num]::before { color: var(--nb-red); }
+
+/* lists: circled numbers, like a numbered point in a notebook */
+[data-note-style='notebook'] .doc .ProseMirror :is(ol, ul:not([data-type='taskList'])) { list-style: none; padding-left: 0; margin: 0; counter-reset: nb; }
+[data-note-style='notebook'] .doc .ProseMirror :is(ol, ul:not([data-type='taskList'])) > li { counter-increment: nb; position: relative; padding-left: 30px; }
+[data-note-style='notebook'] .doc .ProseMirror :is(ol, ul:not([data-type='taskList'])) > li::before {
+  content: counter(nb); position: absolute; left: 0; top: calc((var(--nb-line) - 19px) / 2);
+  width: 19px; height: 19px; line-height: 16px; border: 1.4px solid var(--nb-ink); border-radius: 50%;
+  text-align: center; font-size: 13px; font-weight: 700; color: var(--nb-ink); box-sizing: border-box;
+}
+[data-note-style='notebook'] .doc .ProseMirror li :is(ol, ul:not([data-type='taskList'])) > li::before {
+  content: '–'; border: 0; width: auto; font-size: 1em; line-height: var(--nb-line); top: 0;
+}
+[data-note-style='notebook'] .doc .ProseMirror li > p { margin: 0; }
+[data-note-style='notebook'] .doc .ProseMirror ul[data-type='taskList'] li > label { margin-top: 6px; }
+
+/* key terms: yellow highlighter */
+[data-note-style='notebook'] .doc .ProseMirror :is(strong, b, mark) { background: var(--nb-hl); color: var(--nb-hl-ink); padding: 0 3px; font-weight: 700; border-radius: 0; }
+[data-note-style='notebook'] .doc .ProseMirror :not(pre) > code {
+  font-family: var(--nb-hand); font-weight: 700; font-size: 1em; background: var(--nb-hl); color: var(--nb-hl-ink);
+  padding: 0 3px; border-radius: 0; border: 0;
+}
+[data-note-style='notebook'] .doc .ProseMirror a { color: var(--nb-ink); text-decoration-color: var(--nb-red); }
+[data-note-style='notebook'] .doc .ProseMirror blockquote { border-left: 2px solid var(--nb-red); color: var(--nb-ink); margin: 0; padding: 0 0 0 14px; }
+[data-note-style='notebook'] .doc .ProseMirror hr { border: 0; border-top: 2px dashed var(--nb-ink); opacity: 0.6; margin: calc(var(--nb-line) / 2 - 1px) 0; }
+
+/* code blocks: a sticky note pinned to the page (kept in a code font so it stays readable) */
+[data-note-style='notebook'] .doc .ProseMirror pre {
+  background: var(--nb-note); color: var(--nb-ink); border: 1.5px dashed var(--nb-ink); border-radius: 4px;
+  margin: calc(var(--nb-line) / 2) 0; font-size: 13.5px; line-height: 1.55; box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.06);
+}
+[data-note-style='notebook'] .doc .ProseMirror pre :is(.hljs-keyword, .hljs-built_in, .hljs-meta, .hljs-selector-tag) { color: var(--nb-red); }
+[data-note-style='notebook'] .doc .ProseMirror pre :is(.hljs-string, .hljs-regexp, .hljs-addition) { color: var(--nb-green); }
+[data-note-style='notebook'] .doc .ProseMirror pre :is(.hljs-number, .hljs-literal, .hljs-symbol) { color: var(--nb-orange); }
+[data-note-style='notebook'] .doc .ProseMirror pre :is(.hljs-comment, .hljs-quote) { color: var(--nb-muted); font-style: italic; }
+[data-note-style='notebook'] .doc .ProseMirror pre :is(.hljs-title, .hljs-function, .hljs-type, .hljs-params, .hljs-variable, .hljs-attr, .hljs-name) { color: var(--nb-ink); }
+
+/* tables: drawn in ink */
+[data-note-style='notebook'] .doc .ProseMirror table { margin: calc(var(--nb-line) / 2) 0; background: transparent; }
+[data-note-style='notebook'] .doc .ProseMirror :is(th, td) { border: 1.5px solid var(--nb-ink); background: transparent; padding: 2px 8px; line-height: 1.25; }
+[data-note-style='notebook'] .doc .ProseMirror th { color: var(--nb-red); font-weight: 700; }
+
+/* boxes (callouts): a hand-drawn frame */
+[data-note-style='notebook'] .doc .callout {
+  background: transparent; border: 1.6px solid var(--nb-ink); border-radius: 12px 16px 10px 14px / 14px 10px 16px 12px;
+  padding: 4px 14px; margin: calc(var(--nb-line) / 2) 0;
+}
+[data-note-style='notebook'] .doc .callout-tip { border-color: var(--nb-green); }
+[data-note-style='notebook'] .doc .callout-warning { border-color: var(--nb-orange); }
+[data-note-style='notebook'] .doc .callout-danger { border-color: var(--nb-red); }
+
+/* pictures, animations and cards sit on the paper like pasted-in sheets */
+[data-note-style='notebook'] .doc :is(.media-frame img, .html-anim-frame, .diagram-out, .pdf-node) { box-shadow: 0 1px 5px rgba(0, 0, 0, 0.12); }
+[data-note-style='notebook'] .doc .html-anim, [data-note-style='notebook'] .doc .media-node, [data-note-style='notebook'] .doc .diagram-node { margin: calc(var(--nb-line) / 2) 0; }
+
+@media (max-width: 600px) {
+  [data-note-style='notebook'] .doc { padding: 12px 10px 20px 38px; background-image:
+    linear-gradient(to right, transparent 26px, var(--nb-margin) 26px, var(--nb-margin) 27px, transparent 27px),
+    repeating-linear-gradient(to bottom, transparent 0, transparent calc(var(--nb-line) - 1px), var(--nb-rule) calc(var(--nb-line) - 1px), var(--nb-rule) var(--nb-line)); }
+  [data-note-style='notebook'] .page-title { font-size: 2.2rem; }
+}

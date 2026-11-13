@@ -387,6 +387,7 @@ function applySettings() {
   root.dataset.theme = s.theme;
   root.dataset.codeWrap = String(Boolean(s.codeWrap));
   root.dataset.numbering = String(Boolean(s.numbering));
+  root.dataset.noteStyle = s.noteStyle === 'notebook' ? 'notebook' : 'clean';
   root.style.setProperty('--font-size', `${Number(s.fontSize) || 16}px`);
   root.dataset.width = s.contentWidth;
   document.title = s.title;
@@ -661,6 +662,7 @@ function openSettings() {
   f.token.value = cfg.token || '';
   f.title.value = s.title;
   f.theme.value = s.theme;
+  f.noteStyle.value = s.noteStyle === 'notebook' ? 'notebook' : 'clean';
   f.fontSize.value = s.fontSize;
   f.contentWidth.value = s.contentWidth;
   f.codeWrap.checked = s.codeWrap;
@@ -718,7 +720,7 @@ async function connect() {
 function wireSettings() {
   const dialog = $('#settings');
   const f = dialog.querySelector('form').elements;
-  ['title', 'theme', 'fontSize', 'contentWidth', 'codeWrap', 'numbering'].forEach((name) =>
+  ['title', 'theme', 'noteStyle', 'fontSize', 'contentWidth', 'codeWrap', 'numbering'].forEach((name) =>
     f[name].addEventListener('change', () => {
       commit(() => {
         const el = f[name];

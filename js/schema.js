@@ -16,6 +16,7 @@ export const DEFAULT_SETTINGS = {
   contentWidth: 'normal', // narrow | normal | wide
   codeWrap: false,
   numbering: false, // number sections and headings: 1, 1.1, 1.2 ...
+  noteStyle: 'clean', // clean | notebook (handwritten notebook look)
 };
 
 export const EMPTY_DOC = { type: 'doc', content: [{ type: 'paragraph' }] };

@@ -19,6 +19,7 @@ Click **Edit** and the page itself becomes the editor, like a word processor. Cl
 - **Numbering:** in ⚙ Settings, *Number sections and headings* adds 1, 1.1, 1.2… numbers to the section list, the headings and the outline. Off by default.
 - **Export** (top bar) to **PDF** or **Word (.docx)**: this page, a section with its subsections, or the whole notebook. PDF opens your browser's print window (choose *Save as PDF*) and always prints in light colours. Word files keep headings (so Word's Navigation Pane works), lists, tables, code, pictures and diagrams (as pictures).
 - **↻ Load latest:** the button next to Save fetches the newest notes straight from the repository (bypassing browser and Pages caches), after asking before it discards unsaved edits.
+- **Note style:** in ⚙ Settings, *Handwritten notebook* shows every page on ruled cream paper with a red margin, blue handwriting (the Caveat font, stored in `vendor/fonts/`, OFL licence), red underlined headings, circled numbers for list points and yellow highlighter for bold text and code. It only changes the look; the notes stay the same and *Clean* switches back.
 - Light and dark theme, works on phones, and unsaved edits are kept in the browser so a closed tab doesn't lose work.
 
 ## Build Explorer (compile, link and load)
