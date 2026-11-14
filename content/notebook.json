@@ -12316,6 +12316,78 @@
                         ]
                       }
                     ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Union and structure"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Why should we not use the packed attribute"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "How to define a macro?"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "What is a static class, static function, and static variable in a class?"
+                          }
+                        ]
+                      }
+                    ]
                   }
                 ]
               },
@@ -13087,80 +13159,29 @@
                 "type": "doc",
                 "content": [
                   {
-                    "type": "bulletList",
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    }
+                  },
+                  {
+                    "type": "heading",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0,
+                      "level": 2
+                    },
                     "content": [
                       {
-                        "type": "listItem",
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "Union and structure"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "listItem",
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "Why should we not use the packed attribute"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "listItem",
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "How to define a macro?"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "listItem",
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "What is a static class, static function, and static variable in a class?"
-                              }
-                            ]
-                          }
-                        ]
-                      },
+                        "type": "text",
+                        "text": "Coding "
+                      }
+                    ]
+                  },
+                  {
+                    "type": "bulletList",
+                    "content": [
                       {
                         "type": "listItem",
                         "content": [
@@ -13382,29 +13403,41 @@
                             "attrs": {
                               "textAlign": null,
                               "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Implement min heap"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "listItem",
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Implement ring buffer (0 slots wasted-> use size  and 1 wasted, head+1 ==tail ->full)"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
                             }
                           }
                         ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "heading",
-                    "attrs": {
-                      "textAlign": null,
-                      "indent": 0,
-                      "level": 2
-                    },
-                    "content": [
-                      {
-                        "type": "text",
-                        "text": "Coding "
-                      }
-                    ]
-                  },
-                  {
-                    "type": "bulletList",
-                    "content": [
+                      },
                       {
                         "type": "listItem",
                         "content": [
@@ -13601,42 +13634,6 @@
                             ]
                           }
                         ]
-                      },
-                      {
-                        "type": "listItem",
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "impelemt min heap"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "listItem",
-                        "content": [
-                          {
-                            "type": "paragraph",
-                            "attrs": {
-                              "textAlign": null,
-                              "indent": 0
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "text": "implemet ring buffer (0 slot waster and 1 waste)"
-                              }
-                            ]
-                          }
-                        ]
                       }
                     ]
                   },
@@ -13646,153 +13643,6 @@
                       "textAlign": null,
                       "indent": 0
                     }
-                  },
-                  {
-                    "type": "paragraph",
-                    "attrs": {
-                      "textAlign": null,
-                      "indent": 0
-                    },
-                    "content": [
-                      {
-                        "type": "text",
-                        "marks": [
-                          {
-                            "type": "textStyle",
-                            "attrs": {
-                              "color": "rgb(129, 0, 194)"
-                            }
-                          }
-                        ],
-                        "text": "const"
-                      },
-                      {
-                        "type": "text",
-                        "text": " "
-                      },
-                      {
-                        "type": "text",
-                        "marks": [
-                          {
-                            "type": "textStyle",
-                            "attrs": {
-                              "color": "rgb(129, 0, 194)"
-                            }
-                          }
-                        ],
-                        "text": "char"
-                      },
-                      {
-                        "type": "text",
-                        "text": " *a"
-                      },
-                      {
-                        "type": "text",
-                        "marks": [
-                          {
-                            "type": "textStyle",
-                            "attrs": {
-                              "color": "rgb(43, 48, 59)"
-                            }
-                          }
-                        ],
-                        "text": ";"
-                      },
-                      {
-                        "type": "text",
-                        "marks": [
-                          {
-                            "type": "textStyle",
-                            "attrs": {
-                              "color": "rgb(110, 118, 135)"
-                            }
-                          }
-                        ],
-                        "text": " // pointer to const char"
-                      },
-                      {
-                        "type": "text",
-                        "text": " "
-                      }
-                    ]
-                  },
-                  {
-                    "type": "paragraph",
-                    "attrs": {
-                      "textAlign": null,
-                      "indent": 0
-                    },
-                    "content": [
-                      {
-                        "type": "text",
-                        "marks": [
-                          {
-                            "type": "textStyle",
-                            "attrs": {
-                              "color": "rgb(129, 0, 194)"
-                            }
-                          }
-                        ],
-                        "text": "char"
-                      },
-                      {
-                        "type": "text",
-                        "text": " "
-                      },
-                      {
-                        "type": "text",
-                        "marks": [
-                          {
-                            "type": "textStyle",
-                            "attrs": {
-                              "color": "rgb(129, 0, 194)"
-                            }
-                          }
-                        ],
-                        "text": "const"
-                      },
-                      {
-                        "type": "text",
-                        "text": " *a"
-                      },
-                      {
-                        "type": "text",
-                        "marks": [
-                          {
-                            "type": "textStyle",
-                            "attrs": {
-                              "color": "rgb(43, 48, 59)"
-                            }
-                          }
-                        ],
-                        "text": ";"
-                      },
-                      {
-                        "type": "text",
-                        "marks": [
-                          {
-                            "type": "textStyle",
-                            "attrs": {
-                              "color": "rgb(110, 118, 135)"
-                            }
-                          }
-                        ],
-                        "text": " // pointer to const char (identical)"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "paragraph",
-                    "attrs": {
-                      "textAlign": null,
-                      "indent": 0
-                    },
-                    "content": [
-                      {
-                        "type": "text",
-                        "text": "char * const a = \"abc\";  // const pointer to char"
-                      }
-                    ]
                   },
                   {
                     "type": "image",
