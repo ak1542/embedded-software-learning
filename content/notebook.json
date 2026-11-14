@@ -43831,7 +43831,267 @@
                 "content": [
                   {
                     "type": "text",
-                    "text": "ocp recover "
+                    "text": "DCU :"
+                  }
+                ]
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "HW IP to test "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "⇕(w0); ⇑(r0, w1); ⇓(r1, w0); ⇕(r0) march X pattern "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Bist over CCI, cxl common interface  background task"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Wrote ISA 16 inst, 64 bit each, up to 128 inst,  default pattern, implemented BIST and tested flow."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Error logs collected  and sent using get logs vuc commands "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "interrupt "
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "OCP "
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "OCP Secure Firmware Recovery is an open standard for rescuing a device whose firmware is corrupted, malicious, or too broken to boot, using a very simple protocol that works even when the device’s normal software is dead."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "MCU ROM"
+                  }
+                ]
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Streaming boot -> BMC sends over I3C, RI handles it, no mu involvement "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Flash boot "
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Decided by the hw strap"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "MCU ROM gets Caliptra runtime and MCU runtime"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "MCU RT -> get SOC images over PLDM type 5"
                   }
                 ]
               },
@@ -43858,7 +44118,44 @@
                 "content": [
                   {
                     "type": "text",
-                    "text": "dcu"
+                    "text": "My work :"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Testing flash boot flow at hw level"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "link",
+                        "attrs": {
+                          "href": "https://chipsalliance.github.io/caliptra-ss/main/regs/?p=soc.I3CCSR.I3C_EC.SecFwRecoveryIf.RECOVERY_CTRL",
+                          "target": "_blank",
+                          "rel": "noopener noreferrer",
+                          "class": null
+                        }
+                      }
+                    ],
+                    "text": "https://chipsalliance.github.io/caliptra-ss/main/regs/?p=soc.I3CCSR.I3C_EC.SecFwRecoveryIf.RECOVERY_CTRL"
                   }
                 ]
               },
@@ -43884,11 +44181,75 @@
                 }
               },
               {
+                "type": "image",
+                "attrs": {
+                  "src": "content/media/2026-11/mw6kqqrn-image.png",
+                  "alt": "image",
+                  "width": null,
+                  "align": "center"
+                }
+              },
+              {
                 "type": "paragraph",
                 "attrs": {
                   "textAlign": null,
                   "indent": 0
                 }
+              },
+              {
+                "type": "image",
+                "attrs": {
+                  "src": "content/media/2026-11/mw6ks9un-image.png",
+                  "alt": "image",
+                  "width": null,
+                  "align": "center"
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "blockquote",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Now I'm working on OCP Recovery, which brings a device back to a good state when its firmware is broken.\""
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "blockquote",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": " DCU, a hardware IP that tests DRAM at boot time. I added a vendor-defined command that runs test patterns, like March algorithms, on the DRAM. This helps us catch memory faults early."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "horizontalRule"
               },
               {
                 "type": "paragraph",
@@ -44853,189 +45214,6 @@
                 "attrs": {
                   "textAlign": null,
                   "indent": 0
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "DCU :"
-                  }
-                ]
-              },
-              {
-                "type": "bulletList",
-                "content": [
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "attrs": {
-                          "textAlign": null,
-                          "indent": 0
-                        },
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "HW IP to test "
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                }
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "OCP "
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                }
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "OCP Secure Firmware Recovery is an open standard for rescuing a device whose firmware is corrupted, malicious, or too broken to boot, using a very simple protocol that works even when the device’s normal software is dead."
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                }
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "MCU ROM"
-                  }
-                ]
-              },
-              {
-                "type": "bulletList",
-                "content": [
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "attrs": {
-                          "textAlign": null,
-                          "indent": 0
-                        },
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "Streaming boot -> BMC sends over I3C, RI handles it, no mu involvement "
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "attrs": {
-                          "textAlign": null,
-                          "indent": 0
-                        },
-                        "content": [
-                          {
-                            "type": "text",
-                            "text": "Flash boot "
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "Decided by the hw strap"
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                }
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "MCU ROM gets Caliptra runtime and MCU runtime"
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "MCU RT -> get SOC images over PLDM type 5"
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
                 }
               },
               {
@@ -45044,32 +45222,6 @@
                   "textAlign": null,
                   "indent": 0
                 }
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "My work :"
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "Testing flash boot flow at hw level"
-                  }
-                ]
               },
               {
                 "type": "paragraph",
@@ -45093,75 +45245,11 @@
                 }
               },
               {
-                "type": "image",
-                "attrs": {
-                  "src": "content/media/2026-11/mw6kqqrn-image.png",
-                  "alt": "image",
-                  "width": null,
-                  "align": "center"
-                }
-              },
-              {
                 "type": "paragraph",
                 "attrs": {
                   "textAlign": null,
                   "indent": 0
                 }
-              },
-              {
-                "type": "image",
-                "attrs": {
-                  "src": "content/media/2026-11/mw6ks9un-image.png",
-                  "alt": "image",
-                  "width": null,
-                  "align": "center"
-                }
-              },
-              {
-                "type": "paragraph",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0
-                }
-              },
-              {
-                "type": "blockquote",
-                "content": [
-                  {
-                    "type": "paragraph",
-                    "attrs": {
-                      "textAlign": null,
-                      "indent": 0
-                    },
-                    "content": [
-                      {
-                        "type": "text",
-                        "text": "Now I'm working on OCP Recovery, which brings a device back to a good state when its firmware is broken.\""
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "blockquote",
-                "content": [
-                  {
-                    "type": "paragraph",
-                    "attrs": {
-                      "textAlign": null,
-                      "indent": 0
-                    },
-                    "content": [
-                      {
-                        "type": "text",
-                        "text": " DCU, a hardware IP that tests DRAM at boot time. I added a vendor-defined command that runs test patterns, like March algorithms, on the DRAM. This helps us catch memory faults early."
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "horizontalRule"
               },
               {
                 "type": "paragraph",
@@ -45640,7 +45728,7 @@
                 "content": [
                   {
                     "type": "text",
-                    "text": "1. What is CXL?"
+                    "text": "1. What is CXL? Make notes ??"
                   }
                 ]
               },
