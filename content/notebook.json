@@ -13428,16 +13428,111 @@
                                 "text": "Implement ring buffer (0 slots wasted-> use size  and 1 wasted, head+1 ==tail ->full)"
                               }
                             ]
-                          },
+                          }
+                        ]
+                      },
+                      {
+                        "type": "listItem",
+                        "content": [
                           {
                             "type": "paragraph",
                             "attrs": {
                               "textAlign": null,
                               "indent": 0
-                            }
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Array question from b..pdf"
+                              }
+                            ]
                           }
                         ]
                       },
+                      {
+                        "type": "listItem",
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Linked list, loop detection, add, delete, make queue, etc"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "listItem",
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "stack using array, queue"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "listItem",
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Queue using stack"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "listItem",
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "attrs": {
+                              "textAlign": null,
+                              "indent": 0
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "Tree and graph traversal "
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    }
+                  },
+                  {
+                    "type": "bulletList",
+                    "content": [
                       {
                         "type": "listItem",
                         "content": [
