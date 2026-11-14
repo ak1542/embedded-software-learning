@@ -7,6 +7,7 @@
     "contentWidth": "normal",
     "codeWrap": false,
     "numbering": false,
+    "noteStyle": "clean",
     "animateBlocks": true,
     "codeLineNumbers": true
   },
@@ -43629,6 +43630,22 @@
                 ]
               },
               {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "image",
+                "attrs": {
+                  "src": "content/media/2026-11/mwgluhsq-image.png",
+                  "alt": "image",
+                  "width": null,
+                  "align": "center"
+                }
+              },
+              {
                 "type": "image",
                 "attrs": {
                   "src": "content/media/2026-11/mw0whf12-image.png",
@@ -43636,6 +43653,32 @@
                   "width": null,
                   "align": "center"
                 }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "-> I2C timeout limit in BMC ? "
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "-> How to overcome -> removed logs and increased size to?"
+                  }
+                ]
               },
               {
                 "type": "paragraph",
@@ -43709,6 +43752,22 @@
                 ]
               },
               {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "image",
+                "attrs": {
+                  "src": "content/media/2026-11/mwgmcka4-image.png",
+                  "alt": "image",
+                  "width": 100,
+                  "align": "center"
+                }
+              },
+              {
                 "type": "image",
                 "attrs": {
                   "src": "content/media/2026-11/mw3l8oy1-image.png",
@@ -43775,6 +43834,13 @@
                     "text": "ocp recover "
                   }
                 ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
               },
               {
                 "type": "paragraph",
