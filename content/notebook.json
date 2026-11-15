@@ -44204,6 +44204,613 @@
                 }
               },
               {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 2
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "PCIe and CXL"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "PCie enumeration "
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "image",
+                "attrs": {
+                  "src": "content/media/2026-11/mwhfpjql-image.png",
+                  "alt": "image",
+                  "width": 25,
+                  "align": "center"
+                }
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Each function gets 4 KB of config space in host space"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "256 buses × 32 devices × 8 functions × 4 KB = 256MB"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Type 0 header for endpoint "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Host starts scanning from 0.0.0"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "image",
+                        "attrs": {
+                          "src": "content/media/2026-11/mwhftinl-image.png",
+                          "alt": "image",
+                          "width": 25,
+                          "align": "center"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "MMIO exposed through BAR space, i.e mailbox 2MB"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "MailBox flow "
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "attrs": {
+                  "variant": "info"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Host Check doorbell = 0"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "   → write payload"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "   → write opcode + length"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "   → set doorbell = 1"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "   → [device executes]"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "   → doorbell = 0"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "   → read status"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "        0x0000 → read output, done"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "        0x0001 → poll background status until 100%"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "        busy/retry → wait and resend"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "attrs": {
+                      "textAlign": null,
+                      "indent": 0
+                    },
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "        error → report"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "link",
+                        "attrs": {
+                          "href": "https://www.linkedin.com/pulse/pcie-enumeration-interrupts-mechanism-ajazul-haque-u4tvf/",
+                          "target": "_blank",
+                          "rel": "noopener noreferrer",
+                          "class": null
+                        }
+                      }
+                    ],
+                    "text": "https://www.linkedin.com/pulse/pcie-enumeration-interrupts-mechanism-ajazul-haque-u4tvf/"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 4
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Problem with PCIe and what problem CXL solves ?"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Take an example of a GPU,"
+                  }
+                ]
+              },
+              {
+                "type": "image",
+                "attrs": {
+                  "src": "content/media/2026-11/mwhg4xw0-image.png",
+                  "alt": "image",
+                  "width": 50,
+                  "align": "center"
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "How does CXL solve this problem"
+                  }
+                ]
+              },
+              {
+                "type": "image",
+                "attrs": {
+                  "src": "content/media/2026-11/mwhgbu39-image.png",
+                  "alt": "image",
+                  "width": 50,
+                  "align": "center"
+                }
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "PCIe needs some software mechanism for cache coherence, but CXL provides HW cache coherence  "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "How does .mem work ?"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": " "
+                  }
+                ]
+              },
+              {
+                "type": "image",
+                "attrs": {
+                  "src": "content/media/2026-11/mwhgrmlc-image.png",
+                  "alt": "image",
+                  "width": 50,
+                  "align": "center"
+                }
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Complete process"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "image",
+                "attrs": {
+                  "src": "content/media/2026-11/mwhgtaei-image.png",
+                  "alt": "image",
+                  "width": 75,
+                  "align": "center"
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Cache coherence: home agent + snoop filter :"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "bulletList",
+                        "content": [
+                          {
+                            "type": "listItem",
+                            "content": [
+                              {
+                                "type": "paragraph",
+                                "attrs": {
+                                  "textAlign": "left",
+                                  "indent": 0
+                                },
+                                "content": [
+                                  {
+                                    "type": "text",
+                                    "text": "Host-only handler this in all types of devices "
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "listItem",
+                            "content": [
+                              {
+                                "type": "paragraph",
+                                "attrs": {
+                                  "textAlign": "left",
+                                  "indent": 0
+                                },
+                                "content": [
+                                  {
+                                    "type": "text",
+                                    "text": "In type 3 device, it is simple; host only updates data"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "listItem",
+                            "content": [
+                              {
+                                "type": "paragraph",
+                                "attrs": {
+                                  "textAlign": "left",
+                                  "indent": 0
+                                },
+                                "content": [
+                                  {
+                                    "type": "text",
+                                    "text": "General digram "
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "image",
+                        "attrs": {
+                          "src": "content/media/2026-11/mwhh8885-image.png",
+                          "alt": "image",
+                          "width": 50,
+                          "align": "center"
+                        }
+                      },
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null,
+                          "indent": 0
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
                 "type": "paragraph",
                 "attrs": {
                   "textAlign": null,
