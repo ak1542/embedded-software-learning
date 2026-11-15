@@ -43362,6 +43362,27 @@
                 ]
               },
               {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0
+                }
+              },
+              {
+                "type": "heading",
+                "attrs": {
+                  "textAlign": null,
+                  "indent": 0,
+                  "level": 2
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "PLDM"
+                  }
+                ]
+              },
+              {
                 "type": "image",
                 "attrs": {
                   "src": "content/media/2026-11/mw0wa8yh-89014.jpg",
@@ -43554,10 +43575,11 @@
                 }
               },
               {
-                "type": "paragraph",
+                "type": "heading",
                 "attrs": {
                   "textAlign": null,
-                  "indent": 0
+                  "indent": 0,
+                  "level": 2
                 },
                 "content": [
                   {
@@ -43679,10 +43701,11 @@
                 }
               },
               {
-                "type": "paragraph",
+                "type": "heading",
                 "attrs": {
                   "textAlign": null,
-                  "indent": 0
+                  "indent": 0,
+                  "level": 2
                 },
                 "content": [
                   {
@@ -43768,10 +43791,11 @@
                 }
               },
               {
-                "type": "paragraph",
+                "type": "heading",
                 "attrs": {
                   "textAlign": null,
-                  "indent": 0
+                  "indent": 0,
+                  "level": 2
                 },
                 "content": [
                   {
@@ -43901,10 +43925,11 @@
                 }
               },
               {
-                "type": "paragraph",
+                "type": "heading",
                 "attrs": {
                   "textAlign": null,
-                  "indent": 0
+                  "indent": 0,
+                  "level": 2
                 },
                 "content": [
                   {
@@ -46407,7 +46432,33 @@
                       },
                       {
                         "type": "text",
-                        "text": " and CXL.mem but not CXL.cache. It's essentially DRAM, or persistent memory, behind a CXL endpoint with a memory controller, and it has no compute for the host to use. It's used to add capacity and bandwidth beyond what the CPU's DDR channels allow. The device is a passive target: it only responds to host requests and never initiates coherent requests to the host.\""
+                        "text": " and CXL.mem but not CXL.cache. It's essentially "
+                      },
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "bold"
+                          }
+                        ],
+                        "text": "DRAM"
+                      },
+                      {
+                        "type": "text",
+                        "text": ", or persistent memory, "
+                      },
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "bold"
+                          }
+                        ],
+                        "text": "behind a CXL endpoint with a memory controller"
+                      },
+                      {
+                        "type": "text",
+                        "text": ", and it has no compute for the host to use. It's used to add capacity and bandwidth beyond what the CPU's DDR channels allow. The device is a passive target: it only responds to host requests and never initiates coherent requests to the host.\""
                       }
                     ]
                   }
@@ -46484,7 +46535,20 @@
                       },
                       {
                         "type": "text",
-                        "text": " to that address goes out through the root port as a CXL.mem request. The device translates the host physical address to a device physical address and accesses its media. The OS usually sees this memory as a CPU-less NUMA node, with somewhat higher latency than local DRAM. In parallel, the device firmware handles management through the mailbox: health info, event logs, poison and error handling, firmware update, and sanitize.\""
+                        "text": " to that address goes out through the root port as a CXL.mem request. The device translates the host physical address to a device physical address and accesses its media. The OS usually sees this memory as a CPU-less "
+                      },
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "bold"
+                          }
+                        ],
+                        "text": "NUMA node"
+                      },
+                      {
+                        "type": "text",
+                        "text": ", with somewhat higher latency than local DRAM. In parallel, the device firmware handles management through the mailbox: health info, event logs, poison and error handling, firmware update, and sanitize.\""
                       }
                     ]
                   }
@@ -46590,7 +46654,59 @@
                     "content": [
                       {
                         "type": "text",
-                        "text": "\"Because the device memory is mapped into the host physical address space as HDM, the CPU treats it like normal memory. Lines are cached in L1, L2, and LLC, with no special software. CXL.mem carries the requests: the host sends M2S requests like MemRd and MemWr, and the device answers with S2M responses, data or completions. For a Type 3 device, the device doesn't cache host memory and doesn't modify lines behind the host's back, so there's no coherency problem to resolve. The host can cache freely and write back dirty lines on eviction. For Type 2 devices, where the device can also modify its memory, CXL uses bias-based coherency, host bias versus device bias, to decide who has to be consulted. In CXL 3.x, Back-Invalidate lets a device invalidate lines the host has cached, which matters for memory sharing across hosts.\""
+                        "text": "\"Because the device memory is mapped into the host physical address space as HDM, the CPU treats it like normal memory. Lines are cached in L1, L2, and LLC, with no special software. CXL.mem carries the requests: the host sends M2S requests like "
+                      },
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "bold"
+                          }
+                        ],
+                        "text": "MemRd"
+                      },
+                      {
+                        "type": "text",
+                        "text": " and "
+                      },
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "bold"
+                          }
+                        ],
+                        "text": "MemWr"
+                      },
+                      {
+                        "type": "text",
+                        "text": ", and the device answers with S2M responses, data or completions. For a Type 3 device, the device doesn't cache host memory and doesn't modify lines behind the host's back,"
+                      },
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "bold"
+                          }
+                        ],
+                        "text": " so there's no coherency problem to resolve. "
+                      },
+                      {
+                        "type": "text",
+                        "text": "The host can cache freely and write back dirty lines on eviction. For Type 2 devices, where the device can also modify its memory, "
+                      },
+                      {
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "bold"
+                          }
+                        ],
+                        "text": "CXL uses bias-based coherency, "
+                      },
+                      {
+                        "type": "text",
+                        "text": "host bias versus device bias, to decide who has to be consulted. In CXL 3.x, Back-Invalidate lets a device invalidate lines the host has cached, which matters for memory sharing across hosts.\""
                       }
                     ]
                   }
@@ -46622,146 +46738,46 @@
                     "content": [
                       {
                         "type": "text",
-                        "text": "\"That's CXL.cache, which Type 1 and Type 2 devices support, but Type 3 does not. The device has its own coherent cache and sends requests to the host over the D2H channel, such as read-shared or read-own. The host's home agent tracks the device as a sharer or owner. If a CPU core later needs a line the device holds, the host sends a snoop over H2D, and the device responds with its state and writes back data if the line is modified. All of this is done in hardware, with no software flush or DMA sync.\""
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "heading",
-                "attrs": {
-                  "textAlign": null,
-                  "indent": 0,
-                  "level": 2
-                },
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "Likely follow-ups"
-                  }
-                ]
-              },
-              {
-                "type": "bulletList",
-                "content": [
-                  {
-                    "type": "listItem",
-                    "content": [
+                        "text": "\"That's CXL.cache, which Type 1 and Type 2 devices support, but Type 3 does not. The device has its own coherent cache and sends requests to the host over the "
+                      },
                       {
-                        "type": "paragraph",
-                        "attrs": {
-                          "textAlign": null,
-                          "indent": 0
-                        },
-                        "content": [
+                        "type": "text",
+                        "marks": [
                           {
-                            "type": "text",
-                            "marks": [
-                              {
-                                "type": "bold"
-                              }
-                            ],
-                            "text": "\"Why not just use PCIe?\""
-                          },
-                          {
-                            "type": "text",
-                            "text": " Because PCIe lacks coherency. You'd need pinned buffers, DMA descriptors, and software flushes, and you can't use the device memory as ordinary load/store memory."
+                            "type": "bold"
                           }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [
+                        ],
+                        "text": "D2H"
+                      },
                       {
-                        "type": "paragraph",
-                        "attrs": {
-                          "textAlign": null,
-                          "indent": 0
-                        },
-                        "content": [
+                        "type": "text",
+                        "text": " channel, such as read-shared or read-own. The host's home agent tracks the device as a sharer or owner. If a CPU core later needs a line the device holds, the host sends a snoop over "
+                      },
+                      {
+                        "type": "text",
+                        "marks": [
                           {
-                            "type": "text",
-                            "marks": [
-                              {
-                                "type": "bold"
-                              }
-                            ],
-                            "text": "\"CXL vs NUMA?\""
-                          },
-                          {
-                            "type": "text",
-                            "text": " It shows up as a CPU-less NUMA node, so the OS handles it with existing NUMA and tiering policies."
+                            "type": "bold"
                           }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [
+                        ],
+                        "text": "H2D"
+                      },
                       {
-                        "type": "paragraph",
-                        "attrs": {
-                          "textAlign": null,
-                          "indent": 0
-                        },
-                        "content": [
+                        "type": "text",
+                        "text": ", and the device responds with its state and writes back data if the line is modified. "
+                      },
+                      {
+                        "type": "text",
+                        "marks": [
                           {
-                            "type": "text",
-                            "marks": [
-                              {
-                                "type": "bold"
-                              }
-                            ],
-                            "text": "\"What does your firmware do on the device?\""
-                          },
-                          {
-                            "type": "text",
-                            "text": " Tie it to your own work here: mailbox command handling, requirements through implementation and testing, plus any RAS, error, or management features you own. Be ready with one concrete example you can walk through, such as how a mailbox command flows from the host through to your firmware handler."
+                            "type": "bold"
                           }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [
+                        ],
+                        "text": "All of this is done in hardware"
+                      },
                       {
-                        "type": "paragraph",
-                        "attrs": {
-                          "textAlign": null,
-                          "indent": 0
-                        },
-                        "content": [
-                          {
-                            "type": "text",
-                            "marks": [
-                              {
-                                "type": "bold"
-                              }
-                            ],
-                            "text": "\"How is it managed out of band?\""
-                          },
-                          {
-                            "type": "text",
-                            "text": " CCI over MCTP, which connects directly to your MCTP/PLDM experience."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [
-                      {
-                        "type": "paragraph",
-                        "attrs": {
-                          "textAlign": null,
-                          "indent": 0
-                        }
+                        "type": "text",
+                        "text": ", with no software flush or DMA sync.\""
                       }
                     ]
                   }
